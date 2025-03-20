@@ -4468,9 +4468,6 @@ void X11Window::maximize(MaximizeMode mode, const QRectF &restore)
         return;
     }
 
-    if (!isResizable() || isToolbar()) { // SELI isToolbar() ?
-        return;
-    }
     if (!isMaximizable()) {
         return;
     }
