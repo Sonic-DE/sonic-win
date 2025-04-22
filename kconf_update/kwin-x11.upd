@@ -18,3 +18,7 @@ Script=kwin-6.0-remove-breeze-tabbox-default-x11
 # Delete old gridview and expose defaults
 Id=kwin-6.1-remove-gridview-expose-shortcuts-x11
 Script=kwin-6.1-remove-gridview-expose-shortcuts-x11
+
+# Unload showpaint effect and delete old shortcut
+Id=kwin-6.5-showpaint-changes-x11
+Script=kwin-6.5-showpaint-changes-x11

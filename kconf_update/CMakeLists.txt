@@ -21,5 +21,10 @@ target_sources(kwin-6.1-remove-gridview-expose-shortcuts-x11 PRIVATE kwin-6.1-re
 target_link_libraries(kwin-6.1-remove-gridview-expose-shortcuts-x11 PRIVATE KF6::GlobalAccel)
 install(TARGETS kwin-6.1-remove-gridview-expose-shortcuts-x11 DESTINATION ${KDE_INSTALL_LIBDIR}/kconf_update_bin/)
 
+add_executable(kwin-6.5-showpaint-changes-x11)
+target_sources(kwin-6.5-showpaint-changes-x11 PRIVATE kwin-6.5-showpaint-changes-x11.cpp)
+target_link_libraries(kwin-6.5-showpaint-changes-x11 PRIVATE KF6::ConfigCore KF6::GlobalAccel)
+install(TARGETS kwin-6.5-showpaint-changes-x11 DESTINATION ${KDE_INSTALL_LIBDIR}/kconf_update_bin/)
+
 install(FILES kwin-x11.upd
         DESTINATION ${KDE_INSTALL_KCONFUPDATEDIR})
