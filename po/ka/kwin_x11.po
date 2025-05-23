@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-08 02:39+0000\n"
+"POT-Creation-Date: 2025-05-23 00:43+0000\n"
 "PO-Revision-Date: 2024-12-25 04:46+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -46,7 +46,7 @@ msgid ""
 "meanwhile upgraded to a stable driver,<br>you can reset this protection but "
 "<b>be aware that this might result in an immediate crash!</b></p>"
 msgstr ""
-"<b>OpenGL-ის კომპოზიტირება (ნაგულისხმევი) KWin-სთვის წარსულში ავარიულად "
+"<b>OpenGL-ის კომპოზიტირება (ნაგულისხმები) KWin-სთვის წარსულში ავარიულად "
 "დასრულდა.</b><b>დიდი შანსია, ეს დრაივერის შეცდომის ბრალი იყოს.<p>თუ ფიქრობთ, "
 "რომ დრაივერი უკვე განაახლეთ, ეს დაცვა <b>შეგიძლიათ გამორთოთ, მაგრამ "
 "გაითვალისწინეთ, რომ ის შეიძლება ავარიულად დასრულდეს!</b></p>"
@@ -1326,7 +1326,6 @@ msgstr ""
 #: plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
-#: plugins/showpaint/showpaint_config.cpp:32
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
@@ -1526,7 +1525,7 @@ msgstr "ხანგრძლივობა:"
 #: plugins/scale/package/contents/ui/config.ui:30
 #, kde-format
 msgid "Default"
-msgstr "ნაგულისხმევი"
+msgstr "ნაგულისხმები"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_Duration)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_AnimationDuration)
@@ -1760,7 +1759,7 @@ msgstr "ანიმაციის ხანგრძლივობა:"
 #, kde-format
 msgctxt "Duration of rotation"
 msgid "Default"
-msgstr "ნაგულისხმევი"
+msgstr "ნაგულისხმები"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupSize)
 #: plugins/magnifier/magnifier_config.ui:17
@@ -2198,11 +2197,6 @@ msgstr "მიმდინარე კადრი/წმ"
 msgctxt "@label"
 msgid "Maximum FPS"
 msgstr "მაქს. კადრი/წმ"
-
-#: plugins/showpaint/showpaint.cpp:42 plugins/showpaint/showpaint_config.cpp:37
-#, kde-format
-msgid "Toggle Show Paint"
-msgstr "ნახატის ჩვენების გადართვა"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_Gaps)
 #: plugins/slide/slide_config.ui:17
@@ -3992,7 +3986,7 @@ msgctxt "Application is not responding, appended to window title"
 msgid "(Not Responding)"
 msgstr "(არ პასუხობს)"
 
-#: workspace.cpp:1631
+#: workspace.cpp:1693
 #, kde-format
 msgctxt "Introductory text shown in the support information."
 msgid ""
@@ -4020,6 +4014,9 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "Xwayland ავარიულად დასრულდა"
+
+#~ msgid "Toggle Show Paint"
+#~ msgstr "ნახატის ჩვენების გადართვა"
 
 #~ msgctxt "@item:inmenu never hide cursor on inactivity"
 #~ msgid "Never"
@@ -4192,19 +4189,19 @@ msgstr "Xwayland ავარიულად დასრულდა"
 #~ msgstr "ვირტუალურ Framebuffer-ში რენდერი."
 
 #~ msgid "The width for windowed mode. Default width is 1024."
-#~ msgstr "ფანჯრის რეჟიმის სიგანე. ნაგულისხმევი მნიშვნელობაა 1024."
+#~ msgstr "ფანჯრის რეჟიმის სიგანე. ნაგულისხმები მნიშვნელობაა 1024."
 
 #~ msgid "The height for windowed mode. Default height is 768."
-#~ msgstr "ფანჯრის რეჟიმის სიმაღლე. ნაგულისხმევი მნიშვნელობაა 768."
+#~ msgstr "ფანჯრის რეჟიმის სიმაღლე. ნაგულისხმები მნიშვნელობაა 768."
 
 #~ msgid "The scale for windowed mode. Default value is 1."
-#~ msgstr "ფანჯრის რეჟიმის გადიდება. ნაგულისხმევი მნიშვნელობაა 1."
+#~ msgstr "ფანჯრის რეჟიმის გადიდება. ნაგულისხმები მნიშვნელობაა 1."
 
 #~ msgid ""
 #~ "The number of windows to open as outputs in windowed mode. Default value "
 #~ "is 1"
 #~ msgstr ""
-#~ "ფანჯრულ რეჟიმში გამოტანილი ფანჯრების რაოდენობა. ნაგულისხმევი მნიშვნელობაა "
+#~ "ფანჯრულ რეჟიმში გამოტანილი ფანჯრების რაოდენობა. ნაგულისხმები მნიშვნელობაა "
 #~ "1"
 
 #~ msgid ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-08 02:39+0000\n"
+"POT-Creation-Date: 2025-05-23 00:43+0000\n"
 "PO-Revision-Date: 2017-12-03 22:53+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -1451,7 +1451,6 @@ msgstr ""
 #: plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
-#: plugins/showpaint/showpaint_config.cpp:32
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
@@ -2456,13 +2455,6 @@ msgstr "Подеси распореде..."
 msgctxt "@label"
 msgid "Maximum FPS"
 msgstr "Највећа &ширина:"
-
-#: plugins/showpaint/showpaint.cpp:42 plugins/showpaint/showpaint_config.cpp:37
-#, fuzzy, kde-format
-#| msgctxt "Name of a KWin Effect"
-#| msgid "Show Paint"
-msgid "Toggle Show Paint"
-msgstr "Приказ исцртавања"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_Gaps)
 #: plugins/slide/slide_config.ui:17
@@ -4384,7 +4376,7 @@ msgctxt "Application is not responding, appended to window title"
 msgid "(Not Responding)"
 msgstr "(не одазива се)"
 
-#: workspace.cpp:1631
+#: workspace.cpp:1693
 #, fuzzy, kde-format
 #| msgctxt "Introductory text shown in the support information."
 #| msgid ""
@@ -4421,6 +4413,12 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr ""
+
+#, fuzzy
+#~| msgctxt "Name of a KWin Effect"
+#~| msgid "Show Paint"
+#~ msgid "Toggle Show Paint"
+#~ msgstr "Приказ исцртавања"
 
 #, fuzzy
 #~| msgid " milliseconds"

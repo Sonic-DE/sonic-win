@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-08 02:39+0000\n"
+"POT-Creation-Date: 2025-05-23 00:43+0000\n"
 "PO-Revision-Date: 2024-09-19 17:40+0300\n"
 "Last-Translator: Antonis Geralis <capoiosct@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -1341,7 +1341,6 @@ msgstr ""
 #: plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
-#: plugins/showpaint/showpaint_config.cpp:32
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
@@ -2236,12 +2235,6 @@ msgstr "Διαμόρφωση διατάξεων..."
 msgctxt "@label"
 msgid "Maximum FPS"
 msgstr "Μέγιστο &πλάτος:"
-
-#: plugins/showpaint/showpaint.cpp:42 plugins/showpaint/showpaint_config.cpp:37
-#, fuzzy, kde-format
-#| msgid "Toggle Snow on Desktop"
-msgid "Toggle Show Paint"
-msgstr "Εναλλαγή χιονιού στην επιφάνεια εργασίας"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_Gaps)
 #: plugins/slide/slide_config.ui:17
@@ -4096,7 +4089,7 @@ msgctxt "Application is not responding, appended to window title"
 msgid "(Not Responding)"
 msgstr "(Δεν ανταποκρίνεται)"
 
-#: workspace.cpp:1631
+#: workspace.cpp:1693
 #, kde-format
 msgctxt "Introductory text shown in the support information."
 msgid ""
@@ -4125,6 +4118,11 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "Το Xwayland κατάρρευσε"
+
+#, fuzzy
+#~| msgid "Toggle Snow on Desktop"
+#~ msgid "Toggle Show Paint"
+#~ msgstr "Εναλλαγή χιονιού στην επιφάνεια εργασίας"
 
 #~ msgctxt "@item:inmenu never hide cursor on inactivity"
 #~ msgid "Never"

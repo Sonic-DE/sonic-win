@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin-x11\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-08 02:39+0000\n"
+"POT-Creation-Date: 2025-05-23 00:43+0000\n"
 "PO-Revision-Date: 2025-02-24 12:43+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -1330,7 +1330,8 @@ msgid ""
 "Select window to force close with left click or enter.\n"
 "Escape or right click to cancel."
 msgstr ""
-"Trieu la finestra a forçar el tancament amb el clic esquerre o retorn.\n"
+"Seleccioneu la finestra a forçar el tancament amb el clic esquerre o "
+"retorn.\n"
 "La tecla «Esc» o un clic dret per a cancel·lar."
 
 #: main.cpp:185 plugins/invert/invert_config.cpp:35
@@ -1338,7 +1339,6 @@ msgstr ""
 #: plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
-#: plugins/showpaint/showpaint_config.cpp:32
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
@@ -1483,8 +1483,8 @@ msgid ""
 "Select a position for color picking with left click or enter.\n"
 "Escape or right click to cancel."
 msgstr ""
-"Trieu una posició per a la selecció del color amb el clic esquerre o la "
-"tecla de retorn.\n"
+"Seleccioneu una posició per a la selecció del color amb el clic esquerre o "
+"la tecla de retorn.\n"
 "La tecla d'escapada o clic dret per a cancel·lar."
 
 #. i18n: ectx: property (text), widget (QLabel, label_Strength)
@@ -2174,7 +2174,7 @@ msgid ""
 "Select window to screen shot with left click or enter.\n"
 "Escape or right click to cancel."
 msgstr ""
-"Trieu la finestra que es capturarà amb el clic esquerre o la tecla de "
+"Seleccioneu la finestra que es capturarà amb el clic esquerre o la tecla de "
 "retorn.\n"
 "La tecla d'escapada o clic dret per a cancel·lar."
 
@@ -2216,11 +2216,6 @@ msgstr "FPS actual"
 msgctxt "@label"
 msgid "Maximum FPS"
 msgstr "FPS màxim"
-
-#: plugins/showpaint/showpaint.cpp:42 plugins/showpaint/showpaint_config.cpp:37
-#, kde-format
-msgid "Toggle Show Paint"
-msgstr "Canvia la mostra del pintat"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_Gaps)
 #: plugins/slide/slide_config.ui:17
@@ -3417,7 +3412,7 @@ msgstr ""
 "Heu triat mostrar una finestra sense la vora.\n"
 "Sense la vora no podreu tornar-la a activar utilitzant el ratolí: per a fer-"
 "ho utilitzeu el menú d'operacions de la finestra, activat utilitzant la "
-"drecera de teclat «%1»."
+"drecera de teclat %1."
 
 #: useractions.cpp:169
 #, kde-format
@@ -3431,7 +3426,7 @@ msgstr ""
 "Si la mateixa aplicació no té una opció per a apagar el mode pantalla "
 "completa, no podreu tornar-lo a desactivar utilitzant el ratolí: per a fer-"
 "ho utilitzeu el menú d'operacions de la finestra, activat utilitzant la "
-"drecera de teclat «%1»."
+"drecera de teclat %1."
 
 #: useractions.cpp:216
 #, kde-format
@@ -4013,7 +4008,7 @@ msgctxt "Application is not responding, appended to window title"
 msgid "(Not Responding)"
 msgstr "(No respon)"
 
-#: workspace.cpp:1631
+#: workspace.cpp:1693
 #, kde-format
 msgctxt "Introductory text shown in the support information."
 msgid ""
@@ -4041,3 +4036,6 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "XWayland ha fallat"
+
+#~ msgid "Toggle Show Paint"
+#~ msgstr "Canvia la mostra del pintat"

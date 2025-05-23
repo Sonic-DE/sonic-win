@@ -13,13 +13,13 @@
 # tahmar1900 <tahmar1900@gmail.com>, 2008.
 # elkana bardugo <ttv200@gmail.com>, 2016.
 # Elkana Bardugo <ttv200@gmail.com>, 2017. #zanata
-# SPDX-FileCopyrightText: 2023, 2024, 2025 Yaron Shahrabani <sh.yaron@gmail.com>
+# SPDX-FileCopyrightText: 2023, 2024 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-08 02:39+0000\n"
-"PO-Revision-Date: 2025-08-02 21:39+0300\n"
+"POT-Creation-Date: 2025-05-23 00:43+0000\n"
+"PO-Revision-Date: 2024-12-25 09:30+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 24.12.0\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -351,7 +351,7 @@ msgstr "הפרש (לא מואץ)"
 #, kde-format
 msgctxt "The global mouse pointer position"
 msgid "Global Position"
-msgstr "מקום מקיף"
+msgstr "מקום כללי"
 
 #: debug_console.cpp:213
 #, kde-format
@@ -521,7 +521,7 @@ msgstr "מזהה מצביע"
 #, kde-format
 msgctxt "The global position of the touch point"
 msgid "Global position"
-msgstr "מקום מקיף"
+msgstr "מקום כללי"
 
 #: debug_console.cpp:332
 #, kde-format
@@ -1327,7 +1327,6 @@ msgstr ""
 #: plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
-#: plugins/showpaint/showpaint_config.cpp:32
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
@@ -2200,11 +2199,6 @@ msgstr "תמוניות לשנייה כרגע"
 msgctxt "@label"
 msgid "Maximum FPS"
 msgstr "תמוניות לשנייה לכל היותר"
-
-#: plugins/showpaint/showpaint.cpp:42 plugins/showpaint/showpaint_config.cpp:37
-#, kde-format
-msgid "Toggle Show Paint"
-msgstr "החלפת הצגת צביעה"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_Gaps)
 #: plugins/slide/slide_config.ui:17
@@ -3228,13 +3222,13 @@ msgstr "סוג כלל מקש קיצור"
 #: rulesettings.kcfg:410
 #, kde-format
 msgid "Ignore global shortcuts"
-msgstr "התעלמות ממקשי קיצור מקיפים"
+msgstr "התעלמות ממקשי קיצור כלליים"
 
 #. i18n: ectx: label, entry (disableglobalshortcutsrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:414
 #, kde-format
 msgid "Ignore global shortcuts rule type"
-msgstr "התעלמות מסוג כלל מקשי קיצור מקיפים"
+msgstr "סוג כלל התעלמות ממקשי קיצור כלליים"
 
 #. i18n: ectx: label, entry (desktopfile), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:419
@@ -3990,7 +3984,7 @@ msgctxt "Application is not responding, appended to window title"
 msgid "(Not Responding)"
 msgstr "(לא מגיב)"
 
-#: workspace.cpp:1631
+#: workspace.cpp:1693
 #, kde-format
 msgctxt "Introductory text shown in the support information."
 msgid ""
@@ -4015,6 +4009,9 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "Xwayland קרס"
+
+#~ msgid "Toggle Show Paint"
+#~ msgstr "החלפת הצגת צביעה"
 
 #~ msgctxt "@item:inmenu never hide cursor on inactivity"
 #~ msgid "Never"

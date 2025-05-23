@@ -1,11 +1,11 @@
-# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024, 2025 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
+# SPDX-FileCopyrightText: 2021, 2022, 2023, 2024 Zayed Al-Saidi <zayed.alsaidi@gmail.com>
 # Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-08 02:39+0000\n"
-"PO-Revision-Date: 2025-08-14 11:51+0400\n"
+"POT-Creation-Date: 2025-05-23 00:43+0000\n"
+"PO-Revision-Date: 2024-12-26 09:07+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 "X-Generator: Lokalize 23.08.5\n"
 
 #, kde-format
@@ -44,11 +44,10 @@ msgid ""
 "meanwhile upgraded to a stable driver,<br>you can reset this protection but "
 "<b>be aware that this might result in an immediate crash!</b></p>"
 msgstr ""
-"<b>أدى التركيب في OpenGL (المبدئي) إلى تعطل كوين في الماضي. \n"
-"كان هذا على الأرجح بسبب خطأ في المُشغل. \n"
-"إذا كنت تعتقد أنك رقيت في هذه الأثناء إلى مُشغل مستقر، \n"
-"فيمكنك تصفير هذه الحماية ولكن يجب أن تدرك أن هذا قد يؤدي إلى انهيار فوري!</"
-"b></p>"
+"<b>أدى التركيب في أوبن جي إل (المبدئي) إلى تعطل كوين في الماضي.</b><br>كان "
+"هذا على الأرجح بسبب خطأ في المعرف.<p>إذا كنت تعتقد أنك قمت في هذه الأثناء "
+"بالترقية إلى تعريف ثابت مستقر، <br>فيمكنك إعادة تعيين هذه الحماية ولكن يجب "
+"أن تدرك أن هذا قد يؤدي إلى انهيار فوري!</b></p>"
 
 #: compositor_x11.cpp:576
 #, kde-format
@@ -79,7 +78,8 @@ msgstr "تشكيلة أي سي سي \"%1\" غير قابلة للاستخدام 
 #, kde-format
 msgid ""
 "ICC profile \"%1\" has unsupported connection space, only XYZ is supported"
-msgstr "تشكيلة أي سي سي \"%1\" يحتوي على مساحة اتصال غير مدعومة، يقبل XYZ فقط"
+msgstr ""
+"تشكيلة أي سي سي \"%1\" يحتوي على مساحة اتصال غير مدعومة، يتم دعم XYZ فقط"
 
 #: core/iccprofile.cpp:264
 #, kde-format
@@ -1046,7 +1046,7 @@ msgstr "لا يوجد مركب أوبن‌جي‌إل يعمل"
 #: debug_console.ui:129
 #, kde-format
 msgid "OpenGL (ES) driver information"
-msgstr "معلومات مُشغل أوبن‌جي‌إل (ES)"
+msgstr "معلومات معرف أوبن‌جي‌إل (ES)"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: debug_console.ui:135
@@ -1317,7 +1317,6 @@ msgstr ""
 #: plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
-#: plugins/showpaint/showpaint_config.cpp:32
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
@@ -1420,7 +1419,7 @@ msgstr "نوافذك: مدير نوافذ آخر يعمل (جرّب استخدا
 #: main_x11.cpp:431
 #, kde-format
 msgid "Replace already-running ICCCM2.0-compliant window manager"
-msgstr "استبدل مدير النّوافذ المتوافق مع ICCCM2.0 المشغّل فعلًا"
+msgstr "استبدل مدير النّوافذ المتوافق مع ICCCM2.0 المشغّل بالفعل"
 
 #: main_x11.cpp:438
 #, kde-format
@@ -1750,7 +1749,7 @@ msgstr "مدّة الحركة:"
 #, kde-format
 msgctxt "Duration of rotation"
 msgid "Default"
-msgstr "المبدئي"
+msgstr "الافتراضية"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupSize)
 #: plugins/magnifier/magnifier_config.ui:17
@@ -2193,11 +2192,6 @@ msgctxt "@label"
 msgid "Maximum FPS"
 msgstr "أقصى عدد الإطارات في الثانية"
 
-#: plugins/showpaint/showpaint.cpp:42 plugins/showpaint/showpaint_config.cpp:37
-#, kde-format
-msgid "Toggle Show Paint"
-msgstr "بدّل رسم العرض"
-
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_Gaps)
 #: plugins/slide/slide_config.ui:17
 #, kde-format
@@ -2226,7 +2220,7 @@ msgstr "تمرير خلفية سطح المكتب"
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:50
 #, kde-format
 msgid "Toggle Thumbnail for Current Window"
-msgstr "بدّل بين مصغّرات النافذة الحالية ودونها"
+msgstr "بدّل بين مصغّرات النافذة الحالية وبدونها"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/thumbnailaside/thumbnailaside_config.ui:23
@@ -2450,7 +2444,7 @@ msgstr "تجاهل"
 #: plugins/videowall/package/contents/ui/config.ui:73
 #, kde-format
 msgid "None"
-msgstr "لا شيء"
+msgstr "بدون"
 
 #: plugins/windowview/kcm/windowvieweffectkcm.cpp:42
 #: plugins/windowview/windowvieweffect.cpp:48
@@ -2612,7 +2606,7 @@ msgstr "انقل لأسفل"
 #: plugins/zoom/zoom_config.ui:22 plugins/zoom/zoom_config.ui:35
 #, kde-format
 msgid "On zoom-in and zoom-out change the zoom by the defined zoom-factor."
-msgstr "عند التكبير والتصغير،غيّر التكبير بواسطة عامل التكبير المحدد."
+msgstr "عند التكبير والتصغير ، قم بتغيير التكبير بواسطة عامل التكبير المحدد."
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/zoom/zoom_config.ui:25
@@ -2752,7 +2746,7 @@ msgstr "وصف القاعدة (عتيق)"
 #: rulesettings.kcfg:16
 #, kde-format
 msgid "Delete this rule (for use in imports)"
-msgstr "احذف هذه القاعدة (لتستخدم في الاستيراد)"
+msgstr "إحذف هذه القاعدة (لتستخدم في الإستيراد)"
 
 #. i18n: ectx: label, entry (enabled), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:20
@@ -3076,13 +3070,13 @@ msgstr "نوع القاعدة لملء الشّاشة"
 #: rulesettings.kcfg:297
 #, kde-format
 msgid "No titlebar and frame"
-msgstr "بلا شريط العنوان والإطار"
+msgstr "بدون شريط العنوان والإطار"
 
 #. i18n: ectx: label, entry (noborderrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:301
 #, kde-format
 msgid "No titlebar rule type"
-msgstr "نوع القاعدة لبلا شريط العنوان"
+msgstr "نوع القاعدة لبدون شريط العنوان"
 
 #. i18n: ectx: label, entry (decocolor), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:308
@@ -3160,37 +3154,37 @@ msgstr "نوع القاعدة للقابلة للإغلاق"
 #: rulesettings.kcfg:365
 #, kde-format
 msgid "Autogroup with identical"
-msgstr "الجمع الآليّ للمتطابقات"
+msgstr "الجمع التلقائي للمتطابقات"
 
 #. i18n: ectx: label, entry (autogrouprule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:369
 #, kde-format
 msgid "Autogroup with identical rule type"
-msgstr "نوع القاعدة للجمع الآليّ للمتطابقات"
+msgstr "نوع القاعدة للجمع التلقائي للمتطابقات"
 
 #. i18n: ectx: label, entry (autogroupfg), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:374
 #, kde-format
 msgid "Autogroup in foreground"
-msgstr "الجمع الآليّ في المقدمة"
+msgstr "الجمع التلقائي في المقدمة"
 
 #. i18n: ectx: label, entry (autogroupfgrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:378
 #, kde-format
 msgid "Autogroup in foreground rule type"
-msgstr "نوع القاعدة للجمع الآليّ في المقدمة"
+msgstr "نوع القاعدة للجمع التلقائي في المقدمة"
 
 #. i18n: ectx: label, entry (autogroupid), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:383
 #, kde-format
 msgid "Autogroup by ID"
-msgstr "الجمع الآليّ بالمعرف"
+msgstr "الجمع التلقائي بالمعرف"
 
 #. i18n: ectx: label, entry (autogroupidrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:386
 #, kde-format
 msgid "Autogroup by ID rule type"
-msgstr "نوع القاعدة للجمع الآليّ بالمعرف"
+msgstr "نوع القاعدة للجمع التلقائي بالمعرف"
 
 #. i18n: ectx: label, entry (strictgeometry), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:391
@@ -3388,7 +3382,7 @@ msgid ""
 "keyboard shortcut."
 msgstr ""
 "لقد اخترت إظهار نافذة بلا حدّ.\n"
-"بلا حدود لن تستطيع تمكين الحدّ مجدّدًا باستخدام الفأرة: استخدم قائمة عمليّات "
+"بدون الحدود لن تستطيع تمكين الحدّ مجدّدًا باستخدام الفأرة: استخدم قائمة عمليّات "
 "النّافذة بدل ذلك، لتنشيطها استخدم اختصار لوحة المفاتيح %1."
 
 #: useractions.cpp:169
@@ -3437,7 +3431,7 @@ msgstr "&ظلّل"
 #: useractions.cpp:250
 #, kde-format
 msgid "&No Titlebar and Frame"
-msgstr "دون &شريط العنوان والإطار"
+msgstr "بدون &شريط العنوان والإطار"
 
 #: useractions.cpp:258
 #, kde-format
@@ -3549,7 +3543,7 @@ msgstr "&كلّ الأنشطة"
 #, kde-format
 msgctxt "'%1' is a keyboard shortcut like 'ctrl+w'"
 msgid "<b>%1</b> is already in use"
-msgstr "<b>%1</b> مستخدم فعلًا"
+msgstr "<b>%1</b> مستخدم بالفعل"
 
 #: useractions.cpp:831
 #, kde-format
@@ -3983,7 +3977,7 @@ msgctxt "Application is not responding, appended to window title"
 msgid "(Not Responding)"
 msgstr "(لا يستجيب)"
 
-#: workspace.cpp:1631
+#: workspace.cpp:1693
 #, kde-format
 msgctxt "Introductory text shown in the support information."
 msgid ""
@@ -3998,10 +3992,10 @@ msgid ""
 "like https://paste.kde.org instead of pasting into support threads.\n"
 msgstr ""
 "discussمعلومات دعم كوين: \n"
-"يجب استخدام المعلومات التالية عند طلب الدعم، على سبيل المثال في https://"
+"يجب استخدام المعلومات التالية عند طلب الدعم ، على سبيل المثال في https://"
 "discuss.kde.org. \n"
-"إنها توفر معلومات حول النسخة المشغلة حاليًا، والخيارات المستخدمة، \n"
-"وما هو مُشغل OpenGL والتأثيرات قيد التشغيل. \n"
+"إنها توفر معلومات حول النسخة المشغلة حاليًا ، والخيارات المستخدمة، \n"
+"وما هو معرف OpenGL والتأثيرات قيد التشغيل. \n"
 "الرجاء نشر المعلومات المتوفرة أسفل هذا الملحق التمهيدي إلى خدمة حاوية "
 "اللصق \n"
 "مثل https://paste.kde.org بدلاً من اللصق في موضوع الدعم. \n"
@@ -4010,6 +4004,9 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "إنهار ويلاند_اكس"
+
+#~ msgid "Toggle Show Paint"
+#~ msgstr "بدّل رسم العرض"
 
 #~ msgctxt "@item:inmenu never hide cursor on inactivity"
 #~ msgid "Never"

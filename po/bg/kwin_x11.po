@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-08 02:39+0000\n"
+"POT-Creation-Date: 2025-05-23 00:43+0000\n"
 "PO-Revision-Date: 2025-01-31 11:31+0100\n"
 "Last-Translator: Mincho Kondarev <mkondarev@yahoo.de>\n"
 "Language-Team: Bulgarian <kde-i18n-doc@kde.org>\n"
@@ -1330,7 +1330,6 @@ msgstr ""
 #: plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
-#: plugins/showpaint/showpaint_config.cpp:32
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
@@ -2206,11 +2205,6 @@ msgstr "Текущи FPS"
 msgctxt "@label"
 msgid "Maximum FPS"
 msgstr "Максимални FPS"
-
-#: plugins/showpaint/showpaint.cpp:42 plugins/showpaint/showpaint_config.cpp:37
-#, kde-format
-msgid "Toggle Show Paint"
-msgstr "Превключване на показване на цвета"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_Gaps)
 #: plugins/slide/slide_config.ui:17
@@ -4006,7 +4000,7 @@ msgctxt "Application is not responding, appended to window title"
 msgid "(Not Responding)"
 msgstr "(Не отговаря)"
 
-#: workspace.cpp:1631
+#: workspace.cpp:1693
 #, kde-format
 msgctxt "Introductory text shown in the support information."
 msgid ""
@@ -4034,3 +4028,303 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "Xwayland се срина"
+
+#~ msgid "Toggle Show Paint"
+#~ msgstr "Превключване на показване на цвета"
+
+#~ msgctxt "@item:inmenu never hide cursor on inactivity"
+#~ msgid "Never"
+#~ msgstr "Никога"
+
+#~ msgid "%1 second"
+#~ msgid_plural "%1 seconds"
+#~ msgstr[0] "%1 секунда"
+#~ msgstr[1] "%1 секунди"
+
+#~ msgid "Hide cursor on inactivity:"
+#~ msgstr "Скриване показалеца на мишката при неактивност:"
+
+#~ msgid "Hide cursor on typing"
+#~ msgstr "Скриване показалеца на мишката при писане"
+
+#~ msgid "Failed to start main PipeWire loop"
+#~ msgstr "Неуспешно стартиране на основния цикъл PipeWire"
+
+#~ msgid "Failed to create PipeWire context"
+#~ msgstr "Неуспешно създаване на PipeWire контекст"
+
+#~ msgid "Failed to connect PipeWire context"
+#~ msgstr "Неуспешно свързване на PipeWire контекст"
+
+#~ msgid "Could not find window id %1"
+#~ msgstr "Неуспешно намиране на  идентификатор на прозорец %1"
+
+#~ msgid "Could not find output"
+#~ msgstr "Не може да намери изход"
+
+#~ msgid "Invalid region"
+#~ msgstr "Невалиден регион"
+
+#~ msgid "OpenGL compositing is required for screencasting"
+#~ msgstr "Изисква се OpenGL композитор за предаването на екрана"
+
+#~ msgid "Failed to create PipeWire stream"
+#~ msgstr "Неуспешно създаване на PipeWire поток"
+
+#~ msgctxt "@label"
+#~ msgid "Compositing"
+#~ msgstr "Композиране"
+
+#~ msgid "Touchpad"
+#~ msgstr "Тъчпад"
+
+#~ msgid "Press right control to ungrab pointer"
+#~ msgstr "Натиснете десния бутон за управление, за да освободите показалеца"
+
+#~ msgid "Press right control key to grab pointer"
+#~ msgstr "Натиснете десния клавиш за управление, за да прихванете показалеца"
+
+#~ msgctxt ""
+#~ "Title of nested KWin Wayland with Wayland socket identifier as argument"
+#~ msgid "KDE Wayland Compositor %1"
+#~ msgstr "KDE Wayland Compositor %1"
+
+#~ msgid "- Output disabled"
+#~ msgstr "- Изходът е изключен"
+
+#~ msgid "- Output dimmed"
+#~ msgstr "- Изходът е затъмнен"
+
+#~ msgid "Press right control to ungrab input"
+#~ msgstr ""
+#~ "Натиснете десния бутон за управление, за да освободите входните устройства"
+
+#~ msgid "Press right control key to grab input"
+#~ msgstr ""
+#~ "Натиснете десния клавиш за управление, за да прихванете входните "
+#~ "устройства"
+
+#~ msgid "KDE Wayland Compositor"
+#~ msgstr "KDE Wayland Compositor"
+
+#~ msgid "The Caps Lock key has been activated"
+#~ msgstr "Клавишът Caps Lock е активиран"
+
+#~ msgid "The Caps Lock key is now inactive"
+#~ msgstr "Клавишът Caps Lock сега е неактивен"
+
+#~ msgid "The Num Lock key has been activated"
+#~ msgstr "Клавишът Num Lock е активиран"
+
+#~ msgid "The Num Lock key is now inactive"
+#~ msgstr "Клавишът Num Lock сега е неактивен"
+
+#~ msgid "The Scroll Lock key has been activated"
+#~ msgstr "Клавишът Scroll Lock е активиран"
+
+#~ msgid "The Scroll Lock key is now inactive"
+#~ msgstr "Клавишът Scroll Lock сега е неактивен"
+
+#~ msgid "The Shift key is now active."
+#~ msgstr "Клавишът Shift е активен."
+
+#~ msgid "The Shift key is now inactive."
+#~ msgstr "Клавишът Shift е неактивен."
+
+#~ msgid "The Control key is now active."
+#~ msgstr "Клавишът Ctrl е активен."
+
+#~ msgid "The Control key is now inactive."
+#~ msgstr "Клавишът Ctrl е неактивен."
+
+#~ msgid "The Alt key is now active."
+#~ msgstr "Клавишът Alt е активен."
+
+#~ msgid "The Alt key is now inactive."
+#~ msgstr "Клавишът Alt е неактивен."
+
+#~ msgid "The Meta key is now active."
+#~ msgstr "Клавишът Meta е активен."
+
+#~ msgid "The Meta key is now inactive."
+#~ msgstr "Клавишът Meta е неактивен."
+
+#~ msgid ""
+#~ "The Shift key has been locked and is now active for all of the following "
+#~ "keypresses."
+#~ msgstr "Клавишът Shift е натиснат и е активен за всички последващи клавиши."
+
+#~ msgid ""
+#~ "The Control key has been locked and is now active for all of the "
+#~ "following keypresses."
+#~ msgstr "Клавишът Ctrl е натиснат и е активен за всички последващи клавиши."
+
+#~ msgid ""
+#~ "The Alt key has been locked and is now active for all of the following "
+#~ "keypresses."
+#~ msgstr "Клавишът Alt е натиснат и е активен за всички последващи клавиши."
+
+#~ msgid ""
+#~ "The Meta key has been locked and is now active for all of the following "
+#~ "keypresses."
+#~ msgstr "Клавишът Meta е натиснат и е активен за всички последващи клавиши."
+
+#~ msgid ""
+#~ "The AltGr key has been locked and is now active for all of the following "
+#~ "keypresses."
+#~ msgstr "Клавишът AltGr е заключен и е активен за всички последващи клавиши."
+
+#~ msgid "Start a rootless Xwayland server."
+#~ msgstr "Стартиране на неизискващ root сървър Xwayland."
+
+#~ msgid ""
+#~ "Name of the Wayland socket to listen on. If not set \"wayland-0\" is used."
+#~ msgstr ""
+#~ "Име на сокета на Wayland за слушане. Ако не е зададено, се използва "
+#~ "\"wayland-0\"."
+
+#~ msgid "The X11 Display to use in windowed mode on platform X11."
+#~ msgstr "X11 дисплей за използване в прозоречен режим на платформа X11."
+
+#~ msgid "The Wayland Display to use in windowed mode on platform Wayland."
+#~ msgstr ""
+#~ "Wayland дисплей за използване в прозоречен режим на платформата Wayland."
+
+#~ msgid "Render to a virtual framebuffer."
+#~ msgstr "Предаване към виртуален framebuffer."
+
+#~ msgid "The width for windowed mode. Default width is 1024."
+#~ msgstr "Ширината за прозоречен режим. Ширината по подразбиране е 1024."
+
+#~ msgid "The height for windowed mode. Default height is 768."
+#~ msgstr "Височината за прозоречен режим. Височината по подразбиране е 768."
+
+#~ msgid "The scale for windowed mode. Default value is 1."
+#~ msgstr "Скала за прозоречен режим. Стойността по подразбиране е 1."
+
+#~ msgid ""
+#~ "The number of windows to open as outputs in windowed mode. Default value "
+#~ "is 1"
+#~ msgstr ""
+#~ "Броят на прозорците, които ще се отворят като изходи в прозоречен режим. "
+#~ "Стойността по подразбиране е 1"
+
+#~ msgid ""
+#~ "Wayland socket to use for incoming connections. This can be combined with "
+#~ "--socket to name the socket"
+#~ msgstr "Сокет на Wayland за входящи връзки"
+
+#~ msgid ""
+#~ "XWayland socket to use for Xwayland's incoming connections. This can be "
+#~ "set multiple times"
+#~ msgstr "Сокет на XWayland за входящи връзки"
+
+#~ msgid "Name of the xwayland display that has been pre-set up"
+#~ msgstr "Име на xwayland дисплей, който е бил предварително настроен"
+
+#~ msgid "Name of the xauthority file "
+#~ msgstr "Име на xauthority файл "
+
+#~ msgid "Exits this instance so it can be restarted by kwin_wayland_wrapper."
+#~ msgstr ""
+#~ "Напуска тази инстанция, така че да може да бъде рестартирана от "
+#~ "kwin_wayland_wrapper."
+
+#~ msgid "Render through drm node."
+#~ msgstr "Предаване през drm възел."
+
+#~ msgid ""
+#~ "Extract locale information from locale1 rather than the user's "
+#~ "configuration"
+#~ msgstr ""
+#~ "Извличане на информация за локалите от locale1, а не от конфигурацията на "
+#~ "потребителя"
+
+#~ msgid "Input method that KWin starts."
+#~ msgstr "Метод на въвеждане, който KWin стартира."
+
+#~ msgid "Starts the session in locked mode."
+#~ msgstr "Стартира сесията в заключен режим."
+
+#~ msgid "Starts the session without lock screen support."
+#~ msgstr "Стартира сесията без поддръжка на заключен екран."
+
+#~ msgid "Starts the session without global shortcuts support."
+#~ msgstr "Стартира сесията без поддръжка на глобални клавишни комбинации."
+
+#~ msgid ""
+#~ "Exit after the session application, which is started by KWin, closed."
+#~ msgstr ""
+#~ "Излизане след затваряне на приложението за сесия, което се стартира от "
+#~ "KWin."
+
+#~ msgid "Applications to start once Wayland and Xwayland server are started"
+#~ msgstr ""
+#~ "Приложенията да стартират след стартиране на сървъра на Wayland и Xwayland"
+
+#~ msgctxt "@action shortcut"
+#~ msgid "Disable Active Input Capture"
+#~ msgstr "Деактивиране на улавянето на активен вход"
+
+#~ msgctxt "@item:inlistbox Button size:"
+#~ msgid "Tiny"
+#~ msgstr "Малък"
+
+#~ msgctxt "@item:inlistbox Button size:"
+#~ msgid "Normal"
+#~ msgstr "Нормален"
+
+#~ msgctxt "@item:inlistbox Button size:"
+#~ msgid "Large"
+#~ msgstr "Голям"
+
+#~ msgctxt "@item:inlistbox Button size:"
+#~ msgid "Very Large"
+#~ msgstr "Много голям"
+
+#~ msgctxt "@item:inlistbox Button size:"
+#~ msgid "Huge"
+#~ msgstr "Огромен"
+
+#~ msgctxt "@item:inlistbox Button size:"
+#~ msgid "Very Huge"
+#~ msgstr "Много огромен"
+
+#~ msgctxt "@item:inlistbox Button size:"
+#~ msgid "Oversized"
+#~ msgstr "Свръх огромен"
+
+#~ msgid "Button size:"
+#~ msgstr "Размер на бутоните:"
+
+#~ msgid "Config Dialog"
+#~ msgstr "Прозорец за настройки"
+
+#~ msgid "Title &Alignment"
+#~ msgstr "Подравняване на &заглавието"
+
+#~ msgid "Center"
+#~ msgstr "Центрирано"
+
+#~ msgid ""
+#~ "Check this option if the window border should be painted in the titlebar "
+#~ "color. Otherwise it will be painted in the background color."
+#~ msgstr ""
+#~ "Изчертаване рамките на прозореца с цветовете на заглавието. Ако отметката "
+#~ "не е включена, се използват цветовете за фона."
+
+#~ msgid "Colored window border"
+#~ msgstr "Цветна рамка на прозорците"
+
+#~ msgid ""
+#~ "Check this option if you want the buttons to fade in when the mouse "
+#~ "pointer hovers over them and fade out again when it moves away."
+#~ msgstr ""
+#~ "Открояване на бутоните, когато показалецът на мишката бъде позициониран "
+#~ "над тях."
+
+#~ msgid "Animate buttons"
+#~ msgstr "Анимация за бутоните"
+
+#~ msgid "EventType"
+#~ msgstr "Тип събитие"

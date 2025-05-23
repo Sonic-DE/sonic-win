@@ -6,7 +6,7 @@
 # Henrique Pinto <stampede@coltec.ufmg.br>, 2003.
 # Lisiane Sztoltz Teixeira <lisiane@conectiva.com.br>, 2004.
 # Lisiane Sztoltz Teixeira <lisiane@kdemail.net>, 2004, 2005.
-# SPDX-FileCopyrightText: 2004, 2012, 2025 Marcus Gama <marcus.gama@gmail.com>
+# Marcus Gama <marcus.gama@gmail.com>, 2004, 2012.
 # Diniz Bortolotto <diniz.bortolotto@gmail.com>, 2007, 2008.
 # doutor.zero <doutor.zero@gmail.com>, 2007.
 # Fernando Boaglio <boaglio@kde.org>, 2008.
@@ -19,16 +19,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-08 02:39+0000\n"
-"PO-Revision-Date: 2025-09-14 08:14-0300\n"
-"Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
+"POT-Creation-Date: 2025-05-23 00:43+0000\n"
+"PO-Revision-Date: 2025-02-27 20:16-0300\n"
+"Last-Translator: Guilherme Marçal Silva <guimarcalsilva@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 24.12.2\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1347,7 +1347,6 @@ msgstr ""
 #: plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
-#: plugins/showpaint/showpaint_config.cpp:32
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
@@ -1677,7 +1676,7 @@ msgstr "maximizar"
 #, kde-format
 msgctxt "Note this is a KRunner keyword"
 msgid "fullscreen"
-msgstr "tela cheia"
+msgstr "tela inteira"
 
 #: plugins/krunner-integration/windowsrunnerinterface.cpp:62
 #, kde-format
@@ -1745,7 +1744,7 @@ msgstr "Maximizar/restaurar a janela em execução em %1"
 #: plugins/krunner-integration/windowsrunnerinterface.cpp:308
 #, kde-format
 msgid "Toggle fullscreen for running window on %1"
-msgstr "Alterar tela cheia para a janela em execução em %1"
+msgstr "Alterar tela inteira para a janela em execução em %1"
 
 #: plugins/krunner-integration/windowsrunnerinterface.cpp:311
 #, kde-format
@@ -1771,7 +1770,7 @@ msgstr "Ativar a janela em execução em %1"
 #: plugins/login/package/contents/ui/config.ui:17
 #, kde-format
 msgid "Fade to black (fullscreen splash screens only)"
-msgstr "Mudar para preto (apenas nas telas iniciais em tela cheia)"
+msgstr "Mudar para preto (apenas nas telas iniciais em tela inteira)"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/magiclamp/magiclamp_config.ui:17
@@ -2169,7 +2168,7 @@ msgstr "Fechar janela"
 #: plugins/scale/package/contents/ui/config.ui:46
 #, kde-format
 msgid "Window open scale:"
-msgstr "Escala de abertura da janela:"
+msgstr "Escala de abertura de janela:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_OutScale)
 #: plugins/scale/package/contents/ui/config.ui:53
@@ -2224,11 +2223,6 @@ msgstr "FPS atual"
 msgctxt "@label"
 msgid "Maximum FPS"
 msgstr "FPS máximo"
-
-#: plugins/showpaint/showpaint.cpp:42 plugins/showpaint/showpaint_config.cpp:37
-#, kde-format
-msgid "Toggle Show Paint"
-msgstr "Alternar mostrar pintura"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_Gaps)
 #: plugins/slide/slide_config.ui:17
@@ -3099,13 +3093,13 @@ msgstr "Tipo de regra do manter abaixo"
 #: rulesettings.kcfg:286
 #, kde-format
 msgid "Fullscreen"
-msgstr "Tela cheia"
+msgstr "Tela inteira"
 
 #. i18n: ectx: label, entry (fullscreenrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:290
 #, kde-format
 msgid "Fullscreen rule type"
-msgstr "Tipo de regra de tela cheia"
+msgstr "Tipo de regra de tela inteira"
 
 #. i18n: ectx: label, entry (noborder), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:297
@@ -3436,7 +3430,7 @@ msgid ""
 "mode off you will not be able to disable it again using the mouse: use the "
 "window operations menu instead, activated using the %1 keyboard shortcut."
 msgstr ""
-"Você selecionou mostrar uma janela em modo em tela cheia.\n"
+"Você selecionou mostrar uma janela em modo em tela inteira.\n"
 "Se o aplicativo sozinho não possui uma opção para desabilitar este modo, "
 "você não será capaz de desabilitar novamente, usando o mouse. Em vez disto, "
 "use o menu de operações de janela, ativado utilizando o atalho de teclado %1."
@@ -3464,7 +3458,7 @@ msgstr "Manter a&baixo das outras"
 #: useractions.cpp:238
 #, kde-format
 msgid "&Fullscreen"
-msgstr "&Tela cheia"
+msgstr "&Tela inteira"
 
 #: useractions.cpp:244
 #, kde-format
@@ -3657,7 +3651,7 @@ msgstr "Alternar entre elevar/diminuir janela"
 #: useractions.cpp:935
 #, kde-format
 msgid "Make Window Fullscreen"
-msgstr "Janela em tela cheia"
+msgstr "Janela em tela inteira"
 
 #: useractions.cpp:937
 #, kde-format
@@ -4022,7 +4016,7 @@ msgctxt "Application is not responding, appended to window title"
 msgid "(Not Responding)"
 msgstr "(não está respondendo)"
 
-#: workspace.cpp:1631
+#: workspace.cpp:1693
 #, kde-format
 msgctxt "Introductory text shown in the support information."
 msgid ""
@@ -4051,6 +4045,9 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "O Xwayland falhou"
+
+#~ msgid "Toggle Show Paint"
+#~ msgstr "Alternar mostrar pintura"
 
 #~ msgctxt "@item:inmenu never hide cursor on inactivity"
 #~ msgid "Never"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-07-08 02:39+0000\n"
+"POT-Creation-Date: 2025-05-23 00:43+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-stable/messages/kwin-x11/kwin_x11.pot\n"
-"X-Crowdin-File-ID: 57564\n"
+"X-Crowdin-File: /kf6-trunk/messages/kwin-x11/kwin_x11.pot\n"
+"X-Crowdin-File-ID: 57292\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1317,7 +1317,6 @@ msgstr ""
 #: plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
-#: plugins/showpaint/showpaint_config.cpp:32
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
@@ -2188,11 +2187,6 @@ msgctxt "@label"
 msgid "Maximum FPS"
 msgstr "最大帧速率"
 
-#: plugins/showpaint/showpaint.cpp:42 plugins/showpaint/showpaint_config.cpp:37
-#, kde-format
-msgid "Toggle Show Paint"
-msgstr "开始/停止高亮显示"
-
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_Gaps)
 #: plugins/slide/slide_config.ui:17
 #, kde-format
@@ -2480,7 +2474,7 @@ msgstr "忽略最小化窗口(&M)"
 #: plugins/windowview/qml/main.qml:107
 #, kde-format
 msgid "No Matches"
-msgstr "没有匹配的内容"
+msgstr "无匹配项"
 
 #: plugins/windowview/qml/main.qml:107
 #, kde-format
@@ -3977,7 +3971,7 @@ msgctxt "Application is not responding, appended to window title"
 msgid "(Not Responding)"
 msgstr "(没有响应)"
 
-#: workspace.cpp:1631
+#: workspace.cpp:1693
 #, kde-format
 msgctxt "Introductory text shown in the support information."
 msgid ""
@@ -4002,3 +3996,6 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "Xwayland 已崩溃"
+
+#~ msgid "Toggle Show Paint"
+#~ msgstr "开始/停止高亮显示"
