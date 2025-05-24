@@ -4021,6 +4021,3 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "XWayland krasjet"
-
-#~ msgid "Toggle Show Paint"
-#~ msgstr "Vis/skjul opptegning"

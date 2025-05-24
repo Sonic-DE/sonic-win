@@ -3996,6 +3996,3 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "Xwayland 已崩溃"
-
-#~ msgid "Toggle Show Paint"
-#~ msgstr "开始/停止高亮显示"
