@@ -31,6 +31,7 @@ Dependencies:
     'plasma/plasma-activities': '@same'
     'plasma/kdecoration': '@same'
     'plasma/kglobalacceld': '@same'
+    'plasma/knighttime': '@same'
     'plasma/kscreenlocker': '@same'
     'plasma/kwayland': '@same'
     'third-party/wayland': '@latest'
