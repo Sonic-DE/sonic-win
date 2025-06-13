@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-23 00:43+0000\n"
+"POT-Creation-Date: 2025-06-13 00:44+0000\n"
 "PO-Revision-Date: 2008-07-08 18:58+0530\n"
 "Last-Translator: \n"
 "Language-Team: SMC <smc.org.in>\n"
@@ -1302,16 +1302,13 @@ msgid ""
 "Escape or right click to cancel."
 msgstr ""
 
-#: main.cpp:185 plugins/invert/invert_config.cpp:35
-#: plugins/magnifier/magnifier_config.cpp:46
-#: plugins/mouseclick/mouseclick_config.cpp:40
+#: main.cpp:185 plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
 #: plugins/windowview/kcm/windowvieweffectkcm.cpp:36
-#: plugins/zoom/zoom_config.cpp:48
 #, kde-format
 msgid "KWin"
 msgstr "ക്വിന്‍"
@@ -1575,12 +1572,12 @@ msgstr ""
 msgid "Window Close Animation"
 msgstr "ജാലക പ്രക്രിയകള്‍ക്കുള്ള മെനു"
 
-#: plugins/invert/invert.cpp:43 plugins/invert/invert_config.cpp:38
+#: plugins/invert/invert.cpp:43
 #, kde-format
 msgid "Toggle Invert Effect"
 msgstr "മറിക്കല്‍ പ്രഭാവം ടോഗിള്‍ ചെയ്യുക"
 
-#: plugins/invert/invert.cpp:50 plugins/invert/invert_config.cpp:44
+#: plugins/invert/invert.cpp:50
 #, kde-format
 msgid "Toggle Invert Effect on Window"
 msgstr "ജാലകത്തില്‍ മറിക്കല്‍ പ്രഭാവം ടോഗിള്‍ ചെയ്യുക"
@@ -1746,32 +1743,6 @@ msgstr "&ആനിമേഷന്‍ (സജീവമാക്കല്‍) ദ�
 msgctxt "Duration of rotation"
 msgid "Default"
 msgstr "സഹജമായ"
-
-#. i18n: ectx: property (title), widget (QGroupBox, groupSize)
-#: plugins/magnifier/magnifier_config.ui:17
-#, kde-format
-msgid "Size"
-msgstr "വലിപ്പം"
-
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: plugins/magnifier/magnifier_config.ui:23
-#, kde-format
-msgid "&Width:"
-msgstr "&വീതി:"
-
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_Width)
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_Height)
-#: plugins/magnifier/magnifier_config.ui:42
-#: plugins/magnifier/magnifier_config.ui:74
-#, kde-format
-msgid " px"
-msgstr " px"
-
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: plugins/magnifier/magnifier_config.ui:55
-#, fuzzy, kde-format
-msgid "&Height:"
-msgstr "മുകളില്‍-വലതു്"
 
 #: plugins/mouseclick/mouseclick.cpp:39
 #: plugins/mouseclick/mouseclick_config.cpp:43
@@ -2575,148 +2546,15 @@ msgstr ""
 msgid "Move Zoomed Area Downwards"
 msgstr ""
 
-#: plugins/zoom/zoom.cpp:91 plugins/zoom/zoom_config.cpp:98
+#: plugins/zoom/zoom.cpp:91
 #, kde-format
 msgid "Move Mouse to Focus"
 msgstr ""
 
-#: plugins/zoom/zoom.cpp:98 plugins/zoom/zoom_config.cpp:105
+#: plugins/zoom/zoom.cpp:98
 #, fuzzy, kde-format
 msgid "Move Mouse to Center"
 msgstr "ജാലകം നീക്കുക"
-
-#: plugins/zoom/zoom_config.cpp:70
-#, fuzzy, kde-format
-msgid "Move Left"
-msgstr "ഇടതു്"
-
-#: plugins/zoom/zoom_config.cpp:77
-#, fuzzy, kde-format
-msgid "Move Right"
-msgstr "വലതു്"
-
-#: plugins/zoom/zoom_config.cpp:84
-#, fuzzy, kde-format
-msgid "Move Up"
-msgstr "&നീക്കുക"
-
-#: plugins/zoom/zoom_config.cpp:91
-#, fuzzy, kde-format
-msgid "Move Down"
-msgstr "ജാലകം നീക്കുക"
-
-#. i18n: ectx: property (whatsThis), widget (QLabel, label)
-#. i18n: ectx: property (whatsThis), widget (QDoubleSpinBox, kcfg_ZoomFactor)
-#: plugins/zoom/zoom_config.ui:22 plugins/zoom/zoom_config.ui:35
-#, kde-format
-msgid "On zoom-in and zoom-out change the zoom by the defined zoom-factor."
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: plugins/zoom/zoom_config.ui:25
-#, fuzzy, kde-format
-msgid "Zoom factor:"
-msgstr "സൂം ചെയ്യേണ്ട (വലിപ്പം കൂട്ടേണ്ട) ദൈര്‍ഘ്യം"
-
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#: plugins/zoom/zoom_config.ui:57
-#, kde-format
-msgid "Show pixel grid at zoom level:"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: plugins/zoom/zoom_config.ui:70
-#, fuzzy, kde-format
-msgid "Mouse pointer:"
-msgstr "ജാലകം നീക്കുക"
-
-#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MousePointer)
-#: plugins/zoom/zoom_config.ui:80
-#, kde-format
-msgid "Visibility of the mouse-pointer."
-msgstr ""
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MousePointer)
-#: plugins/zoom/zoom_config.ui:84
-#, kde-format
-msgid "Scale"
-msgstr ""
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MousePointer)
-#: plugins/zoom/zoom_config.ui:89
-#, kde-format
-msgid "Keep"
-msgstr ""
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MousePointer)
-#: plugins/zoom/zoom_config.ui:94
-#, kde-format
-msgid "Hide"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QLabel, label_3)
-#: plugins/zoom/zoom_config.ui:102
-#, kde-format
-msgid "Mouse tracking:"
-msgstr ""
-
-#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MouseTracking)
-#: plugins/zoom/zoom_config.ui:112
-#, kde-format
-msgid "Track moving of the mouse."
-msgstr ""
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MouseTracking)
-#: plugins/zoom/zoom_config.ui:116
-#, kde-format
-msgid "Proportional"
-msgstr ""
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MouseTracking)
-#: plugins/zoom/zoom_config.ui:121
-#, fuzzy, kde-format
-msgid "Centered"
-msgstr "നടുക്കു്"
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MouseTracking)
-#: plugins/zoom/zoom_config.ui:126
-#, kde-format
-msgid "Push"
-msgstr ""
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MouseTracking)
-#: plugins/zoom/zoom_config.ui:131
-#, fuzzy, kde-format
-msgid "Disabled"
-msgstr "പ്രവര്‍ത്തനരഹിതമാക്കിയിരിയ്ക്കുന്നു"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_EnableFocusTracking)
-#: plugins/zoom/zoom_config.ui:142
-#, kde-format
-msgid ""
-"Enable tracking of the focused location. This needs QAccessible to be "
-"enabled per application (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\")."
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFocusTracking)
-#: plugins/zoom/zoom_config.ui:145
-#, kde-format
-msgid "Enable focus tracking"
-msgstr ""
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_EnableTextCaretTracking)
-#: plugins/zoom/zoom_config.ui:152
-#, kde-format
-msgid ""
-"Enable tracking of the text cursor. This needs QAccessible to be enabled per "
-"application (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\")."
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableTextCaretTracking)
-#: plugins/zoom/zoom_config.ui:155
-#, kde-format
-msgid "Enable text cursor tracking"
-msgstr ""
 
 #. i18n: ectx: label, entry (count), group (General)
 #: rulebooksettingsbase.kcfg:9
@@ -4017,6 +3855,51 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr ""
+
+#~ msgid "Size"
+#~ msgstr "വലിപ്പം"
+
+#~ msgid "&Width:"
+#~ msgstr "&വീതി:"
+
+#~ msgid " px"
+#~ msgstr " px"
+
+#, fuzzy
+#~ msgid "&Height:"
+#~ msgstr "മുകളില്‍-വലതു്"
+
+#, fuzzy
+#~ msgid "Move Left"
+#~ msgstr "ഇടതു്"
+
+#, fuzzy
+#~ msgid "Move Right"
+#~ msgstr "വലതു്"
+
+#, fuzzy
+#~ msgid "Move Up"
+#~ msgstr "&നീക്കുക"
+
+#, fuzzy
+#~ msgid "Move Down"
+#~ msgstr "ജാലകം നീക്കുക"
+
+#, fuzzy
+#~ msgid "Zoom factor:"
+#~ msgstr "സൂം ചെയ്യേണ്ട (വലിപ്പം കൂട്ടേണ്ട) ദൈര്‍ഘ്യം"
+
+#, fuzzy
+#~ msgid "Mouse pointer:"
+#~ msgstr "ജാലകം നീക്കുക"
+
+#, fuzzy
+#~ msgid "Centered"
+#~ msgstr "നടുക്കു്"
+
+#, fuzzy
+#~ msgid "Disabled"
+#~ msgstr "പ്രവര്‍ത്തനരഹിതമാക്കിയിരിയ്ക്കുന്നു"
 
 #, fuzzy
 #~ msgid "Toggle Show Paint"

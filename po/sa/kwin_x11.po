@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-05-23 00:43+0000\n"
+"POT-Creation-Date: 2025-06-13 00:44+0000\n"
 "PO-Revision-Date: 2025-03-02 14:47+0530\n"
 "Last-Translator: Shreekant Kalwar <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1314,16 +1314,13 @@ msgstr ""
 "वामक्लिक् अथवा प्रविष्ट्या बलात् बन्दं कर्तुं विण्डो चिनोतु ।\n"
 "पलायनं कुर्वन्तु अथवा रद्दं कर्तुं राइट् क्लिक् कुर्वन्तु।"
 
-#: main.cpp:185 plugins/invert/invert_config.cpp:35
-#: plugins/magnifier/magnifier_config.cpp:46
-#: plugins/mouseclick/mouseclick_config.cpp:40
+#: main.cpp:185 plugins/mouseclick/mouseclick_config.cpp:40
 #: plugins/mousemark/mousemark_config.cpp:43
 #: plugins/overview/kcm/overvieweffectkcm.cpp:35
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:45
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:31
 #: plugins/trackmouse/trackmouse_config.cpp:44
 #: plugins/windowview/kcm/windowvieweffectkcm.cpp:36
-#: plugins/zoom/zoom_config.cpp:48
 #, kde-format
 msgid "KWin"
 msgstr "केविन्"
@@ -1589,12 +1586,12 @@ msgstr "दूरी:"
 msgid "Window Close Animation"
 msgstr "विण्डो बन्द एनिमेशन"
 
-#: plugins/invert/invert.cpp:43 plugins/invert/invert_config.cpp:38
+#: plugins/invert/invert.cpp:43
 #, kde-format
 msgid "Toggle Invert Effect"
 msgstr "Toggle Invert Effect इति"
 
-#: plugins/invert/invert.cpp:50 plugins/invert/invert_config.cpp:44
+#: plugins/invert/invert.cpp:50
 #, kde-format
 msgid "Toggle Invert Effect on Window"
 msgstr "विण्डो इत्यत्र Invert Effect इत्येतत् Toggle कुर्वन्तु"
@@ -1753,32 +1750,6 @@ msgstr "एनिमेशन अवधिः :"
 msgctxt "Duration of rotation"
 msgid "Default"
 msgstr "मूलभूतम्‌"
-
-#. i18n: ectx: property (title), widget (QGroupBox, groupSize)
-#: plugins/magnifier/magnifier_config.ui:17
-#, kde-format
-msgid "Size"
-msgstr "आकृति"
-
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: plugins/magnifier/magnifier_config.ui:23
-#, kde-format
-msgid "&Width:"
-msgstr "&विस्तार:"
-
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_Width)
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_Height)
-#: plugins/magnifier/magnifier_config.ui:42
-#: plugins/magnifier/magnifier_config.ui:74
-#, kde-format
-msgid " px"
-msgstr " px"
-
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: plugins/magnifier/magnifier_config.ui:55
-#, kde-format
-msgid "&Height:"
-msgstr "&औनत्यम्‌:"
 
 #: plugins/mouseclick/mouseclick.cpp:39
 #: plugins/mouseclick/mouseclick_config.cpp:43
@@ -2570,152 +2541,15 @@ msgstr "जूम कृतक्षेत्रं ऊर्ध्वं चा
 msgid "Move Zoomed Area Downwards"
 msgstr "जूम कृतक्षेत्रं अधः गच्छन्तु"
 
-#: plugins/zoom/zoom.cpp:91 plugins/zoom/zoom_config.cpp:98
+#: plugins/zoom/zoom.cpp:91
 #, kde-format
 msgid "Move Mouse to Focus"
 msgstr "मूषकं फोकस प्रति चालयन्तु"
 
-#: plugins/zoom/zoom.cpp:98 plugins/zoom/zoom_config.cpp:105
+#: plugins/zoom/zoom.cpp:98
 #, kde-format
 msgid "Move Mouse to Center"
 msgstr "मूषकं केन्द्रं प्रति स्थानान्तरयन्तु"
-
-#: plugins/zoom/zoom_config.cpp:70
-#, kde-format
-msgid "Move Left"
-msgstr "वामभागे गच्छतु"
-
-#: plugins/zoom/zoom_config.cpp:77
-#, kde-format
-msgid "Move Right"
-msgstr "दक्षिणतः गच्छतु"
-
-#: plugins/zoom/zoom_config.cpp:84
-#, kde-format
-msgid "Move Up"
-msgstr "उपरि गच्छतु"
-
-#: plugins/zoom/zoom_config.cpp:91
-#, kde-format
-msgid "Move Down"
-msgstr "अधः गच्छतु"
-
-#. i18n: ectx: property (whatsThis), widget (QLabel, label)
-#. i18n: ectx: property (whatsThis), widget (QDoubleSpinBox, kcfg_ZoomFactor)
-#: plugins/zoom/zoom_config.ui:22 plugins/zoom/zoom_config.ui:35
-#, kde-format
-msgid "On zoom-in and zoom-out change the zoom by the defined zoom-factor."
-msgstr "जूम-इन् तथा जूम-आउट् इत्यत्र परिभाषितेन जूम-फैक्टर् द्वारा जूम परिवर्तनं कुर्वन्तु ।"
-
-#. i18n: ectx: property (text), widget (QLabel, label)
-#: plugins/zoom/zoom_config.ui:25
-#, kde-format
-msgid "Zoom factor:"
-msgstr "जूम कारक :"
-
-#. i18n: ectx: property (text), widget (QLabel, label_4)
-#: plugins/zoom/zoom_config.ui:57
-#, kde-format
-msgid "Show pixel grid at zoom level:"
-msgstr "जूमस्तरस्य पिक्सेलजालं दर्शयतु:"
-
-#. i18n: ectx: property (text), widget (QLabel, label_2)
-#: plugins/zoom/zoom_config.ui:70
-#, kde-format
-msgid "Mouse pointer:"
-msgstr "मूषकसूचकः :"
-
-#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MousePointer)
-#: plugins/zoom/zoom_config.ui:80
-#, kde-format
-msgid "Visibility of the mouse-pointer."
-msgstr "मूषक-सूचकस्य दृश्यता ।"
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MousePointer)
-#: plugins/zoom/zoom_config.ui:84
-#, kde-format
-msgid "Scale"
-msgstr "मापन"
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MousePointer)
-#: plugins/zoom/zoom_config.ui:89
-#, kde-format
-msgid "Keep"
-msgstr "स्थापय"
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MousePointer)
-#: plugins/zoom/zoom_config.ui:94
-#, kde-format
-msgid "Hide"
-msgstr "गोपयतु"
-
-#. i18n: ectx: property (text), widget (QLabel, label_3)
-#: plugins/zoom/zoom_config.ui:102
-#, kde-format
-msgid "Mouse tracking:"
-msgstr "मूषकस्य अनुसरणं :"
-
-#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MouseTracking)
-#: plugins/zoom/zoom_config.ui:112
-#, kde-format
-msgid "Track moving of the mouse."
-msgstr "मूषकस्य गतिं पश्यन्तु।"
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MouseTracking)
-#: plugins/zoom/zoom_config.ui:116
-#, kde-format
-msgid "Proportional"
-msgstr "आनुपातिक"
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MouseTracking)
-#: plugins/zoom/zoom_config.ui:121
-#, kde-format
-msgid "Centered"
-msgstr "केन्द्रित"
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MouseTracking)
-#: plugins/zoom/zoom_config.ui:126
-#, kde-format
-msgid "Push"
-msgstr "नोद"
-
-#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MouseTracking)
-#: plugins/zoom/zoom_config.ui:131
-#, kde-format
-msgid "Disabled"
-msgstr "अक्षमित"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_EnableFocusTracking)
-#: plugins/zoom/zoom_config.ui:142
-#, kde-format
-msgid ""
-"Enable tracking of the focused location. This needs QAccessible to be "
-"enabled per application (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\")."
-msgstr ""
-"केन्द्रितस्थानस्य अनुसरणं सक्षमं कुर्वन्तु। अस्य प्रति अनुप्रयोगं QAccessible सक्षमीकरणस्य "
-"आवश्यकता अस्ति (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\") ।"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableFocusTracking)
-#: plugins/zoom/zoom_config.ui:145
-#, kde-format
-msgid "Enable focus tracking"
-msgstr "फोकस ट्रैकिंग् सक्षमं कुर्वन्तु"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_EnableTextCaretTracking)
-#: plugins/zoom/zoom_config.ui:152
-#, kde-format
-msgid ""
-"Enable tracking of the text cursor. This needs QAccessible to be enabled per "
-"application (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\")."
-msgstr ""
-"पाठकर्सरस्य अनुसरणं सक्षमं कुर्वन्तु । अस्य प्रति अनुप्रयोगं QAccessible सक्षमीकरणस्य आवश्यकता "
-"अस्ति (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\") ।"
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_EnableTextCaretTracking)
-#: plugins/zoom/zoom_config.ui:155
-#, kde-format
-msgid "Enable text cursor tracking"
-msgstr "पाठकर्सर-निरीक्षणं सक्षमं कुर्वन्तु"
 
 #. i18n: ectx: label, entry (count), group (General)
 #: rulebooksettingsbase.kcfg:9
@@ -4001,6 +3835,92 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "Xwayland दुर्घटना अभवत्"
+
+#~ msgid "Size"
+#~ msgstr "आकृति"
+
+#~ msgid "&Width:"
+#~ msgstr "&विस्तार:"
+
+#~ msgid " px"
+#~ msgstr " px"
+
+#~ msgid "&Height:"
+#~ msgstr "&औनत्यम्‌:"
+
+#~ msgid "Move Left"
+#~ msgstr "वामभागे गच्छतु"
+
+#~ msgid "Move Right"
+#~ msgstr "दक्षिणतः गच्छतु"
+
+#~ msgid "Move Up"
+#~ msgstr "उपरि गच्छतु"
+
+#~ msgid "Move Down"
+#~ msgstr "अधः गच्छतु"
+
+#~ msgid "On zoom-in and zoom-out change the zoom by the defined zoom-factor."
+#~ msgstr "जूम-इन् तथा जूम-आउट् इत्यत्र परिभाषितेन जूम-फैक्टर् द्वारा जूम परिवर्तनं कुर्वन्तु ।"
+
+#~ msgid "Zoom factor:"
+#~ msgstr "जूम कारक :"
+
+#~ msgid "Show pixel grid at zoom level:"
+#~ msgstr "जूमस्तरस्य पिक्सेलजालं दर्शयतु:"
+
+#~ msgid "Mouse pointer:"
+#~ msgstr "मूषकसूचकः :"
+
+#~ msgid "Visibility of the mouse-pointer."
+#~ msgstr "मूषक-सूचकस्य दृश्यता ।"
+
+#~ msgid "Scale"
+#~ msgstr "मापन"
+
+#~ msgid "Keep"
+#~ msgstr "स्थापय"
+
+#~ msgid "Hide"
+#~ msgstr "गोपयतु"
+
+#~ msgid "Mouse tracking:"
+#~ msgstr "मूषकस्य अनुसरणं :"
+
+#~ msgid "Track moving of the mouse."
+#~ msgstr "मूषकस्य गतिं पश्यन्तु।"
+
+#~ msgid "Proportional"
+#~ msgstr "आनुपातिक"
+
+#~ msgid "Centered"
+#~ msgstr "केन्द्रित"
+
+#~ msgid "Push"
+#~ msgstr "नोद"
+
+#~ msgid "Disabled"
+#~ msgstr "अक्षमित"
+
+#~ msgid ""
+#~ "Enable tracking of the focused location. This needs QAccessible to be "
+#~ "enabled per application (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\")."
+#~ msgstr ""
+#~ "केन्द्रितस्थानस्य अनुसरणं सक्षमं कुर्वन्तु। अस्य प्रति अनुप्रयोगं QAccessible सक्षमीकरणस्य "
+#~ "आवश्यकता अस्ति (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\") ।"
+
+#~ msgid "Enable focus tracking"
+#~ msgstr "फोकस ट्रैकिंग् सक्षमं कुर्वन्तु"
+
+#~ msgid ""
+#~ "Enable tracking of the text cursor. This needs QAccessible to be enabled "
+#~ "per application (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\")."
+#~ msgstr ""
+#~ "पाठकर्सरस्य अनुसरणं सक्षमं कुर्वन्तु । अस्य प्रति अनुप्रयोगं QAccessible सक्षमीकरणस्य "
+#~ "आवश्यकता अस्ति (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\") ।"
+
+#~ msgid "Enable text cursor tracking"
+#~ msgstr "पाठकर्सर-निरीक्षणं सक्षमं कुर्वन्तु"
 
 #~ msgid "Toggle Show Paint"
 #~ msgstr "Toggle Show Paint इति"
