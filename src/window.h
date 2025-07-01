@@ -14,6 +14,7 @@
 #include "effect/globals.h"
 #include "options.h"
 #include "rules.h"
+#include "scene/borderradius.h"
 #include "utils/common.h"
 
 #include <functional>
@@ -608,6 +609,9 @@ public:
      * the window doesn't have a server-side decoration.
      */
     QMargins frameMargins() const;
+
+    BorderRadius borderRadius() const;
+    void setBorderRadius(const BorderRadius &radius);
 
     virtual QSizeF minSize() const;
     virtual QSizeF maxSize() const;
@@ -1485,6 +1489,7 @@ Q_SIGNALS:
     void targetScaleChanged();
     void nextTargetScaleChanged();
     void noBorderChanged();
+    void borderRadiusChanged();
 
 protected:
     Window();
@@ -1742,6 +1747,7 @@ protected:
     void startDecorationDoubleClickTimer();
     void invalidateDecorationDoubleClickTimer();
     void updateDecorationInputShape();
+    void updateDecorationBorderRadius();
 
     void setDesktopFileName(const QString &name);
     QString iconFromDesktopFile() const;
@@ -1782,6 +1788,8 @@ protected:
     bool ready_for_painting;
     bool m_hidden = false;
     bool m_hiddenByShowDesktop = false;
+
+    BorderRadius m_borderRadius;
 
     qreal m_nextTargetScale = 1;
     qreal m_targetScale = 1;

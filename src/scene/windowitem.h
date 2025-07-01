@@ -67,6 +67,7 @@ private Q_SLOTS:
     void updateShadowItem();
     void updateSurfacePosition();
     void updateSurfaceVisibility();
+    void updateSurfaceBorderRadius();
     void updatePosition();
     void updateOpacity();
     void updateStackingOrder();

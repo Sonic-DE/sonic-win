@@ -415,6 +415,19 @@ QMargins Window::frameMargins() const
     return QMargins(borderLeft(), borderTop(), borderRight(), borderBottom());
 }
 
+BorderRadius Window::borderRadius() const
+{
+    return m_borderRadius;
+}
+
+void Window::setBorderRadius(const BorderRadius &radius)
+{
+    if (m_borderRadius != radius) {
+        m_borderRadius = radius;
+        Q_EMIT borderRadiusChanged();
+    }
+}
+
 void Window::updateMouseGrab()
 {
 }
@@ -2800,9 +2813,15 @@ void Window::setDecoration(std::shared_ptr<KDecoration3::Decoration> decoration)
                 updateDecorationInputShape();
             }
         });
+        connect(decoration.get(), &KDecoration3::Decoration::borderRadiusChanged, this, [this]() {
+            if (!isDeleted()) {
+                updateDecorationBorderRadius();
+            }
+        });
     }
     m_decoration.decoration = decoration;
     updateDecorationInputShape();
+    updateDecorationBorderRadius();
     Q_EMIT decorationChanged();
 }
 
@@ -2820,6 +2839,15 @@ void Window::updateDecorationInputShape()
     const QRectF outerRect = innerRect + borders + resizeBorders;
 
     m_decoration.inputRegion = QRegion(outerRect.toAlignedRect()) - innerRect.toAlignedRect();
+}
+
+void Window::updateDecorationBorderRadius()
+{
+    if (!isDecorated()) {
+        setBorderRadius(BorderRadius());
+    } else {
+        setBorderRadius(BorderRadius::from(decoration()->borderRadius()));
+    }
 }
 
 bool Window::decorationHasAlpha() const
