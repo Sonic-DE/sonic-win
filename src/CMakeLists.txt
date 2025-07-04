@@ -175,6 +175,7 @@ target_sources(kwin PRIVATE
     scene/itemrenderer.cpp
     scene/itemrenderer_opengl.cpp
     scene/itemrenderer_qpainter.cpp
+    scene/outlinedborderitem.cpp
     scene/rootitem.cpp
     scene/scene.cpp
     scene/shadowitem.cpp
@@ -619,6 +620,7 @@ install(FILES
     scene/itemrenderer.h
     scene/itemrenderer_opengl.h
     scene/itemrenderer_qpainter.h
+    scene/outlinedborderitem.h
     scene/rootitem.h
     scene/scene.h
     scene/shadowitem.h
