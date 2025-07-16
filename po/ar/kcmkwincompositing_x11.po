@@ -2,18 +2,18 @@
 # translation of kcmkwincompositing.po to
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
+#
 # Youssef Chahibi <chahibi@gmail.com>, 2007.
 # Abdulaziz AlSharif <a.a-a.s@hotmail.com>, 2007.
-# SPDX-FileCopyrightText: 2008, 2025 zayed <zayed.alsaidi@gmail.com>
+# zayed <zayed.alsaidi@gmail.com>, 2008.
 # Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2010, 2021, 2022, 2023.
 # Abdalrahim G. Fakhouri <abdilra7eem@yahoo.com>, 2014.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwincompositing\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-12 00:43+0000\n"
-"PO-Revision-Date: 2025-08-14 11:51+0400\n"
+"PO-Revision-Date: 2023-01-14 16:47+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -22,7 +22,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Lokalize 23.08.5\n"
 
 #. i18n: ectx: property (text), widget (KMessageWidget, glCrashedWarning)
 #: compositing.ui:31
@@ -34,10 +33,11 @@ msgid ""
 "you can reset this protection but be aware that this might result in an "
 "immediate crash!"
 msgstr ""
-"أدى التركيب في OpenGL (المبدئي) إلى تعطل كوين في الماضي. \n"
-"كان هذا على الأرجح بسبب خطأ في المُشغل. \n"
-"إذا كنت تعتقد أنك رقيت في هذه الأثناء إلى مُشغل مستقر، \n"
-"فيمكنك تصفير هذه الحماية ولكن يجب أن تدرك أن هذا قد يؤدي إلى انهيار فوري!"
+"أدى التركيب في OpenGL (الافتراضي) إلى تعطل كوين في الماضي. \n"
+"كان هذا على الأرجح بسبب خطأ في المعرف. \n"
+"إذا كنت تعتقد أنك قمت في هذه الأثناء بالترقية إلى تعريف ثابت مستقر، \n"
+"فيمكنك إعادة تعيين هذه الحماية ولكن يجب أن تدرك أن هذا قد يؤدي إلى انهيار "
+"فوري!"
 
 #. i18n: ectx: property (text), widget (KMessageWidget, windowThumbnailWarning)
 #: compositing.ui:47
