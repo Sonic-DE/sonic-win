@@ -152,7 +152,13 @@ Item *WorkspaceScene::overlayItem() const
     return m_overlayItem.get();
 }
 
-static bool addCandidates(SurfaceItem *item, QList<SurfaceItem *> &candidates, ssize_t maxCount, QRegion &occluded)
+struct ClipCorner
+{
+    QRectF box;
+    BorderRadius radius;
+};
+
+static bool addCandidates(SurfaceItem *item, QList<SurfaceItem *> &candidates, ssize_t maxCount, QRegion &occluded, QStack<ClipCorner> &corners)
 {
     const QList<Item *> children = item->sortedChildItems();
     auto it = children.rbegin();
@@ -162,7 +168,7 @@ static bool addCandidates(SurfaceItem *item, QList<SurfaceItem *> &candidates, s
             break;
         }
         if (child->isVisible() && !occluded.contains(child->mapToScene(child->boundingRect()).toAlignedRect())) {
-            if (!addCandidates(static_cast<SurfaceItem *>(child), candidates, maxCount, occluded)) {
+            if (!addCandidates(static_cast<SurfaceItem *>(child), candidates, maxCount, occluded, corners)) {
                 return false;
             }
         }
@@ -174,11 +180,36 @@ static bool addCandidates(SurfaceItem *item, QList<SurfaceItem *> &candidates, s
         return true;
     }
     candidates.push_back(item);
-    occluded += item->mapToScene(item->opaque());
+
+    if (!item->borderRadius().isNull()) {
+        corners.push({
+            .box = item->rect(),
+            .radius = item->borderRadius(),
+        });
+    } else if (!corners.isEmpty()) {
+        const auto &top = corners.top();
+        corners.push({
+            .box = item->transform().inverted().mapRect(top.box.translated(-item->position())),
+            .radius = top.radius,
+        });
+    }
+    auto cleanupCorners = qScopeGuard([&corners]() {
+        if (!corners.isEmpty()) {
+            corners.pop();
+        }
+    });
+
+    QRegion opaque = item->opaque();
+    if (!corners.isEmpty()) {
+        const auto &top = corners.top();
+        opaque = top.radius.clip(opaque, top.box);
+    }
+
+    occluded += item->mapToScene(opaque);
     for (; it != children.rend(); it++) {
         Item *const child = *it;
         if (child->isVisible() && !occluded.contains(child->mapToScene(child->boundingRect()).toAlignedRect())) {
-            if (!addCandidates(static_cast<SurfaceItem *>(child), candidates, maxCount, occluded)) {
+            if (!addCandidates(static_cast<SurfaceItem *>(child), candidates, maxCount, occluded, corners)) {
                 return false;
             }
         }
@@ -194,6 +225,7 @@ QList<SurfaceItem *> WorkspaceScene::scanoutCandidates(ssize_t maxCount) const
     QList<SurfaceItem *> ret;
     if (!effects->blocksDirectScanout()) {
         QRegion occlusion;
+        QStack<ClipCorner> corners;
         for (int i = stacking_order.count() - 1; i >= 0; i--) {
             WindowItem *windowItem = stacking_order[i];
             Window *window = windowItem->window();
@@ -207,7 +239,7 @@ QList<SurfaceItem *> WorkspaceScene::scanoutCandidates(ssize_t maxCount) const
                     continue;
                 }
 
-                if (!addCandidates(surfaceItem, ret, maxCount, occlusion)) {
+                if (!addCandidates(surfaceItem, ret, maxCount, occlusion, corners)) {
                     return {};
                 }
                 if (occlusion.contains(painted_screen->geometry())) {
@@ -385,12 +417,12 @@ void WorkspaceScene::preparePaintSimpleScreen()
         if (window->opacity() == 1.0) {
             const SurfaceItem *surfaceItem = windowItem->surfaceItem();
             if (Q_LIKELY(surfaceItem)) {
-                data.opaque = surfaceItem->mapToScene(surfaceItem->opaque());
+                data.opaque = surfaceItem->mapToScene(surfaceItem->borderRadius().clip(surfaceItem->opaque(), surfaceItem->rect()));
             }
 
             const DecorationItem *decorationItem = windowItem->decorationItem();
             if (decorationItem) {
-                data.opaque += decorationItem->mapToScene(decorationItem->opaque());
+                data.opaque += decorationItem->mapToScene(decorationItem->borderRadius().clip(decorationItem->opaque(), decorationItem->rect()));
             }
         }
 

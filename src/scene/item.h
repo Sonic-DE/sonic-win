@@ -8,6 +8,7 @@
 
 #include "core/colorspace.h"
 #include "effect/globals.h"
+#include "scene/borderradius.h"
 #include "scene/itemgeometry.h"
 
 #include <QList>
@@ -122,6 +123,9 @@ public:
     bool isVisible() const;
     void setVisible(bool visible);
 
+    BorderRadius borderRadius() const;
+    void setBorderRadius(const BorderRadius &radius);
+
     QRect paintedArea(SceneDelegate *delegate, const QRectF &rect) const;
     QRegion paintedArea(SceneDelegate *delegate, const QRegion &region) const;
 
@@ -192,6 +196,7 @@ private:
     QRectF m_boundingRect;
     QPointF m_position;
     QSizeF m_size = QSize(0, 0);
+    BorderRadius m_borderRadius;
     qreal m_opacity = 1;
     int m_z = 0;
     bool m_explicitVisible = true;
