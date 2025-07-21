@@ -71,6 +71,7 @@
         "Description[ka]": "ფანჯრების რბილად გადიდება/დაპატარავება მათი ჩვენება/დამალვისას",
         "Description[ko]": "창이 보여지거나 감춰질 때 크기 조정 효과를 사용합니다",
         "Description[nl]": "Vensters kleiner en groter schalen wanneer ze worden getoond of verborgen",
+        "Description[pl]": "Okna pomniejszają się przy otwieraniu i powiększają przy zamykaniu",
         "Description[pt_BR]": "Faz com que as janelas aumentem e diminuam quando forem mostradas ou ocultadas",
         "Description[ru]": "Плавное увеличение или уменьшение окон при их появлении и скрытии",
         "Description[sl]": "Naj se okna povečajo in zmanjšajo, ko so prikazana ali skrita",
