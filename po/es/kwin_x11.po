@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: kwin_x11\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-29 00:43+0000\n"
-"PO-Revision-Date: 2025-05-18 15:06+0100\n"
+"PO-Revision-Date: 2025-07-29 13:52+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "First-Translator: Boris Wesslowski <Boris@Wesslowski.com>\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 25.04.3\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -3420,10 +3420,9 @@ msgid "<b>%1</b> is used by %2 in %3"
 msgstr "<b>%1</b> está siendo utilizado por %2 en %3"
 
 #: useractions.cpp:912
-#, fuzzy, kde-format
-#| msgid "Window role"
+#, kde-format
 msgid "Window Menu"
-msgstr "Papel de la ventana"
+msgstr "Menú ventana"
 
 #: useractions.cpp:914
 #, kde-format
@@ -3877,99 +3876,3 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "Xwayland ha fallado"
-
-#~ msgid "Window Operations Menu"
-#~ msgstr "Menú de operaciones de la ventana"
-
-#~ msgid "Size"
-#~ msgstr "Tamaño"
-
-#~ msgid "&Width:"
-#~ msgstr "Anc&hura:"
-
-#~ msgid " px"
-#~ msgstr " px"
-
-#~ msgid "&Height:"
-#~ msgstr "Al&tura:"
-
-#~ msgid "Move Left"
-#~ msgstr "Mover a la izquierda"
-
-#~ msgid "Move Right"
-#~ msgstr "Mover a la derecha"
-
-#~ msgid "Move Up"
-#~ msgstr "Mover arriba"
-
-#~ msgid "Move Down"
-#~ msgstr "Mover abajo"
-
-#~ msgid "On zoom-in and zoom-out change the zoom by the defined zoom-factor."
-#~ msgstr ""
-#~ "Al ampliar y reducir, cambiar la ampliación según el factor de ampliación "
-#~ "definido."
-
-#~ msgid "Zoom factor:"
-#~ msgstr "Factor de ampliación:"
-
-#~ msgid "Show pixel grid at zoom level:"
-#~ msgstr "Mostrar cuadrícula de píxeles en el nivel de ampliación:"
-
-#~ msgid "Mouse pointer:"
-#~ msgstr "Puntero del ratón:"
-
-#~ msgid "Visibility of the mouse-pointer."
-#~ msgstr "Visibilidad del puntero del ratón."
-
-#~ msgid "Scale"
-#~ msgstr "Escala"
-
-#~ msgid "Keep"
-#~ msgstr "Mantener"
-
-#~ msgid "Hide"
-#~ msgstr "Ocultar"
-
-#~ msgid "Mouse tracking:"
-#~ msgstr "Seguimiento del ratón:"
-
-#~ msgid "Track moving of the mouse."
-#~ msgstr "Seguir el movimiento del ratón."
-
-#~ msgid "Proportional"
-#~ msgstr "Proporcional"
-
-#~ msgid "Centered"
-#~ msgstr "Centrado"
-
-#~ msgid "Push"
-#~ msgstr "Empujar"
-
-#~ msgid "Disabled"
-#~ msgstr "Desactivado"
-
-#~ msgid ""
-#~ "Enable tracking of the focused location. This needs QAccessible to be "
-#~ "enabled per application (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\")."
-#~ msgstr ""
-#~ "Activar el seguimiento de la posición que tiene el foco. Esto necesita "
-#~ "que QAccessible esté activado por aplicación («export "
-#~ "QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1»)."
-
-#~ msgid "Enable focus tracking"
-#~ msgstr "Activar seguimiento del foco"
-
-#~ msgid ""
-#~ "Enable tracking of the text cursor. This needs QAccessible to be enabled "
-#~ "per application (\"export QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1\")."
-#~ msgstr ""
-#~ "Activar el seguimiento del cursor de texto. Esto necesita que QAccessible "
-#~ "esté activado por aplicación («export "
-#~ "QT_LINUX_ACCESSIBILITY_ALWAYS_ON=1»)."
-
-#~ msgid "Enable text cursor tracking"
-#~ msgstr "Activar seguimiento del cursor de texto"
-
-#~ msgid "Toggle Show Paint"
-#~ msgstr "Conmutar mostrar pintura"

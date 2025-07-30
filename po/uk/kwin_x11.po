@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-07-29 00:43+0000\n"
-"PO-Revision-Date: 2025-02-09 17:30+0200\n"
+"PO-Revision-Date: 2025-07-29 09:55+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3411,10 +3411,9 @@ msgid "<b>%1</b> is used by %2 in %3"
 msgstr "<b>%1</b> використовується для дії %2 у %3"
 
 #: useractions.cpp:912
-#, fuzzy, kde-format
-#| msgid "Window role"
+#, kde-format
 msgid "Window Menu"
-msgstr "Роль вікна"
+msgstr "Меню «Вікно»"
 
 #: useractions.cpp:914
 #, kde-format
