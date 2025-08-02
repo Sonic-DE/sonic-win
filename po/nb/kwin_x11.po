@@ -3856,6 +3856,3 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "XWayland krasjet"
-
-#~ msgid "Window Operations Menu"
-#~ msgstr "Meny for vindusoperasjoner"
