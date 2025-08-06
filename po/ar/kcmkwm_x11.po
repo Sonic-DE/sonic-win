@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kcmkwm\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-11 00:42+0000\n"
-"PO-Revision-Date: 2025-08-04 19:47+0400\n"
+"PO-Revision-Date: 2025-08-05 21:03+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -650,7 +650,7 @@ msgstr "&سياسة تنشيط النافذة:"
 #: focus.ui:32
 #, kde-format
 msgid "With this option you can specify how and when windows will be focused."
-msgstr "باستخدام هذا الخيار ، يمكنك تحديد كيف ومتى سيتم تركيز على النوافذ."
+msgstr "باستخدام هذا الخيار ، يمكنك تحديد كيف ومتى سيُركز على النوافذ."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, windowFocusPolicy)
 #: focus.ui:36
@@ -757,22 +757,22 @@ msgstr ""
 "style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
 "italic;\">منخفض:</span> تمكن الوقاية ؛ عندما لا تحتوي بعض النوافذ على دعم "
-"للآليّة الأساسية ولا يمكن لـ كوين أن يقرر بشكل موثوق ما إذا كان سيتم تنشيط "
-"النافذة أم لا ، فسيتم تنشيطها. قد يكون لهذا الإعداد نتائج أسوأ وأفضل من "
-"المستوى المتوسط ​​، اعتمادًا على التطبيقات.</li><li style=\" margin-top:0px; "
-"margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; "
-"text-indent:0px;\"><span style=\" font-style:italic;\">متوسط:</span> تمكن "
-"الوقاية.</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
+"للآليّة الأساسية ولا يمكن لـ كوين أن يقرر بشكل موثوق ما إذا كان ستُنشط النافذة "
+"أم لا. قد يكون لهذا الإعداد نتائج أسوأ وأفضل من المستوى المتوسط ​​، اعتمادًا "
+"على التطبيقات.</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
 "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
-"style=\" font-style:italic;\">عالي:</span>  تنشيط النوافذ الجديدة فقط إذا لم "
-"تكن هناك نافذة نشطة حاليًا أو إذا كانت تنتمي إلى التطبيق النشط حاليًا. ربما لا "
-"يكون هذا الإعداد قابلاً للاستخدام حقًا عند عدم استخدام سياسة تركيز الفأرة.</"
-"li><li style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-"
-"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
-"italic;\">متطرف:</span> يجب على المستخدم تنشيط جميع النوافذ بشكل صريح.</li></"
-"ul><p> تميز النوافذ الممنوعة من سرقة التركيز على أنها تتطلب الانتباه ، مما "
-"يعني مبدئيًا أنه سيتم تمييز إدخال شريط المهام الخاص بهم. يمكن تغيير هذا في "
-"وحدة التحكم في الإخطارات. .</p></body></html>"
+"style=\" font-style:italic;\">متوسط:</span> تمكن الوقاية.</li><li style=\" "
+"margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-"
+"block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">عالي:"
+"</span>  تنشيط النوافذ الجديدة فقط إذا لم تكن هناك نافذة نشطة حاليًا أو إذا "
+"كانت تنتمي إلى التطبيق النشط حاليًا. ربما لا يكون هذا الإعداد قابلاً للاستخدام "
+"حقًا عند عدم استخدام سياسة تركيز الفأرة.</li><li style=\" margin-top:0px; "
+"margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; "
+"text-indent:0px;\"><span style=\" font-style:italic;\">متطرف:</span> يجب على "
+"المستخدم تنشيط جميع النوافذ بشكل صريح.</li></ul><p> تميز النوافذ الممنوعة من "
+"سرقة التركيز على أنها تتطلب الانتباه ، مما يعني مبدئيًا أنه ستُميز إدخال شريط "
+"المهام الخاص بهم. يمكن تغيير هذا في وحدة التحكم في الإشعارات.</p></body></"
+"html>"
 
 #. i18n: Focus Stealing Prevention Level
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_BorderSnapZone)
@@ -859,8 +859,8 @@ msgid ""
 "This is the delay after which the window that the mouse pointer is over will "
 "automatically come to the front."
 msgstr ""
-"هذا هو التأخير الذي يتم بعده نقل أي نافذة التي يوجد فوقها مؤشر الفأرة آليّاً "
-"إلى الأمام."
+"هذا هو التأخير الذي تُنقل بعده أي نافذة التي يوجد فوقها مؤشر الفأرة آليّاً إلى "
+"الأمام."
 
 #. i18n: ectx: property (text), widget (QLabel, multiscreenBehaviorLabel)
 #: focus.ui:199
@@ -874,8 +874,7 @@ msgstr "سلوك الشاشات المتعددة:"
 msgid ""
 "When this option is enabled, focus operations are limited only to the active "
 "screen"
-msgstr ""
-"إذا تم تمكين هذا الخيار ، عمليات التركيز ستكون محدودة فقط في الشاشة النشطة"
+msgstr "إذا مُكّن هذا الخيار ، عمليات التركيز ستكون محدودة فقط في الشاشة النشطة"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SeparateScreenFocus)
 #: focus.ui:209
@@ -1128,7 +1127,7 @@ msgid ""
 "magnetic field which will make windows snap to the border when moved near it."
 msgstr ""
 "هنا يمكنك إعداد مناطق الجذب لحافة الشاشة، أو بمعنى آخر، 'قوة' الحقل "
-"الميغناطيسي التي تجعل النوافذ تلتصق بالحدود عندما يتم تحريكها جوارها."
+"المغناطيسي التي تجعل النوافذ تلتصق بالحدود عندما تُحرك بجوارها."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_BorderSnapZone)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_WindowSnapZone)
@@ -1153,7 +1152,7 @@ msgid ""
 "moved near another window."
 msgstr ""
 "هنا يمكنك إعداد مناطق الجذب للنوافذ، أو بمعنى آخر، 'قوة' الحقل المغناطيسي "
-"التي تجعل النوافذ تنجذب إلى بعضها البعض عندما يتم تحريكها بجوار نافذة أخرى."
+"التي تجعل النوافذ تنجذب إلى بعضها البعض عندما تُحرك بجوار نافذة أخرى."
 
 #. i18n: ectx: property (text), widget (QLabel, centerSnaplabel)
 #: moving.ui:84
@@ -1170,7 +1169,7 @@ msgid ""
 "when moved near it."
 msgstr ""
 "هنا يمكنك إعداد مناطق الجذب لوسط الشاشة، أو بمعنى آخر، 'قوة' الحقل "
-"المغناطيسي التي تجعل النوافذ تنجذب إلى وسط الشاشة عندما يتم تحريكها بجوارها."
+"المغناطيسي التي تجعل النوافذ تنجذب إلى وسط الشاشة عندما تُحرك بجوارها."
 
 #. i18n: ectx: property (text), widget (QLabel, OverlapSnapLabel)
 #: moving.ui:113

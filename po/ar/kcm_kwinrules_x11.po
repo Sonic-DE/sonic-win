@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kcmkwinrules\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-11 00:42+0000\n"
-"PO-Revision-Date: 2025-08-04 19:54+0400\n"
+"PO-Revision-Date: 2025-08-05 12:54+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -769,7 +769,7 @@ msgstr "أعلى"
 #: rulesmodel.cpp:923
 #, kde-format
 msgid "Notification"
-msgstr "إخطار"
+msgstr "إشعار"
 
 #: rulesmodel.cpp:925
 #, kde-format
@@ -779,7 +779,7 @@ msgstr "منبثق"
 #: rulesmodel.cpp:926
 #, kde-format
 msgid "Critical notification"
-msgstr "تحذير حَرِج"
+msgstr "إشعار حَرِج"
 
 #: rulesmodel.cpp:928
 #, kde-format
