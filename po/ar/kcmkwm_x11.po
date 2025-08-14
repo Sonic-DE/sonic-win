@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: kcmkwm\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-11 00:42+0000\n"
-"PO-Revision-Date: 2025-08-05 21:03+0400\n"
+"PO-Revision-Date: 2025-08-13 18:32+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -459,8 +459,8 @@ msgid ""
 "unshade automatically when the mouse pointer has been over the titlebar for "
 "some time.</p></body></html>"
 msgstr ""
-"<html><head/><body><p>إذا  مكن هذا الخيار ، فسيلغى تظليل النافذة المظللة "
-"آليًّا عندما يكون مؤشر الفأرة فوق شريط العنوان لبعض الوقت. </p></body></html>"
+"<html><head/><body><p>إذا  مكن هذا الخيار، فسيلغى تظليل النافذة المظللة آليًّا "
+"عندما يكون مؤشر الفأرة فوق شريط العنوان لبعض الوقت. </p></body></html>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShadeHover)
 #: advanced.ui:35
@@ -587,7 +587,7 @@ msgid ""
 "windows are allowed to do so. This will override the window placement mode "
 "defined above."
 msgstr ""
-"عند التشغيل ، يُسمح للتطبيقات التي يمكنها تذكر مواضع النوافذ الخاصة بها "
+"عند التشغيل، يُسمح للتطبيقات التي يمكنها تذكر مواضع النوافذ الخاصة بها "
 "بالقيام بذلك. سيؤدي هذا إلى تجاوز وضع وضع النافذة المحدد أعلاه."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AllowKDEAppsToRememberWindowPositions)
@@ -595,7 +595,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "Allow apps to remember the positions of their own windows, if they support it"
-msgstr "اسمح للتطبيقات بتذكر مواضع النوافذ الخاصة بها ، إذا كانت تدعمها"
+msgstr "اسمح للتطبيقات بتذكر مواضع النوافذ الخاصة بها، إذا كانت تدعمها"
 
 #. i18n: ectx: property (text), widget (QLabel, activationDesktopPolicyLabel)
 #: advanced.ui:123
@@ -650,7 +650,7 @@ msgstr "&سياسة تنشيط النافذة:"
 #: focus.ui:32
 #, kde-format
 msgid "With this option you can specify how and when windows will be focused."
-msgstr "باستخدام هذا الخيار ، يمكنك تحديد كيف ومتى سيُركز على النوافذ."
+msgstr "باستخدام هذا الخيار، يمكنك تحديد كيف ومتى سيُركز على النوافذ."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, windowFocusPolicy)
 #: focus.ui:36
@@ -756,7 +756,7 @@ msgstr ""
 "italic;\">لا شيء:</span> تعطل الوقاية وتنشط كل النوافذ الجديدة.</li><li "
 "style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
-"italic;\">منخفض:</span> تمكن الوقاية ؛ عندما لا تحتوي بعض النوافذ على دعم "
+"italic;\">منخفض:</span> تمكن الوقاية؛ عندما لا تحتوي بعض النوافذ على دعم "
 "للآليّة الأساسية ولا يمكن لـ كوين أن يقرر بشكل موثوق ما إذا كان ستُنشط النافذة "
 "أم لا. قد يكون لهذا الإعداد نتائج أسوأ وأفضل من المستوى المتوسط ​​، اعتمادًا "
 "على التطبيقات.</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
@@ -770,7 +770,7 @@ msgstr ""
 "margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; "
 "text-indent:0px;\"><span style=\" font-style:italic;\">متطرف:</span> يجب على "
 "المستخدم تنشيط جميع النوافذ بشكل صريح.</li></ul><p> تميز النوافذ الممنوعة من "
-"سرقة التركيز على أنها تتطلب الانتباه ، مما يعني مبدئيًا أنه ستُميز إدخال شريط "
+"سرقة التركيز على أنها تتطلب الانتباه، مما يعني مبدئيًا أنه ستُميز إدخال شريط "
 "المهام الخاص بهم. يمكن تغيير هذا في وحدة التحكم في الإشعارات.</p></body></"
 "html>"
 
@@ -874,7 +874,7 @@ msgstr "سلوك الشاشات المتعددة:"
 msgid ""
 "When this option is enabled, focus operations are limited only to the active "
 "screen"
-msgstr "إذا مُكّن هذا الخيار ، عمليات التركيز ستكون محدودة فقط في الشاشة النشطة"
+msgstr "إذا مُكّن هذا الخيار، عمليات التركيز ستكون محدودة فقط في الشاشة النشطة"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SeparateScreenFocus)
 #: focus.ui:209
@@ -1185,7 +1185,7 @@ msgid ""
 "them, i.e. they will not be snapped if the windows comes only near another "
 "window or border."
 msgstr ""
-"هنا يمكن تحديد أن نوافذ ستنجذب فقط إذا حاولت أن تطابق بينها ، بمعنى أنها لن "
+"هنا يمكن تحديد أن نوافذ ستنجذب فقط إذا حاولت أن تطابق بينها، بمعنى أنها لن "
 "تنجذب حتى تكون النوافذ قريبة من النوافذ الأخرى أو قريبة من حدودها."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SnapOnlyWhenOverlapping)
@@ -1214,8 +1214,8 @@ msgid ""
 msgstr ""
 "<em> النقر للتركيز (أولوية الفأرة): </em> في الغالب هو نفسه <em> انقر "
 "للتركيز</em>. إذا كان يتعين على النظام اختيار نافذة نشطة (على سبيل المثال ، "
-"بسبب إغلاق النافذة النشطة حاليًا) ، فإن النافذة الموجودة أسفل الفأرة هي "
-"المرشح المفضل. هذا غير معتاد ولكنه  تنويع ممكن لـ <em> انقر للتركيز </em>."
+"بسبب إغلاق النافذة النشطة حاليًا)، فإن النافذة الموجودة أسفل الفأرة هي المرشح "
+"المفضل. هذا غير معتاد ولكنه  تنويع ممكن لـ <em> انقر للتركيز </em>."
 
 #: windows.cpp:98
 #, kde-format
@@ -1239,9 +1239,9 @@ msgid ""
 "if you want a hover controlled focus."
 msgstr ""
 "هذا في الغالب مماثل لـ <em> التركيز يتبع الفأرة </em>. إذا كان يتعين على "
-"النظام اختيار نافذة نشطة (على سبيل المثال ، بسبب إغلاق النافذة النشطة "
-"حاليًا) ، فإن النافذة الموجودة أسفل الفأرة هي المرشح المفضل. اختر هذا ، إذا "
-"كنت تريد تركيزًا متحكمًا فيه بواسطة التحويم."
+"النظام اختيار نافذة نشطة (على سبيل المثال، بسبب إغلاق النافذة النشطة حاليًا)، "
+"فإن النافذة الموجودة أسفل الفأرة هي المرشح المفضل. اختر هذا، إذا كنت تريد "
+"تركيزًا متحكمًا فيه بواسطة التحويم."
 
 #: windows.cpp:104
 #, kde-format
@@ -1268,12 +1268,12 @@ msgid ""
 "activation policy and will not work. You very likely want to use <em>Focus "
 "follows mouse (mouse precedence)</em> instead!"
 msgstr ""
-"ن<em>التركيز تحت الفأرة بصرامة: </em> يكون التركيز دائمًا على النافذة "
-"الموجودة أسفل الفأرة (في شك في لا مكان) يشبه إلى حد كبير سلوك التركيز في "
-"بيئة X11 قديمة غير مُدارة. <br/> <strong> تحذير: </strong> <em>منع سرقة "
-"التركيز </em> و <em> صندوق التبويب ('Alt + Tab') </em> تتعارض مع سياسة "
-"التنشيط ولن تعمل. من المحتمل جدًا أنك تريد استخدام <em> التركيز يتبع الفأرة "
-"(أولوية الفأرة) </em> بدلاً من ذلك!"
+"<em>التركيز تحت الفأرة بصرامة: </em> يكون التركيز دائمًا على النافذة الموجودة "
+"أسفل الفأرة (في شك في لا مكان) يشبه إلى حد كبير سلوك التركيز في بيئة X11 "
+"قديمة غير مُدارة. <br/> <strong> تحذير: </strong> <em>منع سرقة التركيز </em> "
+"و <em> صندوق الألسنة ('Alt + Tab') </em> تتعارض مع سياسة التنشيط ولن تعمل. "
+"من المحتمل جدًا أنك تريد استخدام <em> التركيز يتبع الفأرة (أولوية الفأرة) </"
+"em> بدلاً من ذلك!"
 
 #~ msgid "&Special windows:"
 #~ msgstr "ال&نوافذ الخاصة:"
