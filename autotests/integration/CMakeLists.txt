@@ -43,7 +43,6 @@ target_link_libraries(KWinIntegrationTestFramework
         Plasma::KWaylandClient
         Wayland::Client
         Libdrm::Libdrm
-        KF6::GlobalAccel
         kwin
 
     PRIVATE
