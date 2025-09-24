@@ -2,14 +2,14 @@
 # Copyright (C) 2008 This_file_is_part_of_KDE
 # This file is distributed under the same license as the kwrite package.
 # Laurenţiu Buzdugan <lbuz@rolix.org>, 2008, 2009".
-# SPDX-FileCopyrightText: 2008, 2009, 2010, 2011, 2012, 2013, 2020, 2022, 2026 Sergiu Bivol <sergiu@cip.md>
+# Sergiu Bivol <sergiu@cip.md>, 2008, 2009, 2010, 2011, 2012, 2013, 2020, 2022.
 # Cristian Oneț <onet.cristian@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-09-24 00:44+0000\n"
 "PO-Revision-Date: 2022-12-28 21:14+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -42,108 +42,110 @@ msgid "Suspend Compositing"
 msgstr "Suspendă compoziționarea"
 
 #: compositor_x11.cpp:569
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<b>OpenGL compositing (the default) has crashed KWin in the past.</"
+#| "b><br>This was most likely due to a driver bug.<p>If you think that you "
+#| "have meanwhile upgraded to a stable driver,<br>you can reset this "
+#| "protection but <b>be aware that this might result in an immediate crash!</"
+#| "b></p><p>Alternatively, you might want to use the XRender backend instead."
+#| "</p>"
 msgid ""
 "<b>OpenGL compositing (the default) has crashed KWin in the past.</"
 "b><br>This was most likely due to a driver bug.<p>If you think that you have "
 "meanwhile upgraded to a stable driver,<br>you can reset this protection but "
 "<b>be aware that this might result in an immediate crash!</b></p>"
 msgstr ""
-"<b>Compoziționarea OpenGL (implicită) a provocat prăbușirea KWin în trecut.</"
-"b><br>Aceasta s-a datorat, cel mai probabil, unui defect în driver.<p>Dacă "
-"credeți că ați înnoit între timp driver-ul la unul stabil, puteți "
-"reinițializa<br>această protecție, dar <b>aveți în vedere că aceasta poate "
-"provoca o prăbușire imediată!</b></p>"
+"<b>Compoziția OpenGL (implicită) a făcut KWin să eșueze în trecut.</"
+"b><br>Este foarte probabil că aceasta se datorează unei erori de driver."
+"<p>Dacă credeți că între timp ați făcut o actualizare la un driver mai "
+"stabil,<br>puteți reseta această protecție, dar <b>să știți că aceasta poate "
+"rezulta într-o prăbușire imediată!</b></p><p>Altfel puteți folosi în loc "
+"suportul XRender.</p>"
 
 #: compositor_x11.cpp:576
-#, kde-format
+#, fuzzy, kde-format
 msgid "Required X extensions (XComposite and XDamage) are not available."
-msgstr "Nu sunt disponibile extensii X necesare (XComposite și XDamage)."
+msgstr "Extensiile X necesare (XComposite și XDamage) nu sunt disponibile."
 
 #: compositor_x11.cpp:579
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "GLX/OpenGL and XRender/XFixes are not available."
 msgid "GLX/OpenGL is not available."
-msgstr "GLX/OpenGL nu e disponibil."
+msgstr "GLX/OpenGL și XRender/XFixes nu sunt disponibile."
 
 #: core/iccprofile.cpp:252
 #, kde-format
 msgid "Failed to open ICC profile \"%1\""
-msgstr "Eșec la deschiderea profilului ICC „%1”"
+msgstr ""
 
 #: core/iccprofile.cpp:254
 #, kde-format
 msgid "ICC profile \"%1\" doesn't exist"
-msgstr "Profilul ICC „%1” nu există"
+msgstr ""
 
 #: core/iccprofile.cpp:258
 #, kde-format
 msgid "ICC profile \"%1\" is not usable for displays"
-msgstr "Profilul ICC „%1” nu poate fi folosit pentru afișaje"
+msgstr ""
 
 #: core/iccprofile.cpp:261
 #, kde-format
 msgid ""
 "ICC profile \"%1\" has unsupported connection space, only XYZ is supported"
 msgstr ""
-"Profilul ICC „%1” conține un spațiu de conectare nesusținut, doar XYZ e "
-"susținut"
 
 #: core/iccprofile.cpp:264
 #, kde-format
 msgid "ICC profile \"%1\" is broken, input/output color space isn't RGB"
 msgstr ""
-"Profilul ICC „%1” e defectuos, domeniul de culori de intrare/ieșire nu e RGB"
 
 #: core/iccprofile.cpp:283
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no whitepoint"
-msgstr "Profilul ICC „%1” e defectuos, acesta nu are punct alb"
+msgstr ""
 
 #: core/iccprofile.cpp:286
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its whitepoint is invalid"
-msgstr "Profilul ICC „%1” e defectuos, punctul alb al acestuia e eronat"
+msgstr ""
 
 #: core/iccprofile.cpp:299
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, parsing chromatic adaptation matrix failed"
 msgstr ""
-"Profilul ICC „%1” e defectuos, parcurgerea matricii de adaptare cromatică a "
-"eșuat"
 
 #: core/iccprofile.cpp:304
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, inverting chromatic adaptation matrix failed"
 msgstr ""
-"Profilul ICC „%1” e defectuos, inversarea matricii de adaptare cromatică a "
-"eșuat"
 
 #: core/iccprofile.cpp:317
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no primaries"
-msgstr "Profilul ICC „%1” e defectuos, nu conține primare"
+msgstr ""
 
 #: core/iccprofile.cpp:332
 #, kde-format
 msgid "ICC profile \"%1\" is broken, couldn't calculate its primaries"
-msgstr "Profilul ICC „%1” e defectuos, nu i s-au putut calcula primarele"
+msgstr ""
 
 #: core/iccprofile.cpp:341
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its primaries are invalid"
-msgstr "Profilul ICC „%1” e defectuos, primarele acestuia sunt eronate"
+msgstr ""
 
 #: core/iccprofile.cpp:357
 #, kde-format
 msgid "ICC profile \"%1\" with only BToD tags isn't supported"
-msgstr "Profilul ICC „%1” doar cu marcaje BToD nu e susținut"
+msgstr ""
 
 #: core/iccprofile.cpp:396
 #, kde-format
 msgid "Color profile is missing TRC tags"
-msgstr "Profilul de culoare nu conține marcaje TRC"
+msgstr ""
 
 #: debug_console.cpp:79
 #, kde-format
@@ -413,12 +415,14 @@ msgid "Delta"
 msgstr "Delta"
 
 #: debug_console.cpp:244
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Current delta in pinch gesture"
+#| msgid "Delta x"
 msgctxt ""
 "The normalized V120 angle delta of a pointer axis event. V120 is a technical "
 "term and shouldn't be changed."
 msgid "Delta (V120)"
-msgstr "Delta (V120)"
+msgstr "Delta x"
 
 #: debug_console.cpp:259
 #, kde-format
@@ -466,7 +470,7 @@ msgstr "Tastatură numerică"
 #, kde-format
 msgctxt "A keyboard modifier"
 msgid "Group-switch"
-msgstr "Comutator de grup"
+msgstr ""
 
 #: debug_console.cpp:297
 #, kde-format
@@ -475,10 +479,12 @@ msgid "Repeat"
 msgstr "Repetare"
 
 #: debug_console.cpp:301
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Key according to Qt"
+#| msgid "Qt::Key code"
 msgctxt "The code reported by the kernel"
 msgid "Keycode"
-msgstr "Cod tastă"
+msgstr "Cod Qt::Key"
 
 #: debug_console.cpp:302
 #, kde-format
@@ -508,13 +514,13 @@ msgstr "Modificatori"
 #, kde-format
 msgctxt "A touch down event"
 msgid "Touch down"
-msgstr "Atingere pusă"
+msgstr ""
 
 #: debug_console.cpp:319 debug_console.cpp:334 debug_console.cpp:349
 #, kde-format
 msgctxt "The id of the touch point in the touch event"
 msgid "Point identifier"
-msgstr "Identificator punct"
+msgstr ""
 
 #: debug_console.cpp:320 debug_console.cpp:335
 #, kde-format
@@ -532,13 +538,13 @@ msgstr "Mișcare de atingere"
 #, kde-format
 msgctxt "A touch up event"
 msgid "Touch Up"
-msgstr "Atingere luată"
+msgstr ""
 
 #: debug_console.cpp:360
 #, kde-format
 msgctxt "A pinch gesture is started"
 msgid "Pinch start"
-msgstr "Începere ciupit"
+msgstr ""
 
 #: debug_console.cpp:362
 #, kde-format
@@ -550,7 +556,7 @@ msgstr "Număr de degete"
 #, kde-format
 msgctxt "A pinch gesture is updated"
 msgid "Pinch update"
-msgstr "Actualizare ciupit"
+msgstr ""
 
 #: debug_console.cpp:375
 #, kde-format
@@ -562,7 +568,7 @@ msgstr "Scalare"
 #, kde-format
 msgctxt "Current angle in pinch gesture"
 msgid "Angle delta"
-msgstr "Diferență de unghi"
+msgstr ""
 
 #: debug_console.cpp:377
 #, kde-format
@@ -580,19 +586,19 @@ msgstr "Delta y"
 #, kde-format
 msgctxt "A pinch gesture ended"
 msgid "Pinch end"
-msgstr "Sfârșire ciupit"
+msgstr ""
 
 #: debug_console.cpp:401
 #, kde-format
 msgctxt "A pinch gesture got cancelled"
 msgid "Pinch cancelled"
-msgstr "Ciupit anulat"
+msgstr ""
 
 #: debug_console.cpp:413
 #, kde-format
 msgctxt "A swipe gesture is started"
 msgid "Swipe start"
-msgstr "Începere glisare"
+msgstr ""
 
 #: debug_console.cpp:415
 #, kde-format
@@ -604,7 +610,7 @@ msgstr "Număr de degete"
 #, kde-format
 msgctxt "A swipe gesture is updated"
 msgid "Swipe update"
-msgstr "Actualizare glisare"
+msgstr ""
 
 #: debug_console.cpp:428
 #, kde-format
@@ -622,13 +628,13 @@ msgstr "Delta y"
 #, kde-format
 msgctxt "A swipe gesture ended"
 msgid "Swipe end"
-msgstr "Sfârșit glisare"
+msgstr ""
 
 #: debug_console.cpp:452
 #, kde-format
 msgctxt "A swipe gesture got cancelled"
 msgid "Swipe cancelled"
-msgstr "Glisare anulată"
+msgstr ""
 
 #: debug_console.cpp:464
 #, kde-format
@@ -675,22 +681,22 @@ msgstr "Stare"
 #: debug_console.cpp:495
 #, kde-format
 msgid "Tablet Tool Proximity"
-msgstr "Proximitate unealtă planșetă"
+msgstr ""
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Proximity"
-msgstr "Proximitate"
+msgstr ""
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "In"
-msgstr "Spre"
+msgstr ""
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Out"
-msgstr "Dinspre"
+msgstr ""
 
 #: debug_console.cpp:497 debug_console.cpp:511 debug_console.cpp:528
 #: debug_console.cpp:572 debug_console.cpp:586
@@ -711,7 +717,7 @@ msgstr "Rotire"
 #: debug_console.cpp:510
 #, kde-format
 msgid "Tablet Tool Axis"
-msgstr "Axa uneltei planșetei"
+msgstr ""
 
 #: debug_console.cpp:516 debug_console.cpp:533
 #, kde-format
@@ -724,29 +730,33 @@ msgid "Buttons"
 msgstr "Butoane"
 
 #: debug_console.cpp:526
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Name of a hardware switch"
+#| msgid "Tablet mode"
 msgid "Tablet Tool Tip"
-msgstr "Vârful uneltei planșetei"
+msgstr "Regim tabletă"
 
 #: debug_console.cpp:527
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Top"
 msgid "Tip"
-msgstr "Vârf"
+msgstr "Sus"
 
 #: debug_console.cpp:527
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Move Window"
 msgid "Down"
-msgstr "Jos"
+msgstr "Mută fereastra"
 
 #: debug_console.cpp:527
 #, kde-format
 msgid "Up"
-msgstr "Sus"
+msgstr ""
 
 #: debug_console.cpp:543
 #, kde-format
 msgid "Tablet Tool Button"
-msgstr "Butonul uneltei planșetei"
+msgstr ""
 
 #: debug_console.cpp:544 debug_console.cpp:558
 #, kde-format
@@ -767,12 +777,12 @@ msgstr "Tabletă"
 #: debug_console.cpp:557
 #, kde-format
 msgid "Tablet Pad Button"
-msgstr "Butonul tastaturii tabletei"
+msgstr ""
 
 #: debug_console.cpp:570
 #, kde-format
 msgid "Tablet Pad Strip"
-msgstr "Fâșia tastaturii planșetei"
+msgstr ""
 
 #: debug_console.cpp:571 debug_console.cpp:585
 #, kde-format
@@ -782,18 +792,18 @@ msgstr "Număr"
 #: debug_console.cpp:573 debug_console.cpp:587
 #, kde-format
 msgid "isFinger"
-msgstr "eDeget"
+msgstr ""
 
 #: debug_console.cpp:584
 #, kde-format
 msgid "Tablet Pad Ring"
-msgstr "Inelul tastaturii planșetei"
+msgstr ""
 
 #: debug_console.cpp:651
 #, kde-format
 msgctxt "@label"
 msgid "Effects"
-msgstr "Efecte"
+msgstr ""
 
 #: debug_console.cpp:825
 #, kde-format
@@ -1004,19 +1014,20 @@ msgstr "Ferestre interne"
 #, kde-format
 msgctxt "@action:button unload an effect"
 msgid "Unload"
-msgstr "Descarcă"
+msgstr ""
 
 #: debug_console.cpp:1616 debug_console.cpp:1630
 #, kde-format
 msgctxt "@action:button load an effect"
 msgid "Load"
-msgstr "Încarcă"
+msgstr ""
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, DebugConsole)
 #: debug_console.ui:14
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quit Debug Console"
 msgid "Debug Console"
-msgstr "Consola de depanare"
+msgstr "Termină consola de depanare"
 
 #. i18n: ectx: property (text), widget (QPushButton, quitButton)
 #: debug_console.ui:38
@@ -1082,7 +1093,7 @@ msgstr "Versiune:"
 #: debug_console.ui:156
 #, kde-format
 msgid "Shading Language Version:"
-msgstr "Versiune Shading Language:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: debug_console.ui:163
@@ -1257,8 +1268,6 @@ msgid ""
 "<para><application>%1</application> is not responding. Do you want to "
 "terminate this application?</para>"
 msgstr ""
-"<para><application>%1</application> nu răspunde. Doriți să terminați această "
-"aplicație?</para>"
 
 #: helpers/killer/killer.cpp:236
 #, kde-kuit-format
@@ -1267,48 +1276,57 @@ msgid ""
 "<para>\"%1\" of <application>%2</application> is not responding. Do you want "
 "to terminate this application?</para>"
 msgstr ""
-"<para>„%1” a <application>%2</application> nu răspunde. Doriți să terminați "
-"această aplicație?</para>"
 
 #: helpers/killer/killer.cpp:239
-#, kde-kuit-format
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid ""
+#| "<para>Do you want to terminate this application?</"
+#| "para><para><warning>Terminating the application will close all of its "
+#| "child windows. Any unsaved data will be lost.</warning></para>"
 msgctxt "@info"
 msgid ""
 "<para><emphasis strong='true'>Terminating this application will close all of "
 "its windows. Any unsaved data will be lost.</emphasis></para>"
 msgstr ""
-"<para><emphasis strong='true'>Terminarea aplicației va închide toate "
-"ferestrele acesteia. Datele nesalvate se vor pierde.</emphasis></para>"
+"<para>Doriți să terminați această aplicație?</para><para><warning>Terminarea "
+"aplicației va închide toate ferestrele acesteia. Datele nesalvate se vor "
+"pierde.</warning></para>"
 
 #: helpers/killer/killer.cpp:241
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Terminate"
 msgctxt "@action:button Terminate app"
 msgid "&Terminate %1"
-msgstr "&Termină %1"
+msgstr "Termină"
 
 #: helpers/killer/killer.cpp:242
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Wait Longer"
 msgctxt "@action:button Wait for frozen app to maybe respond again"
 msgid "&Wait Longer"
-msgstr "&Mai așteaptă"
+msgstr "Mai așteaptă"
 
 #: helpers/killer/killer.cpp:250
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Application is not responding, appended to window title"
+#| msgid "(Not Responding)"
 msgctxt "@title:window"
 msgid "Not Responding"
-msgstr "Nu răspunde"
+msgstr "(nu răspunde)"
 
 #: helpers/killer/killer.cpp:266
 #, kde-format
 msgctxt "@info"
 msgid "Process ID: %1"
-msgstr "Id. proces: %1"
+msgstr ""
 
 #: helpers/killer/killer.cpp:268
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "hostname"
 msgctxt "@info"
 msgid "Host name: %1"
-msgstr "Nume gazdă: %1"
+msgstr "gazdă"
 
 #: keyboard_layout.cpp:45 keyboard_layout.cpp:55 keyboard_layout.cpp:137
 #, kde-format
@@ -1386,9 +1404,11 @@ msgid "Vlad Zahorodnii"
 msgstr "Vlad Zahorodnii"
 
 #: main.cpp:199
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@item:inlistbox Button size:"
+#| msgid "Very Huge"
 msgid "Xaver Hugl"
-msgstr "Xaver Hugl"
+msgstr "Foarte imensă"
 
 #: main.cpp:208
 #, kde-format
@@ -1421,11 +1441,14 @@ msgstr ""
 "(încercați să folosiți opțiunea --replace)\n"
 
 #: main_x11.cpp:286
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "kwin: unable to claim manager selection, another wm running? (try using --"
+#| "replace)\n"
 msgid "kwin: another window manager is running (try using --replace)\n"
 msgstr ""
-"kwin: rulează alt gestionar de ferestre (încercați să folosiți opțiunea --"
-"replace)\n"
+"kwin: nu pot cere selecția gestionarului de ferestre. Rulează alt gestionar? "
+"(încercați să folosiți opțiunea --replace)\n"
 
 #: main_x11.cpp:431
 #, kde-format
@@ -1441,173 +1464,204 @@ msgstr "Dezactivează integrarea KActivities"
 
 #. i18n: ectx: property (text), widget (QLabel, labelConstantBlurDescription)
 #: plugins/blur/blur_config.ui:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Blur strength:"
 msgid "Blur strength:"
-msgstr "Intensitatea încețoșării:"
+msgstr "Intensitatea estompării:"
 
 #. i18n: ectx: property (text), widget (QLabel, labelConstantBlurLight)
 #. i18n: ectx: property (text), widget (QLabel, labelConstantNoiseLight)
 #: plugins/blur/blur_config.ui:42 plugins/blur/blur_config.ui:108
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A mouse button"
+#| msgid "Right"
 msgid "Light"
-msgstr "Ușoară"
+msgstr "Drept"
 
 #. i18n: ectx: property (text), widget (QLabel, labelConstantBlurStrong)
 #. i18n: ectx: property (text), widget (QLabel, labelConstantNoiseStrong)
 #: plugins/blur/blur_config.ui:74 plugins/blur/blur_config.ui:137
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Strong"
 msgid "Strong"
 msgstr "Puternică"
 
 #. i18n: ectx: property (text), widget (QLabel, labelConstantNoiseDescription)
 #: plugins/blur/blur_config.ui:83
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Noise strength:"
 msgid "Noise strength:"
 msgstr "Intensitatea zgomotului:"
 
 #: plugins/colorpicker/colorpicker.cpp:109
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select window to force close with left click or enter.\n"
+#| "Escape or right click to cancel."
 msgid ""
 "Select a position for color picking with left click or enter.\n"
 "Escape or right click to cancel."
 msgstr ""
-"Alegeți o poziție pentru alegerea culorii cu clic stâng sau Enter.\n"
-"Apăsați Escape sau clic drept pentru a anula."
+"Alegeți fereastra de închis forțat cu clic stâng sau Enter.\n"
+"Apăsați Escape sau clic drept pentru a renunța."
 
 #. i18n: ectx: property (text), widget (QLabel, label_Strength)
 #: plugins/diminactive/diminactive_config.ui:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Strength:"
 msgid "Strength:"
 msgstr "Intensitate:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_Dim)
 #: plugins/diminactive/diminactive_config.ui:40
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Dim:"
 msgid "Dim:"
-msgstr "Estompează:"
+msgstr "Întunecă:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DimPanels)
 #: plugins/diminactive/diminactive_config.ui:47
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Docks and panels"
 msgid "Docks and panels"
 msgstr "Andocări și panouri"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DimDesktop)
 #: plugins/diminactive/diminactive_config.ui:54
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Desktops"
 msgid "Desktop"
-msgstr "Birou"
+msgstr "&Birouri"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DimKeepAbove)
 #: plugins/diminactive/diminactive_config.ui:61
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Keep above"
 msgid "Keep above windows"
-msgstr "Ține deasupra ferestrelor"
+msgstr "Ține deasupra"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DimByGroup)
 #: plugins/diminactive/diminactive_config.ui:68
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window role"
 msgid "By window group"
-msgstr "După grupul ferestrei"
+msgstr "Rol fereastră"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_DimFullScreen)
 #: plugins/diminactive/diminactive_config.ui:75
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Fullscreen"
 msgid "Fullscreen windows"
-msgstr "Ferestre pe tot ecranul"
+msgstr "Ecran complet"
 
 #. i18n: ectx: property (text), widget (QLabel, label_Duration)
 #: plugins/glide/glide_config.ui:19
 #: plugins/scale/package/contents/ui/config.ui:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "caption"
 msgid "Duration:"
-msgstr "Durată:"
+msgstr "legendă"
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_Duration)
 #: plugins/glide/glide_config.ui:32
 #: plugins/scale/package/contents/ui/config.ui:30
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Default"
 msgid "Default"
-msgstr "Implicit"
+msgstr "Implicită"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_Duration)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_AnimationDuration)
 #: plugins/glide/glide_config.ui:35 plugins/magiclamp/magiclamp_config.ui:39
 #: plugins/scale/package/contents/ui/config.ui:33
-#, kde-format
+#, fuzzy, kde-format
+#| msgid " milliseconds"
 msgid " milliseconds"
 msgstr " milisecunde"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_InAnimation)
 #: plugins/glide/glide_config.ui:50
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window position"
 msgid "Window Open Animation"
-msgstr "Animație de deschidere a ferestrelor"
+msgstr "Poziție fereastră"
 
 #. i18n: ectx: property (text), widget (QLabel, label_InRotationEdge)
 #. i18n: ectx: property (text), widget (QLabel, label_OutRotationEdge)
 #: plugins/glide/glide_config.ui:56 plugins/glide/glide_config.ui:154
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rotation"
 msgid "Rotation edge:"
-msgstr "Muchia rotației:"
+msgstr "Rotire"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_InRotationEdge)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OutRotationEdge)
 #: plugins/glide/glide_config.ui:70 plugins/glide/glide_config.ui:168
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Top"
 msgid "Top"
 msgstr "Sus"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_InRotationEdge)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OutRotationEdge)
 #: plugins/glide/glide_config.ui:75 plugins/glide/glide_config.ui:173
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A mouse button"
+#| msgid "Right"
 msgid "Right"
-msgstr "Dreapta"
+msgstr "Drept"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_InRotationEdge)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OutRotationEdge)
 #: plugins/glide/glide_config.ui:80 plugins/glide/glide_config.ui:178
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Bottom"
 msgid "Bottom"
 msgstr "Jos"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_InRotationEdge)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_OutRotationEdge)
 #: plugins/glide/glide_config.ui:85 plugins/glide/glide_config.ui:183
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A mouse button"
+#| msgid "Left"
 msgid "Left"
-msgstr "Stânga"
+msgstr "Stâng"
 
 #. i18n: ectx: property (text), widget (QLabel, label_InRotationAngle)
 #. i18n: ectx: property (text), widget (QLabel, label_OutRotationAngle)
 #: plugins/glide/glide_config.ui:93 plugins/glide/glide_config.ui:191
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rotation"
 msgid "Rotation angle:"
-msgstr "Unghiul rotației:"
+msgstr "Rotire"
 
 #. i18n: ectx: property (text), widget (QLabel, label_InDistance)
 #. i18n: ectx: property (text), widget (QLabel, label_OutDistance)
 #: plugins/glide/glide_config.ui:119 plugins/glide/glide_config.ui:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Distance:"
 msgid "Distance:"
 msgstr "Distanță:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_OutAnimation)
 #: plugins/glide/glide_config.ui:148
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window position"
 msgid "Window Close Animation"
-msgstr "Animație de închidere a ferestrelor"
+msgstr "Poziție fereastră"
 
 #: plugins/invert/invert.cpp:44
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Invert Effect"
 msgid "Toggle Invert Effect"
-msgstr "Comută efectul de inversare"
+msgstr "Comută inversare efect"
 
 #: plugins/invert/invert.cpp:52
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Invert Effect on Window"
 msgid "Toggle Invert Effect on Window"
-msgstr "Comută efectul de inversare asupra ferestrei"
+msgstr "Comută efect de inversare asupra ferestrei"
 
 #: plugins/invert/invert.cpp:59
 #, kde-format
@@ -1747,86 +1801,105 @@ msgstr "Activează fereastra rulând pe %1"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_FadeToBlack)
 #: plugins/login/package/contents/ui/config.ui:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Fade to black (fullscreen splash screens only)"
 msgid "Fade to black (fullscreen splash screens only)"
-msgstr "Estompează spre negru (doar ecranele de întâmpinare în ecran complet)"
+msgstr "Estompează spre nergu (doar ecranele de început în mod ecran complet)"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/magiclamp/magiclamp_config.ui:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Animation duration:"
 msgid "Animation duration:"
 msgstr "Durata animației:"
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_AnimationDuration)
 #: plugins/magiclamp/magiclamp_config.ui:36
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Duration of rotation"
+#| msgid "Default"
 msgctxt "Duration of rotation"
 msgid "Default"
 msgstr "Implicită"
 
 #: plugins/mouseclick/mouseclick.cpp:39
 #: plugins/mouseclick/mouseclick_config.cpp:43
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Expose Effect"
 msgid "Toggle Mouse Click Animation"
-msgstr "Comută animația de clic al mausului"
+msgstr "Comută efectul de expunere"
 
 #: plugins/mouseclick/mouseclick.cpp:46
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A mouse button"
+#| msgid "Left"
 msgctxt "Left mouse button"
 msgid "Left"
 msgstr "Stâng"
 
 #: plugins/mouseclick/mouseclick.cpp:47
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A mouse button"
+#| msgid "Middle"
 msgctxt "Middle mouse button"
 msgid "Middle"
-msgstr "Mijlociu"
+msgstr "Mijloc"
 
 #: plugins/mouseclick/mouseclick.cpp:48
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A mouse button"
+#| msgid "Right"
 msgctxt "Right mouse button"
 msgid "Right"
 msgstr "Drept"
 
 #. i18n: ectx: attribute (title), widget (QWidget, basic_tab)
 #: plugins/mouseclick/mouseclick_config.ui:21
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Basic Settings"
 msgid "Basic Settings"
 msgstr "Configurări de bază"
 
 #. i18n: ectx: property (text), widget (QLabel, button1_label)
 #: plugins/mouseclick/mouseclick_config.ui:37
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No Mouse Buttons"
 msgid "Left Mouse Button Color:"
-msgstr "Culoarea butonului din stânga al mausului:"
+msgstr "Niciun buton de maus"
 
 #. i18n: ectx: property (text), widget (QLabel, button2_label)
 #: plugins/mouseclick/mouseclick_config.ui:50
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No Mouse Buttons"
 msgid "Middle Mouse Button Color:"
-msgstr "Culoarea butonului din mijloc al mausului:"
+msgstr "Niciun buton de maus"
 
 #. i18n: ectx: property (text), widget (QLabel, button3_label)
 #: plugins/mouseclick/mouseclick_config.ui:70
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No Mouse Buttons"
 msgid "Right Mouse Button Color:"
-msgstr "Culoarea butonului din dreapta al mausului:"
+msgstr "Niciun buton de maus"
 
 #. i18n: ectx: attribute (title), widget (QWidget, advanced_tab)
 #: plugins/mouseclick/mouseclick_config.ui:91
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@title:tab Advanced Settings"
+#| msgid "Advanced"
 msgid "Advanced Settings"
-msgstr "Configurări avansate"
+msgstr "Avansate"
 
 #. i18n: ectx: property (title), widget (QGroupBox, rings)
 #: plugins/mouseclick/mouseclick_config.ui:97
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rings"
 msgid "Rings"
 msgstr "Inele"
 
 #. i18n: ectx: property (text), widget (QLabel, ring_line_width_label)
 #: plugins/mouseclick/mouseclick_config.ui:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Line Width:"
 msgid "Line Width:"
 msgstr "Lățimea liniei:"
 
@@ -1834,64 +1907,76 @@ msgstr "Lățimea liniei:"
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_RingSize)
 #: plugins/mouseclick/mouseclick_config.ui:119
 #: plugins/mouseclick/mouseclick_config.ui:171
-#, kde-format
+#, fuzzy, kde-format
+#| msgid " pixel"
 msgid " pixel"
-msgstr " pixeli"
+msgstr " pixel"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_RingLife)
 #: plugins/mouseclick/mouseclick_config.ui:132
-#, kde-format
+#, fuzzy, kde-format
+#| msgid " msec"
 msgid " msec"
 msgstr " msec"
 
 #. i18n: ectx: property (text), widget (QLabel, ring_duration_label)
 #: plugins/mouseclick/mouseclick_config.ui:145
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Ring Duration:"
 msgid "Ring Duration:"
 msgstr "Durată inel:"
 
 #. i18n: ectx: property (text), widget (QLabel, ring_radius_label)
 #: plugins/mouseclick/mouseclick_config.ui:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Ring Radius:"
 msgid "Ring Radius:"
 msgstr "Rază inel:"
 
 #. i18n: ectx: property (text), widget (QLabel, ring_count_label)
 #: plugins/mouseclick/mouseclick_config.ui:184
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Number of fingers in this pinch gesture"
+#| msgid "Finger count"
 msgid "Ring Count:"
-msgstr "Număr de inele:"
+msgstr "Număr de degete"
 
 #. i18n: ectx: property (title), widget (QGroupBox, font)
 #: plugins/mouseclick/mouseclick_config.ui:210
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Text"
 msgid "Text"
 msgstr "Text"
 
 #. i18n: ectx: property (text), widget (QLabel, font_label)
 #: plugins/mouseclick/mouseclick_config.ui:216
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Font:"
 msgid "Font:"
 msgstr "Font:"
 
 #. i18n: ectx: property (text), widget (QLabel, showtext_label)
 #: plugins/mouseclick/mouseclick_config.ui:233
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Show Desktop"
 msgid "Show Text:"
-msgstr "Arată textul:"
+msgstr "Arată biroul"
 
 #: plugins/mousemark/mousemark.cpp:43
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Clear All Mouse Marks"
 msgid "Clear All Mouse Marks"
 msgstr "Curăță toate urmele mausului"
 
 #: plugins/mousemark/mousemark.cpp:49 plugins/mousemark/mousemark_config.cpp:52
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Clear Last Mouse Mark"
 msgid "Clear Last Mouse Mark"
 msgstr "Curăță ultima urmă a mausului"
 
 #: plugins/mousemark/mousemark_config.cpp:46
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Clear Mouse Marks"
 msgid "Clear Mouse Marks"
 msgstr "Curăță urmele mausului"
 
@@ -1900,40 +1985,45 @@ msgstr "Curăță urmele mausului"
 msgctxt "Suffix"
 msgid " pixel"
 msgid_plural " pixels"
-msgstr[0] " pixel"
-msgstr[1] " pixeli"
-msgstr[2] " de pixeli"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox)
 #: plugins/mousemark/mousemark_config.ui:17
 #: plugins/thumbnailaside/thumbnailaside_config.ui:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Appearance"
 msgid "Appearance"
 msgstr "Aspect"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/mousemark/mousemark_config.ui:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Wid&th:"
 msgid "Wid&th:"
 msgstr "&Lățime:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/mousemark/mousemark_config.ui:36
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Color:"
 msgid "&Color:"
 msgstr "&Culoare:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox2)
 #: plugins/mousemark/mousemark_config.ui:82
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Draw with the mouse by holding Shift+Meta keys and moving the mouse."
 msgid "Draw with the mouse by holding modifier keys and moving the mouse"
-msgstr "Desenează cu mausul ținând tastele modificatoare și mișcând cursorul"
+msgstr "Desenează cu mausul ținând Shift+Meta și mișcând cursorul."
 
 #. i18n: ectx: property (text), widget (QLabel, label_FreedrawModifierKeys)
 #: plugins/mousemark/mousemark_config.ui:103
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Modifiers"
 msgid "Free draw modifier keys:"
-msgstr "Taste modificatoare pentru desen liber:"
+msgstr "Modificatori"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Freedrawalt)
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Arrowdrawalt)
@@ -1941,7 +2031,9 @@ msgstr "Taste modificatoare pentru desen liber:"
 #: plugins/mousemark/mousemark_config.ui:125
 #: plugins/mousemark/mousemark_config.ui:179
 #: plugins/trackmouse/trackmouse_config.ui:65
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A keyboard modifier"
+#| msgid "Alt"
 msgid "Alt"
 msgstr "Alt"
 
@@ -1951,7 +2043,8 @@ msgstr "Alt"
 #: plugins/mousemark/mousemark_config.ui:132
 #: plugins/mousemark/mousemark_config.ui:186
 #: plugins/trackmouse/trackmouse_config.ui:72
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Ctrl"
 msgid "Ctrl"
 msgstr "Ctrl"
 
@@ -1961,7 +2054,9 @@ msgstr "Ctrl"
 #: plugins/mousemark/mousemark_config.ui:139
 #: plugins/mousemark/mousemark_config.ui:193
 #: plugins/trackmouse/trackmouse_config.ui:79
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A keyboard modifier"
+#| msgid "Shift"
 msgid "Shift"
 msgstr "Shift"
 
@@ -1971,41 +2066,50 @@ msgstr "Shift"
 #: plugins/mousemark/mousemark_config.ui:146
 #: plugins/mousemark/mousemark_config.ui:200
 #: plugins/trackmouse/trackmouse_config.ui:86
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A keyboard modifier"
+#| msgid "Meta"
 msgid "Meta"
 msgstr "Meta"
 
 #. i18n: ectx: property (text), widget (QLabel, label_ArrowdrawModifierKeys)
 #: plugins/mousemark/mousemark_config.ui:157
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Modifiers"
 msgid "Arrow draw modifier keys:"
-msgstr "Taste modificatoare pentru desenarea săgeților:"
+msgstr "Modificatori"
 
 #: plugins/nightlight/nightlightmanager.cpp:55
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Night Color was enabled"
+#| msgid "Night Color On"
 msgctxt "Night Light was temporarily disabled"
 msgid "Night Light Suspended"
-msgstr "Lumină nocturnă suspendată"
+msgstr "Culoare nocturnă pornită"
 
 #: plugins/nightlight/nightlightmanager.cpp:56
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Night Color was enabled"
+#| msgid "Night Color On"
 msgctxt "Night Light was reenabled from temporary suspension"
 msgid "Night Light Resumed"
-msgstr "Lumină nocturnă reluată"
+msgstr "Culoare nocturnă pornită"
 
 #: plugins/nightlight/nightlightmanager.cpp:77
 #, kde-format
 msgctxt "Temporarily disable/reenable Night Light"
 msgid "Suspend/Resume Night Light"
-msgstr "Suspendă/reia lumina nocturnă"
+msgstr ""
 
 #: plugins/nightlight/nightlightmanager.cpp:393
 #, kde-format
 msgid "Color Temperature Preview"
-msgstr "Previzualizarea temperaturii culorii"
+msgstr ""
 
 #: plugins/outputlocator/outputlocator.cpp:50
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "The input device of the event is not known"
+#| msgid "Unknown"
 msgctxt "@label"
 msgid "Unknown"
 msgstr "Necunoscut"
@@ -2014,207 +2118,245 @@ msgstr "Necunoscut"
 #, kde-format
 msgctxt "@action Overview and Grid View are the name of KWin effects"
 msgid "Cycle through Overview and Grid View"
-msgstr "Ciclează printre prezentarea generală și grilă"
+msgstr ""
 
 #: plugins/overview/kcm/overvieweffectkcm.cpp:46
 #: plugins/overview/overvieweffect.cpp:135
 #, kde-format
 msgctxt "@action Grid View and Overview are the name of KWin effects"
 msgid "Cycle through Grid View and Overview"
-msgstr "Ciclează printre vizualizarea în grilă și prezentarea generală"
+msgstr ""
 
 #: plugins/overview/kcm/overvieweffectkcm.cpp:53
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Invert Effect"
 msgctxt "@action Overview is the name of a KWin effect"
 msgid "Toggle Overview"
-msgstr "Comută sumarul"
+msgstr "Comută inversare efect"
 
 #: plugins/overview/kcm/overvieweffectkcm.cpp:60
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Invert Effect"
 msgctxt "@action Grid View is the name of a KWin effect"
 msgid "Toggle Grid View"
-msgstr "Comută vizualizarea în grilă"
+msgstr "Comută inversare efect"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/overview/kcm/overvieweffectkcm.ui:22
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Moved/resized windows:"
 msgid "Ignore minimized windows:"
-msgstr "Ignoră ferestrele minimizate:"
+msgstr "Ferestre redimensionate/mutate:"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/overview/kcm/overvieweffectkcm.ui:36
 #, kde-format
 msgid "Organize windows in the Grid View:"
-msgstr "Organizează ferestrele la vizualizarea în grilă:"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_FilterWindows)
 #: plugins/overview/kcm/overvieweffectkcm.ui:50
 #, kde-format
 msgid "Search results include filtered windows:"
-msgstr "Rezultatele căutării includ ferestre filtrate:"
+msgstr ""
 
 #: plugins/overview/overvieweffect.cpp:127
 #, kde-format
 msgctxt "@action Grid View and Overview are the name of KWin effects"
 msgid "Cycle through Overview and Grid View"
-msgstr "Ciclează printre prezentarea generală și grilă"
+msgstr ""
 
 #: plugins/overview/overvieweffect.cpp:143
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Invert Effect"
 msgctxt "@action Overview is the name of a Kwin effect"
 msgid "Toggle Overview"
-msgstr "Comută sumarul"
+msgstr "Comută inversare efect"
 
 #: plugins/overview/overvieweffect.cpp:152
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Invert Effect"
 msgctxt "@action Grid view is the name of a Kwin effect"
 msgid "Toggle Grid View"
-msgstr "Comută vizualizarea în grilă"
+msgstr "Comută inversare efect"
 
 #: plugins/overview/qml/DesktopBar.qml:165
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Move to &Desktop"
 msgid "Delete Virtual Desktop"
-msgstr "Șterge biroul virtual"
+msgstr "M&ută la biroul"
 
 #: plugins/overview/qml/DesktopBar.qml:264
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Create a new desktop and add the window to that desktop"
+#| msgid "Add to &New Desktop"
 msgid "Add Virtual Desktop"
-msgstr "Adaugă birou virtual"
+msgstr "Adaugă la birou &nou"
 
 #: plugins/overview/qml/main.qml:378
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Move to &Desktop"
 msgctxt "@info:placeholder"
 msgid "No other Virtual Desktops to show"
-msgstr "Nu mai sunt birouri virtuale de arătat"
+msgstr "M&ută la biroul"
 
 #: plugins/overview/qml/main.qml:384
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Create a new desktop and add the window to that desktop"
+#| msgid "Add to &New Desktop"
 msgctxt "@action:button"
 msgid "Add Virtual Desktop"
-msgstr "Adaugă birou virtual"
+msgstr "Adaugă la birou &nou"
 
 #: plugins/overview/qml/main.qml:391
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Configure Layouts..."
 msgctxt "@action:button"
 msgid "Configure Virtual Desktops…"
-msgstr "Configurează birouri virtuale…"
+msgstr "Configurare aranjamente..."
 
 #: plugins/overview/qml/main.qml:742
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "X11 Unmanaged Windows"
 msgctxt "@info:placeholder"
 msgid "No matching windows"
-msgstr "Nicio fereastră potrivită"
+msgstr "Ferestre X11 negestionate"
 
 #: plugins/private/qml/WindowHeapDelegate.qml:229
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Drag Down To Close"
 msgid "Drag Down To Close"
-msgstr "Trageți în jos pentru a închide"
+msgstr "Trage în jos pentru a închide"
 
 #: plugins/private/qml/WindowHeapDelegate.qml:373
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Close Window"
 msgctxt "@info:tooltip as in: 'close this window'"
 msgid "Close window"
 msgstr "Închide fereastra"
 
 #. i18n: ectx: property (text), widget (QLabel, label_InScale)
 #: plugins/scale/package/contents/ui/config.ui:46
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window role"
 msgid "Window open scale:"
-msgstr "Scară deschidere fereastră:"
+msgstr "Rol fereastră"
 
 #. i18n: ectx: property (text), widget (QLabel, label_OutScale)
 #: plugins/scale/package/contents/ui/config.ui:53
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window role"
 msgid "Window close scale:"
-msgstr "Scară închidere fereastră:"
+msgstr "Rol fereastră"
 
 #: plugins/screenshot/screenshotdbusinterface2.cpp:525
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select window to force close with left click or enter.\n"
+#| "Escape or right click to cancel."
 msgid ""
 "Select window to screen shot with left click or enter.\n"
 "Escape or right click to cancel."
 msgstr ""
-"Alegeți fereastra de capturat cu clic stâng sau Enter.\n"
-"Apăsați Escape sau clic drept pentru a anula."
+"Alegeți fereastra de închis forțat cu clic stâng sau Enter.\n"
+"Apăsați Escape sau clic drept pentru a renunța."
 
 #: plugins/screenshot/screenshotdbusinterface2.cpp:543
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "Select window to force close with left click or enter.\n"
+#| "Escape or right click to cancel."
 msgid ""
 "Create screen shot with left click or enter.\n"
 "Escape or right click to cancel."
 msgstr ""
-"Creați captura de ecran cu clic stâng sau Enter.\n"
-"Apăsați Escape sau clic drept pentru a anula."
+"Alegeți fereastra de închis forțat cu clic stâng sau Enter.\n"
+"Apăsați Escape sau clic drept pentru a renunța."
 
 #: plugins/showfps/qml/main-fallback.qml:26 plugins/showfps/qml/main.qml:192
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "This effect is not a benchmark"
 msgctxt "@label"
 msgid "This effect is not a benchmark"
 msgstr "Acest efect nu e o contorizare"
 
 #: plugins/showfps/qml/main.qml:110
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A mouse pointer motion event"
+#| msgid "Pointer Motion"
 msgctxt "@label"
 msgid "Paint Duration"
-msgstr "Durată vopsire"
+msgstr "Mișcare indicator"
 
 #: plugins/showfps/qml/main.qml:162
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Ring Count:"
 msgctxt "@label"
 msgid "Paint Amount"
-msgstr "Cantitate vopsită"
+msgstr "Număr inele:"
 
 #: plugins/showfps/qml/main.qml:175
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Current Layout:"
 msgctxt "@label"
 msgid "Current FPS"
-msgstr "FPS actual"
+msgstr "Aranjament actual:"
 
 #: plugins/showfps/qml/main.qml:184
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Maximum &width:"
 msgctxt "@label"
 msgid "Maximum FPS"
-msgstr "FPS maxim"
+msgstr "&Lățimea maximă:"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_Gaps)
 #: plugins/slide/slide_config.ui:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Gap between desktops"
 msgid "Gap between desktops"
 msgstr "Loc gol între birouri"
 
 #. i18n: ectx: property (text), widget (QLabel, label_HorizontalGap)
 #: plugins/slide/slide_config.ui:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "An orientation of a pointer axis event"
+#| msgid "Horizontal"
 msgid "Horizontal:"
-msgstr "Orizontal:"
+msgstr "Orizontal"
 
 #. i18n: ectx: property (text), widget (QLabel, label_VerticalGap)
 #: plugins/slide/slide_config.ui:46
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "An orientation of a pointer axis event"
+#| msgid "Vertical"
 msgid "Vertical:"
-msgstr "Vertical:"
+msgstr "Vertical"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SlideBackground)
 #: plugins/slide/slide_config.ui:72
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Slide desktop background"
 msgid "Slide desktop background"
 msgstr "Alunecă fundalul biroului"
 
 #: plugins/thumbnailaside/thumbnailaside.cpp:31
 #: plugins/thumbnailaside/thumbnailaside_config.cpp:50
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Thumbnail for Current Window"
 msgid "Toggle Thumbnail for Current Window"
-msgstr "Comută pictograma pentru fereastra actuală"
+msgstr "Comutare Miniatură pentru fereastra curentă"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/thumbnailaside/thumbnailaside_config.ui:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Maximum &width:"
 msgid "Maximum &width:"
 msgstr "&Lățimea maximă:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/thumbnailaside/thumbnailaside_config.ui:36
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Spacing:"
 msgid "&Spacing:"
 msgstr "&Spațiere:"
 
@@ -2222,185 +2364,212 @@ msgstr "&Spațiere:"
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_MaxWidth)
 #: plugins/thumbnailaside/thumbnailaside_config.ui:55
 #: plugins/thumbnailaside/thumbnailaside_config.ui:106
-#, kde-format
+#, fuzzy, kde-format
+#| msgid " pixels"
 msgid " pixels"
 msgstr " pixeli"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: plugins/thumbnailaside/thumbnailaside_config.ui:68
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Opacity"
 msgid "&Opacity:"
-msgstr "&Opacitate:"
+msgstr "&Opacitate"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_Opacity)
 #: plugins/thumbnailaside/thumbnailaside_config.ui:87
-#, no-c-format, kde-format
+#, fuzzy, no-c-format, kde-format
+#| msgid " %"
 msgid " %"
 msgstr " %"
 
 #: plugins/tileseditor/kcm/tileseditoreffectkcm.cpp:37
 #: plugins/tileseditor/tileseditoreffect.cpp:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Video Recording"
 msgid "Toggle Tiles Editor"
-msgstr "Comută redactorul de mozaic"
+msgstr "Comută Înregistrare video"
 
 #: plugins/tileseditor/qml/main.qml:151
 #, kde-format
 msgid "Padding:"
-msgstr "Umplutură:"
+msgstr ""
 
 #: plugins/tileseditor/qml/main.qml:161
 #, kde-format
 msgid "Load Layout…"
-msgstr "Încarcă aranjament…"
+msgstr ""
 
 #: plugins/tileseditor/qml/main.qml:271
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Close"
 msgid "Close"
-msgstr "Închide"
+msgstr "În&chide"
 
 #: plugins/tileseditor/qml/TileDelegate.qml:167
 #, kde-format
 msgid "Split Left/Right"
-msgstr "Desparte stânga/dreapta"
+msgstr ""
 
 #: plugins/tileseditor/qml/TileDelegate.qml:174
 #, kde-format
 msgid "Split Top/Bottom"
-msgstr "Desparte sus/jos"
+msgstr ""
 
 #: plugins/tileseditor/qml/TileDelegate.qml:182
 #: plugins/tileseditor/qml/TileDelegate.qml:211
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Floating layout, windows aren't tiled at all"
+#| msgid "Floating"
 msgid "Add Floating Tile"
-msgstr "Adaugă dală flotantă"
+msgstr "Mod flotant"
 
 #: plugins/tileseditor/qml/TileDelegate.qml:191
 #, kde-format
 msgid "Delete"
-msgstr "Șterge"
+msgstr ""
 
 #: plugins/trackmouse/trackmouse.cpp:71
 #: plugins/trackmouse/trackmouse_config.cpp:49
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Track mouse"
 msgid "Track mouse"
 msgstr "Urmărește mausul"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/trackmouse/trackmouse_config.ui:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Trigger effect with:"
 msgid "Trigger effect with:"
 msgstr "Declanșează efectul cu:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_KeyboardShortcut)
 #: plugins/trackmouse/trackmouse_config.ui:33
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Keyboard"
 msgid "Keyboard shortcut:"
-msgstr "Scurtătură de taste:"
+msgstr "Tastatură"
 
 #. i18n: ectx: property (text), widget (QLabel, label_ModifierKeys)
 #: plugins/trackmouse/trackmouse_config.ui:43
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Modifiers"
 msgid "Modifier keys:"
-msgstr "Taste modificatoare:"
+msgstr "Modificatori"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, KWin::TranslucencyEffectConfigForm)
 #: plugins/translucency/package/contents/ui/config.ui:14
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Translucency"
 msgid "Translucency"
 msgstr "Transluciditate"
 
 #. i18n: ectx: property (title), widget (QGroupBox, m_opacityGroupBox)
 #: plugins/translucency/package/contents/ui/config.ui:20
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "General Translucency Settings"
 msgid "General Translucency Settings"
 msgstr "Configurări generale transluciditate"
 
 #. i18n: ectx: property (text), widget (QLabel, comboboxpopup_label)
 #: plugins/translucency/package/contents/ui/config.ui:64
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Combobox popups:"
 msgid "Combobox popups:"
-msgstr "Indiciile casetelor combinate:"
+msgstr "Indiciile căsuțelor combinate:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: plugins/translucency/package/contents/ui/config.ui:121
 #: plugins/translucency/package/contents/ui/config.ui:431
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Opaque"
 msgid "Opaque"
 msgstr "Opac"
 
 #. i18n: ectx: property (text), widget (QLabel, dialogs_label)
 #: plugins/translucency/package/contents/ui/config.ui:137
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Dialog"
 msgid "Dialogs:"
-msgstr "Dialoguri:"
+msgstr "Dialog"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: plugins/translucency/package/contents/ui/config.ui:156
 #: plugins/translucency/package/contents/ui/config.ui:418
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Transparent"
 msgid "Transparent"
 msgstr "Transparent"
 
 #. i18n: ectx: property (text), widget (QLabel, menus_label)
 #: plugins/translucency/package/contents/ui/config.ui:188
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Menu"
 msgid "Menus:"
-msgstr "Meniuri:"
+msgstr "Meniu"
 
 #. i18n: ectx: property (text), widget (QLabel, moveresize_label)
 #: plugins/translucency/package/contents/ui/config.ui:207
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Moved/resized windows:"
 msgid "Moving windows:"
-msgstr "Ferestre mutate:"
+msgstr "Ferestre redimensionate/mutate:"
 
 #. i18n: ectx: property (text), widget (QLabel, inactive_label)
 #: plugins/translucency/package/contents/ui/config.ui:226
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Internal Windows"
 msgid "Inactive windows:"
-msgstr "Ferestre inactive:"
+msgstr "Ferestre interne"
 
 #. i18n: ectx: property (title), widget (QGroupBox, kcfg_IndividualMenuConfig)
 #: plugins/translucency/package/contents/ui/config.ui:267
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set menu translucency independently"
 msgid "Set menu translucency independently"
-msgstr "Stabilește independent transluciditatea meniului"
+msgstr "Stabilește transluciditatea meniului independent"
 
 #. i18n: ectx: property (text), widget (QLabel, dropdownmenus_label)
 #: plugins/translucency/package/contents/ui/config.ui:285
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Dropdown menus:"
 msgid "Dropdown menus:"
-msgstr "Meniuri desfășurabile:"
+msgstr "Meniuri cu liste derulante:"
 
 #. i18n: ectx: property (text), widget (QLabel, popupmenus_label)
 #: plugins/translucency/package/contents/ui/config.ui:329
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Popup menus:"
 msgid "Popup menus:"
 msgstr "Meniuri contextuale:"
 
 #. i18n: ectx: property (text), widget (QLabel, tornoffmenus_label)
 #: plugins/translucency/package/contents/ui/config.ui:367
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Torn-off menus:"
 msgid "Torn-off menus:"
-msgstr "Meniuri rupte:"
+msgstr "Meniuri „rupte”"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, KWin::VideoWallConfigForm)
 #: plugins/videowall/package/contents/ui/config.ui:14
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Video Wall"
 msgid "Video Wall"
 msgstr "Perete video"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ApplyTo)
 #: plugins/videowall/package/contents/ui/config.ui:20
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Apply to"
 msgid "Apply to"
 msgstr "Aplică la"
 
 #. i18n: ectx: property (text), widget (QLineEdit, kcfg_Whitelist)
 #: plugins/videowall/package/contents/ui/config.ui:32
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "vlc, xv, vdpau, smplayer, dragon, xine, ffplay"
 msgid "vlc, xv, vdpau, smplayer, dragon, xine, ffplay"
 msgstr "vlc, xv, vdpau, smplayer, dragon, xine, ffplay"
 
@@ -2408,162 +2577,192 @@ msgstr "vlc, xv, vdpau, smplayer, dragon, xine, ffplay"
 #. i18n: ectx: property (placeholderText), widget (QLineEdit, kcfg_Blacklist)
 #: plugins/videowall/package/contents/ui/config.ui:35
 #: plugins/videowall/package/contents/ui/config.ui:66
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Comma separated list of window classes"
 msgid "Comma separated list of window classes"
 msgstr "Listă separată prin virgulă cu clase de ferestre"
 
 #. i18n: ectx: property (text), widget (QLabel, applyLabel)
 #: plugins/videowall/package/contents/ui/config.ui:45
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "A keyboard modifier"
+#| msgid "Alt"
 msgid "All"
-msgstr "Toate"
+msgstr "Alt"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Ignore)
 #: plugins/videowall/package/contents/ui/config.ui:54
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Ignore"
 msgid "Ignore"
 msgstr "Ignoră"
 
 #. i18n: ectx: property (text), widget (QLabel, ignoreLabel)
 #: plugins/videowall/package/contents/ui/config.ui:73
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "None"
 msgid "None"
-msgstr "Niciuna"
+msgstr "Nici unul"
 
 #: plugins/windowview/kcm/windowvieweffectkcm.cpp:42
 #: plugins/windowview/windowvieweffect.cpp:48
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Present Windows (Current desktop)"
 msgid "Toggle Present Windows (Current desktop)"
-msgstr "Comută prezentarea ferestrelor (biroul actual)"
+msgstr "Comută ferestre prezente (biroul curent)"
 
 #: plugins/windowview/kcm/windowvieweffectkcm.cpp:49
 #: plugins/windowview/windowvieweffect.cpp:57
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Present Windows (All desktops)"
 msgid "Toggle Present Windows (All desktops)"
-msgstr "Comută prezentarea ferestrelor (toate birourile)"
+msgstr "Comută ferestre prezente (toate birourile)"
 
 #: plugins/windowview/kcm/windowvieweffectkcm.cpp:56
 #: plugins/windowview/windowvieweffect.cpp:66
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Present Windows (All desktops)"
 msgid "Toggle Present Windows (Window class)"
-msgstr "Comută prezentarea ferestrelor (clasa Fereastră)"
+msgstr "Comută ferestre prezente (toate birourile)"
 
 #: plugins/windowview/kcm/windowvieweffectkcm.cpp:62
 #: plugins/windowview/windowvieweffect.cpp:75
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Toggle Present Windows (Current desktop)"
 msgid "Toggle Present Windows (Window class on current desktop)"
-msgstr "Comută prezentarea ferestrelor (clasa Fereastră pe biroul actual)"
+msgstr "Comută ferestre prezente (biroul curent)"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_IgnoreMinimized)
 #: plugins/windowview/kcm/windowvieweffectkcm.ui:22
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Minimize Window"
 msgid "Ignore &minimized windows"
-msgstr "Ignoră ferestrele &minimizate"
+msgstr "Minimizează fereastra"
 
 #: plugins/windowview/qml/main.qml:107
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No Matches"
 msgid "No Matches"
 msgstr "Nicio potrivire"
 
 #: plugins/windowview/qml/main.qml:107
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Windows"
 msgid "No Windows"
-msgstr "Nicio fereastră"
+msgstr "Ferestre"
 
 #: plugins/windowview/qml/main.qml:122
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Internal Windows"
 msgid "Filter windows…"
-msgstr "Filtrează ferestrele…"
+msgstr "Ferestre interne"
 
 #. i18n: ectx: property (title), widget (QGroupBox, advancedGroup)
 #: plugins/wobblywindows/wobblywindows_config.ui:20
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "@title:tab Advanced Settings"
+#| msgid "Advanced"
 msgid "Advanced"
 msgstr "Avansate"
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #: plugins/wobblywindows/wobblywindows_config.ui:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Stiffness:"
 msgid "&Stiffness:"
-msgstr "Rigi&ditate:"
+msgstr "&Rigiditate:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: plugins/wobblywindows/wobblywindows_config.ui:68
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Dra&g:"
 msgid "Dra&g:"
-msgstr "Rezi&stență:"
+msgstr "Tra&gere:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: plugins/wobblywindows/wobblywindows_config.ui:81
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Left"
 msgid "&Move factor:"
-msgstr "Factor de &mutare:"
+msgstr "Stânga"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_MoveWobble)
 #: plugins/wobblywindows/wobblywindows_config.ui:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Wo&bble when moving"
 msgid "Wo&bble when moving"
 msgstr "&Tremură la mutare"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ResizeWobble)
 #: plugins/wobblywindows/wobblywindows_config.ui:162
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Wobble when &resizing"
 msgid "Wobble when &resizing"
 msgstr "Tremură la &redimensionare"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AdvancedMode)
 #: plugins/wobblywindows/wobblywindows_config.ui:182
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Enable &advanced mode"
 msgid "Enable &advanced mode"
 msgstr "Activează regimul &avansat"
 
 #. i18n: ectx: property (title), widget (QGroupBox, basicGroup)
 #: plugins/wobblywindows/wobblywindows_config.ui:192
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Wobbliness"
 msgid "&Wobbliness"
 msgstr "Trem&ur"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/wobblywindows/wobblywindows_config.ui:201
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Less"
 msgid "Less"
 msgstr "Mai puțin"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: plugins/wobblywindows/wobblywindows_config.ui:224
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "More"
 msgid "More"
 msgstr "Mai mult"
 
 #: plugins/zoom/zoom.cpp:62
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window One Desktop to the Left"
 msgid "Move Zoomed Area to Left"
-msgstr "Mută zona mărită spre stânga"
+msgstr "Fereastra cu un birou la stânga"
 
 #: plugins/zoom/zoom.cpp:69
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window One Desktop to the Right"
 msgid "Move Zoomed Area to Right"
-msgstr "Mută zona mărită spre dreapta"
+msgstr "Fereastra cu un birou la dreapta"
 
 #: plugins/zoom/zoom.cpp:76
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Move Zoomed Area Upwards"
 msgid "Move Zoomed Area Upwards"
 msgstr "Mută zona mărită în sus"
 
 #: plugins/zoom/zoom.cpp:83
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Move Zoomed Area Downwards"
 msgid "Move Zoomed Area Downwards"
 msgstr "Mută zona mărită în jos"
 
 #: plugins/zoom/zoom.cpp:91
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No Mouse Buttons"
 msgid "Move Mouse to Focus"
-msgstr "Mută mausul la focalizare"
+msgstr "Niciun buton de maus"
 
 #: plugins/zoom/zoom.cpp:98
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Move Window to the Center"
 msgid "Move Mouse to Center"
-msgstr "Mută mausul la centru"
+msgstr "Mută fereastra la centru"
 
 #. i18n: ectx: label, entry (count), group (General)
 #: rulebooksettingsbase.kcfg:9
@@ -2597,9 +2796,10 @@ msgstr "Șterge această regulă (de folosit în importuri)"
 
 #. i18n: ectx: label, entry (enabled), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:20
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Tiling Enabled"
 msgid "This rule is enabled"
-msgstr "Această regulă e activată"
+msgstr "Mozaic activat"
 
 #. i18n: ectx: label, entry (wmclass), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:24
@@ -2611,7 +2811,7 @@ msgstr "Clasa ferestrei (aplicație)"
 #: rulesettings.kcfg:27
 #, kde-format
 msgid "Window class string match type"
-msgstr "Tip de potrivire a șirului cu clasa ferestrei"
+msgstr ""
 
 #. i18n: ectx: label, entry (wmclasscomplete), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:33
@@ -2623,13 +2823,13 @@ msgstr "Se potrivește cu toată clasa ferestrei"
 #: rulesettings.kcfg:38
 #, kde-format
 msgid "Window role"
-msgstr "Rolul ferestrei"
+msgstr "Rol fereastră"
 
 #. i18n: ectx: label, entry (windowrolematch), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:41
 #, kde-format
 msgid "Window role string match type"
-msgstr "Tip de potrivire a șirului cu rolul ferestrei"
+msgstr ""
 
 #. i18n: ectx: label, entry (title), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:48
@@ -2641,7 +2841,7 @@ msgstr "Titlu fereastră"
 #: rulesettings.kcfg:51
 #, kde-format
 msgid "Window title string match type"
-msgstr "Tip de potrivire a șirului cu titlul ferestrei"
+msgstr ""
 
 #. i18n: ectx: label, entry (clientmachine), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:58
@@ -2653,13 +2853,13 @@ msgstr "Mașină (nume gazdă):"
 #: rulesettings.kcfg:61
 #, kde-format
 msgid "Machine string match type"
-msgstr "Tip de potrivire a șirului cu mașina"
+msgstr ""
 
 #. i18n: ectx: label, entry (types), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:68
 #, kde-format
 msgid "Window types that match"
-msgstr "Tipuri de ferestre ce se potrivesc"
+msgstr ""
 
 #. i18n: ectx: label, entry (placement), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:73
@@ -2669,9 +2869,10 @@ msgstr "Plasament inițial"
 
 #. i18n: ectx: label, entry (placementrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:78
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Fullscreen"
 msgid "Initial placement rule type"
-msgstr "Tip de regulă cu plasament inițial"
+msgstr "&Ecran complet"
 
 #. i18n: ectx: label, entry (position), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:83
@@ -2681,21 +2882,22 @@ msgstr "Poziție fereastră"
 
 #. i18n: ectx: label, entry (positionrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:87
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window to Screen 0"
 msgid "Window position rule type"
-msgstr "Tip de regulă cu poziția ferestrei"
+msgstr "Fereastră în biroul 10"
 
 #. i18n: ectx: label, entry (size), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:94
 #, kde-format
 msgid "Window size"
-msgstr "Dimensiunea ferestrei"
+msgstr "Dimensiune fereastră"
 
 #. i18n: ectx: label, entry (sizerule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:97
 #, kde-format
 msgid "Window size rule type"
-msgstr "Tip de regulă cu dimensiunea ferestrei"
+msgstr ""
 
 #. i18n: ectx: label, entry (minsize), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:104
@@ -2707,7 +2909,7 @@ msgstr "Dimensiune minimă fereastră"
 #: rulesettings.kcfg:108
 #, kde-format
 msgid "Window minimum size rule type"
-msgstr "Tip de regulă cu dimensiunea minimă a ferestrei"
+msgstr ""
 
 #. i18n: ectx: label, entry (maxsize), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:113
@@ -2719,7 +2921,7 @@ msgstr "Dimensiune maximă fereastră"
 #: rulesettings.kcfg:117
 #, kde-format
 msgid "Window maximum size rule type"
-msgstr "Tip de regulă cu dimensiunea maximă a ferestrei"
+msgstr ""
 
 #. i18n: ectx: label, entry (opacityactive), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:122
@@ -2731,7 +2933,7 @@ msgstr "Opacitate activă"
 #: rulesettings.kcfg:128
 #, kde-format
 msgid "Active opacity rule type"
-msgstr "Tip de regulă cu opacitatea activă"
+msgstr ""
 
 #. i18n: ectx: label, entry (opacityinactive), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:133
@@ -2743,7 +2945,7 @@ msgstr "Opacitate inactivă"
 #: rulesettings.kcfg:139
 #, kde-format
 msgid "Inactive opacity rule type"
-msgstr "Tip de regulă cu opacitatea inactivă"
+msgstr ""
 
 #. i18n: ectx: label, entry (ignoregeometry), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:144
@@ -2755,19 +2957,21 @@ msgstr "Ignoră geometria cerută"
 #: rulesettings.kcfg:148
 #, kde-format
 msgid "Ignore requested geometry rule type"
-msgstr "Tip de regulă cu ignorarea geometriei cerute"
+msgstr ""
 
 #. i18n: ectx: label, entry (desktops), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:155
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Switch to Desktop 2"
 msgid "List of Desktop Ids"
-msgstr "Lista identificatorilor biroului"
+msgstr "Comută la biroul 2"
 
 #. i18n: ectx: label, entry (desktopsrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:159
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Desktop Cube"
 msgid "Desktop Ids rule type"
-msgstr "Tip de regulă cu identificatorii biroului"
+msgstr "Cub de birou"
 
 #. i18n: ectx: label, entry (screen), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:166
@@ -2779,7 +2983,7 @@ msgstr "Numărul ecranului"
 #: rulesettings.kcfg:170
 #, kde-format
 msgid "Screen number rule type"
-msgstr "Tip de regulă cu numărul ecranului"
+msgstr ""
 
 #. i18n: ectx: label, entry (activity), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:177
@@ -2791,7 +2995,7 @@ msgstr "Activitate"
 #: rulesettings.kcfg:180
 #, kde-format
 msgid "Activity rule type"
-msgstr "Tip de regulă cu activitatea"
+msgstr ""
 
 #. i18n: ectx: label, entry (maximizevert), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:187
@@ -2801,9 +3005,10 @@ msgstr "Maximizat pe verticală"
 
 #. i18n: ectx: label, entry (maximizevertrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:191
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Maximize Window Vertically"
 msgid "Maximized vertically rule type"
-msgstr "Tip de regulă cu maximizarea pe verticală"
+msgstr "Maximizează fereastra pe verticală"
 
 #. i18n: ectx: label, entry (maximizehoriz), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:198
@@ -2813,9 +3018,10 @@ msgstr "Maximizat pe orizontală"
 
 #. i18n: ectx: label, entry (maximizehorizrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:202
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Maximize Window Horizontally"
 msgid "Maximized horizontally rule type"
-msgstr "Tip de regulă cu maximizarea pe orizontală"
+msgstr "Maximizează fereastra pe orizontală"
 
 #. i18n: ectx: label, entry (minimize), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:209
@@ -2827,7 +3033,7 @@ msgstr "Minimizat"
 #: rulesettings.kcfg:213
 #, kde-format
 msgid "Minimized rule type"
-msgstr "Tip de regulă cu minimizare"
+msgstr ""
 
 #. i18n: ectx: label, entry (shade), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:220
@@ -2839,7 +3045,7 @@ msgstr "Strâns"
 #: rulesettings.kcfg:224
 #, kde-format
 msgid "Shaded rule type"
-msgstr "Tip de regulă cu strângerea"
+msgstr ""
 
 #. i18n: ectx: label, entry (skiptaskbar), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:231
@@ -2851,7 +3057,7 @@ msgstr "Sari bara de sarcini"
 #: rulesettings.kcfg:235
 #, kde-format
 msgid "Skip taskbar rule type"
-msgstr "Tip de regulă cu săritul barei de sarcini"
+msgstr ""
 
 #. i18n: ectx: label, entry (skippager), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:242
@@ -2863,7 +3069,7 @@ msgstr "Sari paginatorul"
 #: rulesettings.kcfg:246
 #, kde-format
 msgid "Skip pager rule type"
-msgstr "Tip de regulă cu săritul paginatorului"
+msgstr ""
 
 #. i18n: ectx: label, entry (skipswitcher), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:253
@@ -2875,7 +3081,7 @@ msgstr "Sari comutatorul"
 #: rulesettings.kcfg:257
 #, kde-format
 msgid "Skip switcher rule type"
-msgstr "Tip de regulă cu săritul comutatorului"
+msgstr ""
 
 #. i18n: ectx: label, entry (above), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:264
@@ -2885,9 +3091,10 @@ msgstr "Ține deasupra"
 
 #. i18n: ectx: label, entry (aboverule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:268
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Keep above others"
 msgid "Keep above rule type"
-msgstr "Tip de regulă cu ținut deasupra"
+msgstr "Ține deasupra celorlalte"
 
 #. i18n: ectx: label, entry (below), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:275
@@ -2897,9 +3104,10 @@ msgstr "Ține dedesubt"
 
 #. i18n: ectx: label, entry (belowrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:279
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Keep below others"
 msgid "Keep below rule type"
-msgstr "Tip de regulă cu ținut dedesubt"
+msgstr "Ține sub celelalte"
 
 #. i18n: ectx: label, entry (fullscreen), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:286
@@ -2909,9 +3117,10 @@ msgstr "Ecran complet"
 
 #. i18n: ectx: label, entry (fullscreenrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:290
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "&Fullscreen"
 msgid "Fullscreen rule type"
-msgstr "Tip de regulă cu ecran complet"
+msgstr "&Ecran complet"
 
 #. i18n: ectx: label, entry (noborder), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:297
@@ -2923,19 +3132,19 @@ msgstr "Fără bară de titlu și cadru"
 #: rulesettings.kcfg:301
 #, kde-format
 msgid "No titlebar rule type"
-msgstr "Tip de regulă fără bară de titlu"
+msgstr ""
 
 #. i18n: ectx: label, entry (decocolor), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:308
 #, kde-format
 msgid "Titlebar color and scheme"
-msgstr "Schemă și culori pentru bara de titlu"
+msgstr ""
 
 #. i18n: ectx: label, entry (decocolorrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:311
 #, kde-format
 msgid "Titlebar color rule type"
-msgstr "Tip de regulă cu culoarea barei de titlu"
+msgstr ""
 
 #. i18n: ectx: label, entry (blockcompositing), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:316
@@ -2947,7 +3156,7 @@ msgstr "Blochează compoziționarea"
 #: rulesettings.kcfg:320
 #, kde-format
 msgid "Block Compositing rule type"
-msgstr "Tip de regulă cu blocarea compoziționării"
+msgstr ""
 
 #. i18n: ectx: label, entry (fsplevel), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:325
@@ -2959,7 +3168,7 @@ msgstr "Prevenirea furtului focalizării"
 #: rulesettings.kcfg:331
 #, kde-format
 msgid "Focus stealing prevention rule type"
-msgstr "Tip de regulă cu prevenirea furtului focalizării"
+msgstr ""
 
 #. i18n: ectx: label, entry (fpplevel), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:336
@@ -2971,7 +3180,7 @@ msgstr "Protecție focalizare"
 #: rulesettings.kcfg:342
 #, kde-format
 msgid "Focus protection rule type"
-msgstr "Tip de regulă cu protecția focalizării"
+msgstr ""
 
 #. i18n: ectx: label, entry (acceptfocus), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:347
@@ -2983,7 +3192,7 @@ msgstr "Acceptă focalizare"
 #: rulesettings.kcfg:351
 #, kde-format
 msgid "Accept Focus rule type"
-msgstr "Tip de regulă cu acceptarea focalizării"
+msgstr ""
 
 #. i18n: ectx: label, entry (closeable), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:356
@@ -2995,7 +3204,7 @@ msgstr "Poate fi închisă"
 #: rulesettings.kcfg:360
 #, kde-format
 msgid "Closeable rule type"
-msgstr "Tip de regulă cu posibilitatea închiderii"
+msgstr ""
 
 #. i18n: ectx: label, entry (autogroup), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:365
@@ -3007,7 +3216,7 @@ msgstr "Auto-grupare cu cele identice"
 #: rulesettings.kcfg:369
 #, kde-format
 msgid "Autogroup with identical rule type"
-msgstr "Tip de regulă cu auto-grupare cu cele identice"
+msgstr ""
 
 #. i18n: ectx: label, entry (autogroupfg), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:374
@@ -3019,19 +3228,19 @@ msgstr "Auto-grupare în prim plan"
 #: rulesettings.kcfg:378
 #, kde-format
 msgid "Autogroup in foreground rule type"
-msgstr "Tip de regulă cu auto-grupare în prim plan"
+msgstr ""
 
 #. i18n: ectx: label, entry (autogroupid), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:383
 #, kde-format
 msgid "Autogroup by ID"
-msgstr "Auto-grupare după identificator"
+msgstr "Auto-grupare după ID"
 
 #. i18n: ectx: label, entry (autogroupidrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:386
 #, kde-format
 msgid "Autogroup by ID rule type"
-msgstr "Tip de regulă cu auto-grupare după identificator"
+msgstr ""
 
 #. i18n: ectx: label, entry (strictgeometry), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:391
@@ -3043,7 +3252,7 @@ msgstr "Respectă restricțiile geometrice"
 #: rulesettings.kcfg:395
 #, kde-format
 msgid "Obey geometry restrictions rule type"
-msgstr "Tip de regulă cu respectarea restricțiilor geometrice"
+msgstr ""
 
 #. i18n: ectx: label, entry (shortcut), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:400
@@ -3055,7 +3264,7 @@ msgstr "Scurtătură"
 #: rulesettings.kcfg:403
 #, kde-format
 msgid "Shortcut rule type"
-msgstr "Tip de regulă cu scurtătură"
+msgstr ""
 
 #. i18n: ectx: label, entry (disableglobalshortcuts), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:410
@@ -3067,7 +3276,7 @@ msgstr "Ignoră scurtăturile globale"
 #: rulesettings.kcfg:414
 #, kde-format
 msgid "Ignore global shortcuts rule type"
-msgstr "Tip de regulă cu ignorarea scurtăturilor globale"
+msgstr ""
 
 #. i18n: ectx: label, entry (desktopfile), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:419
@@ -3079,43 +3288,46 @@ msgstr "Denumire fișier de birou"
 #: rulesettings.kcfg:422
 #, kde-format
 msgid "Desktop file name rule type"
-msgstr "Tip de regulă cu denumirea fișierului de birou"
+msgstr ""
 
 #. i18n: ectx: label, entry (layer), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:429
 #, kde-format
 msgid "Layer"
-msgstr "Strat"
+msgstr ""
 
 #. i18n: ectx: label, entry (layerrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:445
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Keep above others"
 msgid "Layer rule type"
-msgstr "Tip de regulă cu stratul"
+msgstr "Ține deasupra celorlalte"
 
 #. i18n: ectx: label, entry (adaptivesync), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:450
 #, kde-format
 msgid "AdaptiveSync"
-msgstr "AdaptiveSync"
+msgstr ""
 
 #. i18n: ectx: label, entry (adaptivesyncrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:454
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Keep above others"
 msgid "AdaptiveSync rule type"
-msgstr "Tip de regulă cu AdaptiveSync"
+msgstr "Ține deasupra celorlalte"
 
 #. i18n: ectx: label, entry (tearing), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:459
 #, kde-format
 msgid "Allow Tearing"
-msgstr "Permite frânturile"
+msgstr ""
 
 #. i18n: ectx: label, entry (tearingrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:463
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Keep above others"
 msgid "Tearing rule type"
-msgstr "Tip de regulă cu frânturi"
+msgstr "Ține deasupra celorlalte"
 
 #. i18n: ectx: property (windowTitle), widget (QDialog, ShortcutDialog)
 #: shortcutdialog.ui:14
@@ -3127,19 +3339,19 @@ msgstr "Dialog"
 #: shortcutdialog.ui:25
 #, kde-format
 msgid "..."
-msgstr "…"
+msgstr "..."
 
 #: sm.cpp:431
 #, kde-format
 msgctxt "@action:button"
 msgid "Cancel Logout"
-msgstr "Renunță la ieșire"
+msgstr ""
 
 #: sm.cpp:432
 #, kde-format
 msgctxt "@action::button"
 msgid "Log Out Anyway"
-msgstr "Ieși oricum"
+msgstr ""
 
 #: sm.cpp:478
 #, kde-format
@@ -3148,9 +3360,6 @@ msgid ""
 "%1\n"
 "Logging out anyway in 2 minutes."
 msgstr ""
-"Următoarele aplicații nu s-au închis:\n"
-"%1\n"
-"Se iese oricum în 2 minute."
 
 #: tabbox/clientmodel.cpp:58
 #, kde-format
@@ -3159,10 +3368,11 @@ msgid "Show Desktop"
 msgstr "Arată biroul"
 
 #: tabbox/switchers/thumbnail_grid/contents/ui/main.qml:208
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Windows"
 msgctxt "@info:placeholder no entries in the task switcher"
 msgid "No open windows"
-msgstr "Nicio fereastră deschisă"
+msgstr "Ferestre"
 
 #: tabbox/tabbox.cpp:358
 msgid "Walk Through Windows"
@@ -3174,27 +3384,31 @@ msgstr "Comută printre ferestre (invers)"
 
 #: tabbox/tabbox.cpp:360
 msgid "Walk Through Windows Alternative"
-msgstr "Comută printre ferestre, alternativ"
+msgstr "Comută printre alternative ferestre"
 
 #: tabbox/tabbox.cpp:361
 msgid "Walk Through Windows Alternative (Reverse)"
-msgstr "Comută printre ferestre, alternativ (invers)"
+msgstr "Comută printre alternative ferestre (invers)"
 
 #: tabbox/tabbox.cpp:362
 msgid "Walk Through Windows of Current Application"
-msgstr "Comută printre ferestrele aplicației actuale"
+msgstr "Comută printre ferestrele aplicației curente"
 
 #: tabbox/tabbox.cpp:363
 msgid "Walk Through Windows of Current Application (Reverse)"
-msgstr "Comută printre ferestrele aplicației actuale (invers)"
+msgstr "Comută printre ferestrele aplicației curente (invers)"
 
 #: tabbox/tabbox.cpp:364
+#, fuzzy
+#| msgid "Walk Through Windows Alternative"
 msgid "Walk Through Windows of Current Application Alternative"
-msgstr "Comută printre ferestrele aplicației actuale, alternativ"
+msgstr "Comută printre ferestrele aplicației curente "
 
 #: tabbox/tabbox.cpp:365
+#, fuzzy
+#| msgid "Walk Through Windows Alternative (Reverse)"
 msgid "Walk Through Windows of Current Application Alternative (Reverse)"
-msgstr "Comută printre ferestrele aplicației actuale, alternativ (invers)"
+msgstr "Comută printre alternative ferestre (invers)"
 
 #: tabbox/tabboxhandler.cpp:249
 #, kde-format
@@ -3208,17 +3422,19 @@ msgstr ""
 #: tablet_input.cpp:104
 #, kde-format
 msgid "Move the tablet to the next output"
-msgstr "Mută planșeta la următoarea ieșire"
+msgstr ""
 
 #: tablet_input.cpp:177
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Name of a hardware switch"
+#| msgid "Tablet mode"
 msgid "Tablet moved to %1"
-msgstr "Planșetă mutată la %1"
+msgstr "Regim tabletă"
 
 #: tablet_input.cpp:177
 #, kde-format
 msgid "Tablets switched outputs"
-msgstr "Planșetele au schimbat ieșirea"
+msgstr ""
 
 #: useractions.cpp:162
 #, kde-format
@@ -3278,24 +3494,28 @@ msgid "&Shade"
 msgstr "&Strânge"
 
 #: useractions.cpp:250
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No titlebar and frame"
 msgid "&No Titlebar and Frame"
-msgstr "Fără &bară de titlu și cadru"
+msgstr "Fără bară de titlu și cadru"
 
 #: useractions.cpp:258
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Set Window Short&cut..."
 msgid "Set Window Short&cut…"
 msgstr "Stabilește s&curtătura ferestrei…"
 
 #: useractions.cpp:264
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Configure Special &Window Settings..."
 msgid "Configure Special &Window Settings…"
-msgstr "Configurări &speciale pentru fereastră…"
+msgstr "Configurări &speciale fereastră..."
 
 #: useractions.cpp:269
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Configure S&pecial Application Settings..."
 msgid "Configure S&pecial Application Settings…"
-msgstr "Configurări s&peciale pentru aplicație…"
+msgstr "Configurări s&peciale aplicație..."
 
 #: useractions.cpp:275
 #, kde-format
@@ -3343,9 +3563,11 @@ msgid "Show in &Activities"
 msgstr "&Arată în activități"
 
 #: useractions.cpp:477
-#, kde-format
+#, fuzzy, kde-format
+#| msgctxt "Create a new desktop and move the window to that desktop"
+#| msgid "Move to New Desktop"
 msgid "Move &To Current Desktop"
-msgstr "Mu&tă la biroul actual"
+msgstr "Mută la birou nou"
 
 #: useractions.cpp:487 useractions.cpp:546
 #, kde-format
@@ -3359,9 +3581,10 @@ msgid "&New Desktop"
 msgstr "Birou &nou"
 
 #: useractions.cpp:580 useractions.cpp:710
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Move to %1 %2"
 msgid "Move to %1"
-msgstr "Mută la %1"
+msgstr "Mută la %1 %2"
 
 #: useractions.cpp:593
 #, kde-format
@@ -3401,9 +3624,10 @@ msgid "<b>%1</b> is used by %2 in %3"
 msgstr "<b>%1</b> este folosit de %2 în %3"
 
 #: useractions.cpp:912
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window role"
 msgid "Window Menu"
-msgstr "Meniul ferestrei"
+msgstr "Rol fereastră"
 
 #: useractions.cpp:914
 #, kde-format
@@ -3466,9 +3690,10 @@ msgid "Make Window Fullscreen"
 msgstr "Ocupă tot biroul"
 
 #: useractions.cpp:938
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No titlebar and frame"
 msgid "Toggle Window Titlebar and Frame"
-msgstr "Comută bara de titlu și cadrul ferestrei"
+msgstr "Fără bară de titlu și cadru"
 
 #: useractions.cpp:940
 #, kde-format
@@ -3596,12 +3821,14 @@ msgid "Switch to Window to the Left"
 msgstr "Schimbă la fereastra din stânga"
 
 #: useractions.cpp:990
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Increase Opacity of Active Window by 5 %"
 msgid "Increase Opacity of Active Window by 5%"
 msgstr "Crește opacitatea ferestrei active cu 5%"
 
 #: useractions.cpp:992
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Decrease Opacity of Active Window by 5 %"
 msgid "Decrease Opacity of Active Window by 5%"
 msgstr "Scade opacitatea ferestrei active cu 5%"
 
@@ -3611,24 +3838,28 @@ msgid "Keep Window on All Desktops"
 msgstr "Ține fereastra pe toate birourile"
 
 #: useractions.cpp:998
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quick Tile Window to the Left"
 msgid "Custom Quick Tile Window to the Left"
-msgstr "Fereastră în mozaic rapid personalizată la stânga"
+msgstr "Așează fereastra rapid în mozaic la stânga"
 
 #: useractions.cpp:1000
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quick Tile Window to the Right"
 msgid "Custom Quick Tile Window to the Right"
-msgstr "Fereastră în mozaic rapid personalizată la dreapta"
+msgstr "Așează fereastra rapid în mozaic la dreapta"
 
 #: useractions.cpp:1002
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quick Tile Window to the Top"
 msgid "Custom Quick Tile Window to the Top"
-msgstr "Fereastră în mozaic rapid personalizată deasupra"
+msgstr "Așează fereastra rapid în mozaic deasupra"
 
 #: useractions.cpp:1004
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Quick Tile Window to the Bottom"
 msgid "Custom Quick Tile Window to the Bottom"
-msgstr "Fereastră în mozaic rapid personalizată dedesubt"
+msgstr "Așează fereastra rapid în mozaic dedesubt"
 
 #: useractions.cpp:1015
 #, kde-format
@@ -3666,39 +3897,46 @@ msgid "Window One Desktop Down"
 msgstr "Fereastra cu un birou mai jos"
 
 #: useractions.cpp:1029
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window to Screen %1"
 msgid "Move Window to Screen %1"
-msgstr "Mută fereastra către ecranul %1"
+msgstr "Fereastra către ecranul %1"
 
 #: useractions.cpp:1036
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window to Next Screen"
 msgid "Move Window to Next Screen"
-msgstr "Mută fereastra către ecranul următor"
+msgstr "Fereastră către ecranul următor"
 
 #: useractions.cpp:1038
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window to Previous Screen"
 msgid "Move Window to Previous Screen"
-msgstr "Mută fereastra către ecranul precedent"
+msgstr "Fereastră către ecranul precedent"
 
 #: useractions.cpp:1040
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window One Desktop to the Right"
 msgid "Move Window One Screen to the Right"
-msgstr "Mută fereastra cu un ecran la dreapta"
+msgstr "Fereastra cu un birou la dreapta"
 
 #: useractions.cpp:1042
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window One Desktop to the Left"
 msgid "Move Window One Screen to the Left"
-msgstr "Mută fereastra cu un ecran la stânga"
+msgstr "Fereastra cu un birou la stânga"
 
 #: useractions.cpp:1044
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window to Screen 2"
 msgid "Move Window One Screen Up"
-msgstr "Mută fereastra cu un ecran mai sus"
+msgstr "Fereastră în biroul 2"
 
 #: useractions.cpp:1046
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Window One Desktop Down"
 msgid "Move Window One Screen Down"
-msgstr "Mută fereastra cu un ecran mai jos"
+msgstr "Fereastra cu un birou mai jos"
 
 #: useractions.cpp:1050
 #, kde-format
@@ -3716,29 +3954,34 @@ msgid "Switch to Previous Screen"
 msgstr "Schimbă la ecranul precedent"
 
 #: useractions.cpp:1059
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Switch to Window to the Right"
 msgid "Switch to Screen to the Right"
-msgstr "Schimbă la ecranul din dreapta"
+msgstr "Schimbă la fereastra din dreapta"
 
 #: useractions.cpp:1061
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Switch to Window to the Left"
 msgid "Switch to Screen to the Left"
-msgstr "Schimbă la ecranul din stânga"
+msgstr "Schimbă la fereastra din stânga"
 
 #: useractions.cpp:1063
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Switch to Screen 0"
 msgid "Switch to Screen Above"
-msgstr "Schimbă la ecranul de mai sus"
+msgstr "Comută la biroul 0"
 
 #: useractions.cpp:1065
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Switch to Screen 0"
 msgid "Switch to Screen Below"
-msgstr "Schimbă la ecranul de mai jos"
+msgstr "Comută la biroul 0"
 
 #: useractions.cpp:1068
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Move to &Desktop"
 msgid "Peek at Desktop"
-msgstr "Trage cu ochiul la birou"
+msgstr "M&ută la biroul"
 
 #: useractions.cpp:1071
 #, kde-format
@@ -3798,28 +4041,27 @@ msgstr "Comută la biroul %1"
 #: wayland/outputmanagement_v2.cpp:433
 #, kde-format
 msgid "One of the relevant outputs is no longer available"
-msgstr "Unul dintre afișajele relevante nu mai e disponibil"
+msgstr ""
 
 #: wayland/outputmanagement_v2.cpp:451
 #, kde-format
 msgid "Disabling all outputs through configuration changes is not allowed"
 msgstr ""
-"Dezactivarea tuturor afișajelor prin modificarea configurărilor nu e permisă"
 
 #: wayland/outputmanagement_v2.cpp:461
 #, kde-format
 msgid "The provided output order doesn't contain all outputs"
-msgstr "Ordinea furnizată a ieșirilor nu conține toate ieșirile"
+msgstr ""
 
 #: wayland/outputmanagement_v2.cpp:479
 #, kde-format
 msgid "The provided output order is invalid"
-msgstr "Ordinea furnizată a ieșirilor e eronată"
+msgstr ""
 
 #: wayland/outputmanagement_v2.cpp:497
 #, kde-format
 msgid "The driver rejected the output configuration"
-msgstr "Driver-ul a respins configurația ieșirilor"
+msgstr ""
 
 #: window.cpp:3303
 #, kde-format
@@ -3841,19 +4083,11 @@ msgid ""
 "paste bin service\n"
 "like https://paste.kde.org instead of pasting into support threads.\n"
 msgstr ""
-"Informații pentru asistență KWin:\n"
-"Următoarele informații trebuiesc folosite când cereți asistență, de exemplu "
-"pe https://discuss.kde.org.\n"
-"Acestea oferă informații despre instanța ce rulează acum, opțiunile "
-"folosite,\n"
-"ce driver OpenGL și ce efecte sunt active.\n"
-"Publicați informațiile oferite mai jos pe un serviciu de tip „pastebin”\n"
-"ca https://paste.kde.org în loc de a le lipi în discuții.\n"
 
 #: xwayland/xwaylandlauncher.cpp:272
 #, kde-format
 msgid "Xwayland has crashed"
-msgstr "Xwayland s-a prăbușit"
+msgstr ""
 
 #~ msgid "Window Operations Menu"
 #~ msgstr "Meniul de operații al ferestrei"

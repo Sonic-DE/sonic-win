@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-09-24 00:44+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-stable/messages/kwin-x11/kwin_x11.pot\n"
-"X-Crowdin-File-ID: 57564\n"
+"X-Crowdin-File: /kf6-trunk/messages/kwin-x11/kwin_x11.pot\n"
+"X-Crowdin-File-ID: 57292\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -1040,7 +1040,7 @@ msgstr "OpenGL"
 #: debug_console.ui:101
 #, kde-format
 msgid "No OpenGL compositor running"
-msgstr "没有正在运行的 OpenGL 显示合成器"
+msgstr "没有正在运行的 OpenGL 显示特效合成器"
 
 #. i18n: ectx: property (title), widget (QGroupBox, driverInfoBox)
 #: debug_console.ui:129
@@ -1850,7 +1850,7 @@ msgstr "圆环环数："
 #: plugins/mouseclick/mouseclick_config.ui:210
 #, kde-format
 msgid "Text"
-msgstr "文本"
+msgstr "文字"
 
 #. i18n: ectx: property (text), widget (QLabel, font_label)
 #: plugins/mouseclick/mouseclick_config.ui:216
@@ -1862,7 +1862,7 @@ msgstr "字体："
 #: plugins/mouseclick/mouseclick_config.ui:233
 #, kde-format
 msgid "Show Text:"
-msgstr "显示文本："
+msgstr "显示文字："
 
 #: plugins/mousemark/mousemark.cpp:43
 #, kde-format
@@ -2445,7 +2445,7 @@ msgstr "忽略最小化窗口(&M)"
 #: plugins/windowview/qml/main.qml:107
 #, kde-format
 msgid "No Matches"
-msgstr "没有匹配的内容"
+msgstr "无匹配项"
 
 #: plugins/windowview/qml/main.qml:107
 #, kde-format
