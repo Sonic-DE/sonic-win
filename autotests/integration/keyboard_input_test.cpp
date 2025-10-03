@@ -156,7 +156,6 @@ void KeyboardInputTest::globalShortcut()
     auto action = std::make_unique<QAction>();
     action->setObjectName(QStringLiteral("test"));
     action->setProperty("componentName", QStringLiteral("test"));
-    KGlobalAccel::self()->setShortcut(action.get(), QList<QKeySequence>{Qt::META | Qt::Key_Space}, KGlobalAccel::NoAutoloading);
     QSignalSpy actionTriggeredSpy(action.get(), &QAction::triggered);
 
     // the client should not see the space key being pressed or released
