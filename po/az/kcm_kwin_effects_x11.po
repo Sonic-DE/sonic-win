@@ -1,7 +1,8 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2025 This file is copyright:
 # This file is distributed under the same license as the kwin package.
 #
-# Xəyyam Qocayev <xxmn77@gmail.com>, 2020, 2022.
+# SPDX-FileCopyrightText: 2025 X əyyam
+# SPDX-FileCopyrightText: 2025 linux <xxmn77@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
@@ -15,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #: ui/Effect.qml:98
 #, kde-format
@@ -27,18 +28,16 @@ msgstr ""
 "Lisenziya: %2"
 
 #: ui/Effect.qml:110
-#, fuzzy, kde-format
-#| msgctxt "@info:tooltip"
-#| msgid "Configure..."
+#, kde-format
 msgctxt "@info:tooltip"
 msgid "Configure…"
-msgstr "Tənzimləmə..."
+msgstr "Tənzimləyin..."
 
 #: ui/main.qml:25
 #, kde-format
 msgctxt "@action:button get new KWin effects"
 msgid "Get New…"
-msgstr ""
+msgstr "Yenisini endirin..."
 
 #: ui/main.qml:54
 #, kde-format
