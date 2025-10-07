@@ -1120,14 +1120,6 @@ void ScreenEdges::recreateEdges()
             }
         }
     }
-    
-    // Force m_lastTrigger init on edges we have created just now
-    const auto now = std::chrono::duration_cast<std::chrono::microseconds>(
-        std::chrono::steady_clock::now().time_since_epoch());
-    for (const auto &edge : m_edges) {
-        edge->markAsTriggered(QPoint(-1, -1), now);
-    }
-    
     auto split = std::partition(oldEdges.begin(), oldEdges.end(), [](const auto &edge) {
         return !edge->client();
     });
