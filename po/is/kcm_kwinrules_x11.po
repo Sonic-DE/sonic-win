@@ -3,7 +3,7 @@
 #
 # Richard Allen <ra@ra.is>, 2004.
 # Arnar Leosson <leosson@frisurf.no>, 2005.
-# Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2010, 2011, 2022.
+# SPDX-FileCopyrightText: 2008, 2009, 2010, 2011, 2022, 2025 Sveinn í Felli <sveinki@nett.is>
 # SPDX-FileCopyrightText: 2022, 2023, 2024 gummi <gudmundure@gmail.com>
 msgid ""
 msgstr ""
@@ -587,7 +587,7 @@ msgstr "Heiti skjáborðsskrár"
 #: rulesmodel.cpp:707
 #, kde-format
 msgid "Block compositing"
-msgstr "Loka á myndsmíði"
+msgstr "Loka á skjásamsetningu"
 
 #: rulesmodel.cpp:712
 #, kde-format

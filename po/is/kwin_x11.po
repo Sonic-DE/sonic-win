@@ -46,7 +46,7 @@ msgstr "Skjáborðsbrellur voru endurræstar vegna endurstillingar á myndvinnsl
 #: compositor_x11.cpp:103
 #, kde-format
 msgid "Suspend Compositing"
-msgstr "Fresta myndsmíði"
+msgstr "Fresta skjásamsetningu"
 
 #: compositor_x11.cpp:569
 #, kde-format
@@ -56,10 +56,10 @@ msgid ""
 "meanwhile upgraded to a stable driver,<br>you can reset this protection but "
 "<b>be aware that this might result in an immediate crash!</b></p>"
 msgstr ""
-"<b>OpenGL myndsmíði (sjálfgefið) hefur áður hrunið í KWin.</b><br>Líklega "
-"orskaðist þetta af villu í rekli.<p>Ef þú telur þig hafa uppfært síðan þá í "
-"stöðugan rekil<br>geturðu endurstillt þessa vörn en <b>hafðu í huga að þetta "
-"gæti valdið tafarlausu hruni!</b></p>"
+"<b>OpenGL-skjásamsetning (sjálfgefið) hefur áður hrunið í KWin.</"
+"b><br>Líklega orsakaðist þetta af villu í rekli.<p>Ef þú telur þig hafa "
+"uppfært síðan þá í stöðugan rekil<br>geturðu endurstillt þessa vörn en "
+"<b>hafðu í huga að þetta gæti valdið tafarlausu hruni!</b></p>"
 
 #: compositor_x11.cpp:576
 #, kde-format
@@ -2941,13 +2941,13 @@ msgstr "Regla af gerðinni Litastef titilstiku"
 #: rulesettings.kcfg:316
 #, kde-format
 msgid "Block Compositing"
-msgstr "Loka á myndsmíði"
+msgstr "Loka á skjásamsetningu"
 
 #. i18n: ectx: label, entry (blockcompositingrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:320
 #, kde-format
 msgid "Block Compositing rule type"
-msgstr "Regla af gerðinni Loka á myndsmíði"
+msgstr "Regla af gerðinni Loka á skjásamsetningu"
 
 #. i18n: ectx: label, entry (fsplevel), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:325

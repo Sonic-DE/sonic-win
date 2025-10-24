@@ -3,7 +3,7 @@
 # Copyright (C) 2007, 2009 This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2010, 2016.
+# SPDX-FileCopyrightText: 2008, 2009, 2010, 2016, 2025 Sveinn í Felli <sveinki@nett.is>
 # SPDX-FileCopyrightText: 2022, 2023, 2024 Guðmundur Erlingsson <gudmundure@gmail.com>
 msgid ""
 msgstr ""
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 "\n"
-"X-Generator: Lokalize 23.08.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
 #. i18n: ectx: property (text), widget (KMessageWidget, glCrashedWarning)
 #: compositing.ui:31
@@ -32,7 +32,7 @@ msgid ""
 "you can reset this protection but be aware that this might result in an "
 "immediate crash!"
 msgstr ""
-"OpenGL-myndsmíði (sjálfgefið) hefur áður valdið hruni í KWin.\n"
+"OpenGL-skjásamsetning (sjálfgefið) hefur áður valdið hruni í KWin.\n"
 "Líklega stafar það af galla í rekli.\n"
 "Ef þú telur þig hafa uppfært í stöðugan rekil síðan þá geturðu\n"
 "endurstillt þessa vörn en gættu að því að það gæti valdið tafarlausu hruni!"
@@ -51,7 +51,7 @@ msgstr ""
 #: compositing.ui:62
 #, kde-format
 msgid "Compositing:"
-msgstr "Myndsmíði (compositing):"
+msgstr "Skjásamsetning (compositing):"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Enabled)
 #: compositing.ui:69
@@ -67,7 +67,7 @@ msgid ""
 " This brings performance improvements for e.g. games.\n"
 " The setting can be overruled by window-specific rules."
 msgstr ""
-"Forrit geta sent boð um að loka á myndsmíði þegar glugginn er opinn.\n"
+"Forrit geta sent boð um að loka á skjásamsetningu þegar glugginn er opinn.\n"
 " Þetta getur bætt afköst, til dæmis í leikjum.\n"
 " Hægt er að hnekkja þessari stillingu með reglum fyrir hvern glugga fyrir "
 "sig."
@@ -76,7 +76,7 @@ msgstr ""
 #: compositing.ui:81
 #, kde-format
 msgid "Allow applications to block compositing"
-msgstr "Leyfa forritum að loka á myndsmíði"
+msgstr "Leyfa forritum að loka á skjásamsetningu"
 
 #. i18n: ectx: property (text), widget (QLabel, animationSpeedLabel)
 #: compositing.ui:88
