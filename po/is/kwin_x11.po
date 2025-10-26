@@ -2,7 +2,7 @@
 # Íslensk þýðing kwin.po
 # Copyright (C) 2000,2003, 2005, 2008, 2009, 2010 Free Software Foundation, Inc.
 #
-# SPDX-FileCopyrightText: 2022, 2023, 2024 Guðmundur Erlingsson <gudmundure@gmail.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 Guðmundur Erlingsson <gudmundure@gmail.com>
 # Bjarni R. Einarsson <bre@netverjar.is>, 2000.
 # Richard Allen <ra@ra.is>, 2000.
 # Pjetur G. Hjaltason <pjetur@pjetur.net>, 2003.
@@ -13,14 +13,14 @@ msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-09-24 00:44+0000\n"
-"PO-Revision-Date: 2025-10-23 09:14+0000\n"
-"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic\n"
+"PO-Revision-Date: 2025-10-25 11:04+0000\n"
+"Last-Translator: Gummi <gudmundure@gmail.com>\n"
+"Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.08.1\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 "\n"
@@ -65,7 +65,7 @@ msgstr ""
 #, kde-format
 msgid "Required X extensions (XComposite and XDamage) are not available."
 msgstr ""
-"Skilyrtar X framlengingar (XComposite og XDamage) eru ekki aðgengilegar."
+"Skilyrtar X-framlengingar (XComposite og XDamage) eru ekki aðgengilegar."
 
 #: compositor_x11.cpp:579
 #, kde-format
@@ -75,75 +75,77 @@ msgstr "GLX/OpenGL er ekki tiltækt."
 #: core/iccprofile.cpp:252
 #, kde-format
 msgid "Failed to open ICC profile \"%1\""
-msgstr ""
+msgstr "Gat ekki opnað ICC-litasnið \"%1\""
 
 #: core/iccprofile.cpp:254
 #, kde-format
 msgid "ICC profile \"%1\" doesn't exist"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er ekki til"
 
 #: core/iccprofile.cpp:258
 #, kde-format
 msgid "ICC profile \"%1\" is not usable for displays"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er ekki nothæft fyrir skjái"
 
 #: core/iccprofile.cpp:261
 #, kde-format
 msgid ""
 "ICC profile \"%1\" has unsupported connection space, only XYZ is supported"
 msgstr ""
+"ICC-litasniðið \"%1\" er með óstutt tengirými, einungis er stuðningur við XYZ"
 
 #: core/iccprofile.cpp:264
 #, kde-format
 msgid "ICC profile \"%1\" is broken, input/output color space isn't RGB"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, inntaks-/úttakslitrými er ekki RGB"
 
 #: core/iccprofile.cpp:283
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no whitepoint"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, það er ekki með neinn hvítan punkt"
 
 #: core/iccprofile.cpp:286
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its whitepoint is invalid"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, hvítur punktur þess er ógildur"
 
 #: core/iccprofile.cpp:299
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, parsing chromatic adaptation matrix failed"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, þáttun á litaaðlögunarfylki mistókst"
 
 #: core/iccprofile.cpp:304
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, inverting chromatic adaptation matrix failed"
 msgstr ""
+"ICC-litasniðið \"%1\" er bilað, umhverfing litaaðlögunarfylkis mistókst"
 
 #: core/iccprofile.cpp:317
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no primaries"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, það er ekki með neina grunnliti"
 
 #: core/iccprofile.cpp:332
 #, kde-format
 msgid "ICC profile \"%1\" is broken, couldn't calculate its primaries"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, gat ekki reiknað út grunnliti þess"
 
 #: core/iccprofile.cpp:341
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its primaries are invalid"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, grunnlitir þess eru ógildir"
 
 #: core/iccprofile.cpp:357
 #, kde-format
 msgid "ICC profile \"%1\" with only BToD tags isn't supported"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" með eingöngu BToD-merki er ekki stutt"
 
 #: core/iccprofile.cpp:396
 #, kde-format
 msgid "Color profile is missing TRC tags"
-msgstr ""
+msgstr "Engin TRC-merki í litasniði"
 
 #: debug_console.cpp:79
 #, kde-format
@@ -344,7 +346,7 @@ msgstr "Delta"
 #, kde-format
 msgctxt "The relative mouse movement"
 msgid "Delta (not accelerated)"
-msgstr "Delta (ekki hröðun)"
+msgstr "Delta (engin hröðun)"
 
 #: debug_console.cpp:199
 #, kde-format
@@ -386,7 +388,7 @@ msgstr "Bendilhnappi sleppt"
 #, kde-format
 msgctxt "A mouse pointer axis (wheel) event"
 msgid "Pointer Axis"
-msgstr "Ás bendils"
+msgstr "Bendilsás"
 
 #: debug_console.cpp:240
 #, kde-format
@@ -413,14 +415,12 @@ msgid "Delta"
 msgstr "Delta"
 
 #: debug_console.cpp:244
-#, fuzzy, kde-format
-#| msgctxt "Current delta in pinch gesture"
-#| msgid "Delta x"
+#, kde-format
 msgctxt ""
 "The normalized V120 angle delta of a pointer axis event. V120 is a technical "
 "term and shouldn't be changed."
 msgid "Delta (V120)"
-msgstr "Delta x"
+msgstr "Delta (V120)"
 
 #: debug_console.cpp:259
 #, kde-format
@@ -444,7 +444,7 @@ msgstr "Shift"
 #, kde-format
 msgctxt "A keyboard modifier"
 msgid "Control"
-msgstr "Control"
+msgstr "Ctrl"
 
 #: debug_console.cpp:279
 #, kde-format
@@ -675,25 +675,24 @@ msgid "State"
 msgstr "Staða"
 
 #: debug_console.cpp:495
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Proximity"
-msgstr "Teikniborðsverkfæri"
+msgstr "Nálægð teikniborðsverkfæris"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Proximity"
-msgstr ""
+msgstr "Nálægð"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "In"
-msgstr ""
+msgstr "Inn"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Out"
-msgstr ""
+msgstr "Út"
 
 #: debug_console.cpp:497 debug_console.cpp:511 debug_console.cpp:528
 #: debug_console.cpp:572 debug_console.cpp:586
@@ -712,10 +711,9 @@ msgid "Rotation"
 msgstr "Snúningur"
 
 #: debug_console.cpp:510
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Axis"
-msgstr "Teikniborðsverkfæri"
+msgstr "Ás teikniborðsverkfæris"
 
 #: debug_console.cpp:516 debug_console.cpp:533
 #, kde-format
@@ -728,32 +726,29 @@ msgid "Buttons"
 msgstr "Hnappar"
 
 #: debug_console.cpp:526
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Tip"
-msgstr "Teikniborðsverkfæri"
+msgstr "Oddur teikniborðsverkfæris"
 
 #: debug_console.cpp:527
-#, fuzzy, kde-format
-#| msgid "Top"
+#, kde-format
 msgid "Tip"
-msgstr "Efst"
+msgstr "Oddur"
 
 #: debug_console.cpp:527
-#, fuzzy, kde-format
-#| msgid "Move Down"
+#, kde-format
 msgid "Down"
-msgstr "Færa niður"
+msgstr "Niður"
 
 #: debug_console.cpp:527
 #, kde-format
 msgid "Up"
-msgstr ""
+msgstr "Upp"
 
 #: debug_console.cpp:543
 #, kde-format
 msgid "Tablet Tool Button"
-msgstr "Verkfærishnappur teikniborðs"
+msgstr "Hnappur teikniborðsverkfæris"
 
 #: debug_console.cpp:544 debug_console.cpp:558
 #, kde-format
@@ -794,13 +789,13 @@ msgstr "er fingur"
 #: debug_console.cpp:584
 #, kde-format
 msgid "Tablet Pad Ring"
-msgstr "Hringur á teikniborðsspjaldi"
+msgstr "Teikniborðshringur"
 
 #: debug_console.cpp:651
 #, kde-format
 msgctxt "@label"
 msgid "Effects"
-msgstr "Brellur"
+msgstr "Áhrif"
 
 #: debug_console.cpp:825
 #, kde-format
@@ -1011,7 +1006,7 @@ msgstr "Innri gluggar"
 #, kde-format
 msgctxt "@action:button unload an effect"
 msgid "Unload"
-msgstr "Stöðva"
+msgstr "Afhlaða"
 
 #: debug_console.cpp:1616 debug_console.cpp:1630
 #, kde-format
@@ -1021,10 +1016,9 @@ msgstr "Hlaða inn"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, DebugConsole)
 #: debug_console.ui:14
-#, fuzzy, kde-format
-#| msgid "Quit Debug Console"
+#, kde-format
 msgid "Debug Console"
-msgstr "Hætta í villuleitarglugga"
+msgstr "Villuleitargluggi"
 
 #. i18n: ectx: property (text), widget (QPushButton, quitButton)
 #: debug_console.ui:38
@@ -1060,7 +1054,7 @@ msgstr "OpenGL"
 #: debug_console.ui:101
 #, kde-format
 msgid "No OpenGL compositor running"
-msgstr "Enginn OpenGL-myndsmiður í gangi"
+msgstr "Engin OpenGL-skjásamsetning í gangi"
 
 #. i18n: ectx: property (title), widget (QGroupBox, driverInfoBox)
 #: debug_console.ui:129
@@ -1181,7 +1175,7 @@ msgstr "Klippispjald"
 #: debug_console.ui:490
 #, kde-format
 msgid "Primary Selection"
-msgstr "Aðalval (primary)"
+msgstr "Aðalval"
 
 #: helpers/killer/killer.cpp:159
 #, kde-format
@@ -1191,7 +1185,7 @@ msgstr "Gluggastjóri"
 #: helpers/killer/killer.cpp:164
 #, kde-format
 msgid "PID of the application to terminate"
-msgstr "PID forrits sem á að slökkva á"
+msgstr "PID-auðkenni forrits sem á að loka"
 
 #: helpers/killer/killer.cpp:164
 #, kde-format
@@ -1201,7 +1195,7 @@ msgstr "pid"
 #: helpers/killer/killer.cpp:166
 #, kde-format
 msgid "Hostname on which the application is running"
-msgstr "Nafn vélar þar sem forritið er í keyrslu"
+msgstr "Heiti vélar þar sem forritið er í keyrslu"
 
 #: helpers/killer/killer.cpp:166
 #, kde-format
@@ -1241,7 +1235,7 @@ msgstr "auðkenni"
 #: helpers/killer/killer.cpp:174
 #, kde-format
 msgid "Time of user action causing termination"
-msgstr "Tímasetning aðgerðar notandans sem olli stöðvuninni"
+msgstr "Tímasetning notandaaðgerðar sem olli stöðvuninni"
 
 #: helpers/killer/killer.cpp:174
 #, kde-format
@@ -1251,7 +1245,7 @@ msgstr "tímasetning"
 #: helpers/killer/killer.cpp:176
 #, kde-format
 msgid "KWin helper utility"
-msgstr "KWin hjálparverkfæri"
+msgstr "KWin-hjálparverkfæri"
 
 #: helpers/killer/killer.cpp:212
 #, kde-format
@@ -1672,13 +1666,13 @@ msgstr "rúlla upp"
 #, kde-format
 msgctxt "Note this is a KRunner keyword"
 msgid "keep above"
-msgstr "halda efst"
+msgstr "hafa efst"
 
 #: plugins/krunner-integration/windowsrunnerinterface.cpp:68
 #, kde-format
 msgctxt "Note this is a KRunner keyword"
 msgid "keep below"
-msgstr "halda undir öðru"
+msgstr "hafa undir öðru"
 
 #: plugins/krunner-integration/windowsrunnerinterface.cpp:75
 #, kde-format
@@ -1728,7 +1722,7 @@ msgstr "Fullstækka/endurheimta glugga sem keyrir á %1"
 #: plugins/krunner-integration/windowsrunnerinterface.cpp:308
 #, kde-format
 msgid "Toggle fullscreen for running window on %1"
-msgstr "Víxla skjáfylli af/á fyrir glugga sem keyrir á %1"
+msgstr "Skjáfylli af/á fyrir glugga sem keyrir á %1"
 
 #: plugins/krunner-integration/windowsrunnerinterface.cpp:311
 #, kde-format
@@ -1797,7 +1791,7 @@ msgstr "Hægri"
 #: plugins/mouseclick/mouseclick_config.ui:21
 #, kde-format
 msgid "Basic Settings"
-msgstr "Einfaldar stillingar"
+msgstr "Grunnstillingar"
 
 #. i18n: ectx: property (text), widget (QLabel, button1_label)
 #: plugins/mouseclick/mouseclick_config.ui:37
@@ -1821,7 +1815,7 @@ msgstr "Litur hægri músarhnapps:"
 #: plugins/mouseclick/mouseclick_config.ui:91
 #, kde-format
 msgid "Advanced Settings"
-msgstr "Ítarlegra stillingar"
+msgstr "Ítarlegar stillingar"
 
 #. i18n: ectx: property (title), widget (QGroupBox, rings)
 #: plugins/mouseclick/mouseclick_config.ui:97
@@ -1833,7 +1827,7 @@ msgstr "Hringir"
 #: plugins/mouseclick/mouseclick_config.ui:103
 #, kde-format
 msgid "Line Width:"
-msgstr "Breidd línu:"
+msgstr "Línubreidd:"
 
 #. i18n: ectx: property (suffix), widget (QDoubleSpinBox, kcfg_LineWidth)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_RingSize)
@@ -1847,7 +1841,7 @@ msgstr " px"
 #: plugins/mouseclick/mouseclick_config.ui:132
 #, kde-format
 msgid " msec"
-msgstr " msek"
+msgstr " msek."
 
 #. i18n: ectx: property (text), widget (QLabel, ring_duration_label)
 #: plugins/mouseclick/mouseclick_config.ui:145
@@ -1888,17 +1882,17 @@ msgstr "Sýna texta:"
 #: plugins/mousemark/mousemark.cpp:43
 #, kde-format
 msgid "Clear All Mouse Marks"
-msgstr "Hreinsa allar músarslóðir"
+msgstr "Hreinsa öll músarmerki"
 
 #: plugins/mousemark/mousemark.cpp:49 plugins/mousemark/mousemark_config.cpp:52
 #, kde-format
 msgid "Clear Last Mouse Mark"
-msgstr "Hreinsa síðustu músarslóð"
+msgstr "Hreinsa síðasta músarmerki"
 
 #: plugins/mousemark/mousemark_config.cpp:46
 #, kde-format
 msgid "Clear Mouse Marks"
-msgstr "Hreinsa músarslóðir"
+msgstr "Hreinsa músarmerki"
 
 #: plugins/mousemark/mousemark_config.cpp:87
 #, kde-format
@@ -1932,7 +1926,7 @@ msgstr "&Litur:"
 #, kde-format
 msgid "Draw with the mouse by holding modifier keys and moving the mouse"
 msgstr ""
-"Teikna með músinni með því að halda niðri breytilyklunum og hreyfa músina um "
+"Teiknaðu með músinni með því að halda niðri breytilyklum og hreyfa músina um "
 "leið."
 
 #. i18n: ectx: property (text), widget (QLabel, label_FreedrawModifierKeys)
@@ -1991,19 +1985,19 @@ msgstr "Breytilyklar fyrir örvateikningu:"
 #, kde-format
 msgctxt "Night Light was temporarily disabled"
 msgid "Night Light Suspended"
-msgstr "Næturlýsingu frestað"
+msgstr "Næturlitum frestað"
 
 #: plugins/nightlight/nightlightmanager.cpp:56
 #, kde-format
 msgctxt "Night Light was reenabled from temporary suspension"
 msgid "Night Light Resumed"
-msgstr "Næturlýsing endurheimt"
+msgstr "Næturlitir endurheimtir"
 
 #: plugins/nightlight/nightlightmanager.cpp:77
 #, kde-format
 msgctxt "Temporarily disable/reenable Night Light"
 msgid "Suspend/Resume Night Light"
-msgstr "Fresta/Endurheimta næturlýsingu"
+msgstr "Fresta/endurheimta næturliti"
 
 #: plugins/nightlight/nightlightmanager.cpp:393
 #, kde-format
@@ -2020,20 +2014,20 @@ msgstr "Óþekkt"
 #, kde-format
 msgctxt "@action Overview and Grid View are the name of KWin effects"
 msgid "Cycle through Overview and Grid View"
-msgstr "Keyra í gegnum yfirlit og reitayfirlit"
+msgstr "Fletta í gegnum yfirlitsskjá og reitayfirlit"
 
 #: plugins/overview/kcm/overvieweffectkcm.cpp:46
 #: plugins/overview/overvieweffect.cpp:135
 #, kde-format
 msgctxt "@action Grid View and Overview are the name of KWin effects"
 msgid "Cycle through Grid View and Overview"
-msgstr "Keyra í gegnum reitayfirlit og yfirlit"
+msgstr "Fletta í gegnum reitayfirlit og yfirlitsskjá"
 
 #: plugins/overview/kcm/overvieweffectkcm.cpp:53
 #, kde-format
 msgctxt "@action Overview is the name of a KWin effect"
 msgid "Toggle Overview"
-msgstr "Víxla yfirliti"
+msgstr "Víxla yfirlitsskjá"
 
 #: plugins/overview/kcm/overvieweffectkcm.cpp:60
 #, kde-format
@@ -2063,13 +2057,13 @@ msgstr "Leitarniðurstöður innifela síaða glugga:"
 #, kde-format
 msgctxt "@action Grid View and Overview are the name of KWin effects"
 msgid "Cycle through Overview and Grid View"
-msgstr "Keyra í gegnum yfirlit og reitayfirlit"
+msgstr "Fletta í gegnum yfirlitsskjá og reitayfirlit"
 
 #: plugins/overview/overvieweffect.cpp:143
 #, kde-format
 msgctxt "@action Overview is the name of a Kwin effect"
 msgid "Toggle Overview"
-msgstr "Víxla yfirliti"
+msgstr "Víxla yfirlitsskjá"
 
 #: plugins/overview/overvieweffect.cpp:152
 #, kde-format
@@ -2236,7 +2230,7 @@ msgstr " px"
 #: plugins/thumbnailaside/thumbnailaside_config.ui:68
 #, kde-format
 msgid "&Opacity:"
-msgstr "Ó&gagnsæi:"
+msgstr "&Gagnsæi:"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_Opacity)
 #: plugins/thumbnailaside/thumbnailaside_config.ui:87
@@ -2290,7 +2284,7 @@ msgstr "Eyða"
 #: plugins/trackmouse/trackmouse_config.cpp:49
 #, kde-format
 msgid "Track mouse"
-msgstr "Rekja mús"
+msgstr "Fylgja mús"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: plugins/trackmouse/trackmouse_config.ui:26
@@ -2360,7 +2354,7 @@ msgstr "Valmyndir:"
 #: plugins/translucency/package/contents/ui/config.ui:207
 #, kde-format
 msgid "Moving windows:"
-msgstr "Hreyfanlegir gluggar:"
+msgstr "Gluggar á hreyfingu:"
 
 #. i18n: ectx: property (text), widget (QLabel, inactive_label)
 #: plugins/translucency/package/contents/ui/config.ui:226
@@ -2402,7 +2396,7 @@ msgstr "Myndefnisveggur"
 #: plugins/videowall/package/contents/ui/config.ui:20
 #, kde-format
 msgid "Apply to"
-msgstr "Nota"
+msgstr "Nota á"
 
 #. i18n: ectx: property (text), widget (QLineEdit, kcfg_Whitelist)
 #: plugins/videowall/package/contents/ui/config.ui:32
@@ -2464,7 +2458,7 @@ msgstr "Víxla Sýna glugga (gluggaflokkur á núverandi skjáborði)"
 #: plugins/windowview/kcm/windowvieweffectkcm.ui:22
 #, kde-format
 msgid "Ignore &minimized windows"
-msgstr "Hunsa &minnkaða glugga"
+msgstr "Hunsa &falda glugga"
 
 #: plugins/windowview/qml/main.qml:107
 #, kde-format
@@ -2605,7 +2599,7 @@ msgstr "Eyða þessari reglu (til notkunar í innflutningi)"
 #: rulesettings.kcfg:20
 #, kde-format
 msgid "This rule is enabled"
-msgstr ""
+msgstr "Þessi regla er virk"
 
 #. i18n: ectx: label, entry (wmclass), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:24
@@ -2623,7 +2617,7 @@ msgstr "Samsvörunargerð strengs fyrir gluggaflokk"
 #: rulesettings.kcfg:33
 #, kde-format
 msgid "Match whole window class"
-msgstr "Samsvara öllum gluggaflokki"
+msgstr "Samsvara öllum gluggaflokkinum"
 
 #. i18n: ectx: label, entry (windowrole), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:38
@@ -2731,25 +2725,25 @@ msgstr "Regla af gerðinni Hámarksstærð glugga"
 #: rulesettings.kcfg:122
 #, kde-format
 msgid "Active opacity"
-msgstr "Virkt ógagnsæi"
+msgstr "Gagnsæi virks glugga"
 
 #. i18n: ectx: label, entry (opacityactiverule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:128
 #, kde-format
 msgid "Active opacity rule type"
-msgstr "Regla af gerðinni Virkt ógagnsæi"
+msgstr "Regla af gerðinni Gagnsæi virks glugga"
 
 #. i18n: ectx: label, entry (opacityinactive), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:133
 #, kde-format
 msgid "Inactive opacity"
-msgstr "Óvirkt ógagnsæi"
+msgstr "Gagnsæi óvirks glugga"
 
 #. i18n: ectx: label, entry (opacityinactiverule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:139
 #, kde-format
 msgid "Inactive opacity rule type"
-msgstr "Regla af gerðinni Óvirkt ógagnsæi"
+msgstr "Regla af gerðinni Gagnsæi óvirks glugga"
 
 #. i18n: ectx: label, entry (ignoregeometry), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:144
@@ -3148,17 +3142,15 @@ msgid "Log Out Anyway"
 msgstr "Skrá samt út"
 
 #: sm.cpp:478
-#, fuzzy, kde-format
-#| msgid ""
-#| "The following applications did not close:\n"
-#| "%1"
+#, kde-format
 msgid ""
 "The following applications did not close:\n"
 "%1\n"
 "Logging out anyway in 2 minutes."
 msgstr ""
-"Eftirfarandi forrit lokaðist ekki:\n"
-"%1"
+"Eftirfarandi forrit lokuðust ekki:\n"
+"%1\n"
+"Skrái samt út eftir 2 mínútur."
 
 #: tabbox/clientmodel.cpp:58
 #, kde-format
@@ -3267,12 +3259,12 @@ msgstr "B&reyta stærð"
 #: useractions.cpp:226
 #, kde-format
 msgid "Keep &Above Others"
-msgstr "Halda &efst"
+msgstr "H&afa ofan á öðrum"
 
 #: useractions.cpp:232
 #, kde-format
 msgid "Keep &Below Others"
-msgstr "Halda &undir öðrum"
+msgstr "Hafa un&dir öðrum"
 
 #: useractions.cpp:238
 #, kde-format
@@ -3408,10 +3400,9 @@ msgid "<b>%1</b> is used by %2 in %3"
 msgstr "<b>%1</b> er notað af %2 í %3"
 
 #: useractions.cpp:912
-#, fuzzy, kde-format
-#| msgid "Window role"
+#, kde-format
 msgid "Window Menu"
-msgstr "Hlutverk glugga"
+msgstr "Gluggavalmynd"
 
 #: useractions.cpp:914
 #, kde-format
@@ -3606,12 +3597,12 @@ msgstr "Skipta yfir í glugga til vinstri"
 #: useractions.cpp:990
 #, kde-format
 msgid "Increase Opacity of Active Window by 5%"
-msgstr "Auka ógagnsæi virks glugga um 5%"
+msgstr "Minnka gagnsæi virks glugga um 5%"
 
 #: useractions.cpp:992
 #, kde-format
 msgid "Decrease Opacity of Active Window by 5%"
-msgstr "Minnka ógagnsæi virks glugga um 5%"
+msgstr "Auka gagnsæi virks glugga um 5%"
 
 #: useractions.cpp:995
 #, kde-format
@@ -3619,28 +3610,24 @@ msgid "Keep Window on All Desktops"
 msgstr "Halda glugga á öllum skjáborðum"
 
 #: useractions.cpp:998
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Left"
+#, kde-format
 msgid "Custom Quick Tile Window to the Left"
-msgstr "Flýtireitaraða glugga til vinstri"
+msgstr "Sérsniðin flýtireitaröðun glugga til vinstri"
 
 #: useractions.cpp:1000
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Right"
+#, kde-format
 msgid "Custom Quick Tile Window to the Right"
-msgstr "Flýtireitaraða glugga til hægri"
+msgstr "Sérsniðin flýtireitaröðun glugga til hægri"
 
 #: useractions.cpp:1002
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Top"
+#, kde-format
 msgid "Custom Quick Tile Window to the Top"
-msgstr "Flýtireitaraða glugga efst"
+msgstr "Sérsniðin flýtireitaröðun glugga efst"
 
 #: useractions.cpp:1004
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Bottom"
+#, kde-format
 msgid "Custom Quick Tile Window to the Bottom"
-msgstr "Flýtireitaraða glugga neðst"
+msgstr "Sérsniðin flýtireitaröðun glugga neðst"
 
 #: useractions.cpp:1015
 #, kde-format
@@ -3715,37 +3702,37 @@ msgstr "Færa glugga niður um skjá"
 #: useractions.cpp:1050
 #, kde-format
 msgid "Switch to Screen %1"
-msgstr "Skipta á skjá %1"
+msgstr "Skipta yfir á skjá %1"
 
 #: useractions.cpp:1057
 #, kde-format
 msgid "Switch to Next Screen"
-msgstr "Skipta á næsta skjá"
+msgstr "Skipta yfir á næsta skjá"
 
 #: useractions.cpp:1058
 #, kde-format
 msgid "Switch to Previous Screen"
-msgstr "Skipta á fyrri skjá"
+msgstr "Skipta yfir á fyrri skjá"
 
 #: useractions.cpp:1059
 #, kde-format
 msgid "Switch to Screen to the Right"
-msgstr "Skipta á skjá til hægri"
+msgstr "Skipta yfir á skjá til hægri"
 
 #: useractions.cpp:1061
 #, kde-format
 msgid "Switch to Screen to the Left"
-msgstr "Skipta á skjá til vinstri"
+msgstr "Skipta yfir á skjá til vinstri"
 
 #: useractions.cpp:1063
 #, kde-format
 msgid "Switch to Screen Above"
-msgstr "Skipta á skjá fyrir ofan"
+msgstr "Skipta yfir á skjá fyrir ofan"
 
 #: useractions.cpp:1065
 #, kde-format
 msgid "Switch to Screen Below"
-msgstr "Skipta á skjá fyrir neðan"
+msgstr "Skipta yfir á skjá fyrir neðan"
 
 #: useractions.cpp:1068
 #, kde-format
@@ -3775,62 +3762,63 @@ msgstr "Skjáborð %1"
 #: virtualdesktops.cpp:746
 #, kde-format
 msgid "Switch to Next Desktop"
-msgstr "Á næsta skjáborð"
+msgstr "Fara á næsta skjáborð"
 
 #: virtualdesktops.cpp:747
 #, kde-format
 msgid "Switch to Previous Desktop"
-msgstr "Á fyrra skjáborð"
+msgstr "Fara á fyrra skjáborð"
 
 #: virtualdesktops.cpp:750
 #, kde-format
 msgid "Switch One Desktop to the Right"
-msgstr "Eitt skjáborð til hægri"
+msgstr "Fara eitt skjáborð til hægri"
 
 #: virtualdesktops.cpp:751
 #, kde-format
 msgid "Switch One Desktop to the Left"
-msgstr "Eitt skjáborð til vinstri"
+msgstr "Fara eitt skjáborð til vinstri"
 
 #: virtualdesktops.cpp:752
 #, kde-format
 msgid "Switch One Desktop Up"
-msgstr "Eitt skjáborð upp"
+msgstr "Fara eitt skjáborð upp"
 
 #: virtualdesktops.cpp:753
 #, kde-format
 msgid "Switch One Desktop Down"
-msgstr "Eitt skjáborð niður"
+msgstr "Fara eitt skjáborð niður"
 
 #: virtualdesktops.cpp:841
 #, kde-format
 msgid "Switch to Desktop %1"
-msgstr "Skipta á skjáborð %1"
+msgstr "Skipta yfir á skjáborð %1"
 
 #: wayland/outputmanagement_v2.cpp:433
 #, kde-format
 msgid "One of the relevant outputs is no longer available"
-msgstr ""
+msgstr "Eitt af úttökunum sem á við er ekki lengur tiltækt"
 
 #: wayland/outputmanagement_v2.cpp:451
 #, kde-format
 msgid "Disabling all outputs through configuration changes is not allowed"
 msgstr ""
+"Ekki er leyfilegt að gera öll úttök óvirk með breytingum á grunnstillingum"
 
 #: wayland/outputmanagement_v2.cpp:461
 #, kde-format
 msgid "The provided output order doesn't contain all outputs"
-msgstr ""
+msgstr "Úttaksröðin sem er gefin inniheldur ekki öll úttök"
 
 #: wayland/outputmanagement_v2.cpp:479
 #, kde-format
 msgid "The provided output order is invalid"
-msgstr ""
+msgstr "Úttaksröðin sem er gefin er ógild"
 
 #: wayland/outputmanagement_v2.cpp:497
 #, kde-format
 msgid "The driver rejected the output configuration"
-msgstr ""
+msgstr "Rekillinn hafnaði grunnstillingu úttaksins"
 
 #: window.cpp:3303
 #, kde-format
@@ -3858,7 +3846,7 @@ msgstr ""
 "Þær veita upplýsingar um tilvikið sem er í gangi, hvaða valkostir eru í "
 "notkun,\n"
 "hvaða OpenGL-rekill og hvaða brellur eru keyrðar.\n"
-"Settu upplýsingarnar fyrir neðan þennan inngangstexta í afritunarsíðu \n"
+"Settu inn upplýsingarnar fyrir neðan þennan inngangstexta í afritunarsíðu \n"
 "eins og https://paste.kde.org í stað þess að líma þær inn í aðstoðarbeiðni.\n"
 
 #: xwayland/xwaylandlauncher.cpp:272
