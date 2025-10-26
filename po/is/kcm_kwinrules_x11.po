@@ -4,20 +4,20 @@
 # Richard Allen <ra@ra.is>, 2004.
 # Arnar Leosson <leosson@frisurf.no>, 2005.
 # SPDX-FileCopyrightText: 2008, 2009, 2010, 2011, 2022, 2025 Sveinn í Felli <sveinki@nett.is>
-# SPDX-FileCopyrightText: 2022, 2023, 2024 gummi <gudmundure@gmail.com>
+# SPDX-FileCopyrightText: 2022, 2023, 2024, 2025 gummi <gudmundure@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwinrules\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-03-11 00:42+0000\n"
-"PO-Revision-Date: 2025-10-23 09:17+0000\n"
-"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic\n"
+"PO-Revision-Date: 2025-10-23 21:59+0000\n"
+"Last-Translator: Gummi <gudmundure@gmail.com>\n"
+"Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.08.1\n"
 "Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 "\n"
@@ -121,8 +121,8 @@ msgid ""
 msgstr ""
 "Gluggaeiginleikinn verður ekki fyrir áhrifum og verður því meðhöndlaður á "
 "sjálfgefinn hátt.\n"
-"Ef þetta er tilgreint kemur það í veg fyrir að almennari gluggastillingar "
-"taki gildi."
+"Ef þetta er valið kemur það í veg fyrir að almennari gluggastillingar taki "
+"gildi."
 
 #: optionsmodel.cpp:221
 #, kde-format
@@ -145,8 +145,8 @@ msgid ""
 "The window property will be forced to the given value until it is hidden\n"
 "(this action will be deleted after the window is hidden)."
 msgstr ""
-"Gluggaeiginleikinn verður þvingaður á tilgreinda gildið\n"
-"þar til hann er falinn\n"
+"Gluggaeiginleikinn verður þvingaður á tilgreinda gildið þar til hann er "
+"falinn\n"
 "(þessari aðgerð verður eytt eftir glugginn er falinn)."
 
 #: rulesmodel.cpp:224
@@ -191,8 +191,8 @@ msgid ""
 "Readability may be impaired with extremely low opacity values. At 0%, the "
 "window becomes invisible."
 msgstr ""
-"Ef mjög lág gagnsæisgildi eru valin getur læsileiki versnað. Þegar 0% er "
-"valið verður glugginn ósýnilegur."
+"Ef mjög lág gagnsæisgildi eru valin getur læsileiki gluggans versnað. "
+"Glugginn verður ósýnilegur við 0%."
 
 #: rulesmodel.cpp:384
 #, kde-format
@@ -208,12 +208,12 @@ msgstr "Samsvörun glugga"
 #: rulesmodel.cpp:392
 #, kde-format
 msgid "Window class (application)"
-msgstr "Gluggaflokkur (forrit):"
+msgstr "Gluggaflokkur (forrit)"
 
 #: rulesmodel.cpp:400
 #, kde-format
 msgid "Match whole window class"
-msgstr "Samsvara öllum gluggaflokkinum"
+msgstr "Samsvara öllum gluggaflokki"
 
 #: rulesmodel.cpp:407
 #, kde-format
@@ -223,17 +223,17 @@ msgstr "Allur gluggaflokkurinn"
 #: rulesmodel.cpp:413
 #, kde-format
 msgid "Window types"
-msgstr "Gerðir glugga"
+msgstr "Gluggagerðir"
 
 #: rulesmodel.cpp:421
 #, kde-format
 msgid "Window role"
-msgstr "Hlutverk glugga"
+msgstr "Gluggahlutverk"
 
 #: rulesmodel.cpp:426
 #, kde-format
 msgid "Window title"
-msgstr "Titill glugga"
+msgstr "Gluggatitill"
 
 #: rulesmodel.cpp:432
 #, kde-format
@@ -243,7 +243,7 @@ msgstr "Vél (vélarheiti):"
 #: rulesmodel.cpp:438
 #, kde-format
 msgid "Position"
-msgstr "Staða"
+msgstr "Staðsetning"
 
 #: rulesmodel.cpp:438 rulesmodel.cpp:444 rulesmodel.cpp:450 rulesmodel.cpp:455
 #: rulesmodel.cpp:463 rulesmodel.cpp:469 rulesmodel.cpp:488 rulesmodel.cpp:504
@@ -325,12 +325,12 @@ msgid ""
 "can also be used to map to a different <interface>Screen</interface>"
 msgstr ""
 "Sum forrit geta valið eigin stærð og lögun sem hnekkir kjörstillingum "
-"gluggastjórans. Með því að stilla þennan eiginleika er staðsetningarbeiðni "
+"gluggastjórans. Með því að velja þennan eiginleika er staðsetningarbeiðni "
 "þeirra hnekkt.<nl/><nl/>Þetta hefur áhrif á <interface>stærð</interface> og "
-"<interface>staðsetningu</interface> en ekki stöðu gluggans við "
-"<interface>fullstækkun</interface> eða <interface>skjáfylli</interface>.<nl/"
-"><nl/>Athugaðu að einnig er hægt að nota staðsetninguna til að staðsetja á "
-"öðrum <interface>skjá</interface>"
+"<interface>staðsetningu</interface> en ekki ástand gluggans þegar hann er "
+"<interface>fullstækkaður</interface> eða <interface>fyllir skjá</interface>."
+"<nl/><nl/>Athugaðu að einnig er hægt að nota staðsetninguna til að varpa á "
+"annan <interface>skjá</interface>"
 
 #: rulesmodel.cpp:545
 #, kde-format
@@ -359,10 +359,10 @@ msgid ""
 msgstr ""
 "Sum forrit, eins og myndspilarar eða skjáhermar, geta beðið KWin um að fá að "
 "halda tilteknu myndhlutfalli eða stækka einungis í hlutfalli við gildi sem "
-"er stærra en víddir eins stafs). Notaðu þennan eiginleika til að hunsa "
-"slíkar takmarkanir og leyfa að stærð þessara glugga sé breytt í hvaða stærð "
-"sem er.<nl/><nl/>Þetta getur verið gagnlegt fyrir glugga sem ná ekki alveg "
-"yfir allan skjáinn við fullstækkun."
+"er stærra en víddir eins stafs. Notaðu þennan eiginleika til að hunsa slíkar "
+"takmarkanir og leyfa að stærð þessara glugga sé breytt í hvaða stærð sem er."
+"<nl/><nl/>Þetta getur verið gagnlegt fyrir glugga sem ná ekki alveg yfir "
+"allan skjáinn við fullstækkun."
 
 #: rulesmodel.cpp:568
 #, kde-format
@@ -383,18 +383,18 @@ msgstr "Hafa undir öðrum gluggum"
 #: rulesmodel.cpp:578
 #, kde-format
 msgid "Skip taskbar"
-msgstr "Sleppa verkstiku"
+msgstr "Sleppa í verkstiku"
 
 #: rulesmodel.cpp:580
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Controls whether or not the window appears in the Task Manager."
-msgstr "Stjórnar því hvort gluggi birtist í Verkefnastjóranum eða ekki."
+msgstr "Stjórnar því hvort glugginn birtist í Verkefnastjóranum eða ekki."
 
 #: rulesmodel.cpp:584
 #, kde-format
 msgid "Skip pager"
-msgstr "Sleppa flettara"
+msgstr "Sleppa í flettara"
 
 #: rulesmodel.cpp:586
 #, kde-format
@@ -407,7 +407,7 @@ msgstr ""
 #: rulesmodel.cpp:590
 #, kde-format
 msgid "Skip switcher"
-msgstr "Sleppa verkefnaskipti"
+msgstr "Sleppa í gluggaskipti"
 
 #: rulesmodel.cpp:592
 #, kde-kuit-format
@@ -416,8 +416,8 @@ msgid ""
 "Controls whether or not the window appears in the <shortcut>Alt+Tab</"
 "shortcut> window list."
 msgstr ""
-"Stjórnar því hvort gluggi birtist í <shortcut>Alt+Tab</shortcut> "
-"gluggalistanum eða ekki."
+"Stjórnar því hvort gluggi birtist í gluggalistanum þegar ýtt er á "
+"<shortcut>Alt+Tab</shortcut> eða ekki."
 
 #: rulesmodel.cpp:596
 #, kde-format
@@ -435,7 +435,7 @@ msgstr "Engin titilstika og rammi"
 #: rulesmodel.cpp:718 rulesmodel.cpp:723
 #, kde-format
 msgid "Appearance & Fixes"
-msgstr "Útlit og umbætur"
+msgstr "Útlit og lagfæringar"
 
 #: rulesmodel.cpp:607
 #, kde-format
@@ -478,19 +478,18 @@ msgid ""
 "currently-focused window.</item><item><emphasis strong='true'>Extreme:</"
 "emphasis> The window will never be raised and focused.</item></list>"
 msgstr ""
-"KWin reynir að koma í veg fyrir að gluggar sem eru opnaðir án beinnar aðkomu "
-"notandans birtist efst og taki fókusinn á meðan þú ert að vinna í öðrum "
-"glugga. Hægt er að nota þennan eiginleika til að breyta fókusvarnarþrepinu "
-"sem beitt er á tiltekna glugga og forrit.<nl/><nl/>Þegar nýir gluggar opnast "
-"án beinnar aðkomu þinnar á hverju fókusvarnarþrepi þegar gluggi með þennan "
-"eiginleika virkan er með fókus, þá gerist þetta:<nl/><list><item><emphasis "
-"strong='true'>Ekkert</emphasis>: Glugginn birtast efst og fær fókusinn.</"
-"item><item><emphasis strong='true'>Lágt:</emphasis> Vörn gegn fókusstuldi "
-"virkjast, en ef KWin metur stöðuna sem tvíræða birtist glugginn efst og fær "
-"fókus.</item><item><emphasis strong='true'>Venjulegt:</emphasis> Vörn gegn "
-"fókusstuldi verður beitt, en ef KWin metur stöðuna sem tvíræða birtist "
-"glugginn <emphasis>ekki</emphasis> efst og fær ekki fókus.</"
-"item><item><emphasis strong='true'>Hátt:</emphasis> Glugginn birtst aðeins "
+"KWin reynir að hindra glugga, sem eru opnaðir án beinnar aðkomu notandans, í "
+"að birtast efst og taka fókusinn þegar þú ert að vinna í öðrum glugga. Hægt "
+"er að nota þennan eiginleika til að breyta fókusvarnarþrepinu sem beitt er á "
+"tiltekna glugga og forrit.<nl/><nl/>Þegar nýir gluggar opnast án beinnar "
+"aðkomu þinnar á hverju fókusvarnarþrepi þá gerist þetta:<nl/"
+"><list><item><emphasis strong='true'>Ekkert</emphasis>: Glugginn birtist "
+"efst og fær fókusinn.</item><item><emphasis strong='true'>Lágt:</emphasis> "
+"Vörn gegn fókusstuldi virkjast, en ef KWin metur stöðuna sem tvíræða birtist "
+"glugginn efst og fær fókus.</item><item><emphasis strong='true'>Venjulegt:</"
+"emphasis> Vörn gegn fókusstuldi verður beitt, en ef KWin metur stöðuna sem "
+"tvíræða birtist glugginn <emphasis>ekki</emphasis> efst og fær ekki fókus.</"
+"item><item><emphasis strong='true'>Hátt:</emphasis> Glugginn birtist aðeins "
 "efst og fær fókus ef hann tilheyrir sama forriti og glugginn sem er með "
 "fókusinn. </item><item><emphasis strong='true'>Öfgafullt:</emphasis> "
 "Glugginn birtist aldrei efst og fær ekki fókus.</item></list>"
@@ -526,10 +525,9 @@ msgstr ""
 "Þessi eiginleiki stjórnar fókusvarnarþrepi gluggans sem er virkur þá "
 "stundina. Hann er notaður til að hnekkja vörn gegn fókusstuldi sem virkjast "
 "þegar nýir gluggar opnast án beinnar aðkomu þinnar.<nl/><nl/>Þegar nýir "
-"gluggar opnast án beinnar aðkomu þinnar á hverju fókusvarnarþrepi þegar "
-"gluggi með þennan eiginleika virkan er með fókus, þá gerist þetta:<nl/"
-"><list><item><emphasis strong='true'>Ekkert</emphasis>: Nýopnaðir gluggar "
-"birtast alltaf efst og taka fókusinn.</item><item><emphasis "
+"gluggar opnast án beinnar aðkomu þinnar á hverju fókusvarnarþrepi þá gerist "
+"þetta:<nl/><list><item><emphasis strong='true'>Ekkert</emphasis>: Nýopnaðir "
+"gluggar birtast alltaf efst og taka fókusinn.</item><item><emphasis "
 "strong='true'>Lágt:</emphasis> Vörn gegn fókusstuldi virkjast á nýopnaða "
 "gluggann, en ef KWin metur stöðuna sem tvíræða birtist glugginn efst og fær "
 "fókus.</item><item><emphasis strong='true'>Venjulegt:</emphasis> Vörn gegn "
@@ -678,7 +676,7 @@ msgstr "Sjálfstæð valmyndastika"
 #: rulesmodel.cpp:821 rulesmodel.cpp:927
 #, kde-format
 msgid "On-screen display"
-msgstr "Yfirlag á skjá"
+msgstr "Yfirlagsmynd á skjá"
 
 #: rulesmodel.cpp:831
 #, kde-format
@@ -689,7 +687,7 @@ msgstr "Öll skjáborð"
 #, kde-format
 msgctxt "@info:tooltip in the virtual desktop list"
 msgid "Make the window available on all desktops"
-msgstr "Hafa gluggann á öllum skjáborðum"
+msgstr "Láta gluggann birtast á öllum skjáborðum"
 
 #: rulesmodel.cpp:852
 #, kde-format
@@ -700,7 +698,7 @@ msgstr "Allar athafnir"
 #, kde-format
 msgctxt "@info:tooltip in the activity list"
 msgid "Make the window available on all activities"
-msgstr "Hafa gluggann í öllum athöfnum"
+msgstr "Láta gluggann birtast í öllum athöfnum"
 
 #: rulesmodel.cpp:875
 #, kde-format
@@ -800,7 +798,7 @@ msgstr "Alvarleg viðvörun"
 #: rulesmodel.cpp:928
 #, kde-format
 msgid "Overlay"
-msgstr "Yfirlag"
+msgstr "Yfirlagsmynd"
 
 #: rulesmodel.cpp:953
 #, kde-format
@@ -846,7 +844,7 @@ msgstr "Flytja út..."
 #: ui/main.qml:88
 #, kde-format
 msgid "No rules for specific windows are currently set"
-msgstr "Ekki hafa verið valdar reglur fyrir tiltekna glugga eins og er"
+msgstr "Engar reglur valdar sem stendur fyrir tiltekna glugga"
 
 #: ui/main.qml:89
 #, kde-kuit-format
