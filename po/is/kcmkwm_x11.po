@@ -195,8 +195,8 @@ msgid ""
 "Here you select whether holding the Meta key or Alt key will allow you to "
 "perform the following actions."
 msgstr ""
-"Hér getur þú valið hvort það að halda Meta- eða Alt-lykli heimili þér að "
-"framkvæma eftirfarandi aðgerðir."
+"Hér getur þú valið hvort það að halda niðri Meta- eða Alt-lykli heimili þér "
+"að framkvæma eftirfarandi aðgerðir."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllKey)
 #: actions.ui:231
@@ -533,21 +533,21 @@ msgstr ""
 "\">Snjallt</span> reynir að láta gluggana skarast sem minnst</li><li style="
 "\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-"
 "block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;"
-"\">Fullstækka</span> reynir að fullstækka gluggana svo þeir nái yfir allan "
-"skjáinn. Það getur verið gagnlegt að velja staðsetningu sumra glugga með því "
-"að nota stillingar fyrir tiltekna glugga.</li><li style=\" margin-top:0px; "
+"\">Fullstækka</span> reynir að fullstækka alla glugga svo þeir nái yfir "
+"allan skjáinn. Það getur verið gagnlegt að velja staðsetningu sumra glugga "
+"með því að nota stillingar fyrir tiltekna glugga.</li><li style=\" margin-"
+"top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-"
+"indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">Slembið</"
+"span> velur tilviljanakennda staðsetningu</li><li style=\" margin-top:0px; "
 "margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; "
-"text-indent:0px;\"><span style=\" font-style:italic;\">Slembið</span> velur "
-"tilviljanakennda staðsetningu</li><li style=\" margin-top:0px; margin-"
+"text-indent:0px;\"><span style=\"font-style:italic;\">Miðja</span> setur "
+"gluggann á mitt skjáborðið</li><li style=\" margin-top:0px; margin-"
 "bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-"
-"indent:0px;\"><span style=\"font-style:italic;\">Miðja</span> setur gluggann "
-"á mitt skjáborðið</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
-"left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
-"style=\" font-style:italic;\">Út í horn</span> setur gluggann efst í vinstra "
-"hornið</li><li style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; "
-"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"style:italic;\">Undir mús</span> setur gluggann undir músarbendilinn</li></"
-"ul></body></html>"
+"indent:0px;\"><span style=\" font-style:italic;\">Út í horn</span> setur "
+"gluggann efst í vinstra hornið</li><li style=\" margin-top:0px; margin-"
+"bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-"
+"indent:0px;\"><span style=\" font-style:italic;\">Undir mús</span> setur "
+"gluggann undir músarbendilinn</li></ul></body></html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:80
@@ -559,7 +559,7 @@ msgstr "Lágmarksskörun"
 #: advanced.ui:85
 #, kde-format
 msgid "Maximized"
-msgstr "Fullstækka"
+msgstr "Fullstækkaður"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:90
@@ -571,13 +571,13 @@ msgstr "Slembið"
 #: advanced.ui:95
 #, kde-format
 msgid "Centered"
-msgstr "Miðja"
+msgstr "Miðjaður"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:100
 #, kde-format
 msgid "In Top-Left Corner"
-msgstr "Efst í vinstra horn"
+msgstr "Efst í vinstra horni"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:105
@@ -718,7 +718,7 @@ msgstr ""
 #: focus.ui:101
 #, kde-format
 msgid "Focus &stealing prevention:"
-msgstr "Vörn gegn fókusstuldi:"
+msgstr "Vörn gegn fókus&stuldi:"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:114
@@ -892,7 +892,7 @@ msgstr ""
 #: focus.ui:209
 #, kde-format
 msgid "&Separate screen focus"
-msgstr "Aðs&kilja skjáfókus"
+msgstr "Að&skilja skjáfókus"
 
 #. i18n: ectx: property (text), widget (QLabel, windowFocusPolicyDescriptionLabel)
 #: focus.ui:222
@@ -1165,8 +1165,7 @@ msgid ""
 "moved near another window."
 msgstr ""
 "Hér getur þú stillt gripsvæði fyrir glugga, þ.e. 'styrkleika' segulsviðsins "
-"sem fær glugga til að smella hver við annan þegar þeir eru færðir að öðrum "
-"gluggum."
+"sem fær glugga til að smella saman þegar þeir eru færðir að öðrum gluggum."
 
 #. i18n: ectx: property (text), widget (QLabel, centerSnaplabel)
 #: moving.ui:84
@@ -1183,7 +1182,7 @@ msgid ""
 "when moved near it."
 msgstr ""
 "Hér getur þú stillt gripsvæði fyrir miðju skjásins, þ.e. 'styrkleika' "
-"segulsviðsins sem fær gluggana til að festast við mðjuna á skjánum þegar "
+"segulsviðsins sem fær gluggana til að festast við miðjuna á skjánum þegar "
 "þeir eru færðir að henni."
 
 #. i18n: ectx: property (text), widget (QLabel, OverlapSnapLabel)
@@ -1200,9 +1199,9 @@ msgid ""
 "them, i.e. they will not be snapped if the windows comes only near another "
 "window or border."
 msgstr ""
-"Hér getur þú valið að gluggar grípi í aðra glugga ef þú reynir að láta þá "
-"skarast, þ.e. þeir grípa ekki í aðra glugga ef gluggarnir koma einungis "
-"nálægt öðrum glugga eða jöðrum."
+"Hér getur þú valið að gluggar smelli bara saman þegar þú reynir að láta þá "
+"skarast, þ.e. þeir smella ekki saman ef gluggarnir koma bara nálægt öðrum "
+"glugga eða skjájaðri."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SnapOnlyWhenOverlapping)
 #: moving.ui:126
