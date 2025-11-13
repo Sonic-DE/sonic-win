@@ -47,7 +47,7 @@ public:
     }
     Qt::KeyboardModifiers arrowdraw_modifiers() const
     {
-        return m_freedraw_modifiers;
+        return m_arrowdraw_modifiers;
     }
 private Q_SLOTS:
     void clear();
