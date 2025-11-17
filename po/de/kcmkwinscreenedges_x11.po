@@ -1,16 +1,15 @@
+# SPDX-FileCopyrightText: 2009, 2010, 2023 Johannes Obermayr <johannesobermayr@gmx.de>
+# SPDX-FileCopyrightText: 2009, 2013, 2014, 2015, 2017, 2018, 2019, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
 # SPDX-FileCopyrightText: 2009 Thomas Reitelbach <tr@erdfunkstelle.de>
-# SPDX-FileCopyrightText: 2009, 2013-2015, 2017-2021 Burkhard Lück <lueck@hube-lueck.de>
-# SPDX-FileCopyrightText: 2009-2010, 2023 Johannes Obermayr <johannesobermayr@gmx.de>
 # SPDX-FileCopyrightText: 2012, 2016, 2020, 2022 Frederik Schwarzer <schwarzer@kde.org>
 # SPDX-FileCopyrightText: 2022 Frank Steinmetzger <dev-kde@felsenfleischer.de>
 # SPDX-FileCopyrightText: 2023 Jannick Kuhr <opensource@kuhr.org>
 # SPDX-FileCopyrightText: 2024 Nicolai Weitkemper <kontakt@nicolaiweitkemper.de>
-# SPDX-FileCopyrightText: 2026 Alexander Becker <alex-at-kde-l10n-de@freenet.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwinscreenedges\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-11-17 11:53+0000\n"
 "PO-Revision-Date: 2024-06-02 12:35+0200\n"
 "Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -19,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.12.3\n"
+"X-Generator: Lokalize 24.05.0\n"
 
 #: main.cpp:152 touch.cpp:118
 #, kde-format
@@ -59,17 +58,17 @@ msgstr "Fenster zeigen"
 #: main.cpp:162 touch.cpp:128
 #, kde-format
 msgid "%1 - All Desktops"
-msgstr "%1 – Alle Arbeitsflächen"
+msgstr "%1 - Alle Arbeitsflächen"
 
 #: main.cpp:163 touch.cpp:129
 #, kde-format
 msgid "%1 - Current Desktop"
-msgstr "%1 – Aktuelle Arbeitsfläche"
+msgstr "%1 - Aktuelle Arbeitsfläche"
 
 #: main.cpp:164 touch.cpp:130
 #, kde-format
 msgid "%1 - Current Application"
-msgstr "%1 – Aktuelle Anwendung"
+msgstr "%1 - Aktuelle Anwendung"
 
 #: main.cpp:166 touch.cpp:132
 #, kde-format
@@ -79,7 +78,7 @@ msgstr "Übersicht"
 #: main.cpp:167 touch.cpp:133
 #, kde-format
 msgid "Grid"
-msgstr "Gitter"
+msgstr ""
 
 #: main.cpp:169 touch.cpp:135
 #, kde-format
@@ -183,13 +182,15 @@ msgstr "Deaktiviert"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
 #: main.ui:193
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Only When Moving Windows"
 msgid "Only when moving windows"
 msgstr "Nur beim Verschieben von Fenstern"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
 #: main.ui:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Always Enabled"
 msgid "Always enabled"
 msgstr "Immer aktiviert"
 
@@ -236,7 +237,7 @@ msgstr "&Reaktivierungsverzögerung:"
 #: main.ui:270
 #, kde-format
 msgid "&Corner barrier:"
-msgstr "&Eckenbarriere:"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_CornerBarrier)
 #: main.ui:280
@@ -248,25 +249,19 @@ msgid ""
 "interface elements like maximized windows' close buttons when using multiple "
 "screens."
 msgstr ""
-"Hier können Sie die virtuelle Eckenbarriere zwischen Bildschirmen aktivieren "
-"oder deaktivieren. Die Barriere verhindert, dass sich der Cursor zu einem "
-"anderen Bildschirm bewegt, wenn er bereits eine Bildschirmecke berührt. Dies "
-"erleichtert das Auslösen von Elementen der Benutzeroberfläche, wie z. B. die "
-"Schaltflächen zum Schließen maximierter Fenster, wenn mehrere Bildschirme "
-"verwendet werden."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CornerBarrier)
 #: main.ui:283
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Prevents cursors from crossing at screen corners."
-msgstr "Verhindert, dass der Cursor die Bildschirmecken überquert."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, EdgeBarrierLabel)
 #: main.ui:290
 #, kde-format
 msgid "&Edge barrier:"
-msgstr "&Randbarriere:"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_EdgeBarrier)
 #: main.ui:300
@@ -278,12 +273,6 @@ msgid ""
 "interface elements like Plasma Panels that are located on an edge between "
 "screens."
 msgstr ""
-"Hier können Sie die Größe der Randbarriere zwischen verschiedenen "
-"Bildschirmen einstellen. Die Barriere fügt eine zusätzliche Distanz hinzu, "
-"die Sie mit Ihrem Mauszeiger zurücklegen müssen, bevor er die Kante zum "
-"anderen Bildschirm überquert. Dies erleichtert den Zugriff auf Elemente der "
-"Benutzeroberfläche wie z. B. Plasma-Kontrolleisten, die sich an einer Kante "
-"zwischen Bildschirmen befinden."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_EdgeBarrier)
 #: main.ui:303
@@ -291,20 +280,18 @@ msgstr ""
 msgctxt "@info:tooltip"
 msgid "Additional distance cursor needs to travel to cross screen edges."
 msgstr ""
-"Zusätzliche Distanz, die der Cursor zurücklegen muss, um den Bildschirmrand "
-"zu überqueren."
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_EdgeBarrier)
 #: main.ui:306
 #, kde-format
 msgid "None"
-msgstr "Keine"
+msgstr ""
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_EdgeBarrier)
 #: main.ui:309
 #, kde-format
 msgid " px"
-msgstr " px"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_1)
 #: touch.ui:17

@@ -3,14 +3,14 @@
 # Copyright (C) 2008 This_file_is_part_of_KDE
 # This file is distributed under the same license as the kcm_kwindesktop package.
 # Laurenţiu Buzdugan <lbuz@rolix.org>, 2008, 2009".
-# SPDX-FileCopyrightText: 2008, 2009, 2010, 2011, 2013, 2020, 2021, 2024, 2026 Sergiu Bivol <sergiu@cip.md>
+# Sergiu Bivol <sergiu@cip.md>, 2008, 2009, 2010, 2011, 2013, 2020, 2021, 2024.
 # Cristian Oneț <onet.cristian@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kcm_kwindesktop\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-11-17 11:53+0000\n"
 "PO-Revision-Date: 2024-02-27 21:22+0000\n"
 "Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
 "Language-Team: Romanian <kde-i18n-ro@kde.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -61,13 +61,14 @@ msgstr "A avut loc o eroare în timpul cererii informațiilor de la compozitor."
 #, kde-format
 msgctxt "@text:label Number of rows, label associated to a number input field"
 msgid "Rows:"
-msgstr "Rânduri:"
+msgstr ""
 
 #: ui/main.qml:54
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "New Desktop"
 msgctxt "@action:button"
 msgid "Add Desktop"
-msgstr "Adaugă birou"
+msgstr "Birou nou"
 
 #: ui/main.qml:123
 #, kde-format

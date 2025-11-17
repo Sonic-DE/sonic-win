@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin-x11\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-11-17 11:53+0000\n"
 "PO-Revision-Date: 2024-09-26 10:06+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -51,7 +51,7 @@ msgstr "L'script «%1» s'ha importat correctament."
 #: module.cpp:131
 #, kde-format
 msgid "Error when uninstalling KWin Script: %1"
-msgstr "S'ha produït un error mentre es desinstal·lava l'script de KWin: %1"
+msgstr "S'ha produït un error en desinstal·lar l'Script de KWin: %1"
 
 #: ui/main.qml:23
 #, kde-format

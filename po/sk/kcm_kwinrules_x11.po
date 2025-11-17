@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwinrules\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-11-17 11:53+0000\n"
 "PO-Revision-Date: 2023-12-02 20:10+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -19,8 +19,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Lokalize 24.01.80\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: kcmrules.cpp:228
 #, kde-format
@@ -43,22 +43,26 @@ msgid "Unimportant"
 msgstr "Nedôležité"
 
 #: optionsmodel.cpp:199
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Exact Match"
 msgid "Exact match"
 msgstr "Presná zhoda"
 
 #: optionsmodel.cpp:200
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Substring Match"
 msgid "Substring match"
 msgstr "Zhoda s podreťazcom"
 
 #: optionsmodel.cpp:201
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Regular Expression"
 msgid "Regular expression"
 msgstr "Regulárny výraz"
 
 #: optionsmodel.cpp:205
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Apply Initially"
 msgid "Apply initially"
 msgstr "Aplikovať na začiatku"
 
@@ -73,7 +77,8 @@ msgstr ""
 "Žiadne ďalšie zmeny nebudú ovplyvnené."
 
 #: optionsmodel.cpp:209
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Apply Now"
 msgid "Apply now"
 msgstr "Aplikovať teraz"
 
@@ -103,7 +108,8 @@ msgstr ""
 "posledná zapamätaná hodnota."
 
 #: optionsmodel.cpp:217
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Do Not Affect"
 msgid "Do not affect"
 msgstr "Neovplyvňovať"
 
@@ -129,7 +135,8 @@ msgid "The window property will be always forced to the given value."
 msgstr "Vlastnosť okna bude vždy vynútená na zadanú hodnotu."
 
 #: optionsmodel.cpp:224
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Force Temporarily"
 msgid "Force temporarily"
 msgstr "Vynútiť dočasne"
 
@@ -261,12 +268,14 @@ msgid "Maximized vertically"
 msgstr "Maximalizované vertikálne"
 
 #: rulesmodel.cpp:463
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Virtual Desktop"
 msgid "Virtual desktop"
 msgstr "Virtuálna plocha"
 
 #: rulesmodel.cpp:469
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Virtual Desktops"
 msgid "Virtual desktops"
 msgstr "Virtuálne pracovné plochy"
 
@@ -587,17 +596,17 @@ msgstr "Blokovať kompozíciu"
 #: rulesmodel.cpp:712
 #, kde-format
 msgid "Layer"
-msgstr "Vrstva"
+msgstr ""
 
 #: rulesmodel.cpp:718
 #, kde-format
 msgid "Adaptive sync"
-msgstr "Adaptívna synchronizácia"
+msgstr ""
 
 #: rulesmodel.cpp:723
 #, kde-format
 msgid "Allow tearing"
-msgstr "Povoliť trhanie"
+msgstr ""
 
 #: rulesmodel.cpp:775
 #, kde-format
@@ -620,22 +629,26 @@ msgstr ""
 "vývojárom aplikácie."
 
 #: rulesmodel.cpp:810
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "All Window Types"
 msgid "All window types"
 msgstr "Všetky typy okien"
 
 #: rulesmodel.cpp:811
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Normal Window"
 msgid "Normal window"
 msgstr "Normálne okno"
 
 #: rulesmodel.cpp:812
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Dialog Window"
 msgid "Dialog window"
 msgstr "Dialógové okno"
 
 #: rulesmodel.cpp:813
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Utility Window"
 msgid "Utility window"
 msgstr "Nástrojové okno"
 
@@ -650,12 +663,14 @@ msgid "Toolbar"
 msgstr "Panel nástrojov"
 
 #: rulesmodel.cpp:816
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Torn-Off Menu"
 msgid "Torn-off menu"
 msgstr "Odtrhnutá ponuka"
 
 #: rulesmodel.cpp:817
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Splash Screen"
 msgid "Splash screen"
 msgstr "Úvodná obrazovka"
 
@@ -666,17 +681,20 @@ msgstr "Plocha"
 
 #. i18n("Unmanaged Window")},  deprecated
 #: rulesmodel.cpp:820
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Standalone Menubar"
 msgid "Standalone menubar"
 msgstr "Samostatná ponuka"
 
 #: rulesmodel.cpp:821 rulesmodel.cpp:927
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "On Screen Display"
 msgid "On-screen display"
 msgstr "Zobrazenie na obrazovke"
 
 #: rulesmodel.cpp:831
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "All Desktops"
 msgid "All desktops"
 msgstr "Všetky plochy"
 
@@ -687,7 +705,8 @@ msgid "Make the window available on all desktops"
 msgstr "Sprístupniť okno na všetkých plochách"
 
 #: rulesmodel.cpp:852
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "All Activities"
 msgid "All activities"
 msgstr "Všetky aktivity"
 
@@ -703,12 +722,14 @@ msgid "Default"
 msgstr "Štandardné"
 
 #: rulesmodel.cpp:876
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No Placement"
 msgid "No placement"
 msgstr "Bez umiestnenia"
 
 #: rulesmodel.cpp:877
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Minimal Overlapping"
 msgid "Minimal overlapping"
 msgstr "Minimálne prekrývanie"
 
@@ -728,17 +749,20 @@ msgid "Random"
 msgstr "Náhodné"
 
 #: rulesmodel.cpp:881
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "In Top-Left Corner"
 msgid "In top-left corner"
 msgstr "V ľavom hornom rohu"
 
 #: rulesmodel.cpp:882
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Under Mouse"
 msgid "Under mouse"
 msgstr "Pod myšou"
 
 #: rulesmodel.cpp:883
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "On Main Window"
 msgid "On main window"
 msgstr "Na hlavné okno"
 
@@ -770,32 +794,34 @@ msgstr "Extrémna"
 #: rulesmodel.cpp:920
 #, kde-format
 msgid "Below"
-msgstr "Pod"
+msgstr ""
 
 #: rulesmodel.cpp:922
 #, kde-format
 msgid "Above"
-msgstr "Nad"
+msgstr ""
 
 #: rulesmodel.cpp:923
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Position"
 msgid "Notification"
-msgstr "Oznámenie"
+msgstr "Pozícia"
 
 #: rulesmodel.cpp:925
 #, kde-format
 msgid "Popup"
-msgstr "Vyskakovacie okno"
+msgstr ""
 
 #: rulesmodel.cpp:926
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Position"
 msgid "Critical notification"
 msgstr "Pozícia"
 
 #: rulesmodel.cpp:928
 #, kde-format
 msgid "Overlay"
-msgstr "Prekrytie"
+msgstr ""
 
 #: rulesmodel.cpp:953
 #, kde-format
@@ -843,7 +869,9 @@ msgid "No rules for specific windows are currently set"
 msgstr "Žiadne pravidlá pre konkrétne okná nie sú aktuálne nastavené"
 
 #: ui/main.qml:89
-#, kde-kuit-format
+#, fuzzy, kde-kuit-format
+#| msgctxt "@info"
+#| msgid "Click the <interface>Add New…</interface> button below to add some"
 msgctxt "@info"
 msgid "Click <interface>Add New…</interface> to add some"
 msgstr ""
@@ -957,16 +985,18 @@ msgid "Add property to the rule"
 msgstr "Pridať vlastnosť tomuto pravidlu"
 
 #: ui/RulesEditor.qml:267
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No window properties changed"
 msgctxt "@info:placeholder"
 msgid "No properties left to add"
 msgstr "Nezmenili sa žiadne vlastnosti okna"
 
 #: ui/RulesEditor.qml:269
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "No window properties changed"
 msgctxt "@info:placeholder %1 is a filter text introduced by the user"
 msgid "No properties match \"%1\""
-msgstr "No properties match \"%1\""
+msgstr "Nezmenili sa žiadne vlastnosti okna"
 
 #: ui/RulesEditor.qml:290 ui/ValueEditor.qml:54
 #, kde-format
@@ -1017,6 +1047,12 @@ msgstr "x"
 #~ msgstr "Okno sa zobrazí/nezobrazi v zozname Alt+Tab"
 
 #, fuzzy
+#~| msgid ""
+#~| "KWin tries to prevent windows from taking the focus\n"
+#~| "(\"activate\") while you're working in another window,\n"
+#~| "but this may sometimes fail or superact.\n"
+#~| "\"None\" will unconditionally allow this window to get the focus while\n"
+#~| "\"Extreme\" will completely prevent it from taking the focus."
 #~ msgid ""
 #~ "KWin tries to prevent windows from taking the focus (\"activate\") while "
 #~ "you're working in another window, but this may sometimes fail or "
@@ -1030,6 +1066,12 @@ msgstr "x"
 #~ "\"Extrémne\" úplne zabráni získanie fokusu."
 
 #, fuzzy
+#~| msgid ""
+#~| "This controls the focus protection of the currently active window.\n"
+#~| "None will always give the focus away,\n"
+#~| "Extreme will keep it.\n"
+#~| "Otherwise it's interleaved with the stealing prevention\n"
+#~| "assigned to the window that wants the focus."
 #~ msgid ""
 #~ "This controls the focus protection of the currently active window. None "
 #~ "will always give the focus away, Extreme will keep it. Otherwise it's "
@@ -1043,6 +1085,10 @@ msgstr "x"
 #~ "priradené k oknu, ktoré chce zameranie."
 
 #, fuzzy
+#~| msgid ""
+#~| "Windows may prevent to get the focus (activate) when being clicked.\n"
+#~| "On the other hand you might wish to prevent a window\n"
+#~| "from getting focused on a mouse click."
 #~ msgid ""
 #~ "Windows may prevent to get the focus (activate) when being clicked. On "
 #~ "the other hand you might wish to prevent a window from getting focused on "
@@ -1053,6 +1099,15 @@ msgstr "x"
 #~ "fokusu pri kliknutí myšou."
 
 #, fuzzy
+#~| msgid ""
+#~| "When used, a window will receive\n"
+#~| "all keyboard inputs while it is active, including Alt+Tab etc.\n"
+#~| "This is especially interesting for emulators or virtual machines.\n"
+#~| "\n"
+#~| "Be warned:\n"
+#~| "you won't be able to Alt+Tab out of the window\n"
+#~| "nor use any other global shortcut (such as Alt+F2 to show KRunner)\n"
+#~| "while it's active!"
 #~ msgid ""
 #~ "When used, a window will receive all keyboard inputs while it is active, "
 #~ "including Alt+Tab etc. This is especially interesting for emulators or "
