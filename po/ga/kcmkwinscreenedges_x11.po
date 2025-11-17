@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwinscreenedges\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-11-17 11:53+0000\n"
 "PO-Revision-Date: 2009-02-28 14:19-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -53,19 +53,22 @@ msgid "Present Windows"
 msgstr ""
 
 #: main.cpp:162 touch.cpp:128
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "All Desktops"
 msgid "%1 - All Desktops"
-msgstr ""
+msgstr "Gach Deasc"
 
 #: main.cpp:163 touch.cpp:129
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Current Desktop"
 msgid "%1 - Current Desktop"
-msgstr ""
+msgstr "An Deasc Reatha"
 
 #: main.cpp:164 touch.cpp:130
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Current Application"
 msgid "%1 - Current Application"
-msgstr ""
+msgstr "An Feidhmchlár Reatha"
 
 #: main.cpp:166 touch.cpp:132
 #, kde-format
@@ -89,11 +92,16 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, infoLabel)
 #: main.ui:23
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "To trigger an action push your mouse cursor against the edge of the "
+#| "screen in the action's direction."
 msgid ""
 "You can trigger an action by pushing the mouse cursor against the "
 "corresponding screen edge or corner."
 msgstr ""
+"Chun gníomh a chur ar siúl, brúigh cúrsóir do luiche in aghaidh chiumhais an "
+"scáileáin i dtreo an ghnímh."
 
 #. i18n: ectx: property (text), widget (QLabel, quickMaximizeLabel)
 #: main.ui:67
@@ -115,9 +123,10 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ElectricBorderTiling)
 #: main.ui:94
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Tile windows by dragging them to the side of the screen"
 msgid "Windows dragged to left or right edge"
-msgstr ""
+msgstr "Tíligh fuinneoga trí iad a tharraingt go dtí ciumhais an scáileáin"
 
 #. i18n: ectx: property (text), widget (QLabel, label)
 #: main.ui:101
@@ -179,15 +188,17 @@ msgstr "Díchumasaithe"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
 #: main.ui:193
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Only When Moving Windows"
 msgid "Only when moving windows"
-msgstr ""
+msgstr "Agus fuinneoga á mbogadh amháin"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
 #: main.ui:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Always Enabled"
 msgid "Always enabled"
-msgstr ""
+msgstr "Cumasaithe i gcónaí"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, activationDelayLabel)
 #: main.ui:206
@@ -290,8 +301,60 @@ msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_1)
 #: touch.ui:17
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "To trigger an action push your mouse cursor against the edge of the "
+#| "screen in the action's direction."
 msgid ""
 "You can trigger an action by swiping from the screen edge towards the center "
 "of the screen."
 msgstr ""
+"Chun gníomh a chur ar siúl, brúigh cúrsóir do luiche in aghaidh chiumhais an "
+"scáileáin i dtreo an ghnímh."
+
+#~ msgid "Show Desktop"
+#~ msgstr "Taispeáin an Deasc"
+
+#, fuzzy
+#~| msgid "Cube"
+#~ msgid "%1 - Cube"
+#~ msgstr "Ciúb"
+
+#, fuzzy
+#~| msgid "Cylinder"
+#~ msgid "%1 - Cylinder"
+#~ msgstr "Sorcóir"
+
+#, fuzzy
+#~| msgid "Sphere"
+#~ msgid "%1 - Sphere"
+#~ msgstr "Sféar"
+
+#, fuzzy
+#~| msgid "Active Screen Edge Actions"
+#~ msgid "Active Screen Corners and Edges"
+#~ msgstr "Gníomhartha Ciumhaiseanna Gníomhacha"
+
+#~ msgid "Window Management"
+#~ msgstr "Bainisteoireacht Fuinneog"
+
+#, fuzzy
+#~| msgid "Maximize windows by dragging them to the top of the screen"
+#~ msgid "Maximize windows by dragging them to the top edge of the screen"
+#~ msgstr ""
+#~ "Uasmhéadaigh fuinneoga trí iad a tharraingt go dtí barr an scáileáin"
+
+#~ msgid "Other Settings"
+#~ msgstr "Socruithe Eile"
+
+#~ msgid "Show Dashboard"
+#~ msgstr "Taispeáin Painéal na nIonstraimí"
+
+#~ msgid "Prevent Screen Locking"
+#~ msgstr "Cuir Cosc Ar Ghlasáil Scáileáin"
+
+#~ msgid "Trigger &cooldown:"
+#~ msgstr "&Cuir fuarú ar siúl:"
+
+#~ msgid "Action Groups"
+#~ msgstr "Grúpaí Gníomhartha"

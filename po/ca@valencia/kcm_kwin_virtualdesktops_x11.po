@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin-x11\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-11-17 11:53+0000\n"
 "PO-Revision-Date: 2024-04-27 10:57+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -43,19 +43,17 @@ msgstr[1] "Escriptori %1"
 #: desktopsmodel.cpp:479
 #, kde-format
 msgid "There was an error connecting to the compositor."
-msgstr "S'ha produït un error mentre es connectava amb el compositor."
+msgstr "S'ha produït un error en connectar amb el compositor."
 
 #: desktopsmodel.cpp:678
 #, kde-format
 msgid "There was an error saving the settings to the compositor."
-msgstr ""
-"S'ha produït un error mentre es guardava la configuració al compositor."
+msgstr "S'ha produït un error en guardar la configuració al compositor."
 
 #: desktopsmodel.cpp:681
 #, kde-format
 msgid "There was an error requesting information from the compositor."
-msgstr ""
-"S'ha produït un error mentre se sol·licitava informació des del compositor."
+msgstr "S'ha produït un error en sol·licitar informació des del compositor."
 
 #: ui/main.qml:26
 #, kde-format

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kcm_kwindesktop\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-11-17 11:53+0000\n"
 "PO-Revision-Date: 2023-05-06 17:59+0200\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <opensuse-translation@opensuse.org>\n"
@@ -17,8 +17,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Lokalize 21.12.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -55,13 +55,15 @@ msgid "There was an error requesting information from the compositor."
 msgstr "Nastala chyba pri žiadaní informácií od kompozítora."
 
 #: ui/main.qml:26
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Rows:"
 msgctxt "@text:label Number of rows, label associated to a number input field"
 msgid "Rows:"
 msgstr "Riadky:"
 
 #: ui/main.qml:54
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "New Desktop"
 msgctxt "@action:button"
 msgid "Add Desktop"
 msgstr "Nová pracovná plocha"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwinscreenedges\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-11-17 11:53+0000\n"
 "PO-Revision-Date: 2023-12-12 19:23+0100\n"
 "Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
 "Language-Team: Slovak <kde-sk@linux.sk>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Lokalize 23.08.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: main.cpp:152 touch.cpp:118
 #, kde-format
@@ -77,7 +77,7 @@ msgstr "Prehľad"
 #: main.cpp:167 touch.cpp:133
 #, kde-format
 msgid "Grid"
-msgstr "Mriežka"
+msgstr ""
 
 #: main.cpp:169 touch.cpp:135
 #, kde-format
@@ -181,13 +181,15 @@ msgstr "Zakázané"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
 #: main.ui:193
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Only When Moving Windows"
 msgid "Only when moving windows"
 msgstr "Len pri presúvaní okien"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
 #: main.ui:198
-#, kde-format
+#, fuzzy, kde-format
+#| msgid "Always Enabled"
 msgid "Always enabled"
 msgstr "Vždy povolené"
 
@@ -232,7 +234,7 @@ msgstr "Oneskorenie &reaktivácie:"
 #: main.ui:270
 #, kde-format
 msgid "&Corner barrier:"
-msgstr "&Bariéra v rohu:"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_CornerBarrier)
 #: main.ui:280
@@ -244,24 +246,19 @@ msgid ""
 "interface elements like maximized windows' close buttons when using multiple "
 "screens."
 msgstr ""
-"Tu môžete povoliť alebo zakázať virtuálnu bariéru v rohu medzi obrazovkami. "
-"Bariéra bráni kurzoru v prechode na inú obrazovku, keď sa už dotýka rohu "
-"obrazovky. To uľahčuje aktiváciu prvkov používateľského rozhrania, ako sú "
-"tlačidlá na zatvorenie maximalizovaných okien, pri používaní viacerých "
-"obrazoviek."
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_CornerBarrier)
 #: main.ui:283
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Prevents cursors from crossing at screen corners."
-msgstr "Bráni kurzorom v prechode cez rohy obrazoviek."
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, EdgeBarrierLabel)
 #: main.ui:290
 #, kde-format
 msgid "&Edge barrier:"
-msgstr "&Bariéra na hrane:"
+msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_EdgeBarrier)
 #: main.ui:300
@@ -273,11 +270,6 @@ msgid ""
 "interface elements like Plasma Panels that are located on an edge between "
 "screens."
 msgstr ""
-"Tu môžete nastaviť veľkosť bariéry na hrane medzi rôznymi obrazovkami. "
-"Bariéra pridáva dodatočnú vzdialenosť, o ktorú musíte posunúť ukazovateľ, "
-"než prejde cez hranu na inú obrazovku. To uľahčuje prístup k prvkom "
-"používateľského rozhrania, ako sú panely Plasma, ktoré sa nachádzajú na "
-"hrane medzi obrazovkami."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_EdgeBarrier)
 #: main.ui:303
@@ -285,20 +277,18 @@ msgstr ""
 msgctxt "@info:tooltip"
 msgid "Additional distance cursor needs to travel to cross screen edges."
 msgstr ""
-"Dodatočná vzdialenosť, ktorú musí kurzor prejsť na prekročenie hrán "
-"obrazoviek."
 
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_EdgeBarrier)
 #: main.ui:306
 #, kde-format
 msgid "None"
-msgstr "Žiadny"
+msgstr ""
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_EdgeBarrier)
 #: main.ui:309
 #, kde-format
 msgid " px"
-msgstr " px"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, label_1)
 #: touch.ui:17

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
+"POT-Creation-Date: 2025-11-17 11:53+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-stable/messages/kwin-x11/kcmkwm_x11.pot\n"
-"X-Crowdin-File-ID: 57552\n"
+"X-Crowdin-File: /kf6-trunk/messages/kwin-x11/kcmkwm_x11.pot\n"
+"X-Crowdin-File-ID: 57282\n"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_1)
 #: actions.ui:20
@@ -442,7 +442,7 @@ msgid ""
 "unshade automatically when the mouse pointer has been over the titlebar for "
 "some time.</p></body></html>"
 msgstr ""
-"<html><head/><body><p>如果此选项被启用，当鼠标指针在标题栏上悬停片刻后，折叠"
+"<html><head/><body><p>如果此选项被启用，当鼠标光标在标题栏上悬停片刻后，折叠"
 "窗口将自动展开。</p></body></html>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShadeHover)
@@ -457,7 +457,7 @@ msgstr "标题栏悬停后："
 msgid ""
 "Sets the time in milliseconds before the window unshades when the mouse "
 "pointer goes over the shaded window."
-msgstr "设置鼠标指针在折叠的窗口上悬停多少毫秒后自动展开窗口。"
+msgstr "设置鼠标光标在折叠的窗口上悬停多少毫秒后自动展开窗口。"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_DelayFocusInterval)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_AutoRaiseInterval)
@@ -520,7 +520,7 @@ msgstr ""
 "style:italic;\">左上角</span>：在左上角放置窗口</li><li style=\" margin-"
 "top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-"
 "indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">鼠标下方</"
-"span>：在鼠标指针下方放置窗口</li></ul></body></html>"
+"span>：在鼠标光标下方放置窗口</li></ul></body></html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:80
@@ -814,7 +814,7 @@ msgid ""
 "When this option is enabled, a window in the background will automatically "
 "come to the front when the mouse pointer has been over it for some time."
 msgstr ""
-"启用此选项后，当鼠标指针移动到后台窗口上方一段时间后，该窗口将自动被提升到最"
+"启用此选项后，当鼠标光标移动到后台窗口上方一段时间后，该窗口将自动被提升到最"
 "前面。"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoRaise)
