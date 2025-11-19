@@ -3,7 +3,6 @@
 #include "sdf.glsl"
 
 uniform sampler2D texUnit;
-uniform mat4 colorMatrix;
 uniform float offset;
 uniform vec2 halfpixel;
 uniform vec4 box;
@@ -26,7 +25,7 @@ void main(void)
     sum += texture(texUnit, uv + vec2(0.0, -halfpixel.y * 2.0) * offset);
     sum += texture(texUnit, uv + vec2(-halfpixel.x, -halfpixel.y) * offset) * 2.0;
 
-    fragColor = (sum / 12.0) * colorMatrix * opacity * opacity;
+    fragColor = (sum / 12.0) * opacity * opacity;
 
     float f = sdfRoundedBox(vertex, box.xy, box.zw, cornerRadius);
     float df = fwidth(f);
