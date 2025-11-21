@@ -3858,6 +3858,3 @@ msgstr ""
 #, kde-format
 msgid "Xwayland has crashed"
 msgstr "Xwayland се срина"
-
-#~ msgid "Window Operations Menu"
-#~ msgstr "Показване меню на прозорец"
