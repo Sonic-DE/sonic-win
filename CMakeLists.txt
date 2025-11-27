@@ -54,6 +54,7 @@ option(KWIN_BUILD_NOTIFICATIONS "Enable building of KWin with knotifications sup
 option(KWIN_BUILD_SCREENLOCKER "Enable building of KWin lockscreen functionality" ON)
 option(KWIN_BUILD_TABBOX "Enable building of KWin Tabbox functionality" ON)
 option(KWIN_BUILD_RUNNERS "Enable building of KWin with krunner support" ON)
+option(KWIN_BUILD_NIGHTLIGHT "Enable building of KWin with nightlight support" ON)
 
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     Concurrent
@@ -117,11 +118,13 @@ if(KWIN_BUILD_TABBOX AND KWIN_BUILD_KCMS)
     )
 endif()
 
-find_package(KNightTime ${PROJECT_DEP_VERSION} CONFIG)
-set_package_properties(KNightTime PROPERTIES
-    PURPOSE "Needed for Night Light"
-    TYPE REQUIRED
-)
+if(KWIN_BUILD_NIGHTLIGHT)
+    find_package(KNightTime ${PROJECT_DEP_VERSION} CONFIG)
+    set_package_properties(KNightTime PROPERTIES
+        PURPOSE "Needed for Night Light"
+        TYPE REQUIRED
+    )
+endif()
 
 find_package(Threads)
 set_package_properties(Threads PROPERTIES
