@@ -51,9 +51,9 @@ Other scripting stuff is located in `src/scripting`.
 
 ### Coding Conventions
 
-KWin's coding conventions are located [here](doc/coding-conventions.md).
+We follow KWin's coding conventions which are located [here](doc/coding-conventions.md).
 
-KWin additionally follows [KDE's Frameworks Coding Style](https://community.kde.org/Policies/Frameworks_Coding_Style).
+We additionally follow [KDE's Frameworks Coding Style](https://community.kde.org/Policies/Frameworks_Coding_Style).
 
 ### Commits
 
