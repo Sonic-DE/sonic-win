@@ -51,22 +51,21 @@ For more on Wayland's problems [see also this](https://gist.github.com/probonopd
 
 Please refer to the [contributing document](CONTRIBUTING.md) for everything you need to know to get started contributing to KWin.
 
-## Contacting KWin development team
+## Contacting the Sonic DE development team
 
-* mailing list: [kwin@kde.org](https://mail.kde.org/mailman/listinfo/kwin)
-* IRC: #kde-kwin on irc.libera.chat
-* Matrix: [#kwin:kde.org](https://go.kde.org/matrix/#/#kwin:kde.org)
+* IRC: #sonicde on irc.libera.chat
+* Telegram: (https://t.me/sonic_de)
 
 ## Support
 
 ### Application Developer
 
-If you are an application developer having questions regarding windowing systems (either X11 or Wayland) please do not hesitate to contact us. Preferable through our mailing list. Ideally subscribe to the mailing list, so that your mail doesn't get stuck in the moderation queue.
+If you are an application developer having questions regarding windowing systems (X11) please do not hesitate to contact us. Preferably through our Telegram.
 
 ### End user
 
-Please contact the support channels of your Linux distribution for user support. The KWin development team does not provide end user support.
+Please contact the support channels of your Linux distribution for user support. The Sonic DE development team does not provide end user support.
 
 ## Reporting bugs
 
-Please use [KDE's bugtracker](https://bugs.kde.org) and report for [product KWin](https://bugs.kde.org/enter_bug.cgi?product=kwin).
+Please use [Sonic De's issue tracker](https://github.com/Sonic-DE/kwin-x11-sonic/issues) and report your issue.
