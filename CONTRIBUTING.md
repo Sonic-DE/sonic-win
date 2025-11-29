@@ -2,16 +2,16 @@
 
 ## Chatting
 
-Come on by and ask about anything you run into when hacking on KWin!
+Come on by and ask about anything you run into when hacking on kwin-x11-sonic!
 
-KWin's Matrix room on our instance is located here: https://matrix.to/#/#kwin:kde.org.
+Sonic DE's Telegram group is located [here](https://t.me/sonic_de).
 You can grab an Matrix account at https://webchat.kde.org/ if you don't already have one from us or another provider.
 
-The Matrix room is bridged to `#kde-kwin` on Libera, allowing IRC users to access it.
+The Telegram group is bridged to `#sonicde` on Libera, allowing IRC users to access it.
 
 ## What Needs Doing
 
-There's a large amount of bugs open for KWin on our [Bugzilla instance](https://bugs.kde.org/describecomponents.cgi?product=kwin).
+You can open issues for kwin-x11-sonic on our [Issue tracker](https://github.com/Sonic-DE/kwin-x11-sonic/issues).
 
 ## Where Stuff Is
 
@@ -70,9 +70,9 @@ While this isn't a hard rule, it's appreciated for easy scanning of commits by t
 
 ## Contributing
 
-KWin uses KDE's GitLab instance for submitting code.
+kwin-x11-sonic uses Sonic DE's kwin-x11-sonic [GitHub repository](https://github.com/Sonic-DE/kwin-x11-sonic) for submitting code.
 
-You can read about the [KDE workflow here](https://community.kde.org/Infrastructure/GitLab).
+It's just a matter of forking the repository and then doing a pull request with your changes.
 
 ## Running KWin From Source
 
@@ -96,10 +96,6 @@ Running it from your build directory looks like this:
 source prefix.sh
 cd bin
 
-# for wayland, starts nested session: with console
-
-env QT_PLUGIN_PATH="$(pwd)":"$QT_PLUGIN_PATH" dbus-run-session ./kwin_wayland --xwayland konsole
-
 # or for x11, replaces current kwin instance:
 
 env QT_PLUGIN_PATH="$(pwd)":"$QT_PLUGIN_PATH" ./kwin_x11 --replace
@@ -110,8 +106,6 @@ QT_PLUGIN_PATH tells Qt to load KWin's plugins from the build directory, and not
 
 The dbus-run-session is needed to prevent the nested KWin instance from conflicting with your session KWin instance when exporting objects onto the bus, or with stuff like global shortcuts.
 
-If you need to run a whole Wayland plasma session, you should install a development session by first building [plasma-workspace](https://invent.kde.org/plasma/plasma-workspace) and executing the `login-sessions/install-sessions.sh` in the build directory. This can be done using kdesrc-build.
-
 ```bash
 kdesrc-build plasma-workspace
 # assuming the root directory for kdesrc-build is ~/kde
@@ -119,7 +113,7 @@ bash ~/kde/build/plasma-workspace/login-sessions/install-sessions.sh
 ```
 Then you can select the develop session in the sddm login screen.
 
-You can look up the current boot kwin log via `journalctl --user-unit plasma-kwin_wayland --boot 0`.
+You can look up the current boot kwin log via `journalctl --user-unit plasma-kwin_x11 --boot 0`.
 
 ## Using A Debugger
 
@@ -134,5 +128,3 @@ KWin has a series of unit tests and integration tests that ensure everything is 
 If you're adding substantial new code, it's expected that you'll write tests for it to ensure that it's working as expected.
 
 If you're fixing a bug, it's appreciated, but not expected, that you add a test case for the bug you fix.
-
-You can read more about [KWin's testing infrastructure here](doc/TESTING.md).
