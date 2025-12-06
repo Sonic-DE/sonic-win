@@ -53,10 +53,7 @@ Please refer to the [contributing document](CONTRIBUTING.md) for everything you 
 
 ## Contacting the SonicDE development team
 
-* `#sonicde` on irc.libera.chat 
-* [Telegram](https://t.me/sonic_de)
-* [`#sonicdesktop:matrix.org`](https://matrix.to/#/#sonicdesktop:matrix.org)
-* [Discord](https://discord.gg/cNZMQ62u5S)
+<img src="https://raw.githubusercontent.com/Sonic-DE/.github/refs/heads/main/profile/icons//bluesky.svg">&nbsp;[Bluesky](https://bsky.app/profile/sonicdesktop.bsky.social)&nbsp; <img src="https://raw.githubusercontent.com/Sonic-DE/.github/refs/heads/main/profile/icons//discord.svg">&nbsp;[Discord](https://discord.gg/cNZMQ62u5S) &nbsp; <img src="https://raw.githubusercontent.com/Sonic-DE/.github/refs/heads/main/profile/icons//mastodon.svg">&nbsp;[Mastodon](https://mastodon.social/@sonicdesktop) &nbsp; <img src="https://raw.githubusercontent.com/Sonic-DE/.github/refs/heads/main/profile/icons//oftc.svg">&nbsp;[OFTC IRC](https://webchat.oftc.net/?channels=sonicde%2Csonicde-devel%2Csonicde-dist&uio=MT11bmRlZmluZWQb1) &nbsp; <img src="https://raw.githubusercontent.com/Sonic-DE/.github/refs/heads/main/profile/icons//matrix.svg">&nbsp;[Matrix](https://matrix.to/#/#sonicdesktop:matrix.org) &nbsp; <img src="https://raw.githubusercontent.com/Sonic-DE/.github/refs/heads/main/profile/icons//telegram.svg">&nbsp;[Telegram](https://t.me/sonic_de) &nbsp; <img src="https://raw.githubusercontent.com/Sonic-DE/.github/refs/heads/main/profile/icons//x.svg">&nbsp;[X (Twitter)](https://x.com/SonicDesktop)
 
 ## Support
 
