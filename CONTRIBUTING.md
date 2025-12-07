@@ -2,12 +2,7 @@
 
 ## Chatting
 
-Come on by and ask about anything you run into when hacking on kwin-x11-sonic!
-
-Sonic DE's Telegram group is located [here](https://t.me/sonic_de).
-You can grab an Matrix account at https://webchat.kde.org/ if you don't already have one from us or another provider.
-
-The Telegram group is bridged to `#sonicde` on Libera, allowing IRC users to access it.
+Come on by and ask about anything you run into when hacking on kwin-x11-sonic! You can find us on [Discord](https://discord.gg/cNZMQ62u5S), [OFTC IRC](https://webchat.oftc.net/?channels=sonicde%2Csonicde-devel%2Csonicde-dist&uio=MT11bmRlZmluZWQb1), [Matrix](https://matrix.to/#/#sonicdesktop:matrix.org), and [Telegram](https://t.me/sonic_de).
 
 ## What Needs Doing
 
