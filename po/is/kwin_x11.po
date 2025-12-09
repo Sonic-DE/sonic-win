@@ -7,15 +7,15 @@
 # Richard Allen <ra@ra.is>, 2000.
 # Pjetur G. Hjaltason <pjetur@pjetur.net>, 2003.
 # Arnar Leosson <leosson@frisurf.no>, 2005.
-# Sveinn í Felli <sveinki@nett.is>, 2008, 2009, 2010, 2022, 2024.
+# SPDX-FileCopyrightText: 2008, 2009, 2010, 2022, 2024, 2025 Sveinn í Felli <sveinki@nett.is>
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 14:41+0000\n"
-"PO-Revision-Date: 2024-09-26 14:15+0000\n"
-"Last-Translator: Gummi <gudmundure@gmail.com>\n"
-"Language-Team: Icelandic <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2025-12-06 12:59+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,75 +75,77 @@ msgstr "GLX/OpenGL er ekki tiltækt."
 #: core/iccprofile.cpp:252
 #, kde-format
 msgid "Failed to open ICC profile \"%1\""
-msgstr ""
+msgstr "Gat ekki opnað ICC-litasnið \"%1\""
 
 #: core/iccprofile.cpp:254
 #, kde-format
 msgid "ICC profile \"%1\" doesn't exist"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er ekki til"
 
 #: core/iccprofile.cpp:258
 #, kde-format
 msgid "ICC profile \"%1\" is not usable for displays"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er ekki nothæft fyrir skjái"
 
 #: core/iccprofile.cpp:261
 #, kde-format
 msgid ""
 "ICC profile \"%1\" has unsupported connection space, only XYZ is supported"
 msgstr ""
+"ICC-litasniðið \"%1\" er með óstutt tengirými, einungis er stuðningur við XYZ"
 
 #: core/iccprofile.cpp:264
 #, kde-format
 msgid "ICC profile \"%1\" is broken, input/output color space isn't RGB"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, inntaks-/úttakslitrými er ekki RGB"
 
 #: core/iccprofile.cpp:283
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no whitepoint"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, það er ekki með neinn hvítan punkt"
 
 #: core/iccprofile.cpp:286
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its whitepoint is invalid"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, hvítur punktur þess er ógildur"
 
 #: core/iccprofile.cpp:299
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, parsing chromatic adaptation matrix failed"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, þáttun á litaaðlögunarfylki mistókst"
 
 #: core/iccprofile.cpp:304
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, inverting chromatic adaptation matrix failed"
 msgstr ""
+"ICC-litasniðið \"%1\" er bilað, umhverfing litaaðlögunarfylkis mistókst"
 
 #: core/iccprofile.cpp:317
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no primaries"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, það er ekki með neina grunnliti"
 
 #: core/iccprofile.cpp:332
 #, kde-format
 msgid "ICC profile \"%1\" is broken, couldn't calculate its primaries"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, gat ekki reiknað út grunnliti þess"
 
 #: core/iccprofile.cpp:341
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its primaries are invalid"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" er bilað, grunnlitir þess eru ógildir"
 
 #: core/iccprofile.cpp:357
 #, kde-format
 msgid "ICC profile \"%1\" with only BToD tags isn't supported"
-msgstr ""
+msgstr "ICC-litasniðið \"%1\" með eingöngu BToD-merki er ekki stutt"
 
 #: core/iccprofile.cpp:396
 #, kde-format
 msgid "Color profile is missing TRC tags"
-msgstr ""
+msgstr "Engin TRC-merki í litasniði"
 
 #: debug_console.cpp:79
 #, kde-format
@@ -413,14 +415,12 @@ msgid "Delta"
 msgstr "Delta"
 
 #: debug_console.cpp:244
-#, fuzzy, kde-format
-#| msgctxt "Current delta in pinch gesture"
-#| msgid "Delta x"
+#, kde-format
 msgctxt ""
 "The normalized V120 angle delta of a pointer axis event. V120 is a technical "
 "term and shouldn't be changed."
 msgid "Delta (V120)"
-msgstr "Delta x"
+msgstr "Delta (V120)"
 
 #: debug_console.cpp:259
 #, kde-format
@@ -675,25 +675,24 @@ msgid "State"
 msgstr "Staða"
 
 #: debug_console.cpp:495
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Proximity"
-msgstr "Teikniborðsverkfæri"
+msgstr "Nálægð teikniborðsverkfæris"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Proximity"
-msgstr ""
+msgstr "Nálægð"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "In"
-msgstr ""
+msgstr "Inn"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Out"
-msgstr ""
+msgstr "Út"
 
 #: debug_console.cpp:497 debug_console.cpp:511 debug_console.cpp:528
 #: debug_console.cpp:572 debug_console.cpp:586
@@ -712,10 +711,9 @@ msgid "Rotation"
 msgstr "Snúningur"
 
 #: debug_console.cpp:510
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Axis"
-msgstr "Teikniborðsverkfæri"
+msgstr "Ás teikniborðsverkfæris"
 
 #: debug_console.cpp:516 debug_console.cpp:533
 #, kde-format
@@ -728,27 +726,24 @@ msgid "Buttons"
 msgstr "Hnappar"
 
 #: debug_console.cpp:526
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Tip"
-msgstr "Teikniborðsverkfæri"
+msgstr "Oddur teikniborðsverkfæris"
 
 #: debug_console.cpp:527
-#, fuzzy, kde-format
-#| msgid "Top"
+#, kde-format
 msgid "Tip"
-msgstr "Efst"
+msgstr "Oddur"
 
 #: debug_console.cpp:527
-#, fuzzy, kde-format
-#| msgid "Move Down"
+#, kde-format
 msgid "Down"
-msgstr "Færa niður"
+msgstr "Niður"
 
 #: debug_console.cpp:527
 #, kde-format
 msgid "Up"
-msgstr ""
+msgstr "Upp"
 
 #: debug_console.cpp:543
 #, kde-format
@@ -1021,10 +1016,9 @@ msgstr "Hlaða inn"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, DebugConsole)
 #: debug_console.ui:14
-#, fuzzy, kde-format
-#| msgid "Quit Debug Console"
+#, kde-format
 msgid "Debug Console"
-msgstr "Hætta í villuleitarglugga"
+msgstr "Villuleitargluggi"
 
 #. i18n: ectx: property (text), widget (QPushButton, quitButton)
 #: debug_console.ui:38
@@ -2605,7 +2599,7 @@ msgstr "Eyða þessari reglu (til notkunar í innflutningi)"
 #: rulesettings.kcfg:20
 #, kde-format
 msgid "This rule is enabled"
-msgstr ""
+msgstr "Þessi regla er virk"
 
 #. i18n: ectx: label, entry (wmclass), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:24
@@ -3148,17 +3142,15 @@ msgid "Log Out Anyway"
 msgstr "Skrá samt út"
 
 #: sm.cpp:478
-#, fuzzy, kde-format
-#| msgid ""
-#| "The following applications did not close:\n"
-#| "%1"
+#, kde-format
 msgid ""
 "The following applications did not close:\n"
 "%1\n"
 "Logging out anyway in 2 minutes."
 msgstr ""
-"Eftirfarandi forrit lokaðist ekki:\n"
-"%1"
+"Eftirfarandi forrit lokuðust ekki:\n"
+"%1\n"
+"Skrái samt út eftir 2 mínútur."
 
 #: tabbox/clientmodel.cpp:58
 #, kde-format
@@ -3408,10 +3400,9 @@ msgid "<b>%1</b> is used by %2 in %3"
 msgstr "<b>%1</b> er notað af %2 í %3"
 
 #: useractions.cpp:912
-#, fuzzy, kde-format
-#| msgid "Window role"
+#, kde-format
 msgid "Window Menu"
-msgstr "Hlutverk glugga"
+msgstr "Gluggavalmynd"
 
 #: useractions.cpp:914
 #, kde-format
@@ -3619,28 +3610,24 @@ msgid "Keep Window on All Desktops"
 msgstr "Halda glugga á öllum skjáborðum"
 
 #: useractions.cpp:998
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Left"
+#, kde-format
 msgid "Custom Quick Tile Window to the Left"
-msgstr "Flýtireitaraða glugga til vinstri"
+msgstr "Sérsniðin flýtireitaröðun glugga til vinstri"
 
 #: useractions.cpp:1000
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Right"
+#, kde-format
 msgid "Custom Quick Tile Window to the Right"
-msgstr "Flýtireitaraða glugga til hægri"
+msgstr "Sérsniðin flýtireitaröðun glugga til hægri"
 
 #: useractions.cpp:1002
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Top"
+#, kde-format
 msgid "Custom Quick Tile Window to the Top"
-msgstr "Flýtireitaraða glugga efst"
+msgstr "Sérsniðin flýtireitaröðun glugga efst"
 
 #: useractions.cpp:1004
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Bottom"
+#, kde-format
 msgid "Custom Quick Tile Window to the Bottom"
-msgstr "Flýtireitaraða glugga neðst"
+msgstr "Sérsniðin flýtireitaröðun glugga neðst"
 
 #: useractions.cpp:1015
 #, kde-format
@@ -3810,27 +3797,28 @@ msgstr "Skipta á skjáborð %1"
 #: wayland/outputmanagement_v2.cpp:433
 #, kde-format
 msgid "One of the relevant outputs is no longer available"
-msgstr ""
+msgstr "Eitt af úttökunum sem á við er ekki lengur tiltækt"
 
 #: wayland/outputmanagement_v2.cpp:451
 #, kde-format
 msgid "Disabling all outputs through configuration changes is not allowed"
 msgstr ""
+"Ekki er leyfilegt að gera öll úttök óvirk með breytingum á grunnstillingum"
 
 #: wayland/outputmanagement_v2.cpp:461
 #, kde-format
 msgid "The provided output order doesn't contain all outputs"
-msgstr ""
+msgstr "Úttaksröðin sem er gefin inniheldur ekki öll úttök"
 
 #: wayland/outputmanagement_v2.cpp:479
 #, kde-format
 msgid "The provided output order is invalid"
-msgstr ""
+msgstr "Úttaksröðin sem er gefin er ógild"
 
 #: wayland/outputmanagement_v2.cpp:497
 #, kde-format
 msgid "The driver rejected the output configuration"
-msgstr ""
+msgstr "Rekillinn hafnaði grunnstillingu úttaksins"
 
 #: window.cpp:3303
 #, kde-format

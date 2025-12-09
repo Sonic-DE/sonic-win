@@ -121,6 +121,13 @@ void OMLSyncControlVsyncMonitorHelper::poll()
     Q_EMIT vblankOccurred(std::chrono::microseconds(ust));
 }
 
+void OMLSyncControlVsyncMonitorHelper::cleanup()
+{
+    if (m_display) {
+        glXMakeCurrent(m_display, None, nullptr);
+    }
+}
+
 OMLSyncControlVsyncMonitor::OMLSyncControlVsyncMonitor()
 {
     m_helper.moveToThread(&m_thread);
@@ -136,6 +143,7 @@ OMLSyncControlVsyncMonitor::OMLSyncControlVsyncMonitor()
 
 OMLSyncControlVsyncMonitor::~OMLSyncControlVsyncMonitor()
 {
+    QMetaObject::invokeMethod(&m_helper, &OMLSyncControlVsyncMonitorHelper::cleanup);
     m_thread.quit();
     m_thread.wait();
 }

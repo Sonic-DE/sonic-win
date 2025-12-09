@@ -123,6 +123,13 @@ void SGIVideoSyncVsyncMonitorHelper::poll()
     Q_EMIT vblankOccurred(std::chrono::steady_clock::now().time_since_epoch());
 }
 
+void SGIVideoSyncVsyncMonitorHelper::cleanup()
+{
+    if (m_display) {
+        glXMakeCurrent(m_display, None, nullptr);
+    }
+}
+
 SGIVideoSyncVsyncMonitor::SGIVideoSyncVsyncMonitor()
 {
     m_helper.moveToThread(&m_thread);
@@ -138,6 +145,7 @@ SGIVideoSyncVsyncMonitor::SGIVideoSyncVsyncMonitor()
 
 SGIVideoSyncVsyncMonitor::~SGIVideoSyncVsyncMonitor()
 {
+    QMetaObject::invokeMethod(&m_helper, &SGIVideoSyncVsyncMonitorHelper::cleanup);
     m_thread.quit();
     m_thread.wait();
 }

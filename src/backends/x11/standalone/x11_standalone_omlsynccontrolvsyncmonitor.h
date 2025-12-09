@@ -33,6 +33,7 @@ public:
 
 public Q_SLOTS:
     void poll();
+    void cleanup();
 
 Q_SIGNALS:
     void errorOccurred();
