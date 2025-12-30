@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2024-10-05 22:06+0300\n"
+"PO-Revision-Date: 2025-12-29 22:00+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.8\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -67,19 +67,17 @@ msgstr "GLX/OpenGL neprieinama."
 #: core/iccprofile.cpp:252
 #, kde-format
 msgid "Failed to open ICC profile \"%1\""
-msgstr ""
+msgstr "Nepavyko atverti ICC profilio „%1“"
 
 #: core/iccprofile.cpp:254
-#, fuzzy, kde-format
-#| msgctxt "Required file does not exist"
-#| msgid "%1 does not exist"
+#, kde-format
 msgid "ICC profile \"%1\" doesn't exist"
-msgstr "%1 nėra"
+msgstr "ICC profilio „%1“ nėra"
 
 #: core/iccprofile.cpp:258
 #, kde-format
 msgid "ICC profile \"%1\" is not usable for displays"
-msgstr ""
+msgstr "ICC profilis „%1“ nėra tinkamas naudoti ekranams"
 
 #: core/iccprofile.cpp:261
 #, kde-format
@@ -91,6 +89,7 @@ msgstr ""
 #, kde-format
 msgid "ICC profile \"%1\" is broken, input/output color space isn't RGB"
 msgstr ""
+"ICC profilis „%1“ yra sugadintas, įvesties/išvesties spalvų erdvė nėra RGB"
 
 #: core/iccprofile.cpp:283
 #, kde-format
@@ -137,7 +136,7 @@ msgstr ""
 #: core/iccprofile.cpp:396
 #, kde-format
 msgid "Color profile is missing TRC tags"
-msgstr ""
+msgstr "Spalvų profilyje nėra TRC žymių"
 
 #: debug_console.cpp:79
 #, kde-format
@@ -407,14 +406,12 @@ msgid "Delta"
 msgstr "Delta"
 
 #: debug_console.cpp:244
-#, fuzzy, kde-format
-#| msgctxt "Current delta in pinch gesture"
-#| msgid "Delta x"
+#, kde-format
 msgctxt ""
 "The normalized V120 angle delta of a pointer axis event. V120 is a technical "
 "term and shouldn't be changed."
 msgid "Delta (V120)"
-msgstr "Delta x"
+msgstr "Delta (V120)"
 
 #: debug_console.cpp:259
 #, kde-format
@@ -1015,10 +1012,9 @@ msgstr "Įkelti"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, DebugConsole)
 #: debug_console.ui:14
-#, fuzzy, kde-format
-#| msgid "Quit Debug Console"
+#, kde-format
 msgid "Debug Console"
-msgstr "Išeiti iš derinimo pulto"
+msgstr "Derinimo pultas"
 
 #. i18n: ectx: property (text), widget (QPushButton, quitButton)
 #: debug_console.ui:38
@@ -2609,7 +2605,7 @@ msgstr "Ištrinti šią taisyklę (naudojimui importavimuose)"
 #: rulesettings.kcfg:20
 #, kde-format
 msgid "This rule is enabled"
-msgstr ""
+msgstr "Ši taisyklė yra įjungta"
 
 #. i18n: ectx: label, entry (wmclass), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:24
@@ -3152,17 +3148,15 @@ msgid "Log Out Anyway"
 msgstr "Vis tiek atsijungti"
 
 #: sm.cpp:478
-#, fuzzy, kde-format
-#| msgid ""
-#| "The following applications did not close:\n"
-#| "%1"
+#, kde-format
 msgid ""
 "The following applications did not close:\n"
 "%1\n"
 "Logging out anyway in 2 minutes."
 msgstr ""
 "Šios programos neužsivėrė:\n"
-"%1"
+"%1\n"
+"Po 2 minučių atsijungiama bet kokiu atveju."
 
 #: tabbox/clientmodel.cpp:58
 #, kde-format
@@ -3412,10 +3406,9 @@ msgid "<b>%1</b> is used by %2 in %3"
 msgstr "Spartieji klavišai <b>%1</b> yra naudojami veiksmui %2, programoje %3"
 
 #: useractions.cpp:912
-#, fuzzy, kde-format
-#| msgid "Window role"
+#, kde-format
 msgid "Window Menu"
-msgstr "Lango vaidmuo"
+msgstr "Lango meniu"
 
 #: useractions.cpp:914
 #, kde-format
@@ -3814,27 +3807,28 @@ msgstr "Perjungti į darbalaukį %1"
 #: wayland/outputmanagement_v2.cpp:433
 #, kde-format
 msgid "One of the relevant outputs is no longer available"
-msgstr ""
+msgstr "Vienas iš aktualių išvedimų daugiau nebeprieinamas"
 
 #: wayland/outputmanagement_v2.cpp:451
 #, kde-format
 msgid "Disabling all outputs through configuration changes is not allowed"
 msgstr ""
+"Visų išvedimų išjungimas per konfigūracijos pakeitimus yra neleidžiamas"
 
 #: wayland/outputmanagement_v2.cpp:461
 #, kde-format
 msgid "The provided output order doesn't contain all outputs"
-msgstr ""
+msgstr "Pateiktoje išvedimų tvarkoje nėra visų išvedimų"
 
 #: wayland/outputmanagement_v2.cpp:479
 #, kde-format
 msgid "The provided output order is invalid"
-msgstr ""
+msgstr "Pateikta išvedimų tvarka yra neteisinga"
 
 #: wayland/outputmanagement_v2.cpp:497
 #, kde-format
 msgid "The driver rejected the output configuration"
-msgstr ""
+msgstr "Tvarkyklė atmetė išvedimo konfigūraciją"
 
 #: window.cpp:3303
 #, kde-format
