@@ -74,7 +74,7 @@ msgstr "No està disponible el GLX/OpenGL."
 #: core/iccprofile.cpp:252
 #, kde-format
 msgid "Failed to open ICC profile \"%1\""
-msgstr "No s'ha pogut obrir el perfil ICC «%1»"
+msgstr "Ha fallat mentre s'obria el perfil ICC «%1»"
 
 #: core/iccprofile.cpp:254
 #, kde-format
