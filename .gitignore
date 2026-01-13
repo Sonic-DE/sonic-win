@@ -18,6 +18,7 @@ Makefile
 avail
 random_seed
 /build*/
+/_build*/
 CMakeLists.txt.user*
 *.unc-backup*
 /compile_commands.json
@@ -26,3 +27,4 @@ CMakeLists.txt.user*
 /cmake-build*
 .cache
 .directory
+.trunk

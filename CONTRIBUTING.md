@@ -2,16 +2,11 @@
 
 ## Chatting
 
-Come on by and ask about anything you run into when hacking on KWin!
-
-KWin's Matrix room on our instance is located here: https://matrix.to/#/#kwin:kde.org.
-You can grab an Matrix account at https://webchat.kde.org/ if you don't already have one from us or another provider.
-
-The Matrix room is bridged to `#kde-kwin` on Libera, allowing IRC users to access it.
+Come on by and ask about anything you run into when hacking on kwin-x11-sonic! You can find us on [Discord](https://discord.gg/cNZMQ62u5S), [OFTC IRC](https://webchat.oftc.net/?channels=sonicde%2Csonicde-devel%2Csonicde-dist&uio=MT11bmRlZmluZWQb1), [Matrix](https://matrix.to/#/#sonicdesktop:matrix.org), and [Telegram](https://t.me/sonic_de).
 
 ## What Needs Doing
 
-There's a large amount of bugs open for KWin on our [Bugzilla instance](https://bugs.kde.org/describecomponents.cgi?product=kwin).
+You can open issues for kwin-x11-sonic on our [Issue tracker](https://github.com/Sonic-DE/kwin-x11-sonic/issues).
 
 ## Where Stuff Is
 
@@ -51,15 +46,15 @@ Other scripting stuff is located in `src/scripting`.
 
 ### Coding Conventions
 
-KWin's coding conventions are located [here](doc/coding-conventions.md).
+We follow KWin's coding conventions which are located in the [coding-conventions](doc/coding-conventions.md) document.
 
-KWin additionally follows [KDE's Frameworks Coding Style](https://community.kde.org/Policies/Frameworks_Coding_Style).
+We additionally follow [KDE's Frameworks Coding Style](https://community.kde.org/Policies/Frameworks_Coding_Style).
 
 ### Commits
 
 We usually use this convention for commits in KWin:
 
-```
+```git
 component/subcomponent: Do a thing
 
 This is a body of the commit message,
@@ -70,9 +65,9 @@ While this isn't a hard rule, it's appreciated for easy scanning of commits by t
 
 ## Contributing
 
-KWin uses KDE's GitLab instance for submitting code.
+kwin-x11-sonic uses Sonic DE's kwin-x11-sonic [GitHub repository](https://github.com/Sonic-DE/kwin-x11-sonic) for submitting code.
 
-You can read about the [KDE workflow here](https://community.kde.org/Infrastructure/GitLab).
+It's just a matter of forking the repository and then doing a pull request with your changes.
 
 ## Running KWin From Source
 
@@ -90,15 +85,12 @@ People hacking on much KDE software may want to set up [kdesrc-build](https://in
 Once built, you can either install it over your system KWin (not recommended) or run it from the build directory directly.
 
 Running it from your build directory looks like this:
+
 ```bash
 # from the root of your build directory
 
 source prefix.sh
 cd bin
-
-# for wayland, starts nested session: with console
-
-env QT_PLUGIN_PATH="$(pwd)":"$QT_PLUGIN_PATH" dbus-run-session ./kwin_wayland --xwayland konsole
 
 # or for x11, replaces current kwin instance:
 
@@ -110,16 +102,15 @@ QT_PLUGIN_PATH tells Qt to load KWin's plugins from the build directory, and not
 
 The dbus-run-session is needed to prevent the nested KWin instance from conflicting with your session KWin instance when exporting objects onto the bus, or with stuff like global shortcuts.
 
-If you need to run a whole Wayland plasma session, you should install a development session by first building [plasma-workspace](https://invent.kde.org/plasma/plasma-workspace) and executing the `login-sessions/install-sessions.sh` in the build directory. This can be done using kdesrc-build.
-
 ```bash
 kdesrc-build plasma-workspace
 # assuming the root directory for kdesrc-build is ~/kde
 bash ~/kde/build/plasma-workspace/login-sessions/install-sessions.sh
 ```
+
 Then you can select the develop session in the sddm login screen.
 
-You can look up the current boot kwin log via `journalctl --user-unit plasma-kwin_wayland --boot 0`.
+You can look up the current boot kwin log via `journalctl --user-unit plasma-kwin_x11 --boot 0`.
 
 ## Using A Debugger
 
@@ -134,5 +125,3 @@ KWin has a series of unit tests and integration tests that ensure everything is 
 If you're adding substantial new code, it's expected that you'll write tests for it to ensure that it's working as expected.
 
 If you're fixing a bug, it's appreciated, but not expected, that you add a test case for the bug you fix.
-
-You can read more about [KWin's testing infrastructure here](doc/TESTING.md).

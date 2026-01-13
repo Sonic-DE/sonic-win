@@ -574,13 +574,13 @@ public:
         waylandServer()->seat()->setFocusedKeyboardSurface(nullptr);
         if (!passToInputMethod(event)) {
             QKeyEvent keyEvent(event->state == KeyboardKeyState::Released ? QEvent::KeyRelease : QEvent::KeyPress,
-                            event->key,
-                            event->modifiers,
-                            event->nativeScanCode,
-                            event->nativeVirtualKey,
-                            0,
-                            event->text,
-                            event->state == KeyboardKeyState::Repeated);
+                               event->key,
+                               event->modifiers,
+                               event->nativeScanCode,
+                               event->nativeVirtualKey,
+                               0,
+                               event->text,
+                               event->state == KeyboardKeyState::Repeated);
             keyEvent.setAccepted(false);
             effects->grabbedKeyboardEvent(&keyEvent);
         }
@@ -972,264 +972,6 @@ private:
     std::function<void(const QPoint &)> m_pointSelectionFallback;
     QMap<quint32, QPointF> m_touchPoints;
 };
-
-#if KWIN_BUILD_GLOBALSHORTCUTS
-class GlobalShortcutFilter : public InputEventFilter
-{
-public:
-    GlobalShortcutFilter()
-        : InputEventFilter(InputFilterOrder::GlobalShortcut)
-    {
-        m_powerDown.setSingleShot(true);
-        m_powerDown.setInterval(1000);
-    }
-
-    bool pointerButton(PointerButtonEvent *event) override
-    {
-        if (event->state == PointerButtonState::Pressed) {
-            if (input()->shortcuts()->processPointerPressed(event->modifiers, event->buttons)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    bool pointerAxis(PointerAxisEvent *event) override
-    {
-        if (event->modifiers == Qt::NoModifier) {
-            return false;
-        }
-        PointerAxisDirection direction = PointerAxisUp;
-        if (event->orientation == Qt::Horizontal) {
-            if (event->delta > 0) {
-                direction = PointerAxisRight;
-            } else if (event->delta < 0) {
-                direction = PointerAxisLeft;
-            }
-        } else {
-            if (event->delta > 0) {
-                direction = PointerAxisDown;
-            } else if (event->delta < 0) {
-                direction = PointerAxisUp;
-            }
-        }
-
-        return input()->shortcuts()->processAxis(event->modifiers, direction);
-    }
-    bool keyboardKey(KeyboardKeyEvent *event) override
-    {
-        if (event->key == Qt::Key_PowerOff) {
-            const auto modifiers = event->modifiersRelevantForGlobalShortcuts;
-            if (event->state == KeyboardKeyState::Pressed) {
-                auto passToShortcuts = [modifiers] {
-                    input()->shortcuts()->processKey(modifiers, Qt::Key_PowerDown, KeyboardKeyState::Pressed);
-                };
-                QObject::connect(&m_powerDown, &QTimer::timeout, input()->shortcuts(), passToShortcuts, Qt::SingleShotConnection);
-                m_powerDown.start();
-                return true;
-            } else if (event->state == KeyboardKeyState::Released) {
-                const bool ret = !m_powerDown.isActive() || input()->shortcuts()->processKey(modifiers, event->key, event->state);
-                m_powerDown.stop();
-                return ret;
-            }
-        } else if (event->state == KeyboardKeyState::Repeated || event->state == KeyboardKeyState::Pressed) {
-            if (!waylandServer()->isKeyboardShortcutsInhibited()) {
-                if (input()->shortcuts()->processKey(event->modifiersRelevantForGlobalShortcuts, event->key, event->state)) {
-                    input()->keyboard()->addFilteredKey(event->nativeScanCode);
-                    return true;
-                }
-            }
-        } else if (event->state == KeyboardKeyState::Released) {
-            if (!waylandServer()->isKeyboardShortcutsInhibited()) {
-                return input()->shortcuts()->processKey(event->modifiersRelevantForGlobalShortcuts, event->key, event->state);
-            }
-        }
-        return false;
-    }
-    bool swipeGestureBegin(int fingerCount, std::chrono::microseconds time) override
-    {
-        m_touchpadGestureFingerCount = fingerCount;
-        if (m_touchpadGestureFingerCount >= 3) {
-            input()->shortcuts()->processSwipeStart(DeviceType::Touchpad, fingerCount);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    bool swipeGestureUpdate(const QPointF &delta, std::chrono::microseconds time) override
-    {
-        if (m_touchpadGestureFingerCount >= 3) {
-            input()->shortcuts()->processSwipeUpdate(DeviceType::Touchpad, delta);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    bool swipeGestureCancelled(std::chrono::microseconds time) override
-    {
-        if (m_touchpadGestureFingerCount >= 3) {
-            input()->shortcuts()->processSwipeCancel(DeviceType::Touchpad);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    bool swipeGestureEnd(std::chrono::microseconds time) override
-    {
-        if (m_touchpadGestureFingerCount >= 3) {
-            input()->shortcuts()->processSwipeEnd(DeviceType::Touchpad);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    bool pinchGestureBegin(int fingerCount, std::chrono::microseconds time) override
-    {
-        m_touchpadGestureFingerCount = fingerCount;
-        if (m_touchpadGestureFingerCount >= 3) {
-            input()->shortcuts()->processPinchStart(fingerCount);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    bool pinchGestureUpdate(qreal scale, qreal angleDelta, const QPointF &delta, std::chrono::microseconds time) override
-    {
-        if (m_touchpadGestureFingerCount >= 3) {
-            input()->shortcuts()->processPinchUpdate(scale, angleDelta, delta);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    bool pinchGestureEnd(std::chrono::microseconds time) override
-    {
-        if (m_touchpadGestureFingerCount >= 3) {
-            input()->shortcuts()->processPinchEnd();
-            return true;
-        } else {
-            return false;
-        }
-    }
-    bool pinchGestureCancelled(std::chrono::microseconds time) override
-    {
-        if (m_touchpadGestureFingerCount >= 3) {
-            input()->shortcuts()->processPinchCancel();
-            return true;
-        } else {
-            return false;
-        }
-    }
-    bool touchDown(qint32 id, const QPointF &pos, std::chrono::microseconds time) override
-    {
-        if (m_gestureTaken) {
-            input()->shortcuts()->processSwipeCancel(DeviceType::Touchscreen);
-            m_gestureCancelled = true;
-            return true;
-        } else {
-            m_touchPoints.insert(id, pos);
-            if (m_touchPoints.count() == 1) {
-                m_lastTouchDownTime = time;
-            } else {
-                if (time - m_lastTouchDownTime > 250ms) {
-                    m_gestureCancelled = true;
-                    return false;
-                }
-                m_lastTouchDownTime = time;
-                auto output = workspace()->outputAt(pos);
-                auto physicalSize = output->orientateSize(output->physicalSize());
-                if (!physicalSize.isValid()) {
-                    physicalSize = QSize(190, 100);
-                }
-                float xfactor = physicalSize.width() / (float)output->geometry().width();
-                float yfactor = physicalSize.height() / (float)output->geometry().height();
-                bool distanceMatch = std::any_of(m_touchPoints.constBegin(), m_touchPoints.constEnd(), [pos, xfactor, yfactor](const auto &point) {
-                    QPointF p = pos - point;
-                    return std::abs(xfactor * p.x()) + std::abs(yfactor * p.y()) < 50;
-                });
-                if (!distanceMatch) {
-                    m_gestureCancelled = true;
-                    return false;
-                }
-            }
-            if (m_touchPoints.count() >= 3 && !m_gestureCancelled) {
-                m_gestureTaken = true;
-                m_syntheticCancel = true;
-                input()->processFilters(std::bind(&InputEventFilter::touchCancel, std::placeholders::_1));
-                m_syntheticCancel = false;
-                input()->shortcuts()->processSwipeStart(DeviceType::Touchscreen, m_touchPoints.count());
-                return true;
-            }
-        }
-        return false;
-    }
-
-    bool touchMotion(qint32 id, const QPointF &pos, std::chrono::microseconds time) override
-    {
-        if (m_gestureTaken) {
-            if (m_gestureCancelled) {
-                return true;
-            }
-            auto output = workspace()->outputAt(pos);
-            const auto physicalSize = output->orientateSize(output->physicalSize());
-            const float xfactor = physicalSize.width() / (float)output->geometry().width();
-            const float yfactor = physicalSize.height() / (float)output->geometry().height();
-
-            auto &point = m_touchPoints[id];
-            const QPointF dist = pos - point;
-            const QPointF delta = QPointF(xfactor * dist.x(), yfactor * dist.y());
-            input()->shortcuts()->processSwipeUpdate(DeviceType::Touchscreen, 5 * delta / m_touchPoints.size());
-            point = pos;
-            return true;
-        }
-        return false;
-    }
-
-    bool touchUp(qint32 id, std::chrono::microseconds time) override
-    {
-        m_touchPoints.remove(id);
-        if (m_gestureTaken) {
-            if (!m_gestureCancelled) {
-                input()->shortcuts()->processSwipeEnd(DeviceType::Touchscreen);
-                m_gestureCancelled = true;
-            }
-            m_gestureTaken &= m_touchPoints.count() > 0;
-            m_gestureCancelled &= m_gestureTaken;
-            return true;
-        } else {
-            m_gestureCancelled &= m_touchPoints.count() > 0;
-            return false;
-        }
-    }
-
-    bool touchCancel() override
-    {
-        if (m_syntheticCancel) {
-            return false;
-        }
-        const bool oldGestureTaken = m_gestureTaken;
-        m_gestureTaken = false;
-        m_gestureCancelled = false;
-        m_touchPoints.clear();
-        return oldGestureTaken;
-    }
-
-    bool touchFrame() override
-    {
-        return m_gestureTaken;
-    }
-
-private:
-    bool m_gestureTaken = false;
-    bool m_gestureCancelled = false;
-    bool m_syntheticCancel = false;
-    std::chrono::microseconds m_lastTouchDownTime = std::chrono::microseconds::zero();
-    QPointF m_lastAverageDistance;
-    QMap<int32_t, QPointF> m_touchPoints;
-    int m_touchpadGestureFingerCount = 0;
-
-    QTimer m_powerDown;
-};
-#endif
 
 namespace
 {
@@ -2800,9 +2542,6 @@ InputRedirection::InputRedirection(QObject *parent)
     , m_pointer(new PointerInputRedirection(this))
     , m_tablet(new TabletInputRedirection(this))
     , m_touch(new TouchInputRedirection(this))
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    , m_shortcuts(new GlobalShortcutsManager(this))
-#endif
 {
     setupInputBackends();
 
@@ -2847,9 +2586,6 @@ void InputRedirection::init()
     m_inputConfigWatcher = KConfigWatcher::create(kwinApp()->inputConfig());
     connect(m_inputConfigWatcher.data(), &KConfigWatcher::configChanged,
             this, &InputRedirection::handleInputConfigChanged);
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    m_shortcuts->init();
-#endif
 }
 
 void InputRedirection::setupWorkspace()
@@ -3098,12 +2834,6 @@ void InputRedirection::setupInputFilters()
 #if KWIN_BUILD_TABBOX
     m_tabboxFilter = std::make_unique<TabBoxInputFilter>();
     installInputEventFilter(m_tabboxFilter.get());
-#endif
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    if (kwinApp()->supportsGlobalShortcuts()) {
-        m_globalShortcutFilter = std::make_unique<GlobalShortcutFilter>();
-        installInputEventFilter(m_globalShortcutFilter.get());
-    }
 #endif
 
     m_effectsFilter = std::make_unique<EffectsFilter>();
@@ -3405,44 +3135,26 @@ Qt::KeyboardModifiers InputRedirection::modifiersRelevantForGlobalShortcuts() co
 
 void InputRedirection::registerPointerShortcut(Qt::KeyboardModifiers modifiers, Qt::MouseButton pointerButtons, QAction *action)
 {
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    m_shortcuts->registerPointerShortcut(action, modifiers, pointerButtons);
-#endif
 }
 
 void InputRedirection::registerAxisShortcut(Qt::KeyboardModifiers modifiers, PointerAxisDirection axis, QAction *action)
 {
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    m_shortcuts->registerAxisShortcut(action, modifiers, axis);
-#endif
 }
 
 void InputRedirection::registerTouchpadSwipeShortcut(SwipeDirection direction, uint fingerCount, QAction *action, std::function<void(qreal)> cb)
 {
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    m_shortcuts->registerTouchpadSwipe(direction, fingerCount, action, cb);
-#endif
 }
 
 void InputRedirection::registerTouchpadPinchShortcut(PinchDirection direction, uint fingerCount, QAction *onUp, std::function<void(qreal)> progressCallback)
 {
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    m_shortcuts->registerTouchpadPinch(direction, fingerCount, onUp, progressCallback);
-#endif
 }
 
 void InputRedirection::registerTouchscreenSwipeShortcut(SwipeDirection direction, uint fingerCount, QAction *action, std::function<void(qreal)> progressCallback)
 {
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    m_shortcuts->registerTouchscreenSwipe(direction, fingerCount, action, progressCallback);
-#endif
 }
 
 void InputRedirection::forceRegisterTouchscreenSwipeShortcut(SwipeDirection direction, uint fingerCount, QAction *action, std::function<void(qreal)> progressCallback)
 {
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    m_shortcuts->forceRegisterTouchscreenSwipe(direction, fingerCount, action, progressCallback);
-#endif
 }
 
 void InputRedirection::warpPointer(const QPointF &pos)

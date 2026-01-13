@@ -17,10 +17,6 @@
 #include <memory>
 
 class QAction;
-#if KWIN_BUILD_GLOBALSHORTCUTS
-class KGlobalAccelD;
-class KGlobalAccelInterface;
-#endif
 namespace KWin
 {
 class GlobalShortcut;
@@ -117,10 +113,6 @@ private:
 
     QList<GlobalShortcut> m_shortcuts;
 
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    std::unique_ptr<KGlobalAccelD> m_kglobalAccel;
-    KGlobalAccelInterface *m_kglobalAccelInterface = nullptr;
-#endif
     std::unique_ptr<GestureRecognizer> m_touchpadGestureRecognizer;
     std::unique_ptr<GestureRecognizer> m_touchscreenGestureRecognizer;
 };

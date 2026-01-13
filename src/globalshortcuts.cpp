@@ -15,11 +15,6 @@
 #include "gestures.h"
 #include "main.h"
 #include "utils/common.h"
-// KDE
-#if KWIN_BUILD_GLOBALSHORTCUTS
-#include <kglobalaccel_interface.h>
-#include <kglobalacceld.h>
-#endif
 // Qt
 #include <QAction>
 // system
@@ -98,19 +93,6 @@ GlobalShortcutsManager::~GlobalShortcutsManager()
 
 void GlobalShortcutsManager::init()
 {
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    if (kwinApp()->shouldUseWaylandForCompositing()) {
-        qputenv("KGLOBALACCELD_PLATFORM", QByteArrayLiteral("org.kde.kwin"));
-        m_kglobalAccel = std::make_unique<KGlobalAccelD>();
-        if (!m_kglobalAccel->init()) {
-            qCDebug(KWIN_CORE) << "Init of kglobalaccel failed";
-            m_kglobalAccel.reset();
-        } else {
-            m_kglobalAccelInterface = m_kglobalAccel->interface();
-            qCDebug(KWIN_CORE) << "KGlobalAcceld inited";
-        }
-    }
-#endif
 }
 
 void GlobalShortcutsManager::objectDeleted(QObject *object)
@@ -194,37 +176,6 @@ void GlobalShortcutsManager::forceRegisterTouchscreenSwipe(SwipeDirection direct
 
 bool GlobalShortcutsManager::processKey(Qt::KeyboardModifiers mods, int keyQt, KeyboardKeyState state)
 {
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    if (m_kglobalAccelInterface) {
-        auto check = [this](Qt::KeyboardModifiers mods, int keyQt, KeyboardKeyState keyState) {
-            bool retVal = false;
-            QMetaObject::invokeMethod(m_kglobalAccelInterface,
-                                      "checkKeyPressed",
-                                      Qt::DirectConnection,
-                                      Q_RETURN_ARG(bool, retVal),
-                                      Q_ARG(int, int(mods) | keyQt),
-                                      Q_ARG(KeyboardKeyState, keyState));
-            return retVal;
-        };
-        if (check(mods, keyQt, state)) {
-            return true;
-        } else if (keyQt == Qt::Key_Backtab) {
-            // KGlobalAccel on X11 has some workaround for Backtab
-            // see kglobalaccel/src/runtime/plugins/xcb/kglobalccel_x11.cpp method x11KeyPress
-            // Apparently KKeySequenceWidget captures Shift+Tab instead of Backtab
-            // thus if the key is backtab we should adjust to add shift again and use tab
-            // in addition KWin registers the shortcut incorrectly as Alt+Shift+Backtab
-            // this should be changed to either Alt+Backtab or Alt+Shift+Tab to match KKeySequenceWidget
-            // trying the variants
-            if (check(mods | Qt::ShiftModifier, keyQt, state)) {
-                return true;
-            }
-            if (check(mods | Qt::ShiftModifier, Qt::Key_Tab, state)) {
-                return true;
-            }
-        }
-    }
-#endif
     return false;
 }
 
@@ -245,31 +196,11 @@ bool match(QList<GlobalShortcut> &shortcuts, Args... args)
 // TODO(C++20): use ranges for a nicer way of filtering by shortcut type
 bool GlobalShortcutsManager::processPointerPressed(Qt::KeyboardModifiers mods, Qt::MouseButtons pointerButtons)
 {
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    // currently only used to better support modifier only shortcuts
-    // modifier-only shortcuts are not triggered if a pointer button is pressed
-    if (m_kglobalAccelInterface) {
-        QMetaObject::invokeMethod(m_kglobalAccelInterface,
-                                  "checkPointerPressed",
-                                  Qt::DirectConnection,
-                                  Q_ARG(Qt::MouseButtons, pointerButtons));
-    }
-#endif
     return match<PointerButtonShortcut>(m_shortcuts, mods, pointerButtons);
 }
 
 bool GlobalShortcutsManager::processAxis(Qt::KeyboardModifiers mods, PointerAxisDirection axis)
 {
-#if KWIN_BUILD_GLOBALSHORTCUTS
-    // currently only used to better support modifier only shortcuts
-    // modifier-only shortcuts are not triggered if a pointer axis is used
-    if (m_kglobalAccelInterface) {
-        QMetaObject::invokeMethod(m_kglobalAccelInterface,
-                                  "checkAxisTriggered",
-                                  Qt::DirectConnection,
-                                  Q_ARG(int, axis));
-    }
-#endif
     return match<PointerAxisShortcut>(m_shortcuts, mods, axis);
 }
 

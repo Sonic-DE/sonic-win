@@ -53,9 +53,8 @@ option(KWIN_BUILD_KCMS "Enable building of KWin configuration modules." ON)
 option(KWIN_BUILD_NOTIFICATIONS "Enable building of KWin with knotifications support" ON)
 option(KWIN_BUILD_SCREENLOCKER "Enable building of KWin lockscreen functionality" ON)
 option(KWIN_BUILD_TABBOX "Enable building of KWin Tabbox functionality" ON)
-option(KWIN_BUILD_X11 "Enable building X11 common code and Xwayland support" ON)
+option(KWIN_BUILD_X11 "Enable building X11 common code" ON)
 option(KWIN_BUILD_X11_BACKEND "Enable building kwin_x11" ON)
-option(KWIN_BUILD_GLOBALSHORTCUTS "Enable building of KWin with global shortcuts support" ON)
 option(KWIN_BUILD_RUNNERS "Enable building of KWin with krunner support" ON)
 
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
@@ -284,15 +283,6 @@ if (KWIN_BUILD_X11)
         TYPE OPTIONAL
     )
 
-    find_package(Xwayland 23.1.0)
-    set_package_properties(Xwayland PROPERTIES
-        URL "https://x.org"
-        DESCRIPTION "Xwayland X server"
-        TYPE RUNTIME
-        PURPOSE "Needed for running kwin_wayland"
-    )
-    set(HAVE_XWAYLAND_ENABLE_EI_PORTAL ${Xwayland_HAVE_ENABLE_EI_PORTAL})
-
     set(HAVE_GLX ${epoxy_HAS_GLX})
     get_target_property(QT_DISABLED_FEATURES Qt6::Gui QT_DISABLED_PUBLIC_FEATURES)
     if("xcb_glx_plugin" IN_LIST QT_DISABLED_FEATURES)
@@ -309,9 +299,6 @@ if (KWIN_BUILD_X11)
         URL "https://www.x.org"
         TYPE REQUIRED
     )
-
-    # Scripts to run on XWayland startup
-    set(XWAYLAND_SESSION_SCRIPTS "/etc/xdg/Xwayland-session.d")
 
 else()
     set(KWIN_BUILD_X11_BACKEND OFF CACHE BOOL "Enable building kwin_x11" FORCE)
@@ -383,10 +370,6 @@ set(HAVE_ACCESSIBILITY ${QAccessibilityClient6_FOUND})
 
 pkg_check_modules(libsystemd IMPORTED_TARGET libsystemd)
 add_feature_info(libsystemd libsystemd_FOUND "Required for setting up the service watchdog")
-
-if(KWIN_BUILD_GLOBALSHORTCUTS)
-    find_package(KGlobalAccelD REQUIRED)
-endif()
 
 pkg_check_modules(libdisplayinfo REQUIRED IMPORTED_TARGET libdisplay-info>=0.2.0)
 add_feature_info(libdisplayinfo libdisplayinfo_FOUND "EDID and DisplayID library: https://gitlab.freedesktop.org/emersion/libdisplay-info")
