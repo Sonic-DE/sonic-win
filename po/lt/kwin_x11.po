@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2025-12-29 22:00+0200\n"
+"PO-Revision-Date: 2026-01-19 19:54+0200\n"
 "Last-Translator: Moo <<>>\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
 "Language: lt\n"
@@ -83,7 +83,7 @@ msgstr "ICC profilis „%1“ nėra tinkamas naudoti ekranams"
 #, kde-format
 msgid ""
 "ICC profile \"%1\" has unsupported connection space, only XYZ is supported"
-msgstr ""
+msgstr "ICC profilyje „%1“ yra nepalaikoma ryšio erdvė, palaikoma tik XYZ"
 
 #: core/iccprofile.cpp:264
 #, kde-format
@@ -94,44 +94,50 @@ msgstr ""
 #: core/iccprofile.cpp:283
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no whitepoint"
-msgstr ""
+msgstr "ICC profilis „%1“ yra sugadintas, jame nėra baltojo taško"
 
 #: core/iccprofile.cpp:286
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its whitepoint is invalid"
-msgstr ""
+msgstr "ICC profilis „%1“ yra sugadintas, jo baltasis taškas yra neteisingas"
 
 #: core/iccprofile.cpp:299
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, parsing chromatic adaptation matrix failed"
 msgstr ""
+"ICC profilis „%1“ yra sugadintas, nepavyko išnagrinėti spalvinio pritaikymo "
+"matricos"
 
 #: core/iccprofile.cpp:304
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, inverting chromatic adaptation matrix failed"
 msgstr ""
+"ICC profilis „%1“ yra sugadintas, nepavyko invertuoti spalvinio pritaikymo "
+"matricos"
 
 #: core/iccprofile.cpp:317
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no primaries"
-msgstr ""
+msgstr "ICC profilis „%1“ yra sugadintas, jame nėra pagrindinių spalvų"
 
 #: core/iccprofile.cpp:332
 #, kde-format
 msgid "ICC profile \"%1\" is broken, couldn't calculate its primaries"
 msgstr ""
+"ICC profilis „%1“ yra sugadintas nepavyko apskaičiuoti jo pagrindinių spalvų"
 
 #: core/iccprofile.cpp:341
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its primaries are invalid"
 msgstr ""
+"ICC profilis „%1“ yra sugadintas, jo pagrindinės spalvos yra neteisingos"
 
 #: core/iccprofile.cpp:357
 #, kde-format
 msgid "ICC profile \"%1\" with only BToD tags isn't supported"
-msgstr ""
+msgstr "ICC profilis „%1“, naudojantis tik BToD žymes, yra nepalaikomas"
 
 #: core/iccprofile.cpp:396
 #, kde-format
@@ -666,25 +672,24 @@ msgid "State"
 msgstr "Būsena"
 
 #: debug_console.cpp:495
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Proximity"
-msgstr "Planšetės įrankis"
+msgstr "Planšetės įrankio artumas"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Proximity"
-msgstr ""
+msgstr "Artumas"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "In"
-msgstr ""
+msgstr "Vidun"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Out"
-msgstr ""
+msgstr "Išorėn"
 
 #: debug_console.cpp:497 debug_console.cpp:511 debug_console.cpp:528
 #: debug_console.cpp:572 debug_console.cpp:586
@@ -703,10 +708,9 @@ msgid "Rotation"
 msgstr "Pasukimas"
 
 #: debug_console.cpp:510
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Axis"
-msgstr "Planšetės įrankis"
+msgstr "Planšetės įrankio ašis"
 
 #: debug_console.cpp:516 debug_console.cpp:533
 #, kde-format
@@ -719,27 +723,24 @@ msgid "Buttons"
 msgstr "Mygtukai"
 
 #: debug_console.cpp:526
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Tip"
-msgstr "Planšetės įrankis"
+msgstr "Planšetės įrankio galiukas"
 
 #: debug_console.cpp:527
-#, fuzzy, kde-format
-#| msgid "Top"
+#, kde-format
 msgid "Tip"
-msgstr "Viršuje"
+msgstr "Galiukas"
 
 #: debug_console.cpp:527
-#, fuzzy, kde-format
-#| msgid "Move Down"
+#, kde-format
 msgid "Down"
-msgstr "Perkelti žemyn"
+msgstr "Žemyn"
 
 #: debug_console.cpp:527
 #, kde-format
 msgid "Up"
-msgstr ""
+msgstr "Aukštyn"
 
 #: debug_console.cpp:543
 #, kde-format
@@ -3616,28 +3617,24 @@ msgid "Keep Window on All Desktops"
 msgstr "Laikyti langą visuose darbalaukiuose"
 
 #: useractions.cpp:998
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Left"
+#, kde-format
 msgid "Custom Quick Tile Window to the Left"
-msgstr "Greitai iškloti langą kairėje"
+msgstr "Tinkintas greitas lango išklojimas kairėje"
 
 #: useractions.cpp:1000
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Right"
+#, kde-format
 msgid "Custom Quick Tile Window to the Right"
-msgstr "Greitai iškloti langą dešinėje"
+msgstr "Tinkintas greitas lango išklojimas dešinėje"
 
 #: useractions.cpp:1002
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Top"
+#, kde-format
 msgid "Custom Quick Tile Window to the Top"
-msgstr "Greitai iškloti langą viršuje"
+msgstr "Tinkintas greitas lango išklojimas viršuje"
 
 #: useractions.cpp:1004
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Bottom"
+#, kde-format
 msgid "Custom Quick Tile Window to the Bottom"
-msgstr "Greitai iškloti langą apačioje"
+msgstr "Tinkintas greitas lango išklojimas apačioje"
 
 #: useractions.cpp:1015
 #, kde-format
