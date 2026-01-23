@@ -34,12 +34,10 @@ class DebugConsole;
 namespace KWin
 {
 
-class AbstractDataSource;
 class Window;
 class X11Window;
 class InternalWindow;
 class DebugConsoleFilter;
-class WaylandWindow;
 
 class KWIN_EXPORT DebugConsoleModel : public QAbstractItemModel
 {
@@ -72,13 +70,11 @@ private:
     void add(int parentRow, QList<T *> &windows, T *window);
     template<class T>
     void remove(int parentRow, QList<T *> &windows, T *window);
-    WaylandWindow *waylandWindow(const QModelIndex &index) const;
     InternalWindow *internalWindow(const QModelIndex &index) const;
     X11Window *x11Window(const QModelIndex &index) const;
     X11Window *unmanaged(const QModelIndex &index) const;
     int topLevelRowCount() const;
 
-    QList<WaylandWindow *> m_waylandWindows;
     QList<InternalWindow *> m_internalWindows;
     QList<X11Window *> m_x11Windows;
     QList<X11Window *> m_unmanageds;
@@ -169,28 +165,6 @@ private Q_SLOTS:
 private:
     void setupDeviceConnections(InputDevice *device);
     QList<InputDevice *> m_devices;
-};
-
-class DataSourceModel : public QAbstractItemModel
-{
-public:
-    using QAbstractItemModel::QAbstractItemModel;
-
-    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
-    QModelIndex parent(const QModelIndex &child) const override;
-    int rowCount(const QModelIndex &parent) const override;
-    int columnCount(const QModelIndex &parent) const override
-    {
-        return parent.isValid() ? 0 : 2;
-    }
-    QVariant data(const QModelIndex &index, int role) const override;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
-
-    void setSource(AbstractDataSource *source);
-
-private:
-    AbstractDataSource *m_source = nullptr;
-    QList<QByteArray> m_data;
 };
 
 class DebugConsoleEffectItem : public QWidget

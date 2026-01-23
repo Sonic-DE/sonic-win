@@ -32,10 +32,14 @@ Q_SIGNALS:
 
 private:
     void handleKeyRepeat();
+    void loadConfig();
     QTimer *m_timer;
     Xkb *m_xkb;
     std::chrono::microseconds m_time;
     quint32 m_key = 0;
+    int m_delay = 600;
+    int m_rate = 25;
+    bool m_enabled = true;
 };
 
 }

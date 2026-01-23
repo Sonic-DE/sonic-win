@@ -14,8 +14,6 @@
 #include "input_event_spy.h"
 #include "osd.h"
 #include "pointer_input.h"
-#include "wayland/tablet_v2.h"
-#include "wayland_server.h"
 #include "window.h"
 #include "workspace.h"
 
@@ -30,46 +28,21 @@
 namespace KWin
 {
 
-class SurfaceCursor : public Cursor
+class TabletCursor : public Cursor
 {
 public:
-    explicit SurfaceCursor(TabletToolV2Interface *tool)
+    explicit TabletCursor()
         : Cursor()
     {
-        setParent(tool);
-        connect(tool, &TabletToolV2Interface::cursorChanged, this, [this](const TabletCursorSourceV2 &cursor) {
-            if (auto surfaceCursor = std::get_if<TabletSurfaceCursorV2 *>(&cursor)) {
-                // If the cursor is unset, fallback to the cross cursor.
-                if ((*surfaceCursor) && (*surfaceCursor)->enteredSerial()) {
-                    if (!m_surfaceSource) {
-                        m_surfaceSource = std::make_unique<SurfaceCursorSource>();
-                    }
-                    m_surfaceSource->update((*surfaceCursor)->surface(), (*surfaceCursor)->hotspot());
-                    setSource(m_surfaceSource.get());
-                    return;
-                }
-            }
-
-            QByteArray shape;
-            if (auto shapeCursor = std::get_if<QByteArray>(&cursor)) {
-                shape = *shapeCursor;
-            } else {
-                shape = QByteArrayLiteral("cross");
-            }
-
-            static WaylandCursorImage defaultCursor;
-            if (!m_shapeSource) {
-                m_shapeSource = std::make_unique<ShapeCursorSource>();
-            }
-            m_shapeSource->setTheme(defaultCursor.theme());
-            m_shapeSource->setShape(shape);
-            setSource(m_shapeSource.get());
-        });
+        static WaylandCursorImage defaultCursor;
+        m_shapeSource = std::make_unique<ShapeCursorSource>();
+        m_shapeSource->setTheme(defaultCursor.theme());
+        m_shapeSource->setShape(QByteArrayLiteral("cross"));
+        setSource(m_shapeSource.get());
     }
 
 private:
     std::unique_ptr<ShapeCursorSource> m_shapeSource;
-    std::unique_ptr<SurfaceCursorSource> m_surfaceSource;
 };
 
 TabletInputRedirection::TabletInputRedirection(InputRedirection *parent)
@@ -88,9 +61,6 @@ void TabletInputRedirection::init()
     connect(workspace(), &QObject::destroyed, this, [this] {
         setInited(false);
     });
-    connect(waylandServer(), &QObject::destroyed, this, [this] {
-        setInited(false);
-    });
 
     const auto devices = input()->devices();
     for (InputDevice *device : devices) {
@@ -107,41 +77,14 @@ void TabletInputRedirection::init()
     connect(tabletNextOutput, &QAction::triggered, this, &TabletInputRedirection::trackNextOutput);
 }
 
-static TabletSeatV2Interface *findTabletSeat()
-{
-    auto server = waylandServer();
-    if (!server) {
-        return nullptr;
-    }
-    TabletManagerV2Interface *manager = server->tabletManagerV2();
-    return manager->seat(waylandServer()->seat());
-}
-
 void TabletInputRedirection::integrateDevice(InputDevice *device)
 {
-    TabletSeatV2Interface *tabletSeat = findTabletSeat();
-    if (!tabletSeat) {
-        qCCritical(KWIN_CORE) << "Could not find tablet seat";
-        return;
-    }
-
-    if (device->isTabletTool()) {
-        tabletSeat->addTablet(device);
-    }
-
-    if (device->isTabletPad()) {
-        tabletSeat->addPad(device);
-    }
+    // Tablet integration is handled via X11 in this build
 }
 
 void TabletInputRedirection::removeDevice(InputDevice *device)
 {
-    TabletSeatV2Interface *tabletSeat = findTabletSeat();
-    if (tabletSeat) {
-        tabletSeat->remove(device);
-    } else {
-        qCCritical(KWIN_CORE) << "Could not find tablet to remove" << device->name();
-    }
+    // Tablet removal is handled via X11 in this build
 }
 
 void TabletInputRedirection::trackNextOutput()
@@ -180,14 +123,11 @@ void TabletInputRedirection::trackNextOutput()
 
 void TabletInputRedirection::ensureTabletTool(InputDeviceTabletTool *device)
 {
-    TabletSeatV2Interface *tabletSeat = findTabletSeat();
-    if (tabletSeat->tool(device)) {
+    if (m_cursorByTool.contains(device)) {
         return;
     }
 
-    TabletToolV2Interface *tool = tabletSeat->addTool(device);
-
-    const auto cursor = new SurfaceCursor(tool);
+    const auto cursor = new TabletCursor();
     Cursors::self()->addCursor(cursor);
     m_cursorByTool[device] = cursor;
 }

@@ -32,8 +32,6 @@
 #include "shadow.h"
 #include "tiles/tilemanager.h"
 #include "virtualdesktops.h"
-#include "wayland/surface.h"
-#include "wayland_server.h"
 #include "workspace.h"
 #include <KDecoration3/DecoratedWindow>
 #include <KDecoration3/Decoration>
@@ -67,68 +65,52 @@ namespace KWin
 
 static uint32_t frameEventMask()
 {
-    if (waylandServer()) {
-        return XCB_EVENT_MASK_FOCUS_CHANGE
-            | XCB_EVENT_MASK_STRUCTURE_NOTIFY
-            | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
-            | XCB_EVENT_MASK_PROPERTY_CHANGE;
-    } else {
-        return XCB_EVENT_MASK_FOCUS_CHANGE
-            | XCB_EVENT_MASK_STRUCTURE_NOTIFY
-            | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
-            | XCB_EVENT_MASK_PROPERTY_CHANGE
-            | XCB_EVENT_MASK_KEY_PRESS
-            | XCB_EVENT_MASK_KEY_RELEASE
-            | XCB_EVENT_MASK_ENTER_WINDOW
-            | XCB_EVENT_MASK_LEAVE_WINDOW
-            | XCB_EVENT_MASK_BUTTON_PRESS
-            | XCB_EVENT_MASK_BUTTON_RELEASE
-            | XCB_EVENT_MASK_BUTTON_MOTION
-            | XCB_EVENT_MASK_POINTER_MOTION
-            | XCB_EVENT_MASK_KEYMAP_STATE
-            | XCB_EVENT_MASK_EXPOSURE
-            | XCB_EVENT_MASK_VISIBILITY_CHANGE;
-    }
+    // X11 only build - always use full X11 event mask
+    return XCB_EVENT_MASK_FOCUS_CHANGE
+        | XCB_EVENT_MASK_STRUCTURE_NOTIFY
+        | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
+        | XCB_EVENT_MASK_PROPERTY_CHANGE
+        | XCB_EVENT_MASK_KEY_PRESS
+        | XCB_EVENT_MASK_KEY_RELEASE
+        | XCB_EVENT_MASK_ENTER_WINDOW
+        | XCB_EVENT_MASK_LEAVE_WINDOW
+        | XCB_EVENT_MASK_BUTTON_PRESS
+        | XCB_EVENT_MASK_BUTTON_RELEASE
+        | XCB_EVENT_MASK_BUTTON_MOTION
+        | XCB_EVENT_MASK_POINTER_MOTION
+        | XCB_EVENT_MASK_KEYMAP_STATE
+        | XCB_EVENT_MASK_EXPOSURE
+        | XCB_EVENT_MASK_VISIBILITY_CHANGE;
 }
 
 static uint32_t wrapperEventMask()
 {
-    if (waylandServer()) {
-        return XCB_EVENT_MASK_FOCUS_CHANGE
-            | XCB_EVENT_MASK_STRUCTURE_NOTIFY
-            | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
-            | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY;
-    } else {
-        return XCB_EVENT_MASK_FOCUS_CHANGE
-            | XCB_EVENT_MASK_STRUCTURE_NOTIFY
-            | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
-            | XCB_EVENT_MASK_KEY_PRESS
-            | XCB_EVENT_MASK_KEY_RELEASE
-            | XCB_EVENT_MASK_ENTER_WINDOW
-            | XCB_EVENT_MASK_LEAVE_WINDOW
-            | XCB_EVENT_MASK_BUTTON_PRESS
-            | XCB_EVENT_MASK_BUTTON_RELEASE
-            | XCB_EVENT_MASK_BUTTON_MOTION
-            | XCB_EVENT_MASK_POINTER_MOTION
-            | XCB_EVENT_MASK_KEYMAP_STATE
-            | XCB_EVENT_MASK_EXPOSURE
-            | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY;
-    }
+    // X11 only build - always use full X11 event mask
+    return XCB_EVENT_MASK_FOCUS_CHANGE
+        | XCB_EVENT_MASK_STRUCTURE_NOTIFY
+        | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
+        | XCB_EVENT_MASK_KEY_PRESS
+        | XCB_EVENT_MASK_KEY_RELEASE
+        | XCB_EVENT_MASK_ENTER_WINDOW
+        | XCB_EVENT_MASK_LEAVE_WINDOW
+        | XCB_EVENT_MASK_BUTTON_PRESS
+        | XCB_EVENT_MASK_BUTTON_RELEASE
+        | XCB_EVENT_MASK_BUTTON_MOTION
+        | XCB_EVENT_MASK_POINTER_MOTION
+        | XCB_EVENT_MASK_KEYMAP_STATE
+        | XCB_EVENT_MASK_EXPOSURE
+        | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY;
 }
 
 static uint32_t clientEventMask()
 {
-    if (waylandServer()) {
-        return XCB_EVENT_MASK_FOCUS_CHANGE
-            | XCB_EVENT_MASK_PROPERTY_CHANGE;
-    } else {
-        return XCB_EVENT_MASK_FOCUS_CHANGE
-            | XCB_EVENT_MASK_PROPERTY_CHANGE
-            | XCB_EVENT_MASK_ENTER_WINDOW
-            | XCB_EVENT_MASK_LEAVE_WINDOW
-            | XCB_EVENT_MASK_KEY_PRESS
-            | XCB_EVENT_MASK_KEY_RELEASE;
-    }
+    // X11 only build - always use full X11 event mask
+    return XCB_EVENT_MASK_FOCUS_CHANGE
+        | XCB_EVENT_MASK_PROPERTY_CHANGE
+        | XCB_EVENT_MASK_ENTER_WINDOW
+        | XCB_EVENT_MASK_LEAVE_WINDOW
+        | XCB_EVENT_MASK_KEY_PRESS
+        | XCB_EVENT_MASK_KEY_RELEASE;
 }
 
 // window types that are supported as normal windows (i.e. KWin actually manages them)
@@ -585,21 +567,9 @@ bool X11Window::track(xcb_window_t w)
         effects->checkInputWindowStacking();
     }
 
-    switch (kwinApp()->operationMode()) {
-    case Application::OperationModeWayland:
-        // The wayland surface is associated with the override-redirect window asynchronously.
-        if (surface()) {
-            associate();
-        } else {
-            connect(this, &Window::surfaceChanged, this, &X11Window::associate);
-        }
-        break;
-    case Application::OperationModeX11:
-        // We have no way knowing whether the override-redirect window can be painted. Mark it
-        // as ready for painting after synthetic 50ms delay.
-        QTimer::singleShot(50, this, &X11Window::setReadyForPainting);
-        break;
-    }
+    // X11 only - we have no way knowing whether the override-redirect window can be painted.
+    // Mark it as ready for painting after synthetic 50ms delay.
+    QTimer::singleShot(50, this, &X11Window::setReadyForPainting);
 
     return true;
 }
@@ -1204,19 +1174,7 @@ bool X11Window::manage(xcb_window_t w, bool isMapped)
         info.setOpacityF(opacity());
     });
 
-    switch (kwinApp()->operationMode()) {
-    case Application::OperationModeWayland:
-        // The wayland surface is associated with the window asynchronously.
-        if (surface()) {
-            associate();
-        } else {
-            connect(this, &Window::surfaceChanged, this, &X11Window::associate);
-        }
-        connect(kwinApp(), &Application::xwaylandScaleChanged, this, &X11Window::handleXwaylandScaleChanged);
-        break;
-    case Application::OperationModeX11:
-        break;
-    }
+    // X11 only - no Wayland surface association needed
 
     return true;
 }
@@ -1607,9 +1565,8 @@ void X11Window::updateInputShape()
     }
     if (Xcb::Extensions::self()->isShapeInputAvailable()) {
         xcb_connection_t *c = kwinApp()->x11Connection();
-        if (waylandServer()) {
-            xcb_shape_combine(c, XCB_SHAPE_SO_SET, XCB_SHAPE_SK_INPUT, XCB_SHAPE_SK_INPUT, frameId(), 0, 0, window());
-        } else {
+        // X11 only build - use full X11 input shape handling
+        {
             // There appears to be no way to find out if a window has input
             // shape set or not, so always propagate the input shape
             // (it's the same like the bounding shape by default).
@@ -1841,9 +1798,7 @@ void X11Window::updateVisibility()
         return;
     }
     if (isHiddenByShowDesktop()) {
-        if (waylandServer()) {
-            return;
-        }
+        // X11 only build - don't skip for Wayland
         if (Compositor::compositing() && options->hiddenPreviews() != HiddenPreviewsNever) {
             internalKeep();
         } else {
@@ -2929,7 +2884,8 @@ QSizeF X11Window::nextClientSizeToFrameSize(const QSizeF &size) const
 
 QRectF X11Window::nextFrameRectToBufferRect(const QRectF &rect) const
 {
-    if (!waylandServer() && isDecorated()) {
+    // X11 only build - always use decorated path
+    if (isDecorated()) {
         return rect;
     }
     return nextFrameRectToClientRect(rect);
@@ -3077,10 +3033,8 @@ void X11Window::ackSync()
         m_syncRequest.timeout->stop();
     }
 
-    // With Xwayland, the sync request will be completed after the wl_surface is committed.
-    if (!waylandServer()) {
-        finishSync();
-    }
+    // X11 only build - finish sync immediately (no Xwayland)
+    finishSync();
     setAllowCommits(true);
 }
 
@@ -3982,31 +3936,12 @@ void X11Window::handleXwaylandScaleChanged()
 
 void X11Window::handleCommitted()
 {
-    if (surface()->isMapped()) {
-        if (m_syncRequest.acked) {
-            finishSync();
-        }
-
-        if (!m_syncRequest.enabled) {
-            setReadyForPainting();
-        }
-    }
+    // X11 only - no Wayland surface commits to handle
 }
 
 void X11Window::setAllowCommits(bool allow)
 {
-    if (!waylandServer()) {
-        return;
-    }
-
-    static bool disabled = qEnvironmentVariableIntValue("KWIN_NO_XWAYLAND_ALLOW_COMMITS") == 1;
-    if (disabled) {
-        return;
-    }
-
-    uint32_t value = allow;
-    xcb_change_property(kwinApp()->x11Connection(), XCB_PROP_MODE_REPLACE, frameId(),
-                        atoms->xwayland_allow_commits, XCB_ATOM_CARDINAL, 32, 1, &value);
+    // X11 only build - no Xwayland commits handling needed
 }
 
 QPointF X11Window::gravityAdjustment(xcb_gravity_t gravity) const
@@ -5039,17 +4974,7 @@ void X11Window::updateWindowPixmap()
 
 void X11Window::associate()
 {
-    if (surface()->isMapped()) {
-        if (m_syncRequest.acked) {
-            finishSync();
-        }
-
-        if (!m_syncRequest.enabled) {
-            setReadyForPainting();
-        }
-    }
-
-    connect(surface(), &SurfaceInterface::committed, this, &X11Window::handleCommitted);
+    // X11 only - no Wayland surface association needed
 }
 
 QWindow *X11Window::findInternalWindow() const

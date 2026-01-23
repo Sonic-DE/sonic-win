@@ -16,8 +16,6 @@
 namespace KWin
 {
 
-class SurfaceInterface;
-
 /**
  * The CursorSource class represents the contents of the Cursor.
  */
@@ -72,30 +70,6 @@ private:
     QTimer m_delayTimer;
     QImage m_image;
     int m_currentSprite = -1;
-};
-
-/**
- * The SurfaceCursorSource class repsents the contents of a cursor backed by a wl_surface.
- */
-class KWIN_EXPORT SurfaceCursorSource : public CursorSource
-{
-    Q_OBJECT
-
-public:
-    explicit SurfaceCursorSource(QObject *parent = nullptr);
-
-    SurfaceInterface *surface() const;
-
-    void frame(std::chrono::milliseconds timestamp) override;
-
-public Q_SLOTS:
-    void update(SurfaceInterface *surface, const QPointF &hotspot);
-
-private:
-    void refresh();
-    void reset();
-
-    SurfaceInterface *m_surface = nullptr;
 };
 
 } // namespace KWin

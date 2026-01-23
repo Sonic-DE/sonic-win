@@ -19,16 +19,6 @@
 #include "platformsupport/scenes/opengl/openglbackend.h"
 #include "scene/workspacescene.h"
 #include "utils/filedescriptor.h"
-#include "wayland/abstract_data_source.h"
-#include "wayland/clientconnection.h"
-#include "wayland/datacontrolsource_v1.h"
-#include "wayland/datasource.h"
-#include "wayland/display.h"
-#include "wayland/primaryselectionsource_v1.h"
-#include "wayland/seat.h"
-#include "wayland/surface.h"
-#include "wayland_server.h"
-#include "waylandwindow.h"
 #include "workspace.h"
 #include "xkb.h"
 #include <cerrno>
@@ -49,8 +39,6 @@
 #include <QSortFilterProxyModel>
 #include <QWindow>
 #include <QtConcurrentRun>
-
-#include <wayland-server-core.h>
 
 // xkb
 #include <xkbcommon/xkbcommon.h>
@@ -593,29 +581,6 @@ void DebugConsoleFilter::tabletPadRingEvent(TabletPadRingEvent *event)
     m_textEdit->ensureCursorVisible();
 }
 
-static QString sourceString(const AbstractDataSource *const source)
-{
-    if (!source) {
-        return QString();
-    }
-
-    if (source->client()) {
-        const QString executable = waylandServer()->display()->getConnection(source->client())->executablePath();
-
-        if (auto dataSource = qobject_cast<const DataSourceInterface *const>(source)) {
-            return QStringLiteral("wl_data_source@%1 of %2").arg(wl_resource_get_id(dataSource->resource())).arg(executable);
-        } else if (qobject_cast<const PrimarySelectionSourceV1Interface *const>(source)) {
-            return QStringLiteral("zwp_primary_selection_source_v1 of %1").arg(executable);
-        } else if (qobject_cast<const DataControlSourceV1Interface *const>(source)) {
-            return QStringLiteral("data control by %1").arg(executable);
-        }
-
-        return QStringLiteral("unknown source of").arg(executable);
-    }
-
-    return QStringLiteral("%1(0x%2)").arg(source->metaObject()->className()).arg(qulonglong(source), 0, 16);
-}
-
 DebugConsole::DebugConsole()
     : QWidget()
     , m_ui(new Ui::DebugConsole)
@@ -623,8 +588,8 @@ DebugConsole::DebugConsole()
     setAttribute(Qt::WA_ShowWithoutActivating);
     m_ui->setupUi(this);
 
-    // Only on Wayland the window has a proper decoration with a close button.
-    m_ui->quitButton->setVisible(!kwinApp()->shouldUseWaylandForCompositing());
+    // X11 mode - show quit button
+    m_ui->quitButton->setVisible(true);
 
     auto windowsModel = new DebugConsoleModel(this);
     QSortFilterProxyModel *proxyWindowsModel = new QSortFilterProxyModel(this);
@@ -634,19 +599,16 @@ DebugConsole::DebugConsole()
     m_ui->windowsView->header()->setSortIndicatorShown(true);
     m_ui->windowsView->setItemDelegate(new DebugConsoleDelegate(this));
 
-    m_ui->clipboardContent->setModel(new DataSourceModel(this));
-    m_ui->primaryContent->setModel(new DataSourceModel(this));
     m_ui->inputDevicesView->setModel(new InputDeviceModel(this));
     m_ui->inputDevicesView->setItemDelegate(new DebugConsoleDelegate(this));
     m_ui->tabWidget->setTabIcon(0, QIcon::fromTheme(QStringLiteral("view-list-tree")));
 
-    if (kwinApp()->operationMode() == Application::OperationMode::OperationModeX11) {
-        m_ui->tabWidget->setTabEnabled(1, false); // Input Events
-        m_ui->tabWidget->setTabEnabled(2, false); // Input Devices
-        m_ui->tabWidget->setTabEnabled(4, false); // Keyboard
-        m_ui->tabWidget->setTabEnabled(5, false); // Clipboard
-        setWindowFlags(Qt::X11BypassWindowManagerHint);
-    }
+    // X11 mode - disable Wayland-only tabs
+    m_ui->tabWidget->setTabEnabled(1, false); // Input Events
+    m_ui->tabWidget->setTabEnabled(2, false); // Input Devices
+    m_ui->tabWidget->setTabEnabled(4, false); // Keyboard
+    m_ui->tabWidget->setTabEnabled(5, false); // Clipboard
+    setWindowFlags(Qt::X11BypassWindowManagerHint);
 
     m_ui->tabWidget->addTab(new DebugConsoleEffectsTab(), i18nc("@label", "Effects"));
 
@@ -660,20 +622,6 @@ DebugConsole::DebugConsole()
         if (index == m_ui->tabWidget->indexOf(m_ui->keyboard)) {
             updateKeyboardTab();
             connect(input(), &InputRedirection::keyStateChanged, this, &DebugConsole::updateKeyboardTab);
-        }
-        if (index == m_ui->tabWidget->indexOf(m_ui->clipboard)) {
-            static_cast<DataSourceModel *>(m_ui->clipboardContent->model())->setSource(waylandServer()->seat()->selection());
-            m_ui->clipboardSource->setText(sourceString(waylandServer()->seat()->selection()));
-            connect(waylandServer()->seat(), &SeatInterface::selectionChanged, this, [this](AbstractDataSource *source) {
-                static_cast<DataSourceModel *>(m_ui->clipboardContent->model())->setSource(source);
-                m_ui->clipboardSource->setText(sourceString(source));
-            });
-            static_cast<DataSourceModel *>(m_ui->primaryContent->model())->setSource(waylandServer()->seat()->primarySelection());
-            m_ui->primarySource->setText(sourceString(waylandServer()->seat()->primarySelection()));
-            connect(waylandServer()->seat(), &SeatInterface::primarySelectionChanged, this, [this](AbstractDataSource *source) {
-                static_cast<DataSourceModel *>(m_ui->primaryContent->model())->setSource(source);
-                m_ui->primarySource->setText(sourceString(source));
-            });
         }
     });
 
@@ -805,13 +753,6 @@ QString DebugConsoleDelegate::displayText(const QVariant &value, const QLocale &
         return QStringLiteral("%1,%2 %3x%4").arg(r.x()).arg(r.y()).arg(r.width()).arg(r.height());
     }
     default:
-        if (value.userType() == qMetaTypeId<KWin::SurfaceInterface *>()) {
-            if (auto s = value.value<KWin::SurfaceInterface *>()) {
-                return QStringLiteral("KWin::SurfaceInterface(0x%1)").arg(qulonglong(s), 0, 16);
-            } else {
-                return QStringLiteral("nullptr");
-            }
-        }
         if (value.userType() == qMetaTypeId<KWin::Window *>()) {
             if (auto w = value.value<KWin::Window *>()) {
                 return w->caption() + QLatin1Char(' ') + QString::fromUtf8(w->metaObject()->className());
@@ -924,8 +865,7 @@ QString DebugConsoleDelegate::displayText(const QVariant &value, const QLocale &
 
 static const int s_x11WindowId = 1;
 static const int s_x11UnmanagedId = 2;
-static const int s_waylandWindowId = 3;
-static const int s_workspaceInternalId = 4;
+static const int s_workspaceInternalId = 3;
 static const quint32 s_propertyBitMask = 0xFFFF0000;
 static const quint32 s_windowBitMask = 0x0000FFFF;
 static const quint32 s_idDistance = 10000;
@@ -974,11 +914,6 @@ void DebugConsoleModel::handleWindowAdded(Window *window)
     }
 #endif
 
-    if (auto wayland = qobject_cast<WaylandWindow *>(window)) {
-        add(s_waylandWindowId - 1, m_waylandWindows, wayland);
-        return;
-    }
-
     if (auto internal = qobject_cast<InternalWindow *>(window)) {
         add(s_workspaceInternalId - 1, m_internalWindows, internal);
         return;
@@ -998,11 +933,6 @@ void DebugConsoleModel::handleWindowRemoved(Window *window)
     }
 #endif
 
-    if (auto wayland = qobject_cast<WaylandWindow *>(window)) {
-        remove(s_waylandWindowId - 1, m_waylandWindows, wayland);
-        return;
-    }
-
     if (auto internal = qobject_cast<InternalWindow *>(window)) {
         remove(s_workspaceInternalId - 1, m_internalWindows, internal);
         return;
@@ -1018,7 +948,8 @@ int DebugConsoleModel::columnCount(const QModelIndex &parent) const
 
 int DebugConsoleModel::topLevelRowCount() const
 {
-    return kwinApp()->shouldUseWaylandForCompositing() ? 4 : 2;
+    // X11 only: X11 Windows, X11 Unmanaged, Internal Windows
+    return 3;
 }
 
 template<class T>
@@ -1041,8 +972,6 @@ int DebugConsoleModel::rowCount(const QModelIndex &parent) const
         return m_x11Windows.count();
     case s_x11UnmanagedId:
         return m_unmanageds.count();
-    case s_waylandWindowId:
-        return m_waylandWindows.count();
     case s_workspaceInternalId:
         return m_internalWindows.count();
     default:
@@ -1066,8 +995,6 @@ int DebugConsoleModel::rowCount(const QModelIndex &parent) const
 #else
         return 0;
 #endif
-    } else if (parent.internalId() < s_idDistance * (s_waylandWindowId + 1)) {
-        return propertyCount(parent, &DebugConsoleModel::waylandWindow);
     } else if (parent.internalId() < s_idDistance * (s_workspaceInternalId + 1)) {
         return propertyCount(parent, &DebugConsoleModel::internalWindow);
     }
@@ -1118,8 +1045,6 @@ QModelIndex DebugConsoleModel::index(int row, int column, const QModelIndex &par
         return indexForWindow(row, column, m_x11Windows, s_x11WindowId);
     case s_x11UnmanagedId:
         return indexForWindow(row, column, m_unmanageds, s_x11UnmanagedId);
-    case s_waylandWindowId:
-        return indexForWindow(row, column, m_waylandWindows, s_waylandWindowId);
     case s_workspaceInternalId:
         return indexForWindow(row, column, m_internalWindows, s_workspaceInternalId);
     default:
@@ -1139,8 +1064,6 @@ QModelIndex DebugConsoleModel::index(int row, int column, const QModelIndex &par
 #else
         return {};
 #endif
-    } else if (parent.internalId() < s_idDistance * (s_waylandWindowId + 1)) {
-        return indexForProperty(row, column, parent, &DebugConsoleModel::waylandWindow);
     } else if (parent.internalId() < s_idDistance * (s_workspaceInternalId + 1)) {
         return indexForProperty(row, column, parent, &DebugConsoleModel::internalWindow);
     }
@@ -1160,8 +1083,6 @@ QModelIndex DebugConsoleModel::parent(const QModelIndex &child) const
             return createIndex(parentId - (s_idDistance * s_x11WindowId), 0, parentId);
         } else if (parentId < s_idDistance * (s_x11UnmanagedId + 1)) {
             return createIndex(parentId - (s_idDistance * s_x11UnmanagedId), 0, parentId);
-        } else if (parentId < s_idDistance * (s_waylandWindowId + 1)) {
-            return createIndex(parentId - (s_idDistance * s_waylandWindowId), 0, parentId);
         } else if (parentId < s_idDistance * (s_workspaceInternalId + 1)) {
             return createIndex(parentId - (s_idDistance * s_workspaceInternalId), 0, parentId);
         }
@@ -1171,8 +1092,6 @@ QModelIndex DebugConsoleModel::parent(const QModelIndex &child) const
         return createIndex(s_x11WindowId - 1, 0, s_x11WindowId);
     } else if (child.internalId() < s_idDistance * (s_x11UnmanagedId + 1)) {
         return createIndex(s_x11UnmanagedId - 1, 0, s_x11UnmanagedId);
-    } else if (child.internalId() < s_idDistance * (s_waylandWindowId + 1)) {
-        return createIndex(s_waylandWindowId - 1, 0, s_waylandWindowId);
     } else if (child.internalId() < s_idDistance * (s_workspaceInternalId + 1)) {
         return createIndex(s_workspaceInternalId - 1, 0, s_workspaceInternalId);
     }
@@ -1268,8 +1187,6 @@ QVariant DebugConsoleModel::data(const QModelIndex &index, int role) const
             return i18n("X11 Windows");
         case s_x11UnmanagedId:
             return i18n("X11 Unmanaged Windows");
-        case s_waylandWindowId:
-            return i18n("Wayland Windows");
         case s_workspaceInternalId:
             return i18n("Internal Windows");
         default:
@@ -1280,9 +1197,7 @@ QVariant DebugConsoleModel::data(const QModelIndex &index, int role) const
         if (index.column() >= 2 || role != Qt::DisplayRole) {
             return QVariant();
         }
-        if (Window *w = waylandWindow(index)) {
-            return propertyData(w, index, role);
-        } else if (InternalWindow *w = internalWindow(index)) {
+        if (InternalWindow *w = internalWindow(index)) {
             return propertyData(w, index, role);
 #if KWIN_BUILD_X11
         } else if (X11Window *w = x11Window(index)) {
@@ -1319,8 +1234,6 @@ QVariant DebugConsoleModel::data(const QModelIndex &index, int role) const
 #endif
             break;
         }
-        case s_waylandWindowId:
-            return windowData<WaylandWindow>(index, role, m_waylandWindows, generic);
         case s_workspaceInternalId:
             return windowData<InternalWindow>(index, role, m_internalWindows, generic);
         default:
@@ -1339,11 +1252,6 @@ static T *windowForIndex(const QModelIndex &index, const QList<T *> &windows, in
         return nullptr;
     }
     return windows.at(row);
-}
-
-WaylandWindow *DebugConsoleModel::waylandWindow(const QModelIndex &index) const
-{
-    return windowForIndex(index, m_waylandWindows, s_waylandWindowId);
 }
 
 InternalWindow *DebugConsoleModel::internalWindow(const QModelIndex &index) const
@@ -1484,117 +1392,6 @@ void InputDeviceModel::setupDeviceConnections(InputDevice *device)
             connect(device, metaProperty.notifySignal(), this, handler);
         }
     }
-}
-
-QModelIndex DataSourceModel::index(int row, int column, const QModelIndex &parent) const
-{
-    if (!m_source || parent.isValid() || column >= 2 || row >= m_source->mimeTypes().size()) {
-        return QModelIndex();
-    }
-    return createIndex(row, column, nullptr);
-}
-
-QModelIndex DataSourceModel::parent(const QModelIndex &child) const
-{
-    return QModelIndex();
-}
-
-int DataSourceModel::rowCount(const QModelIndex &parent) const
-{
-    if (!parent.isValid()) {
-        return m_source ? m_source->mimeTypes().count() : 0;
-    }
-    return 0;
-}
-
-QVariant DataSourceModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal || section >= 2) {
-        return QVariant();
-    }
-    return section == 0 ? QStringLiteral("Mime type") : QStringLiteral("Content");
-}
-
-QVariant DataSourceModel::data(const QModelIndex &index, int role) const
-{
-    if (!checkIndex(index, CheckIndexOption::ParentIsInvalid | CheckIndexOption::IndexIsValid)) {
-        return QVariant();
-    }
-    const QString mimeType = m_source->mimeTypes().at(index.row());
-    ;
-    if (index.column() == 0 && role == Qt::DisplayRole) {
-        return mimeType;
-    } else if (index.column() == 1 && index.row() < m_data.count()) {
-        const QByteArray &data = m_data.at(index.row());
-        if (mimeType.contains(QLatin1String("image"))) {
-            if (role == Qt::DecorationRole) {
-                return QImage::fromData(data);
-            }
-        } else if (role == Qt::DisplayRole) {
-            return data;
-        }
-    }
-    return QVariant();
-}
-
-static QByteArray readData(int fd)
-{
-    pollfd pfd;
-    pfd.fd = fd;
-    pfd.events = POLLIN;
-    FileDescriptor closeFd{fd};
-    QByteArray data;
-    while (true) {
-        const int ready = poll(&pfd, 1, 1000);
-        if (ready < 0) {
-            if (errno != EINTR) {
-                return QByteArrayLiteral("poll() failed: ") + strerror(errno);
-            }
-        } else if (ready == 0) {
-            return QByteArrayLiteral("timeout reading from pipe");
-        } else {
-            char buf[4096];
-            int n = read(fd, buf, sizeof buf);
-
-            if (n < 0) {
-                return QByteArrayLiteral("read failed: ") + strerror(errno);
-            } else if (n == 0) {
-                return data;
-            } else if (n > 0) {
-                data.append(buf, n);
-            }
-        }
-    }
-}
-
-void DataSourceModel::setSource(AbstractDataSource *source)
-{
-    beginResetModel();
-    m_source = source;
-    m_data.clear();
-    if (source) {
-        const QStringList mimeTypes = m_source->mimeTypes();
-        m_data.resize(mimeTypes.size());
-        for (auto type = mimeTypes.begin(); type != mimeTypes.end(); ++type) {
-            int pipeFds[2];
-            if (pipe2(pipeFds, O_CLOEXEC) != 0) {
-                continue;
-            }
-            source->requestData(*type, pipeFds[1]);
-            QFuture<QByteArray> data = QtConcurrent::run(readData, pipeFds[0]);
-            auto watcher = new QFutureWatcher<QByteArray>(this);
-            watcher->setFuture(data);
-            const int index = type - mimeTypes.begin();
-            connect(watcher, &QFutureWatcher<QByteArray>::finished, this, [this, watcher, index, source = QPointer(source)] {
-                watcher->deleteLater();
-                if (source && source == m_source) {
-                    m_data[index] = watcher->result();
-                    Q_EMIT dataChanged(this->index(index, 1), this->index(index, 1), {Qt::DecorationRole | Qt::DisplayRole});
-                }
-            });
-        }
-    }
-    endResetModel();
 }
 
 DebugConsoleEffectItem::DebugConsoleEffectItem(const QString &name, bool loaded, QWidget *parent)

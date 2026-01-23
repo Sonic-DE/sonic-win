@@ -34,7 +34,6 @@
 #include "screenedge.h"
 #include "sm.h"
 #include "tabletmodemanager.h"
-#include "wayland/surface.h"
 #include "workspace.h"
 
 #if KWIN_BUILD_X11
@@ -97,7 +96,6 @@ Application::Application(Application::OperationMode mode, int &argc, char **argv
 {
     qRegisterMetaType<Options::WindowOperation>("Options::WindowOperation");
     qRegisterMetaType<KWin::EffectWindow *>();
-    qRegisterMetaType<KWin::SurfaceInterface *>("KWin::SurfaceInterface *");
     qRegisterMetaType<KSharedConfigPtr>();
     qRegisterMetaType<std::chrono::nanoseconds>();
 }
@@ -114,7 +112,7 @@ Application::OperationMode Application::operationMode() const
 
 bool Application::shouldUseWaylandForCompositing() const
 {
-    return m_operationMode == OperationModeWayland;
+    return false;
 }
 
 void Application::start()
@@ -542,19 +540,7 @@ static quint32 monotonicTime()
 
 void Application::updateXTime()
 {
-    switch (operationMode()) {
-    case Application::OperationModeX11:
-        setX11Time(QX11Info::getTimestamp(), TimestampUpdate::Always);
-        break;
-
-    case Application::OperationModeWayland:
-        setX11Time(monotonicTime(), TimestampUpdate::Always);
-        break;
-
-    default:
-        // Do not update the current X11 time stamp if it's the Wayland only session.
-        break;
-    }
+    setX11Time(QX11Info::getTimestamp(), TimestampUpdate::Always);
 }
 
 void Application::updateX11Time(xcb_generic_event_t *event)

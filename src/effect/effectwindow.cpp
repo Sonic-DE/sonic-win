@@ -13,7 +13,6 @@
 #include "internalwindow.h"
 #include "scene/windowitem.h"
 #include "virtualdesktops.h"
-#include "waylandwindow.h"
 
 #if KWIN_BUILD_X11
 #include "group.h"
@@ -60,7 +59,7 @@ EffectWindow::EffectWindow(WindowItem *windowItem)
     // can still figure out whether it is/was a managed window.
     d->managed = d->m_window->isClient();
 
-    d->m_waylandWindow = qobject_cast<KWin::WaylandWindow *>(d->m_window) != nullptr;
+    d->m_waylandWindow = false; // X11 only build
 #if KWIN_BUILD_X11
     d->m_x11Window = qobject_cast<KWin::X11Window *>(d->m_window) != nullptr;
 #else
@@ -283,7 +282,7 @@ WINDOW_HELPER(bool, isDeleted, isDeleted)
 WINDOW_HELPER(QString, windowRole, windowRole)
 WINDOW_HELPER(QStringList, activities, activities)
 WINDOW_HELPER(bool, skipsCloseAnimation, skipsCloseAnimation)
-WINDOW_HELPER(SurfaceInterface *, surface, surface)
+// X11 only - surface() is now inline returning nullptr in header
 WINDOW_HELPER(bool, isPopupWindow, isPopupWindow)
 WINDOW_HELPER(bool, isOutline, isOutline)
 WINDOW_HELPER(bool, isLockScreen, isLockScreen)

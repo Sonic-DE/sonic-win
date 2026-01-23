@@ -31,7 +31,7 @@ class EffectWindowGroup;
 class EffectWindowVisibleRef;
 class Group;
 class Output;
-class SurfaceInterface;
+class SurfaceInterface; // X11 only - stub for API compatibility
 class VirtualDesktop;
 class Window;
 class WindowItem;
@@ -592,8 +592,12 @@ public:
 
     /**
      * @since 5.5
+     * X11 only - always returns nullptr
      */
-    SurfaceInterface *surface() const;
+    SurfaceInterface *surface() const
+    {
+        return nullptr;
+    }
 
     /**
      * @since 5.6

@@ -6,8 +6,6 @@
 
 #include "outputlayer.h"
 #include "scene/surfaceitem.h"
-#include "scene/surfaceitem_wayland.h"
-#include "wayland/surface.h"
 
 namespace KWin
 {
@@ -72,38 +70,8 @@ bool OutputLayer::doImportScanoutBuffer(GraphicsBuffer *buffer, const ColorDescr
 
 bool OutputLayer::importScanoutBuffer(SurfaceItem *surfaceItem, const std::shared_ptr<OutputFrame> &frame)
 {
-    SurfaceItemWayland *wayland = qobject_cast<SurfaceItemWayland *>(surfaceItem);
-    if (!wayland || !wayland->surface()) {
-        return false;
-    }
-    const auto buffer = wayland->surface()->buffer();
-    if (!buffer) {
-        return false;
-    }
-    const auto attrs = buffer->dmabufAttributes();
-    if (!attrs) {
-        return false;
-    }
-    const auto formats = supportedDrmFormats();
-    if (auto it = formats.find(attrs->format); it != formats.end() && !it->contains(attrs->modifier)) {
-        if (m_scanoutCandidate && m_scanoutCandidate != surfaceItem) {
-            m_scanoutCandidate->setScanoutHint(nullptr, {});
-        }
-        m_scanoutCandidate = surfaceItem;
-        surfaceItem->setScanoutHint(scanoutDevice(), formats);
-        return false;
-    }
-    m_sourceRect = surfaceItem->bufferSourceBox();
-    m_bufferTransform = surfaceItem->bufferTransform();
-    const auto desiredTransform = m_output ? m_output->transform() : OutputTransform::Kind::Normal;
-    m_offloadTransform = m_bufferTransform.combine(desiredTransform.inverted());
-    const bool ret = doImportScanoutBuffer(buffer, surfaceItem->colorDescription(), surfaceItem->renderingIntent(), frame);
-    if (ret) {
-        surfaceItem->resetDamage();
-        // ensure the pixmap is updated when direct scanout ends
-        surfaceItem->destroyPixmap();
-    }
-    return ret;
+    // Scanout buffer import is not supported in X11-only builds
+    return false;
 }
 
 std::optional<OutputLayerBeginFrameInfo> OutputLayer::beginFrame()

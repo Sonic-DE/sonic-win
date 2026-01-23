@@ -24,7 +24,6 @@
 #include "rules.h"
 #include "useractions.h"
 #include "virtualdesktops.h"
-#include "waylandwindow.h"
 #include "window.h"
 
 #if KWIN_BUILD_X11
@@ -232,12 +231,6 @@ void Workspace::setActiveWindow(Window *window)
     StackingUpdatesBlocker blocker(this);
     ++m_setActiveWindowRecursion;
     updateFocusMousePosition(Cursors::self()->mouse()->pos());
-
-    if (qobject_cast<WaylandWindow *>(window)) {
-        // focusIn events only arrive for X11 windows, Wayland windows don't use such a mechanism
-        // and so X11 windows could wrongly get stuck in the list
-        should_get_focus.clear();
-    }
 
     if (m_activeWindow != nullptr) {
         // note that this may call setActiveWindow( NULL ), therefore the recursion counter

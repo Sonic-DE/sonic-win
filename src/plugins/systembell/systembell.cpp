@@ -12,9 +12,6 @@
 #include "effect/effecthandler.h"
 #include "opengl/glshader.h"
 #include "opengl/glshadermanager.h"
-#include "wayland/surface.h"
-#include "wayland/xdgsystembell_v1.h"
-#include "wayland_server.h"
 #include "window.h"
 
 #include <QDBusConnection>
@@ -75,30 +72,7 @@ SystemBellEffect::SystemBellEffect()
         }
     }
 
-    if (waylandServer()) {
-        if (!s_systemBellRemoveTimer) {
-            s_systemBellRemoveTimer = new QTimer(QCoreApplication::instance());
-            s_systemBellRemoveTimer->setSingleShot(true);
-            s_systemBellRemoveTimer->callOnTimeout([]() {
-                s_systemBell->remove();
-                s_systemBell = nullptr;
-            });
-        }
-        s_systemBellRemoveTimer->stop();
-        if (!s_systemBell) {
-            s_systemBell = new XdgSystemBellV1Interface(waylandServer()->display(), s_systemBellRemoveTimer);
-            connect(s_systemBell, &XdgSystemBellV1Interface::ringSurface, this, [this](SurfaceInterface *surface) {
-                triggerWindow(effects->findWindow(surface));
-            });
-            connect(s_systemBell, &XdgSystemBellV1Interface::ring, this, [this](ClientConnection *client) {
-                if (effects->activeWindow()) {
-                    if (effects->activeWindow()->surface() && effects->activeWindow()->surface()->client() == client) {
-                        triggerWindow(effects->activeWindow());
-                    }
-                }
-            });
-        }
-    }
+    // X11 only build - Wayland system bell code removed
 }
 
 SystemBellEffect::~SystemBellEffect()
@@ -106,10 +80,7 @@ SystemBellEffect::~SystemBellEffect()
     if (m_caContext) {
         ca_context_destroy(m_caContext);
     }
-    // When compositing is restarted, avoid removing the system bell immediately
-    if (s_systemBell) {
-        s_systemBellRemoveTimer->start(1000);
-    }
+    // X11 only build - no Wayland system bell to clean up
 }
 
 void SystemBellEffect::reconfigure(ReconfigureFlags flags)

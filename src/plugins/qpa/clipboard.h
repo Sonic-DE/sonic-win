@@ -6,46 +6,14 @@
 
 #pragma once
 
-#include "wayland/abstract_data_source.h"
-
 #include <QMimeData>
-
 #include <qpa/qplatformclipboard.h>
 
 namespace KWin::QPA
 {
 
-class ClipboardDataSource : public AbstractDataSource
-{
-    Q_OBJECT
-
-public:
-    explicit ClipboardDataSource(QMimeData *mimeData, QObject *parent = nullptr);
-
-    QMimeData *mimeData() const;
-
-    void requestData(const QString &mimeType, qint32 fd) override;
-    void cancel() override;
-    QStringList mimeTypes() const override;
-
-private:
-    QMimeData *m_mimeData;
-};
-
-class ClipboardMimeData : public QMimeData
-{
-    Q_OBJECT
-
-public:
-    explicit ClipboardMimeData(AbstractDataSource *dataSource);
-
-protected:
-    QVariant retrieveData(const QString &mimetype, QMetaType preferredType) const override;
-
-private:
-    AbstractDataSource *m_dataSource;
-};
-
+// Stub clipboard for X11-only build
+// X11 handles clipboard natively through the X server
 class Clipboard : public QObject, public QPlatformClipboard
 {
     Q_OBJECT
@@ -62,8 +30,6 @@ public:
 
 private:
     QMimeData m_emptyData;
-    std::unique_ptr<ClipboardMimeData> m_externalMimeData;
-    std::unique_ptr<ClipboardDataSource> m_ownSelection;
 };
 
 }

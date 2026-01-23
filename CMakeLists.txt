@@ -70,7 +70,6 @@ find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     DBus
     Quick
     UiTools
-    WaylandClient
     Widgets
     Sensors
     Svg
@@ -212,35 +211,6 @@ if (epoxy_HAS_GLX)
     endif()
 endif()
 
-find_package(Wayland 1.22)
-set_package_properties(Wayland PROPERTIES
-    TYPE REQUIRED
-    PURPOSE "Required for building KWin with Wayland support"
-)
-if (Wayland_VERSION VERSION_GREATER_EQUAL 1.23)
-    set(HAVE_WL_DISPLAY_SET_DEFAULT_MAX_BUFFER_SIZE 1)
-else()
-    set(HAVE_WL_DISPLAY_SET_DEFAULT_MAX_BUFFER_SIZE 0)
-endif()
-if (Wayland_VERSION VERSION_GREATER_EQUAL 1.23.90)
-    set(HAVE_WL_FIXES 1)
-else()
-    set(HAVE_WL_FIXES 0)
-endif()
-
-find_package(WaylandProtocols 1.38)
-set_package_properties(WaylandProtocols PROPERTIES
-    TYPE REQUIRED
-    PURPOSE "Collection of Wayland protocols that add functionality not available in the Wayland core protocol"
-    URL "https://gitlab.freedesktop.org/wayland/wayland-protocols/"
-)
-
-find_package(PlasmaWaylandProtocols 1.14.0 CONFIG)
-set_package_properties(PlasmaWaylandProtocols PROPERTIES
-    TYPE REQUIRED
-    PURPOSE "Collection of Plasma-specific Wayland protocols"
-    URL "https://invent.kde.org/libraries/plasma-wayland-protocols/"
-)
 
 find_package(XKB 0.7.0)
 set_package_properties(XKB PROPERTIES
@@ -403,7 +373,6 @@ ecm_find_qmlmodule(org.kde.plasma.components 2.0)
 cmake_dependent_option(KWIN_BUILD_ACTIVITIES "Enable building of KWin with kactivities support" ON "PlasmaActivities_FOUND" OFF)
 
 include_directories(BEFORE
-    ${CMAKE_CURRENT_BINARY_DIR}/src/wayland
     ${CMAKE_CURRENT_BINARY_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
@@ -488,14 +457,9 @@ add_subdirectory(kconf_update)
 add_subdirectory(src)
 
 if (BUILD_TESTING)
-    find_package(KWayland ${PROJECT_DEP_VERSION} CONFIG)
-    set_package_properties(KWayland PROPERTIES
-        PURPOSE "Required to build wayland platform plugin and tests"
-        TYPE REQUIRED
-    )
-
     add_subdirectory(autotests)
-    add_subdirectory(tests)
+    # X11 only build - tests directory has Wayland dependencies
+    # add_subdirectory(tests)
 endif()
 
 # add clang-format target for all our real source files

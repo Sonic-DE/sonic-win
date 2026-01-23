@@ -58,8 +58,6 @@
 #include "utils/orientationsensor.h"
 #include "virtualdesktops.h"
 #include "was_user_interaction_x11_filter.h"
-#include "wayland/externalbrightness_v1.h"
-#include "wayland_server.h"
 #if KWIN_BUILD_X11
 #include "atoms.h"
 #include "core/brightnessdevice.h"
@@ -209,22 +207,7 @@ void Workspace::init()
     //  load is needed to be called again when starting xwayalnd to sync to RootInfo, see BUG 385260
     vds->save();
 
-    if (waylandServer()) {
-        m_outputConfigStore = std::make_unique<OutputConfigurationStore>();
-
-        const auto applySensorChanges = [this]() {
-            m_orientationSensor->setEnabled(m_outputConfigStore->isAutoRotateActive(kwinApp()->outputBackend()->outputs(), kwinApp()->tabletModeManager()->effectiveTabletMode()));
-            const auto opt = m_outputConfigStore->queryConfig(kwinApp()->outputBackend()->outputs(), m_lidSwitchTracker->isLidClosed(), m_orientationSensor->reading(), kwinApp()->tabletModeManager()->effectiveTabletMode());
-            if (opt) {
-                const auto &[config, order, type] = *opt;
-                applyOutputConfiguration(config, order);
-            }
-        };
-        connect(m_lidSwitchTracker.get(), &LidSwitchTracker::lidStateChanged, this, applySensorChanges);
-        connect(m_orientationSensor.get(), &OrientationSensor::orientationChanged, this, applySensorChanges);
-        connect(kwinApp()->tabletModeManager(), &TabletModeManager::tabletModeChanged, this, applySensorChanges);
-        m_orientationSensor->setEnabled(m_outputConfigStore->isAutoRotateActive(kwinApp()->outputBackend()->outputs(), kwinApp()->tabletModeManager()->effectiveTabletMode()));
-    }
+    // X11 only build - no Wayland output configuration store
 
     slotOutputBackendOutputsQueried();
     connect(kwinApp()->outputBackend(), &OutputBackend::outputsQueried, this, &Workspace::slotOutputBackendOutputsQueried);
@@ -255,10 +238,7 @@ void Workspace::init()
 
     Scripting::create(this);
 
-    if (auto server = waylandServer()) {
-        connect(server, &WaylandServer::windowAdded, this, &Workspace::addWaylandWindow);
-        connect(server, &WaylandServer::windowRemoved, this, &Workspace::removeWaylandWindow);
-    }
+    // X11 only build - no Wayland window connections
 
     // broadcast that Workspace is ready, but first process all events.
     QMetaObject::invokeMethod(this, &Workspace::workspaceInitialized, Qt::QueuedConnection);
@@ -269,9 +249,7 @@ void Workspace::init()
     connect(this, &Workspace::windowRemoved, m_placementTracker.get(), &PlacementTracker::remove);
     m_placementTracker->init(getPlacementTrackerHash());
 
-    if (waylandServer()) {
-        connect(waylandServer()->externalBrightness(), &ExternalBrightnessV1::devicesChanged, this, &Workspace::updateOutputConfiguration);
-    }
+    // X11 only build - no Wayland external brightness
 
 #if KWIN_BUILD_SCREENLOCKER
     connect(ScreenLocker::KSldApp::self(), &ScreenLocker::KSldApp::locked, this, &Workspace::slotEndInteractiveMoveResize);
@@ -344,10 +322,8 @@ void Workspace::initializeX11()
     desktop_geometry.height = m_geometry.height();
     rootInfo->setDesktopGeometry(desktop_geometry);
 
-    if (waylandServer()) {
-        rootInfo->setActiveWindow(XCB_WINDOW_NONE);
-        focusToNull(); // TODO: is this really needed on Wayland?
-    } else {
+    // X11 only build - always use X11 path
+    {
         // Extra NETRootInfo instance in Client mode is needed to get the values of the properties
         NETRootInfo client_info(kwinApp()->x11Connection(), NET::ActiveWindow | NET::CurrentDesktop);
         bool sessionRestored = false;
@@ -471,11 +447,7 @@ Workspace::~Workspace()
     cleanupX11();
 #endif
 
-    if (waylandServer()) {
-        while (!waylandServer()->windows().isEmpty()) {
-            waylandServer()->windows()[0]->destroyWindow();
-        }
-    }
+    // X11 only build - no Wayland windows to destroy
 
     while (!m_windows.isEmpty()) {
         m_windows[0]->destroyWindow();
@@ -1198,9 +1170,7 @@ Output *Workspace::findOutput(Output *reference, Direction direction, bool wrapA
 
 void Workspace::slotOutputBackendOutputsQueried()
 {
-    if (waylandServer()) {
-        updateOutputConfiguration();
-    }
+    // X11 only build - no Wayland output configuration
     updateOutputs();
 }
 
@@ -1209,12 +1179,7 @@ void Workspace::updateOutputs(const std::optional<QList<Output *>> &outputOrder)
     const auto availableOutputs = kwinApp()->outputBackend()->outputs();
     const auto oldOutputs = m_outputs;
 
-    // On X11, we receive spurious output change events when windows move around.
-    if (waylandServer()) {
-        if (m_moveResizeWindow) {
-            m_moveResizeWindow->cancelInteractiveMoveResize();
-        }
-    }
+    // X11 only build - don't cancel move/resize on X11 output changes
 
     m_outputs.clear();
     for (Output *output : availableOutputs) {
@@ -1350,42 +1315,7 @@ void Workspace::maybeDestroyDpmsFilter()
 
 void Workspace::assignBrightnessDevices()
 {
-    if (!waylandServer()) {
-        return;
-    }
-    QList<Output *> candidates = kwinApp()->outputBackend()->outputs();
-    const auto devices = waylandServer()->externalBrightness()->devices();
-    for (BrightnessDevice *device : devices) {
-        // assign the device to the most fitting output
-        const auto it = std::ranges::find_if(candidates, [device](Output *output) {
-            if (output->isInternal() != device->isInternal()) {
-                return false;
-            }
-            if (output->isInternal()) {
-                return true;
-            } else {
-                return output->edid().isValid() && !device->edidBeginning().isEmpty() && output->edid().raw().startsWith(device->edidBeginning());
-            }
-        });
-        Output *const oldOutput = device->output();
-        if (it != candidates.end()) {
-            Output *const output = *it;
-            if (oldOutput && oldOutput != output) {
-                oldOutput->setBrightnessDevice(nullptr);
-            }
-            output->setBrightnessDevice(device);
-            device->setOutput(output);
-            candidates.erase(it);
-        } else if (oldOutput) {
-            device->setOutput(nullptr);
-            if (oldOutput->brightnessDevice() == device) {
-                oldOutput->setBrightnessDevice(nullptr);
-            }
-        }
-    }
-    for (Output *output : candidates) {
-        output->setBrightnessDevice(nullptr);
-    }
+    // X11 only build - no Wayland brightness device handling
 }
 
 void Workspace::slotDesktopAdded(VirtualDesktop *desktop)
@@ -1437,16 +1367,14 @@ void Workspace::selectWmInputEventMask()
         presentMask = attr->your_event_mask;
     }
 
+    // X11 only build - always include full event mask
     uint32_t wmMask = XCB_EVENT_MASK_PROPERTY_CHANGE
         | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
         | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
-        | XCB_EVENT_MASK_FOCUS_CHANGE; // For NotifyDetailNone
-
-    if (!waylandServer()) {
-        wmMask |= XCB_EVENT_MASK_KEY_PRESS
-            | XCB_EVENT_MASK_COLOR_MAP_CHANGE
-            | XCB_EVENT_MASK_EXPOSURE;
-    }
+        | XCB_EVENT_MASK_FOCUS_CHANGE // For NotifyDetailNone
+        | XCB_EVENT_MASK_KEY_PRESS
+        | XCB_EVENT_MASK_COLOR_MAP_CHANGE
+        | XCB_EVENT_MASK_EXPOSURE;
 
     Xcb::selectInput(kwinApp()->x11RootWindow(), presentMask | wmMask);
 }
@@ -1650,14 +1578,7 @@ QString Workspace::supportInformation() const
     support.append(QStringLiteral("Qt compile version: %1\n").arg(QStringLiteral(QT_VERSION_STR)));
     support.append(QStringLiteral("XCB compile version: %1\n\n").arg(XCB_VERSION_STRING));
     support.append(QStringLiteral("Operation Mode: "));
-    switch (kwinApp()->operationMode()) {
-    case Application::OperationModeX11:
-        support.append(QStringLiteral("X11"));
-        break;
-    case Application::OperationModeWayland:
-        support.append(QStringLiteral("Wayland"));
-        break;
-    }
+    support.append(QStringLiteral("X11")); // X11 only build
     support.append(QStringLiteral("\n\n"));
 
     support.append(QStringLiteral("Build Options\n"));
@@ -2191,14 +2112,7 @@ void Workspace::desktopResized()
         window->setOutput(outputAt(window->frameGeometry().center()));
     }
 
-    if (waylandServer()) {
-        // TODO: Track uninitialized windows in the Workspace too.
-        const auto windows = waylandServer()->windows();
-        for (Window *window : windows) {
-            window->setMoveResizeOutput(outputAt(window->moveResizeGeometry().center()));
-            window->setOutput(outputAt(window->frameGeometry().center()));
-        }
-    }
+    // X11 only build - no Wayland windows to update
 
     // restore cursor position
     const auto oldCursorOutput = std::find_if(m_oldScreenGeometries.cbegin(), m_oldScreenGeometries.cend(), [](const auto &geometry) {

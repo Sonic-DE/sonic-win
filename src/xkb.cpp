@@ -11,9 +11,6 @@
 #include "inputmethod.h"
 #include "utils/c_ptr.h"
 #include "utils/common.h"
-#include "wayland/inputmethod_v1.h"
-#include "wayland/keyboard.h"
-#include "wayland/seat.h"
 // frameworks
 #include <KConfigGroup>
 // Qt
@@ -719,26 +716,11 @@ void Xkb::updateKeymap(xkb_keymap *keymap)
 
 void Xkb::createKeymapFile()
 {
-    const auto currentKeymap = keymapContents();
-    if (currentKeymap.isEmpty()) {
-        return;
-    }
-    m_seat->keyboard()->setKeymap(currentKeymap);
-    auto *inputmethod = kwinApp()->inputMethod();
-    if (!inputmethod) {
-        return;
-    }
-    if (auto *keyboardGrab = inputmethod->keyboardGrab()) {
-        keyboardGrab->sendKeymap(currentKeymap);
-    }
+    // X11 only - Wayland seat keymap not needed
 }
 
 QByteArray Xkb::keymapContents() const
 {
-    if (!m_seat || !m_seat->keyboard()) {
-        return {};
-    }
-    // TODO: uninstall keymap on server?
     if (!m_keymap) {
         return {};
     }
@@ -851,13 +833,7 @@ void Xkb::updateModifiers()
 
 void Xkb::forwardModifiers()
 {
-    if (!m_seat || !m_seat->keyboard()) {
-        return;
-    }
-    m_seat->notifyKeyboardModifiers(m_modifierState.depressed,
-                                    m_modifierState.latched,
-                                    m_modifierState.locked,
-                                    m_currentLayout);
+    // X11 only - Wayland seat modifier forwarding not needed
 }
 
 QString Xkb::layoutName(xkb_layout_index_t index) const
@@ -1195,11 +1171,6 @@ quint32 Xkb::numberOfLayouts() const
         return 0;
     }
     return xkb_keymap_num_layouts(m_keymap);
-}
-
-void Xkb::setSeat(SeatInterface *seat)
-{
-    m_seat = QPointer<SeatInterface>(seat);
 }
 
 std::optional<std::pair<int, int>> Xkb::keycodeFromKeysym(xkb_keysym_t keysym)

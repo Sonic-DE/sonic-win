@@ -10,7 +10,6 @@
 #include "idle_inhibition.h"
 #include "input.h"
 #include "virtualdesktops.h"
-#include "wayland/surface.h"
 #include "window.h"
 #include "workspace.h"
 
@@ -23,7 +22,6 @@ namespace KWin
 IdleInhibition::IdleInhibition(QObject *parent)
     : QObject(parent)
 {
-    // Workspace is created after the wayland server is initialized.
     connect(kwinApp(), &Application::workspaceCreated, this, &IdleInhibition::slotWorkspaceCreated);
 }
 
@@ -31,34 +29,13 @@ IdleInhibition::~IdleInhibition() = default;
 
 void IdleInhibition::registerClient(Window *client)
 {
-    if (!client->surface()) {
-        return;
-    }
-
-    auto updateInhibit = [this, client] {
-        update(client);
-    };
-
-    m_connections[client] = connect(client->surface(), &SurfaceInterface::inhibitsIdleChanged, this, updateInhibit);
-    connect(client, &Window::desktopsChanged, this, updateInhibit);
-    connect(client, &Window::minimizedChanged, this, updateInhibit);
-    connect(client, &Window::hiddenChanged, this, updateInhibit);
-    connect(client, &Window::closed, this, [this, client]() {
-        uninhibit(client);
-        auto it = m_connections.find(client);
-        if (it != m_connections.end()) {
-            disconnect(it.value());
-            m_connections.erase(it);
-        }
-    });
-
-    updateInhibit();
+    // X11 only build - idle inhibition via surface not supported
+    // X11 apps use DPMS or screensaver inhibit APIs directly
 }
 
 void IdleInhibition::inhibit(Window *client)
 {
     input()->addIdleInhibitor(client);
-    // TODO: notify powerdevil?
 }
 
 void IdleInhibition::uninhibit(Window *client)
@@ -68,18 +45,7 @@ void IdleInhibition::uninhibit(Window *client)
 
 void IdleInhibition::update(Window *client)
 {
-    if (client->isInternal() || client->isUnmanaged()) {
-        return;
-    }
-
-    // TODO: Don't honor the idle inhibitor object if the shell client is not
-    // on the current activity (currently, activities are not supported).
-    const bool visible = client->isShown() && client->isOnCurrentDesktop();
-    if (visible && client->surface() && client->surface()->inhibitsIdle()) {
-        inhibit(client);
-    } else {
-        uninhibit(client);
-    }
+    // X11 only build - no surface-based idle inhibition
 }
 
 void IdleInhibition::slotWorkspaceCreated()
@@ -90,9 +56,7 @@ void IdleInhibition::slotWorkspaceCreated()
 
 void IdleInhibition::slotDesktopChanged()
 {
-    workspace()->forEachWindow([this](Window *c) {
-        update(c);
-    });
+    // X11 only build - no surface-based idle inhibition
 }
 
 }

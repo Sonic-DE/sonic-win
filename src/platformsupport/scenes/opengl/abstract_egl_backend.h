@@ -10,19 +10,26 @@
 #include "opengl/eglcontext.h"
 #include "opengl/egldisplay.h"
 #include "platformsupport/scenes/opengl/openglbackend.h"
-#include "wayland/linuxdmabufv1clientbuffer.h"
 
+#include <QHash>
 #include <QObject>
 #include <epoxy/egl.h>
-
-struct wl_display;
-struct wl_resource;
+#include <sys/types.h>
 
 namespace KWin
 {
 
 struct DmaBufAttributes;
 class Output;
+
+// DMA-BUF feedback tranche structure (from Wayland linux-dmabuf-v1 protocol)
+// Kept for format/modifier advertisement even in X11-only builds
+struct DmaBufFeedbackTranche
+{
+    dev_t device;
+    uint32_t flags = 0;
+    QHash<uint32_t, QList<uint64_t>> formatTable;
+};
 
 class KWIN_EXPORT AbstractEglBackend : public OpenGLBackend
 {
@@ -40,7 +47,7 @@ public:
     bool testImportBuffer(GraphicsBuffer *buffer) override;
     QHash<uint32_t, QList<uint64_t>> supportedFormats() const override;
 
-    QList<LinuxDmaBufV1Feedback::Tranche> tranches() const;
+    QList<DmaBufFeedbackTranche> tranches() const;
 
     std::shared_ptr<GLTexture> importDmaBufAsTexture(const DmaBufAttributes &attributes) const;
     EGLImageKHR importDmaBufAsImage(const DmaBufAttributes &attributes) const;
@@ -67,7 +74,7 @@ protected:
     EglDisplay *m_display = nullptr;
     std::shared_ptr<EglContext> m_context;
     QList<QByteArray> m_clientExtensions;
-    QList<LinuxDmaBufV1Feedback::Tranche> m_tranches;
+    QList<DmaBufFeedbackTranche> m_tranches;
     QHash<std::pair<GraphicsBuffer *, int>, EGLImageKHR> m_importedBuffers;
 };
 

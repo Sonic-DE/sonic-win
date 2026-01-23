@@ -20,11 +20,8 @@
 #include "ftrace.h"
 #include "scene/cursorscene.h"
 #include "scene/surfaceitem.h"
-#include "scene/surfaceitem_wayland.h"
 #include "scene/workspacescene.h"
 #include "utils/common.h"
-#include "wayland/surface.h"
-#include "wayland_server.h"
 #include "window.h"
 #include "workspace.h"
 

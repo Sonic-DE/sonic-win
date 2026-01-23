@@ -15,9 +15,6 @@
 #include "effect/effecthandler.h"
 #include "scene/surfaceitem.h"
 #include "scene/windowitem.h"
-#include "wayland/contrast.h"
-#include "wayland/display.h"
-#include "wayland/surface.h"
 
 #if KWIN_BUILD_X11
 #include "utils/xcbutils.h"
@@ -50,20 +47,7 @@ ContrastEffect::ContrastEffect()
             m_net_wm_contrast_region = effects->announceSupportProperty(s_contrastAtomName, this);
         }
 #endif
-        if (effects->waylandDisplay()) {
-            if (!s_contrastManagerRemoveTimer) {
-                s_contrastManagerRemoveTimer = new QTimer(QCoreApplication::instance());
-                s_contrastManagerRemoveTimer->setSingleShot(true);
-                s_contrastManagerRemoveTimer->callOnTimeout([]() {
-                    s_contrastManager->remove();
-                    s_contrastManager = nullptr;
-                });
-            }
-            s_contrastManagerRemoveTimer->stop();
-            if (!s_contrastManager) {
-                s_contrastManager = new ContrastManagerInterface(effects->waylandDisplay(), s_contrastManagerRemoveTimer);
-            }
-        }
+        // X11 only build - no Wayland contrast manager
     }
 
     connect(effects, &EffectsHandler::windowAdded, this, &ContrastEffect::slotWindowAdded);
@@ -88,10 +72,7 @@ ContrastEffect::ContrastEffect()
 
 ContrastEffect::~ContrastEffect()
 {
-    // When compositing is restarted, avoid removing the manager immediately.
-    if (s_contrastManager) {
-        s_contrastManagerRemoveTimer->start(1000);
-    }
+    // X11 only build - no Wayland contrast manager to clean up
 }
 
 void ContrastEffect::slotScreenGeometryChanged()
@@ -142,13 +123,7 @@ void ContrastEffect::updateContrastRegion(EffectWindow *w)
     }
 #endif
 
-    SurfaceInterface *surf = w->surface();
-
-    if (surf && surf->contrast()) {
-        region = surf->contrast()->region();
-        matrix = colorMatrix(surf->contrast()->contrast(), surf->contrast()->intensity(), surf->contrast()->saturation());
-        valid = true;
-    }
+    // X11 only build - no Wayland surface contrast support
 
     if (auto internal = w->internalWindow()) {
         const auto property = internal->property("kwin_background_region");
@@ -187,15 +162,7 @@ void ContrastEffect::updateContrastRegion(EffectWindow *w)
 
 void ContrastEffect::slotWindowAdded(EffectWindow *w)
 {
-    SurfaceInterface *surf = w->surface();
-
-    if (surf) {
-        m_contrastChangedConnections[w] = connect(surf, &SurfaceInterface::contrastChanged, this, [this, w]() {
-            if (w) {
-                updateContrastRegion(w);
-            }
-        });
-    }
+    // X11 only build - no Wayland surface contrast connections
 
     if (auto internal = w->internalWindow()) {
         internal->installEventFilter(this);
@@ -220,10 +187,7 @@ bool ContrastEffect::eventFilter(QObject *watched, QEvent *event)
 
 void ContrastEffect::slotWindowDeleted(EffectWindow *w)
 {
-    if (m_contrastChangedConnections.contains(w)) {
-        disconnect(m_contrastChangedConnections[w]);
-        m_contrastChangedConnections.remove(w);
-    }
+    // X11 only build - no Wayland contrast connections to clean up
     if (auto it = m_windowData.find(w); it != m_windowData.end()) {
         effects->makeOpenGLContextCurrent();
         m_windowData.erase(it);
@@ -299,7 +263,8 @@ bool ContrastEffect::enabledByDefault()
 
 bool ContrastEffect::supported()
 {
-    return effects->openglContext() && (effects->openglContext()->supportsBlits() || effects->waylandDisplay());
+    // X11 only - requires blits support
+    return effects->openglContext() && effects->openglContext()->supportsBlits();
 }
 
 QRegion ContrastEffect::contrastRegion(const EffectWindow *w) const

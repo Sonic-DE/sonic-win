@@ -17,7 +17,6 @@
 #include "logging.h"
 #include "offscreensurface.h"
 #include "screen.h"
-#include "wayland_server.h"
 #include "window.h"
 
 #include "core/output.h"

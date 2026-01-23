@@ -41,7 +41,7 @@ class Decoration;
 namespace KWin
 {
 class PlasmaWindowInterface;
-class SurfaceInterface;
+class SurfaceInterface; // X11 only - stub for API compatibility
 class Group;
 class Output;
 class ClientMachine;
@@ -824,8 +824,14 @@ public:
     bool skipsCloseAnimation() const;
     void setSkipCloseAnimation(bool set);
 
-    SurfaceInterface *surface() const;
-    void setSurface(SurfaceInterface *surface);
+    // X11 only - always returns nullptr
+    SurfaceInterface *surface() const
+    {
+        return nullptr;
+    }
+    void setSurface(SurfaceInterface *)
+    {
+    }
 
     /**
      * @returns Transformation to map from global to window coordinates.
@@ -1804,7 +1810,7 @@ protected:
     QString resource_class;
     ClientMachine *m_clientMachine;
     bool m_skipCloseAnimation;
-    QPointer<SurfaceInterface> m_surface;
+    // X11 only - no Wayland surface support
     qreal m_opacity = 1.0;
     int m_stackingOrder = 0;
 

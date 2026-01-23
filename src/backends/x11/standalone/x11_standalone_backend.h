@@ -52,6 +52,7 @@ public:
     xcb_window_t rootWindow() const;
 
     std::unique_ptr<OpenGLBackend> createOpenGLBackend() override;
+    std::unique_ptr<InputBackend> createInputBackend() override;
     QList<CompositingType> supportedCompositors() const override;
 
     void initOutputs();

@@ -15,6 +15,7 @@ set(X11PLATFORM_SOURCES
     x11_standalone_effects_keyboard_interception_filter.cpp
     x11_standalone_effects_mouse_interception_filter.cpp
     x11_standalone_egl_backend.cpp
+    x11_standalone_inputbackend.cpp
     x11_standalone_keyboard.cpp
     x11_standalone_logging.cpp
     x11_standalone_non_composited_outline.cpp

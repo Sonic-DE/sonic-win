@@ -26,7 +26,6 @@
 #include "input.h"
 #include "input_event.h"
 #include "inputmethod.h"
-#include "inputpanelv1window.h"
 #include "keyboard_input.h"
 #include "opengl/glshader.h"
 #include "opengl/glshadermanager.h"
@@ -40,7 +39,6 @@
 #include "scripting/scripting.h"
 #include "sm.h"
 #include "virtualdesktops.h"
-#include "wayland_server.h"
 #include "window_property_notify_x11_filter.h"
 #include "workspace.h"
 #if KWIN_BUILD_X11
@@ -914,15 +912,6 @@ EffectWindow *EffectsHandler::findWindow(WId id) const
 #endif
     return nullptr;
 }
-EffectWindow *EffectsHandler::findWindow(SurfaceInterface *surf) const
-{
-    if (waylandServer()) {
-        if (Window *w = waylandServer()->findWindow(surf)) {
-            return w->effectWindow();
-        }
-    }
-    return nullptr;
-}
 
 EffectWindow *EffectsHandler::findWindow(QWindow *w) const
 {
@@ -1347,9 +1336,7 @@ bool EffectsHandler::blocksDirectScanout() const
 
 Display *EffectsHandler::waylandDisplay() const
 {
-    if (waylandServer()) {
-        return waylandServer()->display();
-    }
+    // X11 only build - no Wayland display
     return nullptr;
 }
 
@@ -1601,27 +1588,13 @@ bool EffectsHandler::isCursorHidden() const
 
 KWin::EffectWindow *EffectsHandler::inputPanel() const
 {
-    if (!kwinApp()->inputMethod() || !kwinApp()->inputMethod()->isEnabled()) {
-        return nullptr;
-    }
-
-    auto panel = kwinApp()->inputMethod()->panel();
-    if (panel) {
-        return panel->effectWindow();
-    }
+    // X11 only build - no input panel
     return nullptr;
 }
 
 bool EffectsHandler::isInputPanelOverlay() const
 {
-    if (!kwinApp()->inputMethod() || !kwinApp()->inputMethod()->isEnabled()) {
-        return true;
-    }
-
-    auto panel = kwinApp()->inputMethod()->panel();
-    if (panel) {
-        return panel->mode() == InputPanelV1Window::Mode::Overlay;
-    }
+    // X11 only build - no input panel
     return true;
 }
 

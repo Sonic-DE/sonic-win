@@ -29,9 +29,6 @@ class InputDevice;
 class InputRedirection;
 class CursorShape;
 class ShapeCursorSource;
-class SurfaceCursorSource;
-class PointerSurfaceCursor;
-class SurfaceInterface;
 
 namespace Decoration
 {
@@ -177,7 +174,7 @@ private:
     void disconnectConfinedPointerRegionConnection();
     void disconnectLockedPointerAboutToBeUnboundConnection();
     void disconnectPointerConstraintsConnection();
-    void breakPointerConstraints(SurfaceInterface *surface);
+    // X11 only - no pointer constraints without Wayland
     CursorImage *m_cursor;
     QPointF m_pos;
     QHash<uint32_t, PointerButtonState> m_buttons;
@@ -240,7 +237,6 @@ Q_SIGNALS:
 
 private:
     void reevaluteSource();
-    void updateServerCursor(const std::variant<PointerSurfaceCursor *, QByteArray> &cursor);
     void updateDecoration();
     void updateDecorationCursor();
     void updateMoveResize();
@@ -266,7 +262,6 @@ private:
     struct
     {
         QMetaObject::Connection connection;
-        std::unique_ptr<SurfaceCursorSource> surface;
         std::unique_ptr<ShapeCursorSource> shape;
         CursorSource *cursor = nullptr;
     } m_serverCursor;

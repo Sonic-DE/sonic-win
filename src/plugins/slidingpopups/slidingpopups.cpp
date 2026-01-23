@@ -13,9 +13,6 @@
 
 #include "effect/effecthandler.h"
 #include "scene/windowitem.h"
-#include "wayland/display.h"
-#include "wayland/slide.h"
-#include "wayland/surface.h"
 
 #include <QFontMetrics>
 #include <QGuiApplication>
@@ -38,21 +35,7 @@ SlidingPopupsEffect::SlidingPopupsEffect()
 {
     SlidingPopupsConfig::instance(effects->config());
 
-    Display *display = effects->waylandDisplay();
-    if (display) {
-        if (!s_slideManagerRemoveTimer) {
-            s_slideManagerRemoveTimer = new QTimer(QCoreApplication::instance());
-            s_slideManagerRemoveTimer->setSingleShot(true);
-            s_slideManagerRemoveTimer->callOnTimeout([]() {
-                s_slideManager->remove();
-                s_slideManager = nullptr;
-            });
-        }
-        s_slideManagerRemoveTimer->stop();
-        if (!s_slideManager) {
-            s_slideManager = new SlideManagerInterface(display, s_slideManagerRemoveTimer);
-        }
-    }
+    // X11 only build - no Wayland slide manager
 
     m_slideLength = QFontMetrics(QGuiApplication::font()).height() * 8;
 
@@ -83,10 +66,7 @@ SlidingPopupsEffect::SlidingPopupsEffect()
 
 SlidingPopupsEffect::~SlidingPopupsEffect()
 {
-    // When compositing is restarted, avoid removing the manager immediately.
-    if (s_slideManager) {
-        s_slideManagerRemoveTimer->start(1000);
-    }
+    // X11 only build - no Wayland slide manager to clean up
 
     // Cancel animations here while both m_animations and m_animationsData are still valid.
     // slotWindowDeleted may access m_animationsData when an animation is removed.
@@ -216,15 +196,7 @@ void SlidingPopupsEffect::setupSlideData(EffectWindow *w)
     }
 #endif
 
-    // Wayland
-    if (effects->inputPanel() == w) {
-        setupInputPanelSlide();
-    } else if (auto surf = w->surface()) {
-        slotWaylandSlideOnShowChanged(w);
-        connect(surf, &SurfaceInterface::slideOnShowHideChanged, this, [this, surf] {
-            slotWaylandSlideOnShowChanged(effects->findWindow(surf));
-        });
-    }
+    // X11 only build - no Wayland surface slide setup
 
     if (auto internal = w->internalWindow()) {
         internal->installEventFilter(this);
@@ -392,43 +364,9 @@ void SlidingPopupsEffect::setupAnimData(EffectWindow *w)
     w->setData(WindowClosedGrabRole, QVariant::fromValue(static_cast<void *>(this)));
 }
 
-void SlidingPopupsEffect::slotWaylandSlideOnShowChanged(EffectWindow *w)
+void SlidingPopupsEffect::slotWaylandSlideOnShowChanged(EffectWindow *)
 {
-    if (!w) {
-        return;
-    }
-
-    SurfaceInterface *surf = w->surface();
-    if (!surf) {
-        return;
-    }
-
-    if (surf->slideOnShowHide()) {
-        AnimationData &animData = m_animationsData[w];
-
-        animData.offset = surf->slideOnShowHide()->offset();
-
-        switch (surf->slideOnShowHide()->location()) {
-        case SlideInterface::Location::Top:
-            animData.location = Location::Top;
-            break;
-        case SlideInterface::Location::Left:
-            animData.location = Location::Left;
-            break;
-        case SlideInterface::Location::Right:
-            animData.location = Location::Right;
-            break;
-        case SlideInterface::Location::Bottom:
-        default:
-            animData.location = Location::Bottom;
-            break;
-        }
-        animData.slideLength = 0;
-        animData.slideInDuration = m_slideInDuration;
-        animData.slideOutDuration = m_slideOutDuration;
-
-        setupAnimData(w);
-    }
+    // X11 only build - no Wayland surface slide support
 }
 
 void SlidingPopupsEffect::setupInternalWindowSlide(EffectWindow *w)

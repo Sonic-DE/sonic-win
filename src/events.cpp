@@ -26,9 +26,6 @@
 #include "touch_input.h"
 #include "useractions.h"
 #include "utils/xcbutils.h"
-#include "wayland/surface.h"
-#include "wayland/xwaylandshell_v1.h"
-#include "wayland_server.h"
 #include "workspace.h"
 #include "x11window.h"
 
@@ -654,14 +651,7 @@ void X11Window::destroyNotifyEvent(xcb_destroy_notify_event_t *e)
  */
 void X11Window::clientMessageEvent(xcb_client_message_event_t *e)
 {
-    if (e->type == atoms->wl_surface_serial) {
-        m_surfaceSerial = (uint64_t(e->data.data32[1]) << 32) | e->data.data32[0];
-        if (auto w = waylandServer()) {
-            if (XwaylandSurfaceV1Interface *xwaylandSurface = w->xwaylandShell()->findSurface(m_surfaceSerial)) {
-                setSurface(xwaylandSurface->surface());
-            }
-        }
-    }
+    // X11 only build - ignore Wayland surface serial messages
 
     if (e->window != window()) {
         return; // ignore frame/wrapper
@@ -794,9 +784,7 @@ void X11Window::propertyNotifyEvent(xcb_property_notify_event_t *e)
 
 void X11Window::enterNotifyEvent(xcb_enter_notify_event_t *e)
 {
-    if (waylandServer()) {
-        return;
-    }
+    // X11 only build - always process enter events
     if (e->event != frameId()) {
         return; // care only about entering the whole frame
     }
@@ -810,9 +798,7 @@ void X11Window::enterNotifyEvent(xcb_enter_notify_event_t *e)
 
 void X11Window::leaveNotifyEvent(xcb_leave_notify_event_t *e)
 {
-    if (waylandServer()) {
-        return;
-    }
+    // X11 only build - always process leave events
     if (e->event != frameId()) {
         return; // care only about leaving the whole frame
     }
@@ -903,10 +889,7 @@ void X11Window::establishCommandAllGrab(uint8_t button)
 
 void X11Window::updateMouseGrab()
 {
-    if (waylandServer()) {
-        return;
-    }
-
+    // X11 only build - always update mouse grab
     xcb_ungrab_button(kwinApp()->x11Connection(), XCB_BUTTON_INDEX_ANY, m_wrapper, XCB_MOD_MASK_ANY);
 
 #if KWIN_BUILD_TABBOX
@@ -969,9 +952,7 @@ static bool modKeyDown(int state)
 // return value matters only when filtering events before decoration gets them
 bool X11Window::buttonPressEvent(xcb_window_t w, int button, int state, int x, int y, int x_root, int y_root, xcb_timestamp_t time)
 {
-    if (waylandServer()) {
-        return true;
-    }
+    // X11 only build - always process button events
     if (isInteractiveMoveResizePointerButtonDown()) {
         if (w == wrapperId()) {
             xcb_allow_events(kwinApp()->x11Connection(), XCB_ALLOW_SYNC_POINTER, XCB_TIME_CURRENT_TIME); // xTime());
@@ -1087,9 +1068,7 @@ bool X11Window::buttonPressEvent(xcb_window_t w, int button, int state, int x, i
 // return value matters only when filtering events before decoration gets them
 bool X11Window::buttonReleaseEvent(xcb_window_t w, int button, int state, int x, int y, int x_root, int y_root)
 {
-    if (waylandServer()) {
-        return true;
-    }
+    // X11 only build - always process button events
     if (w == frameId() && isDecorated()) {
         // wheel handled on buttonPress
         if (button < 4 || button > 7) {
@@ -1135,9 +1114,7 @@ bool X11Window::buttonReleaseEvent(xcb_window_t w, int button, int state, int x,
 // return value matters only when filtering events before decoration gets them
 bool X11Window::motionNotifyEvent(xcb_window_t w, int state, int x, int y, int x_root, int y_root)
 {
-    if (waylandServer()) {
-        return true;
-    }
+    // X11 only build - always process motion events
     if (w == frameId() && isDecorated() && !isMinimized()) {
         // TODO Mouse move event dependent on state
         QHoverEvent event(QEvent::HoverMove, QPointF(x, y), QPointF(x, y));
@@ -1272,25 +1249,14 @@ void X11Window::NETMoveResize(qreal x_root, qreal y_root, NET::Direction directi
         setInteractiveMoveResizePointerButtonDown(false);
         updateCursor();
     } else if (direction == NET::Move || (direction >= NET::TopLeft && direction <= NET::Left)) {
-        if (waylandServer()) {
-            if (!button) {
-                if (!input()->qtButtonStates() && !input()->touch()->touchPointCount()) {
-                    return;
-                }
-            } else {
-                if (!(input()->qtButtonStates() & x11ToQtMouseButton(button)) && !input()->touch()->touchPointCount()) {
-                    return;
-                }
+        // X11 only build - use X11 pointer check
+        if (button) {
+            Xcb::Pointer pointer(window());
+            if (!pointer) {
+                return;
             }
-        } else {
-            if (button) {
-                Xcb::Pointer pointer(window());
-                if (!pointer) {
-                    return;
-                }
-                if (!(x11ToQtMouseButtons(pointer->mask) & x11ToQtMouseButton(button))) {
-                    return;
-                }
+            if (!(x11ToQtMouseButtons(pointer->mask) & x11ToQtMouseButton(button))) {
+                return;
             }
         }
 

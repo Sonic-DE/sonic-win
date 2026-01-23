@@ -28,8 +28,6 @@
 #include "pointer_input.h"
 #include "utils/common.h"
 #include "virtualdesktops.h"
-#include "wayland/seat.h"
-#include "wayland_server.h"
 #include <window.h>
 #include <workspace.h>
 #if KWIN_BUILD_X11
@@ -242,14 +240,11 @@ bool Edge::activatesForPointer() const
 
     // Most actions do not handle drag and drop properly yet
     // but at least allow "show desktop" and "application launcher".
-    if (waylandServer() && waylandServer()->seat()->isDragPointer()) {
-        if (!m_edges->isDesktopSwitching() && m_action != ElectricActionNone && m_action != ElectricActionShowDesktop && m_action != ElectricActionApplicationLauncher) {
-            return false;
-        }
-        // Don't activate edge when a mouse button is pressed, except when
-        // moving a window. Dragging a scroll bar all the way to the edge
-        // shouldn't activate the edge.
-    } else if (input()->pointer()->areButtonsPressed()) {
+    // X11 only build - no Wayland drag handling
+    // Don't activate edge when a mouse button is pressed, except when
+    // moving a window. Dragging a scroll bar all the way to the edge
+    // shouldn't activate the edge.
+    if (input()->pointer()->areButtonsPressed()) {
         auto c = Workspace::self()->moveResizeWindow();
         if (!c || c->isInteractiveResize()) {
             return false;
@@ -1369,7 +1364,8 @@ bool ScreenEdges::createEdgeForClient(Window *client, ElectricBorder border)
     const QRect screen = output->geometry();
     switch (border) {
     case ElectricTop:
-        if (!waylandServer() && !isTopScreen(screen, fullArea)) {
+        // X11 only build - always check screen position
+        if (!isTopScreen(screen, fullArea)) {
             return false;
         }
         y = screen.y();
@@ -1378,7 +1374,8 @@ bool ScreenEdges::createEdgeForClient(Window *client, ElectricBorder border)
         width = geo.width();
         break;
     case ElectricBottom:
-        if (!waylandServer() && !isBottomScreen(screen, fullArea)) {
+        // X11 only build - always check screen position
+        if (!isBottomScreen(screen, fullArea)) {
             return false;
         }
         y = screen.y() + screen.height() - 1;
@@ -1387,7 +1384,8 @@ bool ScreenEdges::createEdgeForClient(Window *client, ElectricBorder border)
         width = geo.width();
         break;
     case ElectricLeft:
-        if (!waylandServer() && !isLeftScreen(screen, fullArea)) {
+        // X11 only build - always check screen position
+        if (!isLeftScreen(screen, fullArea)) {
             return false;
         }
         x = screen.x();
@@ -1396,7 +1394,8 @@ bool ScreenEdges::createEdgeForClient(Window *client, ElectricBorder border)
         height = geo.height();
         break;
     case ElectricRight:
-        if (!waylandServer() && !isRightScreen(screen, fullArea)) {
+        // X11 only build - always check screen position
+        if (!isRightScreen(screen, fullArea)) {
             return false;
         }
         x = screen.x() + screen.width() - 1;

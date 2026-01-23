@@ -42,7 +42,6 @@ target_sources(kwin PRIVATE
     colors/colordevice.cpp
     colors/colormanager.cpp
     compositor.cpp
-    compositor_wayland.cpp
     core/brightnessdevice.cpp
     core/colorlut3d.cpp
     core/colorpipeline.cpp
@@ -109,8 +108,6 @@ target_sources(kwin PRIVATE
     input_event.cpp
     input_event_spy.cpp
     inputmethod.cpp
-    inputpanelv1integration.cpp
-    inputpanelv1window.cpp
     internalinputmethodcontext.cpp
     internalwindow.cpp
     keyboard_input.cpp
@@ -121,8 +118,6 @@ target_sources(kwin PRIVATE
     killwindow.cpp
     kscreenintegration.cpp
     layers.cpp
-    layershellv1integration.cpp
-    layershellv1window.cpp
     lidswitchtracker.cpp
     main.cpp
     mousebuttons.cpp
@@ -181,7 +176,6 @@ target_sources(kwin PRIVATE
     scene/shadowitem.cpp
     scene/surfaceitem.cpp
     scene/surfaceitem_internal.cpp
-    scene/surfaceitem_wayland.cpp
     scene/windowitem.cpp
     scene/workspacescene.cpp
     scene/workspacescene_opengl.cpp
@@ -218,14 +212,8 @@ target_sources(kwin PRIVATE
     virtualdesktops.cpp
     virtualdesktopsdbustypes.cpp
     virtualkeyboard_dbus.cpp
-    wayland_server.cpp
-    waylandshellintegration.cpp
-    waylandwindow.cpp
     window.cpp
     workspace.cpp
-    xdgactivationv1.cpp
-    xdgshellintegration.cpp
-    xdgshellwindow.cpp
     xkb.cpp
 )
 
@@ -234,7 +222,6 @@ target_link_libraries(kwin
         Qt::DBus
         Qt::Quick
         Qt::Widgets
-        Wayland::Server
         KF6::ConfigCore
         KF6::CoreAddons
         KF6::WindowSystem
@@ -352,11 +339,6 @@ add_subdirectory(backends)
 add_subdirectory(platformsupport)
 add_subdirectory(plugins)
 add_subdirectory(utils)
-add_subdirectory(wayland)
-
-if (KWIN_BUILD_X11)
-    add_subdirectory(xwayland)
-endif()
 
 if (KWIN_BUILD_ACTIVITIES)
     target_sources(kwin PRIVATE activities.cpp)
@@ -456,8 +438,6 @@ install(FILES
     input_event_spy.h
     input.h
     inputmethod.h
-    inputpanelv1integration.h
-    inputpanelv1window.h
     internalwindow.h
     keyboard_input.h
     keyboard_layout.h
@@ -465,8 +445,6 @@ install(FILES
     keyboard_repeat.h
     killwindow.h
     kscreenintegration.h
-    layershellv1integration.h
-    layershellv1window.h
     lidswitchtracker.h
     main.h
     mousebuttons.h
@@ -495,16 +473,10 @@ install(FILES
     virtualdesktopsdbustypes.h
     virtualdesktops.h
     virtualkeyboard_dbus.h
-    wayland_server.h
-    waylandshellintegration.h
-    waylandwindow.h
     window.h
     workspace.h
     x11eventfilter.h
     x11window.h
-    xdgactivationv1.h
-    xdgshellintegration.h
-    xdgshellwindow.h
     xkb.h
     DESTINATION ${KDE_INSTALL_INCLUDEDIR}/kwin-x11 COMPONENT Devel)
 
@@ -560,7 +532,6 @@ install(FILES
     utils/resource.h
     utils/serviceutils.h
     utils/softwarevsyncmonitor.h
-    utils/subsurfacemonitor.h
     utils/udev.h
     utils/version.h
     utils/vsyncmonitor.h
@@ -626,7 +597,6 @@ install(FILES
     scene/shadowitem.h
     scene/surfaceitem.h
     scene/surfaceitem_internal.h
-    scene/surfaceitem_wayland.h
     scene/surfaceitem_x11.h
     scene/windowitem.h
     scene/workspacescene.h

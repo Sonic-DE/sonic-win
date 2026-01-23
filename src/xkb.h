@@ -33,8 +33,6 @@ typedef uint32_t xkb_layout_index_t;
 namespace KWin
 {
 
-class SeatInterface;
-
 class KWIN_EXPORT Xkb : public QObject
 {
     Q_OBJECT
@@ -118,7 +116,6 @@ public:
      */
     void forwardModifiers();
 
-    void setSeat(SeatInterface *seat);
     QByteArray keymapContents() const;
 
     /**
@@ -186,7 +183,6 @@ private:
         xkb_mod_index_t locked = 0;
     } m_modifierState;
 
-    QPointer<SeatInterface> m_seat;
     const bool m_followLocale1;
 };
 

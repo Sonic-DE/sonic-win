@@ -57,7 +57,7 @@ class Decoration;
 namespace KWin
 {
 
-class SurfaceInterface;
+class SurfaceInterface; // X11 only - stub for API compatibility
 class Display;
 class PaintDataPrivate;
 class WindowPaintDataPrivate;
@@ -420,7 +420,11 @@ public:
     double animationTimeFactor() const;
 
     Q_SCRIPTABLE KWin::EffectWindow *findWindow(WId id) const;
-    Q_SCRIPTABLE KWin::EffectWindow *findWindow(SurfaceInterface *surf) const;
+    // X11 only - always returns nullptr
+    Q_SCRIPTABLE KWin::EffectWindow *findWindow(SurfaceInterface *) const
+    {
+        return nullptr;
+    }
     /**
      * Finds the EffectWindow for the internal window @p w.
      * If there is no such window @c null is returned.

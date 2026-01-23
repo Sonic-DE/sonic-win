@@ -8,9 +8,6 @@
 #include "input_event.h"
 #include "internalwindow.h"
 #include "keyboard_input.h"
-#include "wayland/seat.h"
-#include "wayland_server.h"
-#include "waylandwindow.h"
 #include "window.h"
 #include "workspace.h"
 
@@ -91,15 +88,6 @@ bool PopupInputFilter::keyboardKey(KeyboardKeyEvent *event)
                                                        0,
                                                        event->text,
                                                        event->state == KeyboardKeyState::Repeated);
-    } else if (qobject_cast<WaylandWindow *>(last)) {
-        if (!passToInputMethod(event)) {
-            if (event->state == KeyboardKeyState::Repeated) {
-                return true;
-            }
-
-            waylandServer()->seat()->setTimestamp(event->timestamp);
-            waylandServer()->seat()->notifyKeyboardKey(event->nativeScanCode, event->state);
-        }
     }
 
     return true;
@@ -154,15 +142,9 @@ bool PopupInputFilter::tabletToolTipEvent(TabletToolTipEvent *event)
 void PopupInputFilter::focus(Window *popup)
 {
     if (auto internalWindow = qobject_cast<InternalWindow *>(m_popupWindows.constLast())) {
-        waylandServer()->seat()->setFocusedKeyboardSurface(nullptr);
         if (QGuiApplication::focusWindow() != internalWindow->handle()) {
             QWindowSystemInterface::handleFocusWindowChanged(internalWindow->handle());
         }
-    } else if (auto waylandWindow = qobject_cast<WaylandWindow *>(m_popupWindows.constLast())) {
-        if (QGuiApplication::focusWindow()) {
-            QWindowSystemInterface::handleFocusWindowChanged(nullptr);
-        }
-        waylandServer()->seat()->setFocusedKeyboardSurface(waylandWindow->surface(), input()->keyboard()->unfilteredKeys());
     }
 }
 

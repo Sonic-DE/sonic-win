@@ -12,8 +12,6 @@ namespace KWin
 {
 
 class ImageItem;
-class SurfaceInterface;
-class SurfaceItemWayland;
 
 class KWIN_EXPORT CursorItem : public Item
 {
@@ -25,11 +23,9 @@ public:
 
 private:
     void refresh();
-    void setSurface(SurfaceInterface *surface, const QPointF &hotspot);
     void setImage(const QImage &image, const QPointF &hotspot);
 
     std::unique_ptr<ImageItem> m_imageItem;
-    std::unique_ptr<SurfaceItemWayland> m_surfaceItem;
 };
 
 } // namespace KWin

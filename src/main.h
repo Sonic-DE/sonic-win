@@ -81,8 +81,7 @@ class KWIN_EXPORT Application : public QApplication
 public:
     /**
      * @brief This enum provides the various operation modes of KWin depending on the available
-     * Windowing Systems at startup. For example whether KWin only talks to X11 or also to a Wayland
-     * Compositor.
+     * Windowing Systems at startup.
      *
      */
     enum OperationMode {
@@ -90,10 +89,6 @@ public:
          * @brief KWin uses only X11 for managing windows and compositing
          */
         OperationModeX11,
-        /**
-         * @brief KWin uses Wayland
-         */
-        OperationModeWayland,
     };
     Q_ENUM(OperationMode)
     ~Application() override;

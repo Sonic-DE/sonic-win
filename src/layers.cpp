@@ -73,7 +73,6 @@
 #include "tabbox/tabbox.h"
 #include "utils/common.h"
 #include "virtualdesktops.h"
-#include "wayland_server.h"
 #include "workspace.h"
 #if KWIN_BUILD_X11
 #include "group.h"

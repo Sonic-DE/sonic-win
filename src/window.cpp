@@ -34,10 +34,6 @@
 #include "tiles/tilemanager.h"
 #include "useractions.h"
 #include "virtualdesktops.h"
-#include "wayland/output.h"
-#include "wayland/plasmawindowmanagement.h"
-#include "wayland/surface.h"
-#include "wayland_server.h"
 #include "workspace.h"
 
 #include <KDecoration3/DecoratedWindow>
@@ -130,9 +126,7 @@ QDebug operator<<(QDebug debug, const Window *window)
     debug.nospace();
     if (window) {
         debug << window->metaObject()->className() << '(' << static_cast<const void *>(window);
-        if (const SurfaceInterface *surface = window->surface()) {
-            debug << ", surface=" << surface;
-        }
+        // X11 only - no Wayland surface
         if (window->isClient()) {
             if (!window->isPopupWindow()) {
                 debug << ", caption=" << window->caption();
@@ -335,19 +329,7 @@ void Window::setSkipCloseAnimation(bool set)
     Q_EMIT skipCloseAnimationChanged();
 }
 
-SurfaceInterface *Window::surface() const
-{
-    return m_surface;
-}
-
-void Window::setSurface(SurfaceInterface *surface)
-{
-    if (m_surface == surface) {
-        return;
-    }
-    m_surface = surface;
-    Q_EMIT surfaceChanged();
-}
+// X11 only - surface() and setSurface() are now inline no-ops in the header
 
 int Window::stackingOrder() const
 {
@@ -381,9 +363,7 @@ bool Window::hitTest(const QPointF &point) const
             return true;
         }
     }
-    if (m_surface && m_surface->isMapped()) {
-        return m_surface->inputSurfaceAt(mapToLocal(point));
-    }
+    // X11 only - no Wayland surface hit testing
     return exclusiveContains(m_bufferGeometry, point);
 }
 
@@ -582,15 +562,14 @@ Layer Window::belongsToLayer() const
     if (isUnmanaged() || isInternal()) {
         return OverlayLayer;
     }
-    if (isLockScreen() && !waylandServer()) {
+    // X11 only build - lock screen handling simplified
+    if (isLockScreen()) {
         return OverlayLayer;
     }
     if (isInputMethod()) {
         return OverlayLayer;
     }
-    if (isLockScreenOverlay() && waylandServer() && waylandServer()->isScreenLocked()) {
-        return OverlayLayer;
-    }
+    // X11 only build - no Wayland lock screen overlay
     if (isDesktop()) {
         return DesktopLayer;
     }
@@ -742,24 +721,7 @@ void Window::setDesktops(QList<VirtualDesktop *> desktops)
 
     m_desktops = desktops;
 
-    if (windowManagementInterface()) {
-        if (m_desktops.isEmpty()) {
-            windowManagementInterface()->setOnAllDesktops(true);
-        } else {
-            windowManagementInterface()->setOnAllDesktops(false);
-            auto currentDesktops = windowManagementInterface()->plasmaVirtualDesktops();
-            for (auto desktop : std::as_const(m_desktops)) {
-                if (!currentDesktops.contains(desktop->id())) {
-                    windowManagementInterface()->addPlasmaVirtualDesktop(desktop->id());
-                } else {
-                    currentDesktops.removeOne(desktop->id());
-                }
-            }
-            for (const auto &desktopId : std::as_const(currentDesktops)) {
-                windowManagementInterface()->removePlasmaVirtualDesktop(desktopId);
-            }
-        }
-    }
+    // X11 only build - no Wayland window management interface
 
     auto transients_stacking_order = workspace()->ensureStackingOrder(transients());
     for (auto it = transients_stacking_order.constBegin(); it != transients_stacking_order.constEnd(); ++it) {
@@ -1871,203 +1833,12 @@ bool Window::hasStrut() const
 
 void Window::setupWindowManagementInterface()
 {
-    if (m_windowManagementInterface) {
-        // already setup
-        return;
-    }
-    if (!waylandServer() || !waylandServer()->windowManagement()) {
-        return;
-    }
-    auto w = waylandServer()->windowManagement()->createWindow(this, internalId());
-    w->setTitle(caption());
-    w->setActive(isActive());
-    w->setFullscreen(isFullScreen());
-    w->setKeepAbove(keepAbove());
-    w->setKeepBelow(keepBelow());
-    w->setMaximized(maximizeMode() == KWin::MaximizeFull);
-    w->setMinimized(isMinimized());
-    w->setDemandsAttention(isDemandingAttention());
-    w->setCloseable(isCloseable());
-    w->setMaximizeable(isMaximizable());
-    w->setMinimizeable(isMinimizable());
-    w->setFullscreenable(isFullScreenable());
-    w->setApplicationMenuPaths(applicationMenuServiceName(), applicationMenuObjectPath());
-    w->setIcon(icon());
-    auto updateAppId = [this, w] {
-        w->setResourceName(resourceName());
-        w->setAppId(m_desktopFileName.isEmpty() ? resourceClass() : m_desktopFileName);
-    };
-    updateAppId();
-    w->setSkipTaskbar(skipTaskbar());
-    w->setSkipSwitcher(skipSwitcher());
-    w->setPid(pid());
-    w->setShadeable(isShadeable());
-    w->setShaded(isShade());
-    w->setResizable(isResizable());
-    w->setMovable(isMovable());
-    w->setVirtualDesktopChangeable(true); // FIXME Matches X11Window::actionSupported(), but both should be implemented.
-    w->setNoBorder(noBorder());
-    w->setCanSetNoBorder(userCanSetNoBorder());
-    w->setParentWindow(transientFor() ? transientFor()->windowManagementInterface() : nullptr);
-    w->setGeometry(frameGeometry().toRect());
-    w->setClientGeometry(clientGeometry().toRect());
-    connect(this, &Window::skipTaskbarChanged, w, [w, this]() {
-        w->setSkipTaskbar(skipTaskbar());
-    });
-    connect(this, &Window::skipSwitcherChanged, w, [w, this]() {
-        w->setSkipSwitcher(skipSwitcher());
-    });
-    connect(this, &Window::captionChanged, w, [w, this] {
-        w->setTitle(caption());
-    });
-
-    connect(this, &Window::activeChanged, w, [w, this] {
-        w->setActive(isActive());
-    });
-    connect(this, &Window::fullScreenChanged, w, [w, this] {
-        w->setFullscreen(isFullScreen());
-    });
-    connect(this, &Window::keepAboveChanged, w, &PlasmaWindowInterface::setKeepAbove);
-    connect(this, &Window::keepBelowChanged, w, &PlasmaWindowInterface::setKeepBelow);
-    connect(this, &Window::minimizedChanged, w, [w, this] {
-        w->setMinimized(isMinimized());
-    });
-    connect(this, &Window::maximizedChanged, w, [w, this]() {
-        w->setMaximized(maximizeMode() == MaximizeFull);
-    });
-    connect(this, &Window::demandsAttentionChanged, w, [w, this] {
-        w->setDemandsAttention(isDemandingAttention());
-    });
-    connect(this, &Window::iconChanged, w, [w, this]() {
-        w->setIcon(icon());
-    });
-    connect(this, &Window::windowClassChanged, w, updateAppId);
-    connect(this, &Window::desktopFileNameChanged, w, updateAppId);
-    connect(this, &Window::shadeChanged, w, [w, this] {
-        w->setShaded(isShade());
-    });
-    connect(this, &Window::noBorderChanged, w, [w, this] {
-        w->setNoBorder(noBorder());
-    });
-    connect(this, &Window::transientChanged, w, [w, this]() {
-        w->setParentWindow(transientFor() ? transientFor()->windowManagementInterface() : nullptr);
-    });
-    connect(this, &Window::frameGeometryChanged, w, [w, this]() {
-        w->setGeometry(frameGeometry().toRect());
-    });
-    connect(this, &Window::clientGeometryChanged, w, [w, this]() {
-        w->setClientGeometry(clientGeometry().toRect());
-    });
-    connect(this, &Window::applicationMenuChanged, w, [w, this]() {
-        w->setApplicationMenuPaths(applicationMenuServiceName(), applicationMenuObjectPath());
-    });
-    connect(w, &PlasmaWindowInterface::closeRequested, this, [this] {
-        closeWindow();
-    });
-    connect(w, &PlasmaWindowInterface::moveRequested, this, [this]() {
-        Cursors::self()->mouse()->setPos(frameGeometry().center());
-        performMousePressCommand(Options::MouseMove, Cursors::self()->mouse()->pos());
-    });
-    connect(w, &PlasmaWindowInterface::resizeRequested, this, [this]() {
-        Cursors::self()->mouse()->setPos(frameGeometry().bottomRight());
-        performMousePressCommand(Options::MouseResize, Cursors::self()->mouse()->pos());
-    });
-    connect(w, &PlasmaWindowInterface::fullscreenRequested, this, [this](bool set) {
-        setFullScreen(set);
-    });
-    connect(w, &PlasmaWindowInterface::minimizedRequested, this, [this](bool set) {
-        setMinimized(set);
-    });
-    connect(w, &PlasmaWindowInterface::maximizedRequested, this, [this](bool set) {
-        maximize(set ? MaximizeFull : MaximizeRestore);
-    });
-    connect(w, &PlasmaWindowInterface::keepAboveRequested, this, [this](bool set) {
-        setKeepAbove(set);
-    });
-    connect(w, &PlasmaWindowInterface::keepBelowRequested, this, [this](bool set) {
-        setKeepBelow(set);
-    });
-    connect(w, &PlasmaWindowInterface::demandsAttentionRequested, this, [this](bool set) {
-        demandAttention(set);
-    });
-    connect(w, &PlasmaWindowInterface::activeRequested, this, [this](bool set) {
-        if (set) {
-            workspace()->activateWindow(this, true);
-        }
-    });
-    connect(w, &PlasmaWindowInterface::shadedRequested, this, [this](bool set) {
-        setShade(set);
-    });
-    connect(w, &PlasmaWindowInterface::noBorderRequested, this, [this](bool set) {
-        setNoBorder(set);
-    });
-
-    for (const auto vd : std::as_const(m_desktops)) {
-        w->addPlasmaVirtualDesktop(vd->id());
-    }
-    // We need to set `OnAllDesktops` after the actual VD list has been added.
-    // Otherwise it will unconditionally add the current desktop to the interface
-    // which may not be the case, for example, when using rules
-    w->setOnAllDesktops(isOnAllDesktops());
-
-    // Plasma Virtual desktop management
-    // show/hide when the window enters/exits from desktop
-    connect(w, &PlasmaWindowInterface::enterPlasmaVirtualDesktopRequested, this, [this](const QString &desktopId) {
-        VirtualDesktop *vd = VirtualDesktopManager::self()->desktopForId(desktopId);
-        if (vd) {
-            Workspace::self()->addWindowToDesktop(this, vd);
-        }
-    });
-    connect(w, &PlasmaWindowInterface::enterNewPlasmaVirtualDesktopRequested, this, [this]() {
-        VirtualDesktopManager::self()->setCount(VirtualDesktopManager::self()->count() + 1);
-        auto vd = VirtualDesktopManager::self()->desktops().last();
-        Workspace::self()->addWindowToDesktop(this, vd);
-    });
-    connect(w, &PlasmaWindowInterface::leavePlasmaVirtualDesktopRequested, this, [this](const QString &desktopId) {
-        VirtualDesktop *vd = VirtualDesktopManager::self()->desktopForId(desktopId);
-        if (vd) {
-            Workspace::self()->removeWindowFromDesktop(this, vd);
-        }
-    });
-
-    for (const auto &activity : std::as_const(m_activityList)) {
-        w->addPlasmaActivity(activity);
-    }
-
-    connect(this, &Window::activitiesChanged, w, [w, this] {
-        const auto newActivities = QSet<QString>(m_activityList.begin(), m_activityList.end());
-        const auto oldActivitiesList = w->plasmaActivities();
-        const auto oldActivities = QSet<QString>(oldActivitiesList.begin(), oldActivitiesList.end());
-
-        const auto activitiesToAdd = newActivities - oldActivities;
-        for (const auto &activity : activitiesToAdd) {
-            w->addPlasmaActivity(activity);
-        }
-
-        const auto activitiesToRemove = oldActivities - newActivities;
-        for (const auto &activity : activitiesToRemove) {
-            w->removePlasmaActivity(activity);
-        }
-    });
-
-    // Plasma Activities management
-    // show/hide when the window enters/exits activity
-    connect(w, &PlasmaWindowInterface::enterPlasmaActivityRequested, this, [this](const QString &activityId) {
-        setOnActivity(activityId, true);
-    });
-    connect(w, &PlasmaWindowInterface::leavePlasmaActivityRequested, this, [this](const QString &activityId) {
-        setOnActivity(activityId, false);
-    });
-    connect(w, &PlasmaWindowInterface::sendToOutput, this, [this](OutputInterface *output) {
-        sendToOutput(output->handle());
-    });
-
-    m_windowManagementInterface = w;
+    // X11 only build - no Wayland window management interface
 }
 
 void Window::destroyWindowManagementInterface()
 {
-    delete m_windowManagementInterface;
+    // X11 only build - no Wayland window management interface to destroy
     m_windowManagementInterface = nullptr;
 }
 
@@ -3070,40 +2841,16 @@ void Window::pointerLeaveEvent()
 
 QRectF Window::iconGeometry() const
 {
-    if (!windowManagementInterface() || !waylandServer()) {
-        // window management interface is only available if the surface is mapped
-        return QRectF();
-    }
-
-    int minDistance = INT_MAX;
-    Window *candidatePanel = nullptr;
-    QRectF candidateGeom;
-
-    const auto minGeometries = windowManagementInterface()->minimizedGeometries();
-    for (auto i = minGeometries.constBegin(), end = minGeometries.constEnd(); i != end; ++i) {
-        Window *panel = waylandServer()->findWindow(i.key());
-        if (!panel) {
-            continue;
-        }
-        const int distance = QPointF(panel->pos() - pos()).manhattanLength();
-        if (distance < minDistance) {
-            minDistance = distance;
-            candidatePanel = panel;
-            candidateGeom = i.value();
+    // X11 only build - no Wayland window management interface
+    // Check all mainwindows of this window.
+    const auto windows = mainWindows();
+    for (Window *mainWindow : windows) {
+        const auto geom = mainWindow->iconGeometry();
+        if (geom.isValid()) {
+            return geom;
         }
     }
-    if (!candidatePanel) {
-        // Check all mainwindows of this window.
-        const auto windows = mainWindows();
-        for (Window *mainWindow : windows) {
-            const auto geom = mainWindow->iconGeometry();
-            if (geom.isValid()) {
-                return geom;
-            }
-        }
-        return QRectF();
-    }
-    return candidateGeom.translated(candidatePanel->pos());
+    return QRectF();
 }
 
 QRectF Window::virtualKeyboardGeometry() const
@@ -4660,18 +4407,7 @@ bool Window::isOffscreenRendering() const
 
 void Window::maybeSendFrameCallback()
 {
-    if (m_surface && !m_windowItem->isVisible()) {
-        const auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-        m_surface->traverseTree([this, &timestamp](SurfaceInterface *surface) {
-            surface->frameRendered(timestamp);
-            const auto feedback = surface->takePresentationFeedback(nullptr);
-            if (feedback) {
-                feedback->presented(std::chrono::nanoseconds(1'000'000'000'000 / output()->refreshRate()), std::chrono::steady_clock::now().time_since_epoch(), PresentationMode::VSync);
-            }
-        });
-        // update refresh rate, it might have changed
-        m_offscreenFramecallbackTimer.start(1'000'000 / output()->refreshRate());
-    }
+    // X11 only - no Wayland surface frame callbacks
 }
 
 qreal Window::targetScale() const

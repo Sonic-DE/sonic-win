@@ -9,11 +9,10 @@
 #include "keyboard_repeat.h"
 #include "input_event.h"
 #include "keyboard_input.h"
-#include "wayland/keyboard.h"
-#include "wayland/seat.h"
-#include "wayland_server.h"
+#include "main.h"
 #include "xkb.h"
 
+#include <KConfigGroup>
 #include <QTimer>
 
 namespace KWin
@@ -25,15 +24,24 @@ KeyboardRepeat::KeyboardRepeat(Xkb *xkb)
     , m_xkb(xkb)
 {
     connect(m_timer, &QTimer::timeout, this, &KeyboardRepeat::handleKeyRepeat);
+    loadConfig();
+}
+
+void KeyboardRepeat::loadConfig()
+{
+    const auto config = kwinApp()->inputConfig()->group(QStringLiteral("Keyboard"));
+    m_delay = config.readEntry("RepeatDelay", 600);
+    m_rate = std::ceil(config.readEntry("RepeatRate", 25.0));
+    const QString repeatMode = config.readEntry("KeyRepeat", "repeat");
+    m_enabled = repeatMode == QLatin1String("accent") || repeatMode == QLatin1String("repeat");
 }
 
 KeyboardRepeat::~KeyboardRepeat() = default;
 
 void KeyboardRepeat::handleKeyRepeat()
 {
-    // TODO: don't depend on WaylandServer
-    if (waylandServer()->seat()->keyboard()->keyRepeatRate() != 0) {
-        m_timer->setInterval(1000 / waylandServer()->seat()->keyboard()->keyRepeatRate());
+    if (m_rate != 0) {
+        m_timer->setInterval(1000 / m_rate);
     }
     // TODO: better time
     Q_EMIT keyRepeat(m_key, m_time);
@@ -46,9 +54,8 @@ void KeyboardRepeat::keyboardKey(KeyboardKeyEvent *event)
     }
     const quint32 key = event->nativeScanCode;
     if (event->state == KeyboardKeyState::Pressed) {
-        // TODO: don't get these values from WaylandServer
-        if (m_xkb->shouldKeyRepeat(key) && waylandServer()->seat()->keyboard()->keyRepeatDelay() != 0) {
-            m_timer->setInterval(waylandServer()->seat()->keyboard()->keyRepeatDelay());
+        if (m_enabled && m_xkb->shouldKeyRepeat(key) && m_delay != 0) {
+            m_timer->setInterval(m_delay);
             m_key = key;
             m_time = event->timestamp;
             m_timer->start();

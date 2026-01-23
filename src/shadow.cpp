@@ -11,9 +11,6 @@
 // kwin
 #include "core/graphicsbufferview.h"
 #include "internalwindow.h"
-#include "wayland/shadow.h"
-#include "wayland/surface.h"
-#include "wayland_server.h"
 #include "window.h"
 #if KWIN_BUILD_X11
 #include "atoms.h"
@@ -45,9 +42,7 @@ Shadow::~Shadow()
 std::unique_ptr<Shadow> Shadow::createShadow(Window *window)
 {
     auto shadow = createShadowFromDecoration(window);
-    if (!shadow && waylandServer()) {
-        shadow = createShadowFromWayland(window);
-    }
+    // X11 only build - no Wayland shadow support
 #if KWIN_BUILD_X11
     if (!shadow && kwinApp()->x11Connection()) {
         shadow = createShadowFromX11(window);
@@ -93,19 +88,8 @@ std::unique_ptr<Shadow> Shadow::createShadowFromDecoration(Window *window)
 
 std::unique_ptr<Shadow> Shadow::createShadowFromWayland(Window *window)
 {
-    auto surface = window->surface();
-    if (!surface) {
-        return nullptr;
-    }
-    const auto s = surface->shadow();
-    if (!s) {
-        return nullptr;
-    }
-    auto shadow = std::make_unique<Shadow>(window);
-    if (!shadow->init(s)) {
-        return nullptr;
-    }
-    return shadow;
+    // X11 only build - no Wayland shadows
+    return nullptr;
 }
 
 std::unique_ptr<Shadow> Shadow::createShadowFromInternalWindow(Window *window)
@@ -210,38 +194,6 @@ bool Shadow::init(KDecoration3::Decoration *decoration)
     return true;
 }
 
-static QImage shadowTileForBuffer(GraphicsBuffer *buffer)
-{
-    if (buffer) {
-        const GraphicsBufferView view(buffer);
-        if (!view.isNull()) {
-            return view.image()->copy();
-        }
-    }
-    return QImage();
-}
-
-bool Shadow::init(const QPointer<ShadowInterface> &shadow)
-{
-    if (!shadow) {
-        return false;
-    }
-
-    m_shadowElements[ShadowElementTop] = shadowTileForBuffer(shadow->top());
-    m_shadowElements[ShadowElementTopRight] = shadowTileForBuffer(shadow->topRight());
-    m_shadowElements[ShadowElementRight] = shadowTileForBuffer(shadow->right());
-    m_shadowElements[ShadowElementBottomRight] = shadowTileForBuffer(shadow->bottomRight());
-    m_shadowElements[ShadowElementBottom] = shadowTileForBuffer(shadow->bottom());
-    m_shadowElements[ShadowElementBottomLeft] = shadowTileForBuffer(shadow->bottomLeft());
-    m_shadowElements[ShadowElementLeft] = shadowTileForBuffer(shadow->left());
-    m_shadowElements[ShadowElementTopLeft] = shadowTileForBuffer(shadow->topLeft());
-
-    m_offset = shadow->offset().toMargins();
-    Q_EMIT offsetChanged();
-    Q_EMIT textureChanged();
-    return true;
-}
-
 bool Shadow::init(const QWindow *window)
 {
     const bool isEnabled = window->property("kwin_shadow_enabled").toBool();
@@ -290,15 +242,7 @@ bool Shadow::updateShadow()
         return false;
     }
 
-    if (waylandServer()) {
-        if (m_window && m_window->surface()) {
-            if (const auto &s = m_window->surface()->shadow()) {
-                if (init(s)) {
-                    return true;
-                }
-            }
-        }
-    }
+    // X11 only build - no Wayland shadow update
 
     if (InternalWindow *window = qobject_cast<InternalWindow *>(m_window)) {
         if (init(window->handle())) {

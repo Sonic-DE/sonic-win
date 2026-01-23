@@ -1,7 +1,8 @@
 add_definitions(-DKWIN_UNIT_TEST)
 remove_definitions(-DQT_USE_QSTRINGBUILDER)
 add_subdirectory(effect)
-add_subdirectory(integration)
+# X11 only build - integration tests require Wayland protocols
+# add_subdirectory(integration)
 
 ########################################################
 # Test WindowPaintData

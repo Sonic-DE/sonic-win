@@ -16,9 +16,7 @@
 #include <unistd.h>
 
 #include "virtualdesktops.h"
-#include "wayland_server.h"
 #include "workspace.h"
-#include "xdgshellwindow.h"
 #include <QDebug>
 #if KWIN_BUILD_X11
 #include "x11window.h"
@@ -373,110 +371,13 @@ void SessionManager::finishSaveSession(const QString &name)
 bool SessionManager::closeWaylandWindows()
 {
     Q_ASSERT(calledFromDBus());
-    if (!waylandServer()) {
-        return true;
-    }
-
-    if (m_closingWindowsGuard) {
-        sendErrorReply(QDBusError::Failed, u"Operation already in progress"_s);
-        return false;
-    }
-
-    m_closingWindowsGuard = std::make_unique<QObject>();
-    qCDebug(KWIN_CORE) << "Closing windows";
-
-    auto dbusMessage = message();
-    setDelayedReply(true);
-
-    const auto windows = workspace()->windows();
-    m_pendingWindows.clear();
-    m_pendingWindows.reserve(windows.size());
-    for (const auto window : windows) {
-        if (auto toplevelWindow = qobject_cast<XdgToplevelWindow *>(window)) {
-            connect(toplevelWindow, &XdgToplevelWindow::closed, m_closingWindowsGuard.get(), [this, toplevelWindow, dbusMessage] {
-                m_pendingWindows.removeOne(toplevelWindow);
-                if (m_pendingWindows.empty()) {
-#if KWIN_BUILD_NOTIFICATIONS
-                    if (m_cancelNotification) {
-                        m_cancelNotification->close();
-                        m_cancelNotification = nullptr;
-                    }
-#endif
-                    m_closeTimer.stop();
-                    m_logoutAnywayTimer.stop();
-                    m_closingWindowsGuard.reset();
-                    QDBusConnection::sessionBus().send(dbusMessage.createReply(true));
-                } else {
-                    updateWaylandCancelNotification();
-                }
-            });
-            m_pendingWindows.push_back(toplevelWindow);
-            toplevelWindow->closeWindow();
-        }
-    }
-
-    if (m_pendingWindows.empty()) {
-        m_closingWindowsGuard.reset();
-        QDBusConnection::sessionBus().send(dbusMessage.createReply(true));
-        return true;
-    }
-
-    m_closeTimer.start(std::chrono::seconds(10));
-    m_closeTimer.setSingleShot(true);
-    connect(&m_closeTimer, &QTimer::timeout, m_closingWindowsGuard.get(), [this, dbusMessage] {
-#if KWIN_BUILD_NOTIFICATIONS
-        m_cancelNotification = new KNotification("cancellogout", KNotification::DefaultEvent | KNotification::Persistent);
-        m_cancelNotification->setComponentName(QStringLiteral("kwin-x11"));
-        updateWaylandCancelNotification();
-        auto cancel = m_cancelNotification->addAction(i18nc("@action:button", "Cancel Logout"));
-        auto quit = m_cancelNotification->addAction(i18nc("@action::button", "Log Out Anyway"));
-        connect(cancel, &KNotificationAction::activated, m_closingWindowsGuard.get(), [dbusMessage, this] {
-            m_closingWindowsGuard.reset();
-            QDBusConnection::sessionBus().send(dbusMessage.createReply(false));
-        });
-        connect(quit, &KNotificationAction::activated, m_closingWindowsGuard.get(), [dbusMessage, this] {
-            m_closingWindowsGuard.reset();
-            QDBusConnection::sessionBus().send(dbusMessage.createReply(true));
-        });
-        connect(m_cancelNotification, &KNotification::closed, m_closingWindowsGuard.get(), [dbusMessage, this] {
-            m_closingWindowsGuard.reset();
-            QDBusConnection::sessionBus().send(dbusMessage.createReply(false));
-        });
-        m_cancelNotification->sendEvent();
-#else
-        m_closingWindowsGuard.reset();
-        QDBusConnection::sessionBus().send(dbusMessage.createReply(false));
-#endif
-    });
-
-    m_logoutAnywayTimer.start(std::chrono::minutes(2));
-    m_logoutAnywayTimer.setSingleShot(true);
-    connect(&m_logoutAnywayTimer, &QTimer::timeout, m_closingWindowsGuard.get(), [this, dbusMessage] {
-        qCInfo(KWIN_CORE) << "Not all windows have closed, logging out anyway";
-        m_closingWindowsGuard.reset();
-        QDBusConnection::sessionBus().send(dbusMessage.createReply(true));
-    });
+    // X11 only build - no Wayland windows to close
     return true;
 }
 
 void SessionManager::updateWaylandCancelNotification()
 {
-#if KWIN_BUILD_NOTIFICATIONS
-    if (!m_cancelNotification) {
-        return;
-    }
-
-    QStringList apps;
-    apps.reserve(m_pendingWindows.size());
-    std::transform(m_pendingWindows.cbegin(), m_pendingWindows.cend(), std::back_inserter(apps), [](const XdgToplevelWindow *window) -> QString {
-        const auto service = KService::serviceByDesktopName(window->desktopFileName());
-        return QStringLiteral("• ") + (service ? service->name() : window->caption());
-    });
-    apps.removeDuplicates();
-
-    qCDebug(KWIN_CORE) << "Not closed windows" << apps;
-    m_cancelNotification->setText(i18n("The following applications did not close:\n%1\nLogging out anyway in 2 minutes.", apps.join('\n')));
-#endif
+    // X11 only build - no-op
 }
 
 void SessionManager::quit()

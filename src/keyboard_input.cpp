@@ -15,10 +15,6 @@
 #include "inputmethod.h"
 #include "keyboard_layout.h"
 #include "keyboard_repeat.h"
-#include "wayland/datadevice.h"
-#include "wayland/keyboard.h"
-#include "wayland/seat.h"
-#include "wayland_server.h"
 #include "window.h"
 #include "workspace.h"
 #include "xkb.h"
@@ -45,9 +41,6 @@ KeyboardInputRedirection::KeyboardInputRedirection(InputRedirection *parent)
     , m_xkb(new Xkb(kwinApp()->followLocale1()))
 {
     connect(m_xkb.get(), &Xkb::ledsChanged, this, &KeyboardInputRedirection::ledsChanged);
-    if (waylandServer()) {
-        m_xkb->setSeat(waylandServer()->seat());
-    }
 }
 
 KeyboardInputRedirection::~KeyboardInputRedirection() = default;
@@ -154,8 +147,6 @@ void KeyboardInputRedirection::init()
     m_xkb->setNumLockConfig(kwinApp()->inputConfig());
     m_xkb->setConfig(config);
 
-    waylandServer()->seat()->setHasKeyboard(true);
-
     m_input->installInputEventSpy(new KeyStateChangedSpy(m_input));
     m_modifiersChangedSpy = new ModifiersChangedSpy(m_input);
     m_input->installInputEventSpy(m_modifiersChangedSpy);
@@ -169,9 +160,6 @@ void KeyboardInputRedirection::init()
     m_input->installInputEventSpy(keyRepeatSpy);
 
     connect(workspace(), &QObject::destroyed, this, [this] {
-        m_inited = false;
-    });
-    connect(waylandServer(), &QObject::destroyed, this, [this] {
         m_inited = false;
     });
     connect(workspace(), &Workspace::windowActivated, this, [this] {
@@ -197,44 +185,11 @@ void KeyboardInputRedirection::reconfigure()
     if (!m_inited) {
         return;
     }
-    if (waylandServer()->seat()->keyboard()) {
-        const auto config = kwinApp()->inputConfig()->group(QStringLiteral("Keyboard"));
-        const int delay = config.readEntry("RepeatDelay", 600);
-        const int rate = std::ceil(config.readEntry("RepeatRate", 25.0));
-        const QString repeatMode = config.readEntry("KeyRepeat", "repeat");
-        // when the clients will repeat the character or turn repeat key events into an accent character selection, we want
-        // to tell the clients that we are indeed repeating keys.
-        const bool enabled = repeatMode == QLatin1String("accent") || repeatMode == QLatin1String("repeat");
-
-        waylandServer()->seat()->keyboard()->setRepeatInfo(enabled ? rate : 0, delay);
-    }
+    // Keyboard repeat configuration is now handled elsewhere for X11
 }
 
 Window *KeyboardInputRedirection::pickFocus() const
 {
-    if (waylandServer()->isScreenLocked()) {
-        const QList<Window *> &stacking = Workspace::self()->stackingOrder();
-        if (!stacking.isEmpty()) {
-            auto it = stacking.end();
-            do {
-                --it;
-                Window *t = (*it);
-                if (t->isDeleted()) {
-                    // a deleted window doesn't get mouse events
-                    continue;
-                }
-                if (!t->isLockScreen()) {
-                    continue;
-                }
-                if (!t->readyForPainting()) {
-                    continue;
-                }
-                return t;
-            } while (it != stacking.begin());
-        }
-        return nullptr;
-    }
-
     if (input()->isSelectingWindow()) {
         return nullptr;
     }
@@ -253,17 +208,7 @@ void KeyboardInputRedirection::update()
     if (!m_inited) {
         return;
     }
-    auto seat = waylandServer()->seat();
-
-    // TODO: this needs better integration
-    Window *found = pickFocus();
-    if (found && found->surface()) {
-        if (found->surface() != seat->focusedKeyboardSurface()) {
-            seat->setFocusedKeyboardSurface(found->surface(), unfilteredKeys());
-        }
-    } else {
-        seat->setFocusedKeyboardSurface(nullptr);
-    }
+    // Keyboard focus is handled by X11 for this build
 }
 
 void KeyboardInputRedirection::processKey(uint32_t key, KeyboardKeyState state, std::chrono::microseconds time, InputDevice *device)

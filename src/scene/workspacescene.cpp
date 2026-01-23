@@ -69,10 +69,6 @@
 #include "scene/surfaceitem.h"
 #include "scene/windowitem.h"
 #include "shadow.h"
-#include "wayland/seat.h"
-#include "wayland/surface.h"
-#include "wayland_server.h"
-#include "waylandwindow.h"
 #include "window.h"
 #include "workspace.h"
 #if KWIN_BUILD_X11
@@ -98,10 +94,7 @@ WorkspaceScene::WorkspaceScene(std::unique_ptr<ItemRenderer> renderer)
         setGeometry(workspace()->geometry());
     });
 
-    if (waylandServer()) {
-        connect(waylandServer()->seat(), &SeatInterface::dragStarted, this, &WorkspaceScene::createDndIconItem);
-        connect(waylandServer()->seat(), &SeatInterface::dragEnded, this, &WorkspaceScene::destroyDndIconItem);
-    }
+    // X11 only build - no Wayland DnD icon support
 }
 
 WorkspaceScene::~WorkspaceScene()
@@ -110,36 +103,12 @@ WorkspaceScene::~WorkspaceScene()
 
 void WorkspaceScene::createDndIconItem()
 {
-    DragAndDropIcon *dragIcon = waylandServer()->seat()->dragIcon();
-    if (!dragIcon) {
-        return;
-    }
-    m_dndIcon = std::make_unique<DragAndDropIconItem>(dragIcon, m_overlayItem.get());
-    if (waylandServer()->seat()->isDragPointer()) {
-        auto updatePosition = [this]() {
-            const auto pointerPos = waylandServer()->seat()->pointerPos();
-            m_dndIcon->setPosition(pointerPos);
-            m_dndIcon->setOutput(workspace()->outputAt(pointerPos));
-        };
-
-        updatePosition();
-        connect(waylandServer()->seat(), &SeatInterface::pointerPosChanged, m_dndIcon.get(), updatePosition);
-    } else if (waylandServer()->seat()->isDragTouch()) {
-        auto updatePosition = [this]() {
-            auto seat = waylandServer()->seat();
-            const auto touchPos = seat->firstTouchPointPosition(seat->dragSurface());
-            m_dndIcon->setPosition(touchPos);
-            m_dndIcon->setOutput(workspace()->outputAt(touchPos));
-        };
-
-        updatePosition();
-        connect(waylandServer()->seat(), &SeatInterface::touchMoved, m_dndIcon.get(), updatePosition);
-    }
+    // X11 only build - no-op
 }
 
 void WorkspaceScene::destroyDndIconItem()
 {
-    m_dndIcon.reset();
+    // X11 only build - no-op
 }
 
 Item *WorkspaceScene::containerItem() const
@@ -219,9 +188,8 @@ static bool addCandidates(SurfaceItem *item, QList<SurfaceItem *> &candidates, s
 
 QList<SurfaceItem *> WorkspaceScene::scanoutCandidates(ssize_t maxCount) const
 {
-    if (!waylandServer()) {
-        return {};
-    }
+    // X11 only build - no scanout candidates
+    return {};
     QList<SurfaceItem *> ret;
     if (!effects->blocksDirectScanout()) {
         QRegion occlusion;
@@ -283,41 +251,7 @@ double WorkspaceScene::desiredHdrHeadroom() const
 
 void WorkspaceScene::frame(SceneDelegate *delegate, OutputFrame *frame)
 {
-    if (waylandServer()) {
-        Output *output = delegate->output();
-        const std::chrono::milliseconds frameTime =
-            std::chrono::duration_cast<std::chrono::milliseconds>(output->renderLoop()->lastPresentationTimestamp());
-
-        const QList<Item *> items = m_containerItem->sortedChildItems();
-        for (Item *item : items) {
-            if (!item->isVisible()) {
-                continue;
-            }
-            Window *window = static_cast<WindowItem *>(item)->window();
-            if (!window->isOnOutput(output)) {
-                continue;
-            }
-            if (auto surface = window->surface()) {
-                surface->traverseTree([&frameTime, &frame, &output](SurfaceInterface *surface) {
-                    surface->frameRendered(frameTime.count());
-                    if (auto feedback = surface->takePresentationFeedback(output)) {
-                        frame->addFeedback(std::move(feedback));
-                    }
-                });
-            }
-        }
-
-        if (m_dndIcon) {
-            if (auto surface = m_dndIcon->surface()) {
-                surface->traverseTree([&frameTime, &frame, &output](SurfaceInterface *surface) {
-                    surface->frameRendered(frameTime.count());
-                    if (auto feedback = surface->takePresentationFeedback(output)) {
-                        frame->addFeedback(std::move(feedback));
-                    }
-                });
-            }
-        }
-    }
+    // X11 only build - no Wayland surface frame handling needed
 }
 
 QRegion WorkspaceScene::prePaint(SceneDelegate *delegate)

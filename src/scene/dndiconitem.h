@@ -14,10 +14,8 @@ namespace KWin
 {
 
 class DragAndDropIcon;
-class SurfaceInterface;
-class SurfaceItemWayland;
-class PresentationFeedback;
 
+// Stub class for X11-only build - DnD icons are Wayland-specific
 class DragAndDropIconItem : public Item
 {
     Q_OBJECT
@@ -26,12 +24,9 @@ public:
     explicit DragAndDropIconItem(DragAndDropIcon *icon, Item *parent = nullptr);
     ~DragAndDropIconItem() override;
 
-    SurfaceInterface *surface() const;
-
     void setOutput(Output *output);
 
 private:
-    std::unique_ptr<SurfaceItemWayland> m_surfaceItem;
     Output *m_output = nullptr;
 };
 
