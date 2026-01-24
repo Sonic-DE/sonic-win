@@ -1316,11 +1316,6 @@ bool EffectsHandler::blocksDirectScanout() const
     });
 }
 
-Display *EffectsHandler::waylandDisplay() const
-{
-    return nullptr;
-}
-
 QVariant EffectsHandler::kwinOption(KWinOption kwopt)
 {
     switch (kwopt) {

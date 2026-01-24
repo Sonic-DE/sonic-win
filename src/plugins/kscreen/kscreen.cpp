@@ -48,15 +48,13 @@ namespace KWin
 
 KscreenEffect::KscreenEffect()
     : Effect()
-    , m_atom(effects->waylandDisplay() ? xcb_atom_t(XCB_ATOM_NONE) : effects->announceSupportProperty("_KDE_KWIN_KSCREEN_SUPPORT", this))
+    , m_atom(effects->announceSupportProperty("_KDE_KWIN_KSCREEN_SUPPORT", this))
 {
     KscreenConfig::instance(effects->config());
-    if (!effects->waylandDisplay()) {
-        connect(effects, &EffectsHandler::propertyNotify, this, &KscreenEffect::propertyNotify);
-        connect(effects, &EffectsHandler::xcbConnectionChanged, this, [this]() {
-            m_atom = effects->announceSupportProperty(QByteArrayLiteral("_KDE_KWIN_KSCREEN_SUPPORT"), this);
-        });
-    }
+    connect(effects, &EffectsHandler::propertyNotify, this, &KscreenEffect::propertyNotify);
+    connect(effects, &EffectsHandler::xcbConnectionChanged, this, [this]() {
+        m_atom = effects->announceSupportProperty(QByteArrayLiteral("_KDE_KWIN_KSCREEN_SUPPORT"), this);
+    });
     reconfigure(ReconfigureAll);
 
     const QList<Output *> screens = effects->screens();
@@ -64,9 +62,6 @@ KscreenEffect::KscreenEffect()
         addScreen(screen);
     }
     connect(effects, &EffectsHandler::screenAdded, this, &KscreenEffect::addScreen);
-    connect(effects, &EffectsHandler::screenRemoved, this, [this](KWin::Output *screen) {
-        m_waylandStates.remove(screen);
-    });
 }
 
 KscreenEffect::~KscreenEffect()
@@ -76,14 +71,12 @@ KscreenEffect::~KscreenEffect()
 void KscreenEffect::addScreen(Output *screen)
 {
     connect(screen, &Output::wakeUp, this, [this, screen] {
-        auto &state = m_waylandStates[screen];
-        state.m_timeLine.setDuration(std::chrono::milliseconds(animationTime<KscreenConfig>(250ms)));
-        setState(state, StateFadingIn);
+        m_xcbState.m_timeLine.setDuration(std::chrono::milliseconds(animationTime<KscreenConfig>(250ms)));
+        setState(m_xcbState, StateFadingIn);
     });
     connect(screen, &Output::aboutToTurnOff, this, [this, screen](std::chrono::milliseconds dimmingIn) {
-        auto &state = m_waylandStates[screen];
-        state.m_timeLine.setDuration(dimmingIn);
-        setState(state, StateFadingOut);
+        m_xcbState.m_timeLine.setDuration(dimmingIn);
+        setState(m_xcbState, StateFadingOut);
     });
 }
 
@@ -97,16 +90,13 @@ void KscreenEffect::reconfigure(ReconfigureFlags flags)
 void KscreenEffect::prePaintScreen(ScreenPrePaintData &data, std::chrono::milliseconds presentTime)
 {
     if (isScreenActive(data.screen)) {
-        auto &state = !effects->waylandDisplay() ? m_xcbState : m_waylandStates[data.screen];
+        auto &state = m_xcbState;
         m_currentScreen = data.screen;
 
         if (state.m_state == StateFadingIn || state.m_state == StateFadingOut) {
             state.m_timeLine.advance(presentTime);
             if (state.m_timeLine.done()) {
                 switchState(state);
-                if (state.m_state == StateNormal) {
-                    m_waylandStates.remove(data.screen);
-                }
             }
         }
     }
@@ -117,7 +107,7 @@ void KscreenEffect::prePaintScreen(ScreenPrePaintData &data, std::chrono::millis
 void KscreenEffect::postPaintScreen()
 {
     if (isScreenActive(m_currentScreen)) {
-        auto &state = !effects->waylandDisplay() ? m_xcbState : m_waylandStates[m_currentScreen];
+        auto &state = m_xcbState;
         if (state.m_state == StateFadingIn || state.m_state == StateFadingOut) {
             effects->addRepaintFull();
         }
@@ -129,7 +119,7 @@ void KscreenEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &data, st
 {
     auto screen = w->screen();
     if (isScreenActive(screen)) {
-        auto &state = !effects->waylandDisplay() ? m_xcbState : m_waylandStates[screen];
+        auto &state = m_xcbState;
         if (state.m_state != StateNormal) {
             data.setTranslucent();
         }
@@ -141,7 +131,7 @@ void KscreenEffect::paintWindow(const RenderTarget &renderTarget, const RenderVi
 {
     auto screen = w->screen();
     if (isScreenActive(screen)) {
-        auto &state = !effects->waylandDisplay() ? m_xcbState : m_waylandStates[screen];
+        auto &state = m_xcbState;
         // fade to black and fully opaque
         switch (state.m_state) {
         case StateFadingOut:
@@ -211,14 +201,12 @@ void KscreenEffect::switchState(ScreenState &state)
 
 bool KscreenEffect::isActive() const
 {
-    return !m_waylandStates.isEmpty()
-        || (!effects->waylandDisplay() && m_atom && m_xcbState.m_state != StateNormal);
+    return m_atom && m_xcbState.m_state != StateNormal;
 }
 
 bool KscreenEffect::isScreenActive(Output *screen) const
 {
-    return m_waylandStates.contains(screen)
-        || (!effects->waylandDisplay() && m_atom && m_xcbState.m_state != StateNormal);
+    return m_atom && m_xcbState.m_state != StateNormal;
 }
 
 } // namespace KWin

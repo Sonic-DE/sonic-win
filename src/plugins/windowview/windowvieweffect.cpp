@@ -227,7 +227,7 @@ void WindowViewEffect::reconfigure(ReconfigureFlags)
 
 void WindowViewEffect::grabbedKeyboardEvent(QKeyEvent *e)
 {
-    if (e->type() == QEvent::KeyPress && !effects->waylandDisplay()) {
+    if (e->type() == QEvent::KeyPress) {
         // check for global shortcuts
         // HACK: keyboard grab disables the global shortcuts so we have to check for global shortcut (bug 156155)
         if (m_mode == ModeCurrentDesktop && m_shortcut.contains(e->key() | e->modifiers())) {

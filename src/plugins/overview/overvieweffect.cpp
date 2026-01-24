@@ -341,31 +341,29 @@ void OverviewEffect::reverseCycle()
 
 void OverviewEffect::grabbedKeyboardEvent(QKeyEvent *keyEvent)
 {
-    if (!effects->waylandDisplay()) {
-        if (m_cycleShortcut.contains(keyEvent->key() | keyEvent->modifiers())) {
-            if (keyEvent->type() == QEvent::KeyPress) {
-                cycle();
-            }
-            return;
+    if (m_cycleShortcut.contains(keyEvent->key() | keyEvent->modifiers())) {
+        if (keyEvent->type() == QEvent::KeyPress) {
+            cycle();
         }
-        if (m_reverseCycleShortcut.contains(keyEvent->key() | keyEvent->modifiers())) {
-            if (keyEvent->type() == QEvent::KeyPress) {
-                reverseCycle();
-            }
-            return;
+        return;
+    }
+    if (m_reverseCycleShortcut.contains(keyEvent->key() | keyEvent->modifiers())) {
+        if (keyEvent->type() == QEvent::KeyPress) {
+            reverseCycle();
         }
-        if (m_overviewShortcut.contains(keyEvent->key() | keyEvent->modifiers())) {
-            if (keyEvent->type() == QEvent::KeyPress) {
-                m_overviewState->toggle();
-            }
-            return;
+        return;
+    }
+    if (m_overviewShortcut.contains(keyEvent->key() | keyEvent->modifiers())) {
+        if (keyEvent->type() == QEvent::KeyPress) {
+            m_overviewState->toggle();
         }
-        if (m_gridShortcut.contains(keyEvent->key() | keyEvent->modifiers())) {
-            if (keyEvent->type() == QEvent::KeyPress) {
-                m_gridState->toggle();
-            }
-            return;
+        return;
+    }
+    if (m_gridShortcut.contains(keyEvent->key() | keyEvent->modifiers())) {
+        if (keyEvent->type() == QEvent::KeyPress) {
+            m_gridState->toggle();
         }
+        return;
     }
     QuickSceneEffect::grabbedKeyboardEvent(keyEvent);
 }

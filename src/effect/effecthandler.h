@@ -580,13 +580,6 @@ public:
     xcb_window_t x11RootWindow() const;
 
     /**
-     * Interface to the Wayland display: this is relevant only
-     * on Wayland, on X11 it will be nullptr
-     * @since 5.5
-     */
-    Display *waylandDisplay() const;
-
-    /**
      * Whether animations are supported by the Scene.
      * If this method returns @c false Effects are supposed to not
      * animate transitions.

@@ -59,7 +59,6 @@ private:
     void addScreen(Output *screen);
     bool isScreenActive(Output *screen) const;
 
-    QHash<Output *, ScreenState> m_waylandStates;
     ScreenState m_xcbState;
     Output *m_currentScreen = nullptr;
     xcb_atom_t m_atom;
