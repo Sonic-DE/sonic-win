@@ -17,10 +17,8 @@
 
 #include "virtualdesktops.h"
 #include "workspace.h"
-#include <QDebug>
-#if KWIN_BUILD_X11
 #include "x11window.h"
-#endif
+#include <QDebug>
 
 #include <QSessionManager>
 #if KWIN_BUILD_NOTIFICATIONS
@@ -95,7 +93,6 @@ void SessionManager::storeSession(const QString &sessionName, SMSavePhase phase)
     int count = 0;
     int active_client = -1;
 
-#if KWIN_BUILD_X11
     const QList<Window *> windows = workspace()->windows();
     for (auto it = windows.begin(); it != windows.end(); ++it) {
         X11Window *c = qobject_cast<X11Window *>(*it);
@@ -124,7 +121,6 @@ void SessionManager::storeSession(const QString &sessionName, SMSavePhase phase)
             storeClient(cg, count, c);
         }
     }
-#endif
     if (phase == SMSavePhase0) {
         // it would be much simpler to save these values to the config file,
         // but both Qt and KDE treat phase1 and phase2 separately,
@@ -142,7 +138,6 @@ void SessionManager::storeSession(const QString &sessionName, SMSavePhase phase)
     config->sync(); // it previously did some "revert to defaults" stuff for phase1 I think
 }
 
-#if KWIN_BUILD_X11
 void SessionManager::storeClient(KConfigGroup &cg, int num, X11Window *c)
 {
     c->setSessionActivityOverride(false); // make sure we get the real values
@@ -178,7 +173,6 @@ void SessionManager::storeClient(KConfigGroup &cg, int num, X11Window *c)
     cg.writeEntry(QLatin1String("stackingOrder") + n, workspace()->unconstrainedStackingOrder().indexOf(c));
     cg.writeEntry(QLatin1String("activities") + n, c->activities());
 }
-#endif
 
 /**
  * Loads the session information from the config file.
@@ -230,7 +224,6 @@ void SessionManager::addSessionInfo(KConfigGroup &cg)
     }
 }
 
-#if KWIN_BUILD_X11
 static bool sessionInfoWindowTypeMatch(X11Window *c, SessionInfo *info)
 {
     if (int(info->windowType) == -2) {
@@ -299,7 +292,6 @@ SessionInfo *SessionManager::takeSessionInfo(X11Window *c)
     }
     return realInfo;
 }
-#endif
 
 SessionManager::SessionManager(QObject *parent)
     : QObject(parent)
@@ -345,11 +337,9 @@ void SessionManager::setState(SessionState state)
     // If we're ending a save session due to either completion or cancellation
     if (m_sessionState == SessionState::Saving) {
         workspace()->rulebook()->setUpdatesDisabled(false);
-#if KWIN_BUILD_X11
         Workspace::self()->forEachClient([](X11Window *client) {
             client->setSessionActivityOverride(false);
         });
-#endif
     }
 
     m_sessionState = state;

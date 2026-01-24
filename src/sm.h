@@ -45,9 +45,7 @@ public:
 
     SessionState state() const;
 
-#if KWIN_BUILD_X11
     SessionInfo *takeSessionInfo(X11Window *);
-#endif
 
 Q_SIGNALS:
     void stateChanged();
@@ -68,9 +66,7 @@ private:
     void setState(SessionState state);
 
     void storeSession(const QString &sessionName, SMSavePhase phase);
-#if KWIN_BUILD_X11
     void storeClient(KConfigGroup &cg, int num, X11Window *c);
-#endif
     void loadSessionInfo(const QString &sessionName);
     void addSessionInfo(KConfigGroup &cg);
 

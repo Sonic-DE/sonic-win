@@ -10,10 +10,6 @@
 
 #include "config-kwin.h"
 
-#if !KWIN_BUILD_X11
-#error Do not include on non-X11 builds
-#endif
-
 #include "effect/globals.h"
 #include "effect/xcb.h"
 #include "main.h"

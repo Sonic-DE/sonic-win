@@ -27,9 +27,7 @@
 #include "pointer_input.h"
 #include "tablet_input.h"
 #include "touch_input.h"
-#if KWIN_BUILD_X11
 #include "x11window.h"
-#endif
 #if KWIN_BUILD_TABBOX
 #include "tabbox/tabbox.h"
 #endif

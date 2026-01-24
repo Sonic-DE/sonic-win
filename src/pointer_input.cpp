@@ -30,9 +30,7 @@
 #if KWIN_BUILD_SCREENLOCKER
 #include <KScreenLocker/KsldApp>
 #endif
-#if KWIN_BUILD_X11
 #include "x11window.h"
-#endif
 
 #include <KLocalizedString>
 

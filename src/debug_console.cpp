@@ -20,11 +20,9 @@
 #include "scene/workspacescene.h"
 #include "utils/filedescriptor.h"
 #include "workspace.h"
+#include "x11window.h"
 #include "xkb.h"
 #include <cerrno>
-#if KWIN_BUILD_X11
-#include "x11window.h"
-#endif
 
 #include "ui_debug_console.h"
 
@@ -903,7 +901,6 @@ DebugConsoleModel::DebugConsoleModel(QObject *parent)
 
 void DebugConsoleModel::handleWindowAdded(Window *window)
 {
-#if KWIN_BUILD_X11
     if (auto x11 = qobject_cast<X11Window *>(window)) {
         if (x11->isUnmanaged()) {
             add(s_x11UnmanagedId - 1, m_unmanageds, x11);
@@ -912,7 +909,6 @@ void DebugConsoleModel::handleWindowAdded(Window *window)
         }
         return;
     }
-#endif
 
     if (auto internal = qobject_cast<InternalWindow *>(window)) {
         add(s_workspaceInternalId - 1, m_internalWindows, internal);
@@ -922,7 +918,6 @@ void DebugConsoleModel::handleWindowAdded(Window *window)
 
 void DebugConsoleModel::handleWindowRemoved(Window *window)
 {
-#if KWIN_BUILD_X11
     if (auto x11 = qobject_cast<X11Window *>(window)) {
         if (x11->isUnmanaged()) {
             remove(s_x11UnmanagedId - 1, m_unmanageds, x11);
@@ -931,7 +926,6 @@ void DebugConsoleModel::handleWindowRemoved(Window *window)
         }
         return;
     }
-#endif
 
     if (auto internal = qobject_cast<InternalWindow *>(window)) {
         remove(s_workspaceInternalId - 1, m_internalWindows, internal);
@@ -984,17 +978,9 @@ int DebugConsoleModel::rowCount(const QModelIndex &parent) const
     }
 
     if (parent.internalId() < s_idDistance * (s_x11WindowId + 1)) {
-#if KWIN_BUILD_X11
         return propertyCount(parent, &DebugConsoleModel::x11Window);
-#else
-        return 0;
-#endif
     } else if (parent.internalId() < s_idDistance * (s_x11UnmanagedId + 1)) {
-#if KWIN_BUILD_X11
         return propertyCount(parent, &DebugConsoleModel::unmanaged);
-#else
-        return 0;
-#endif
     } else if (parent.internalId() < s_idDistance * (s_workspaceInternalId + 1)) {
         return propertyCount(parent, &DebugConsoleModel::internalWindow);
     }
@@ -1053,17 +1039,9 @@ QModelIndex DebugConsoleModel::index(int row, int column, const QModelIndex &par
 
     // index for a property (third level)
     if (parent.internalId() < s_idDistance * (s_x11WindowId + 1)) {
-#if KWIN_BUILD_X11
         return indexForProperty(row, column, parent, &DebugConsoleModel::x11Window);
-#else
-        return {};
-#endif
     } else if (parent.internalId() < s_idDistance * (s_x11UnmanagedId + 1)) {
-#if KWIN_BUILD_X11
         return indexForProperty(row, column, parent, &DebugConsoleModel::unmanaged);
-#else
-        return {};
-#endif
     } else if (parent.internalId() < s_idDistance * (s_workspaceInternalId + 1)) {
         return indexForProperty(row, column, parent, &DebugConsoleModel::internalWindow);
     }
@@ -1199,12 +1177,10 @@ QVariant DebugConsoleModel::data(const QModelIndex &index, int role) const
         }
         if (InternalWindow *w = internalWindow(index)) {
             return propertyData(w, index, role);
-#if KWIN_BUILD_X11
         } else if (X11Window *w = x11Window(index)) {
             return propertyData(w, index, role);
         } else if (X11Window *u = unmanaged(index)) {
             return propertyData(u, index, role);
-#endif
         }
     } else {
         if (index.column() != 0) {
@@ -1216,14 +1192,11 @@ QVariant DebugConsoleModel::data(const QModelIndex &index, int role) const
         };
         switch (index.parent().internalId()) {
         case s_x11WindowId:
-#if KWIN_BUILD_X11
             return windowData<X11Window>(index, role, m_x11Windows, [](X11Window *c) -> QString {
                 return QStringLiteral("0x%1: %2").arg(c->window(), 0, 16).arg(c->caption());
             });
-#endif
             break;
         case s_x11UnmanagedId: {
-#if KWIN_BUILD_X11
             if (index.row() >= m_unmanageds.count()) {
                 return QVariant();
             }
@@ -1231,7 +1204,6 @@ QVariant DebugConsoleModel::data(const QModelIndex &index, int role) const
             if (role == Qt::DisplayRole) {
                 return QStringLiteral("0x%1").arg(u->window(), 0, 16);
             }
-#endif
             break;
         }
         case s_workspaceInternalId:

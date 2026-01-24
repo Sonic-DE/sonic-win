@@ -59,8 +59,6 @@ option(KWIN_BUILD_KCMS "Enable building of KWin configuration modules." ON)
 option(KWIN_BUILD_NOTIFICATIONS "Enable building of KWin with knotifications support" ON)
 option(KWIN_BUILD_SCREENLOCKER "Enable building of KWin lockscreen functionality" ON)
 option(KWIN_BUILD_TABBOX "Enable building of KWin Tabbox functionality" ON)
-option(KWIN_BUILD_X11 "Enable building X11 common code" ON)
-option(KWIN_BUILD_X11_BACKEND "Enable building kwin_x11" ON)
 option(KWIN_BUILD_RUNNERS "Enable building of KWin with krunner support" ON)
 
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
@@ -133,7 +131,7 @@ set_package_properties(KNightTime PROPERTIES
 
 find_package(Threads)
 set_package_properties(Threads PROPERTIES
-    PURPOSE "Needed for VirtualTerminal support in KWin Wayland"
+    PURPOSE "Needed for VirtualTerminal support in KWin"
     TYPE REQUIRED
 )
 
@@ -215,7 +213,7 @@ endif()
 find_package(XKB 0.7.0)
 set_package_properties(XKB PROPERTIES
     TYPE REQUIRED
-    PURPOSE "Required for building KWin with Wayland support"
+    PURPOSE "Required for building KWin with keyboard support"
 )
 if (XKB_VERSION VERSION_GREATER_EQUAL 1.5.0)
     set(HAVE_XKBCOMMON_NO_SECURE_GETENV 1)
@@ -225,74 +223,61 @@ endif()
 
 find_package(Canberra REQUIRED)
 
-if (KWIN_BUILD_X11)
-    pkg_check_modules(XKBX11 IMPORTED_TARGET xkbcommon-x11 REQUIRED)
-    add_feature_info(XKBX11 XKBX11_FOUND "Required for handling keyboard events in X11 backend")
+pkg_check_modules(XKBX11 IMPORTED_TARGET xkbcommon-x11 REQUIRED)
+add_feature_info(XKBX11 XKBX11_FOUND "Required for handling keyboard events in X11 backend")
 
-    # All the required XCB components
-    find_package(XCB 1.10 REQUIRED COMPONENTS
-        COMPOSITE
-        CURSOR
-        DAMAGE
-        DRI3
-        GLX
-        ICCCM
-        IMAGE
-        KEYSYMS
-        PRESENT
-        RANDR
-        RENDER
-        SHAPE
-        SHM
-        SYNC
-        XCB
-        XFIXES
-        XKB
-        XINERAMA
-        XINPUT
-    )
-    set_package_properties(XCB PROPERTIES TYPE REQUIRED)
+# All the required XCB components
+find_package(XCB 1.10 REQUIRED COMPONENTS
+    COMPOSITE
+    CURSOR
+    DAMAGE
+    DRI3
+    GLX
+    ICCCM
+    IMAGE
+    KEYSYMS
+    PRESENT
+    RANDR
+    RENDER
+    SHAPE
+    SHM
+    SYNC
+    XCB
+    XFIXES
+    XKB
+    XINERAMA
+    XINPUT
+)
+set_package_properties(XCB PROPERTIES TYPE REQUIRED)
 
-    find_package(X11_XCB)
-    set_package_properties(X11_XCB PROPERTIES
-        PURPOSE "Required for building X11 windowed backend of kwin_wayland"
-        TYPE OPTIONAL
-    )
+find_package(X11_XCB)
+set_package_properties(X11_XCB PROPERTIES
+    PURPOSE "Required for building X11 windowed backend"
+    TYPE OPTIONAL
+)
 
-    set(HAVE_GLX ${epoxy_HAS_GLX})
-    get_target_property(QT_DISABLED_FEATURES Qt6::Gui QT_DISABLED_PUBLIC_FEATURES)
-    if("xcb_glx_plugin" IN_LIST QT_DISABLED_FEATURES)
-        message(STATUS "Disable GLX because Qt6::Gui was built without xcb_glx_plugin")
-        set(HAVE_GLX false)
-    endif()
-
-    # for kwin internal things
-    set(HAVE_X11_XCB ${X11_XCB_FOUND})
-
-    find_package(X11)
-    set_package_properties(X11 PROPERTIES
-        DESCRIPTION "X11 libraries"
-        URL "https://www.x.org"
-        TYPE REQUIRED
-    )
-
-else()
-    set(KWIN_BUILD_X11_BACKEND OFF CACHE BOOL "Enable building kwin_x11" FORCE)
+set(HAVE_GLX ${epoxy_HAS_GLX})
+get_target_property(QT_DISABLED_FEATURES Qt6::Gui QT_DISABLED_PUBLIC_FEATURES)
+if("xcb_glx_plugin" IN_LIST QT_DISABLED_FEATURES)
+    message(STATUS "Disable GLX because Qt6::Gui was built without xcb_glx_plugin")
+    set(HAVE_GLX false)
 endif()
 
-find_package(UDev)
-set_package_properties(UDev PROPERTIES
-    URL "https://www.freedesktop.org/wiki/Software/systemd/"
-    DESCRIPTION "Linux device library."
+# for kwin internal things
+set(HAVE_X11_XCB ${X11_XCB_FOUND})
+
+find_package(X11)
+set_package_properties(X11 PROPERTIES
+    DESCRIPTION "X11 libraries"
+    URL "https://www.x.org"
     TYPE REQUIRED
-    PURPOSE "Required for input handling on Wayland."
 )
 
 find_package(Libdrm 2.4.116)
-set_package_properties(Libdrm PROPERTIES TYPE REQUIRED PURPOSE "Required for drm output on Wayland.")
+set_package_properties(Libdrm PROPERTIES TYPE REQUIRED PURPOSE "Required for EGL rendering and buffer management.")
 
 find_package(gbm)
-set_package_properties(gbm PROPERTIES TYPE REQUIRED PURPOSE "Required for egl output of drm backend.")
+set_package_properties(gbm PROPERTIES TYPE REQUIRED PURPOSE "Required for EGL buffer allocation and management.")
 if (gbm_VERSION VERSION_GREATER_EQUAL 21.1)
     set(HAVE_GBM_BO_GET_FD_FOR_PLANE 1)
 else()
@@ -358,7 +343,7 @@ if (KWIN_BUILD_SCREENLOCKER)
     find_package(KScreenLocker CONFIG)
     set_package_properties(KScreenLocker PROPERTIES
         TYPE REQUIRED
-        PURPOSE "For screenlocker integration in kwin_wayland"
+        PURPOSE "For screenlocker integration in KWin"
     )
 endif()
 
@@ -380,7 +365,7 @@ include_directories(BEFORE
 check_symbol_exists(SCHED_RESET_ON_FORK "sched.h" HAVE_SCHED_RESET_ON_FORK)
 add_feature_info("SCHED_RESET_ON_FORK"
                  HAVE_SCHED_RESET_ON_FORK
-                 "Required for running kwin_wayland with real-time scheduling")
+                 "Required for running KWin with real-time scheduling")
 
 # clang < 16 does not support ranges and compiling KWin will fail in the middle of the build.
 # clang 14 is still the default clang version on KDE Neon and Clazy is build with it
@@ -458,8 +443,7 @@ add_subdirectory(src)
 
 if (BUILD_TESTING)
     add_subdirectory(autotests)
-    # X11 only build - tests directory has Wayland dependencies
-    # add_subdirectory(tests)
+    add_subdirectory(tests)
 endif()
 
 # add clang-format target for all our real source files
@@ -478,10 +462,8 @@ configure_package_config_file(KWinX11DBusInterfaceConfig.cmake.in
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/KWinX11DBusInterfaceConfig.cmake
     DESTINATION ${CMAKECONFIG_INSTALL_DIR})
 
-if (KWIN_BUILD_X11_BACKEND)
-    ecm_install_configured_files(INPUT plasma-kwin_x11.service.in @ONLY
-                DESTINATION ${KDE_INSTALL_SYSTEMDUSERUNITDIR})
-endif()
+ecm_install_configured_files(INPUT plasma-kwin_x11.service.in @ONLY
+            DESTINATION ${KDE_INSTALL_SYSTEMDUSERUNITDIR})
 
 
 ki18n_install(po)

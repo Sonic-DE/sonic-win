@@ -26,13 +26,11 @@
 #include "virtualdesktops.h"
 #include "window.h"
 
-#if KWIN_BUILD_X11
 #include "atoms.h"
 #include "group.h"
 #include "netinfo.h"
 #include "x11window.h"
 #include <kstartupinfo.h>
-#endif
 
 #include <KLocalizedString>
 #include <QDebug>
@@ -262,11 +260,9 @@ void Workspace::setActiveWindow(Window *window)
 
     updateStackingOrder(); // e.g. fullscreens have different layer when active/not-active
 
-#if KWIN_BUILD_X11
     if (rootInfo()) {
         rootInfo()->setActiveClient(m_activeWindow);
     }
-#endif
 
     Q_EMIT windowActivated(m_activeWindow);
     --m_setActiveWindowRecursion;
@@ -335,7 +331,6 @@ void Workspace::activateWindow(Window *window, bool force)
         requestFocus(window, force);
     }
 
-#if KWIN_BUILD_X11
     // Don't update user time for windows that have focus stealing workaround.
     // As they usually belong to the current active window but fail to provide
     // this information, updating their user time would make the user time
@@ -347,7 +342,6 @@ void Workspace::activateWindow(Window *window, bool force)
         // updateUserTime is X11 specific
         x11Window->updateUserTime();
     }
-#endif
 }
 
 /**
@@ -589,14 +583,10 @@ bool Workspace::allowFullClientRaising(const KWin::Window *window, uint32_t time
     if (level == 3) { // high
         return false;
     }
-#if KWIN_BUILD_X11
     xcb_timestamp_t user_time = ac->userTime();
     qCDebug(KWIN_CORE) << "Raising, compared:" << time << ":" << user_time
                        << ":" << (NET::timestampCompare(time, user_time) >= 0);
     return NET::timestampCompare(time, user_time) >= 0; // time >= user_time
-#else
-    return true;
-#endif
 }
 
 /**
@@ -611,9 +601,7 @@ bool Workspace::restoreFocus()
     // a timestamp *sigh*, kwin's timestamp would be older than the timestamp
     // that was used by whoever caused the focus change, and therefore
     // the attempt to restore the focus would fail due to old timestamp
-#if KWIN_BUILD_X11
     kwinApp()->updateXTime();
-#endif
     if (should_get_focus.count() > 0) {
         return requestFocus(should_get_focus.last());
     } else if (m_lastActiveWindow) {

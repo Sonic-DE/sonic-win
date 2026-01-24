@@ -20,13 +20,11 @@ kconfig_add_kcfg_files(kwinrules_SRCS ../../rulebooksettingsbase.kcfgc)
 add_library(KWinRulesObjects STATIC ${kwinrules_SRCS})
 set_property(TARGET KWinRulesObjects PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-if (KWIN_BUILD_X11)
-    set(kwin_kcm_rules_XCB_LIBS
-        XCB::CURSOR
-        XCB::XCB
-        XCB::XFIXES
-    )
-endif()
+set(kwin_kcm_rules_XCB_LIBS
+    XCB::CURSOR
+    XCB::XCB
+    XCB::XFIXES
+)
 
 set(kcm_libs
     Qt::Quick

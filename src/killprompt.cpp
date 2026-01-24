@@ -7,9 +7,7 @@
 #include "killprompt.h"
 
 #include "client_machine.h"
-#if KWIN_BUILD_X11
 #include "x11window.h"
-#endif
 
 #include <QDir>
 #include <QFileInfo>
@@ -21,9 +19,7 @@ namespace KWin
 KillPrompt::KillPrompt(Window *window)
     : m_window(window)
 {
-#if KWIN_BUILD_X11
     Q_ASSERT(qobject_cast<X11Window *>(window));
-#endif
 
     m_process.setProcessChannelMode(QProcess::ForwardedChannels);
 
@@ -56,7 +52,6 @@ void KillPrompt::start(quint32 timestamp)
     QString appId = !m_window->desktopFileName().isEmpty() ? m_window->desktopFileName() : m_window->resourceClass();
     QString platform;
 
-#if KWIN_BUILD_X11
     if (auto *x11Window = qobject_cast<X11Window *>(m_window)) {
         platform = QStringLiteral("xcb");
         wid = QString::number(x11Window->window());
@@ -65,7 +60,6 @@ void KillPrompt::start(quint32 timestamp)
             hostname = x11Window->clientMachine()->hostName();
         }
     }
-#endif
 
     QStringList args{
         QStringLiteral("-platform"),

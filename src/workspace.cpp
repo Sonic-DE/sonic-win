@@ -41,11 +41,15 @@
 #if KWIN_BUILD_TABBOX
 #include "tabbox/tabbox.h"
 #endif
+#include "atoms.h"
 #include "compositor.h"
+#include "core/brightnessdevice.h"
 #include "decorations/decorationbridge.h"
 #include "dpmsinputeventfilter.h"
+#include "group.h"
 #include "lidswitchtracker.h"
 #include "main.h"
+#include "netinfo.h"
 #include "outputconfigurationstore.h"
 #include "placeholderinputeventfilter.h"
 #include "placeholderoutput.h"
@@ -56,17 +60,11 @@
 #include "useractions.h"
 #include "utils/kernel.h"
 #include "utils/orientationsensor.h"
+#include "utils/xcbutils.h"
 #include "virtualdesktops.h"
 #include "was_user_interaction_x11_filter.h"
-#if KWIN_BUILD_X11
-#include "atoms.h"
-#include "core/brightnessdevice.h"
-#include "group.h"
-#include "netinfo.h"
-#include "utils/xcbutils.h"
 #include "x11window.h"
 #include <KStartupInfo>
-#endif
 // screenlocker
 #if KWIN_BUILD_SCREENLOCKER
 #include <KScreenLocker/KsldApp>
@@ -228,13 +226,11 @@ void Workspace::init()
 
     m_activeWindow = nullptr;
 
-#if KWIN_BUILD_X11
     // We want to have some xcb connection while tearing down X11 components. We don't really
     // care if the xcb connection is broken or has an error.
     connect(kwinApp(), &Application::x11ConnectionChanged, this, &Workspace::initializeX11);
     connect(kwinApp(), &Application::x11ConnectionAboutToBeDestroyed, this, &Workspace::cleanupX11);
     initializeX11();
-#endif
 
     Scripting::create(this);
 
@@ -275,7 +271,6 @@ QString Workspace::getPlacementTrackerHash()
     return QString::fromLatin1(hash.toHex());
 }
 
-#if KWIN_BUILD_X11
 void Workspace::initializeX11()
 {
     if (!kwinApp()->x11Connection()) {
@@ -437,15 +432,12 @@ void Workspace::cleanupX11()
     m_syncAlarmFilter.reset();
     m_wasUserInteractionFilter.reset();
 }
-#endif
 
 Workspace::~Workspace()
 {
     blockStackingUpdates(true);
 
-#if KWIN_BUILD_X11
     cleanupX11();
-#endif
 
     // X11 only build - no Wayland windows to destroy
 
@@ -697,7 +689,6 @@ void Workspace::removeFromStack(Window *window)
     }
 }
 
-#if KWIN_BUILD_X11
 X11Window *Workspace::createX11Window(xcb_window_t windowId, bool is_mapped)
 {
     StackingUpdatesBlocker blocker(this);
@@ -796,7 +787,6 @@ void Workspace::removeUnmanaged(X11Window *window)
     m_windows.removeOne(window);
     Q_EMIT windowRemoved(window);
 }
-#endif
 
 void Workspace::addDeleted(Window *c)
 {
@@ -964,7 +954,6 @@ void Workspace::slotCurrentDesktopChangingCancelled()
 
 void Workspace::updateWindowVisibilityOnDesktopChange(VirtualDesktop *newDesktop)
 {
-#if KWIN_BUILD_X11
     for (auto it = stacking_order.constBegin(); it != stacking_order.constEnd(); ++it) {
         X11Window *c = qobject_cast<X11Window *>(*it);
         if (!c) {
@@ -978,7 +967,6 @@ void Workspace::updateWindowVisibilityOnDesktopChange(VirtualDesktop *newDesktop
     if (rootInfo()) {
         rootInfo()->setCurrentDesktop(VirtualDesktopManager::self()->current());
     }
-#endif
 
     // FIXME: Keep Move/Resize window across activities
 
@@ -986,7 +974,6 @@ void Workspace::updateWindowVisibilityOnDesktopChange(VirtualDesktop *newDesktop
         m_moveResizeWindow->setDesktops({newDesktop});
     }
 
-#if KWIN_BUILD_X11
     for (int i = stacking_order.size() - 1; i >= 0; --i) {
         X11Window *c = qobject_cast<X11Window *>(stacking_order.at(i));
         if (!c) {
@@ -996,7 +983,6 @@ void Workspace::updateWindowVisibilityOnDesktopChange(VirtualDesktop *newDesktop
             c->updateVisibility();
         }
     }
-#endif
     if (showingDesktop()) { // Do this only after desktop change to avoid flicker
         setShowingDesktop(false);
     }
@@ -1358,7 +1344,6 @@ void Workspace::slotEndInteractiveMoveResize()
     }
 }
 
-#if KWIN_BUILD_X11
 void Workspace::selectWmInputEventMask()
 {
     uint32_t presentMask = 0;
@@ -1378,7 +1363,6 @@ void Workspace::selectWmInputEventMask()
 
     Xcb::selectInput(kwinApp()->x11RootWindow(), presentMask | wmMask);
 }
-#endif
 
 void Workspace::addWindowToDesktop(Window *window, VirtualDesktop *desktop)
 {
@@ -1467,12 +1451,10 @@ void Workspace::cancelDelayFocus()
     m_delayFocusWindow = nullptr;
 }
 
-#if KWIN_BUILD_X11
 bool Workspace::checkStartupNotification(xcb_window_t w, KStartupInfoId &id, KStartupInfoData &data)
 {
     return m_startup->checkStartup(w, id, data) == KStartupInfo::Match;
 }
-#endif
 
 /**
  * Puts the focus on a dummy window
@@ -1480,12 +1462,10 @@ bool Workspace::checkStartupNotification(xcb_window_t w, KStartupInfoId &id, KSt
  */
 void Workspace::focusToNull()
 {
-#if KWIN_BUILD_X11
     if (m_nullFocus) {
         should_get_focus.clear();
         m_nullFocus->focus();
     }
-#endif
 }
 
 bool Workspace::breaksShowingDesktop(Window *window) const
@@ -1497,11 +1477,9 @@ void Workspace::setShowingDesktop(bool showing, bool animated)
 {
     const bool changed = showing != showing_desktop;
 
-#if KWIN_BUILD_X11
     if (rootInfo() && changed) {
         rootInfo()->setShowingDesktop(showing);
     }
-#endif
     showing_desktop = showing;
 
     for (int i = stacking_order.count() - 1; i > -1; --i) {
@@ -1596,7 +1574,6 @@ QString Workspace::supportInformation() const
     support.append(HAVE_GLX ? yes : no);
     support.append(QStringLiteral("\n"));
 
-#if KWIN_BUILD_X11
     if (auto c = kwinApp()->x11Connection()) {
         support.append(QStringLiteral("X11\n"));
         support.append(QStringLiteral("===\n"));
@@ -1611,7 +1588,6 @@ QString Workspace::supportInformation() const
         }
         support.append(QStringLiteral("\n"));
     }
-#endif
 
     if (m_decorationBridge) {
         support.append(QStringLiteral("Decoration\n"));
@@ -1745,11 +1721,9 @@ QString Workspace::supportInformation() const
             if (platform->isMesaDriver()) {
                 support.append(QStringLiteral("Mesa version: ") + platform->mesaVersion().toString() + QStringLiteral("\n"));
             }
-#if KWIN_BUILD_X11
             if (auto xVersion = Xcb::xServerVersion(); xVersion.isValid()) {
                 support.append(QStringLiteral("X server version: ") + xVersion.toString() + QStringLiteral("\n"));
             }
-#endif
             if (auto kernelVersion = linuxKernelVersion(); kernelVersion.isValid()) {
                 support.append(QStringLiteral("Linux kernel version: ") + kernelVersion.toString() + QStringLiteral("\n"));
             }
@@ -1816,7 +1790,6 @@ QString Workspace::supportInformation() const
     return support;
 }
 
-#if KWIN_BUILD_X11
 void Workspace::forEachClient(std::function<void(X11Window *)> func)
 {
     for (Window *window : std::as_const(m_windows)) {
@@ -1878,7 +1851,6 @@ X11Window *Workspace::findClient(Predicate predicate, xcb_window_t w) const
     }
     return nullptr;
 }
-#endif
 
 Window *Workspace::findWindow(std::function<bool(const Window *)> func) const
 {
@@ -1910,11 +1882,9 @@ Window *Workspace::findInternal(QWindow *w) const
     if (!w) {
         return nullptr;
     }
-#if KWIN_BUILD_X11
     if (kwinApp()->operationMode() == Application::OperationModeX11) {
         return findUnmanaged(w->winId());
     }
-#endif
     for (Window *window : m_windows) {
         if (InternalWindow *internal = qobject_cast<InternalWindow *>(window)) {
             if (internal->handle() == w) {
@@ -1932,12 +1902,10 @@ void Workspace::setWasUserInteraction()
     }
     was_user_interaction = true;
     // might be called from within the filter, so delay till we now the filter returned
-#if KWIN_BUILD_X11
     QTimer::singleShot(0, this,
                        [this] {
         m_wasUserInteractionFilter.reset();
     });
-#endif
 }
 
 void Workspace::updateTabbox()
@@ -1978,7 +1946,6 @@ void Workspace::removeInternalWindow(InternalWindow *window)
     Q_EMIT windowRemoved(window);
 }
 
-#if KWIN_BUILD_X11
 Group *Workspace::findGroup(xcb_window_t leader) const
 {
     Q_ASSERT(leader != XCB_WINDOW_NONE);
@@ -2021,7 +1988,6 @@ Group *Workspace::findClientLeaderGroup(const X11Window *window) const
     }
     return ret;
 }
-#endif
 
 void Workspace::updateMinimizedOfTransients(Window *window)
 {
@@ -2072,7 +2038,6 @@ void Workspace::updateOnAllDesktopsOfTransients(Window *window)
     }
 }
 
-#if KWIN_BUILD_X11
 // A new window has been mapped. Check if it's not a mainwindow for some already existing transient window.
 void Workspace::checkTransients(xcb_window_t w)
 {
@@ -2082,7 +2047,6 @@ void Workspace::checkTransients(xcb_window_t w)
         }
     }
 }
-#endif
 
 /**
  * Resizes the workspace after an XRANDR screen size change
@@ -2095,14 +2059,12 @@ void Workspace::desktopResized()
         m_geometry = m_geometry.united(output->geometry());
     }
 
-#if KWIN_BUILD_X11
     if (rootInfo()) {
         NETSize desktop_geometry;
         desktop_geometry.width = Xcb::toXNative(m_geometry.width());
         desktop_geometry.height = Xcb::toXNative(m_geometry.height());
         rootInfo()->setDesktopGeometry(desktop_geometry);
     }
-#endif
 
     rearrange();
 
@@ -2147,7 +2109,6 @@ void Workspace::saveOldScreenSizes()
     }
 }
 
-#if KWIN_BUILD_X11
 /**
  * Whether or not the window has a strut that expands through the invisible area of
  * an xinerama setup where the monitors are not the same resolution.
@@ -2174,7 +2135,6 @@ static bool hasOffscreenXineramaStrut(Window *window)
 
     return false;
 }
-#endif
 
 QRectF Workspace::adjustClientArea(Window *window, const QRectF &area) const
 {
@@ -2186,7 +2146,6 @@ QRectF Workspace::adjustClientArea(Window *window, const QRectF &area) const
     QRectF strutBottom = window->strutRect(StrutAreaBottom);
 
     QRectF screenArea = clientArea(ScreenArea, window);
-#if KWIN_BUILD_X11
     if (qobject_cast<X11Window *>(window)) {
         // HACK: workarea handling is not xinerama aware, so if this strut
         // reserves place at a xinerama edge that's inside the virtual screen,
@@ -2206,7 +2165,6 @@ QRectF Workspace::adjustClientArea(Window *window, const QRectF &area) const
             }
         }
     }
-#endif
 
     // Handle struts at xinerama edges that are inside the virtual screen.
     // They're given in virtual screen coordinates, make them affect only
@@ -2294,9 +2252,7 @@ void Workspace::rearrange()
         // having unusable sections of the screen (Which can be quite large with newer monitors)
         // or having some content appear offscreen (Relatively rare compared to other).
         bool hasOffscreenStrut = false;
-#if KWIN_BUILD_X11
         hasOffscreenStrut = hasOffscreenXineramaStrut(window);
-#endif
 
         const auto vds = window->isOnAllDesktops() ? desktops : window->desktops();
         for (VirtualDesktop *vd : vds) {
@@ -2322,7 +2278,6 @@ void Workspace::rearrange()
         m_oldRestrictedAreas = m_restrictedAreas;
         m_restrictedAreas = restrictedAreas;
 
-#if KWIN_BUILD_X11
         if (rootInfo()) {
             for (VirtualDesktop *desktop : desktops) {
                 const QRectF &workArea = m_workAreas[desktop];
@@ -2330,7 +2285,6 @@ void Workspace::rearrange()
                 rootInfo()->setWorkArea(desktop->x11DesktopNumber(), r);
             }
         }
-#endif
 
         for (auto it = m_windows.constBegin(); it != m_windows.constEnd(); ++it) {
             if ((*it)->isClient()) {
@@ -2443,7 +2397,6 @@ QHash<const Output *, QRect> Workspace::previousScreenSizes() const
     return m_oldScreenGeometries;
 }
 
-#if KWIN_BUILD_X11
 Output *Workspace::xineramaIndexToOutput(int index) const
 {
     xcb_connection_t *connection = kwinApp()->x11Connection();
@@ -2477,7 +2430,6 @@ Output *Workspace::xineramaIndexToOutput(int index) const
 
     return nullptr;
 }
-#endif
 
 void Workspace::setOutputOrder(const QList<Output *> &order)
 {
@@ -2934,7 +2886,6 @@ void Workspace::setMoveResizeWindow(Window *window)
     }
 }
 
-#if KWIN_BUILD_X11
 // When kwin crashes, windows will not be gravitated back to their original position
 // and will remain offset by the size of the decoration. So when restarting, fix this
 // (the property with the size of the frame remains on the window after the crash).
@@ -2951,7 +2902,6 @@ void Workspace::fixPositionAfterCrash(xcb_window_t w, const xcb_get_geometry_rep
         xcb_configure_window(kwinApp()->x11Connection(), w, XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y, values);
     }
 }
-#endif
 
 FocusChain *Workspace::focusChain() const
 {

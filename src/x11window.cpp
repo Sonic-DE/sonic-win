@@ -5211,11 +5211,9 @@ xcb_timestamp_t X11Window::readUserTimeMapTimestamp(const KStartupInfoId *asn_id
                     first_window = false;
                 }
             } else {
-#if KWIN_BUILD_X11
                 if (workspace()->findClient(sameApplicationActiveHackPredicate)) {
                     first_window = false;
                 }
-#endif
             }
             // don't refuse if focus stealing prevention is turned off
             if (!first_window && rules()->checkFSP(options->focusStealingPreventionLevel()) > 0) {

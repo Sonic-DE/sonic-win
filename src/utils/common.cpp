@@ -17,10 +17,8 @@
 #include "utils/common.h"
 #include "utils/c_ptr.h"
 
-#if KWIN_BUILD_X11
 #include "effect/xcb.h"
 #include <kkeyserver.h>
-#endif
 
 #include <QPainter>
 #include <QWidget>
@@ -69,8 +67,6 @@ StrutRect &StrutRect::operator=(const StrutRect &other)
     }
     return *this;
 }
-
-#if KWIN_BUILD_X11
 
 static int server_grab_count = 0;
 
@@ -194,7 +190,6 @@ Qt::KeyboardModifiers x11ToQtKeyboardModifiers(int state)
     return ret;
 }
 
-#endif
 #endif
 
 QPointF popupOffset(const QRectF &anchorRect, const Qt::Edges anchorEdge, const Qt::Edges gravity, const QSizeF popupSize)

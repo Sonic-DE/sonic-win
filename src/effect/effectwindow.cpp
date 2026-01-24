@@ -14,10 +14,8 @@
 #include "scene/windowitem.h"
 #include "virtualdesktops.h"
 
-#if KWIN_BUILD_X11
 #include "group.h"
 #include "x11window.h"
-#endif
 
 #include <QJSEngine>
 
@@ -60,11 +58,7 @@ EffectWindow::EffectWindow(WindowItem *windowItem)
     d->managed = d->m_window->isClient();
 
     d->m_waylandWindow = false; // X11 only build
-#if KWIN_BUILD_X11
     d->m_x11Window = qobject_cast<KWin::X11Window *>(d->m_window) != nullptr;
-#else
-    d->m_x11Window = false;
-#endif
 
     connect(d->m_window, &Window::hiddenChanged, this, [this]() {
         Q_EMIT windowHiddenChanged(this);
@@ -220,11 +214,9 @@ void EffectWindow::addLayerRepaint(const QRect &r)
 
 const EffectWindowGroup *EffectWindow::group() const
 {
-#if KWIN_BUILD_X11
     if (Group *group = d->m_window->group()) {
         return group->effectGroup();
     }
-#endif
     return nullptr;
 }
 
@@ -314,11 +306,9 @@ WINDOW_HELPER(bool, isInputMethod, isInputMethod)
 
 qlonglong EffectWindow::windowId() const
 {
-#if KWIN_BUILD_X11
     if (X11Window *x11Window = qobject_cast<X11Window *>(d->m_window)) {
         return x11Window->window();
     }
-#endif
     return 0;
 }
 
@@ -339,11 +329,9 @@ WindowType EffectWindow::windowType() const
 
 QSizeF EffectWindow::basicUnit() const
 {
-#if KWIN_BUILD_X11
     if (auto window = qobject_cast<X11Window *>(d->m_window)) {
         return window->basicUnit();
     }
-#endif
     return QSize(1, 1);
 }
 
@@ -354,7 +342,6 @@ KDecoration3::Decoration *EffectWindow::decoration() const
 
 QByteArray EffectWindow::readProperty(long atom, long type, int format) const
 {
-#if KWIN_BUILD_X11
     auto x11Window = qobject_cast<X11Window *>(d->m_window);
     if (!x11Window) {
         return QByteArray();
@@ -375,13 +362,11 @@ QByteArray EffectWindow::readProperty(long atom, long type, int format) const
         }
         return prop.toByteArray(format, type);
     }
-#endif
     return {};
 }
 
 void EffectWindow::deleteProperty(long int atom) const
 {
-#if KWIN_BUILD_X11
     auto x11Window = qobject_cast<X11Window *>(d->m_window);
     if (!x11Window) {
         return;
@@ -390,7 +375,6 @@ void EffectWindow::deleteProperty(long int atom) const
         return;
     }
     xcb_delete_property(kwinApp()->x11Connection(), x11Window->window(), atom);
-#endif
 }
 
 EffectWindow *EffectWindow::findModal()
@@ -512,13 +496,11 @@ EffectWindowGroup::~EffectWindowGroup()
 QList<EffectWindow *> EffectWindowGroup::members() const
 {
     QList<EffectWindow *> ret;
-#if KWIN_BUILD_X11
     const auto memberList = m_group->members();
     ret.reserve(memberList.size());
     std::transform(std::cbegin(memberList), std::cend(memberList), std::back_inserter(ret), [](auto window) {
         return window->effectWindow();
     });
-#endif
     return ret;
 }
 

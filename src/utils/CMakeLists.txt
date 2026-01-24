@@ -8,12 +8,9 @@ target_sources(kwin PRIVATE
     ramfile.cpp
     realtime.cpp
     softwarevsyncmonitor.cpp
-    udev.cpp
     vsyncmonitor.cpp
+    xcbutils.cpp
 )
-if (KWIN_BUILD_X11)
-    target_sources(kwin PRIVATE xcbutils.cpp)
-endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
     target_sources(kwin PRIVATE executable_path_proc.cpp)

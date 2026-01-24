@@ -28,11 +28,9 @@
 #include "pointer_input.h"
 #include "utils/common.h"
 #include "virtualdesktops.h"
+#include "x11window.h"
 #include <window.h>
 #include <workspace.h>
-#if KWIN_BUILD_X11
-#include "x11window.h"
-#endif
 // DBus generated
 #if KWIN_BUILD_SCREENLOCKER
 #include "screenlocker_interface.h"
@@ -723,7 +721,6 @@ void Edge::updateApproaching(const QPointF &point)
     }
 }
 
-#if KWIN_BUILD_X11
 quint32 Edge::window() const
 {
     return 0;
@@ -733,7 +730,6 @@ quint32 Edge::approachWindow() const
 {
     return 0;
 }
-#endif
 
 void Edge::setBorder(ElectricBorder border)
 {
@@ -1507,7 +1503,6 @@ bool ScreenEdges::isEntered(const QPointF &pos, std::chrono::microseconds timest
     return activated;
 }
 
-#if KWIN_BUILD_X11
 bool ScreenEdges::handleEnterNotifiy(xcb_window_t window, const QPoint &point, const std::chrono::microseconds &timestamp)
 {
     bool activated = false;
@@ -1546,16 +1541,12 @@ bool ScreenEdges::handleEnterNotifiy(xcb_window_t window, const QPoint &point, c
     }
     return activated;
 }
-#endif
 
 void ScreenEdges::ensureOnTop()
 {
-#if KWIN_BUILD_X11
     Xcb::restackWindowsWithRaise(windows());
-#endif
 }
 
-#if KWIN_BUILD_X11
 bool ScreenEdges::handleDndNotify(xcb_window_t window, const QPoint &point)
 {
     for (const auto &edge : m_edges) {
@@ -1587,7 +1578,6 @@ QList<xcb_window_t> ScreenEdges::windows() const
     }
     return wins;
 }
-#endif
 
 void ScreenEdges::setRemainActiveOnFullscreen(bool remainActive)
 {

@@ -14,9 +14,7 @@
 #include "virtualdesktops.h"
 #include "window.h"
 #include "workspace.h"
-#if KWIN_BUILD_X11
 #include "x11window.h"
-#endif
 
 #include <KDecoration3/Decoration>
 
@@ -305,7 +303,6 @@ void WindowItem::freeze()
     }
 }
 
-#if KWIN_BUILD_X11
 WindowItemX11::WindowItemX11(X11Window *window, Item *parent)
     : WindowItem(window, parent)
 {
@@ -317,7 +314,6 @@ void WindowItemX11::initialize()
     // X11 only build - always use X11 surface item
     updateSurfaceItem(std::make_unique<SurfaceItemX11>(static_cast<X11Window *>(window()), this));
 }
-#endif
 
 // X11 only build - WindowItemWayland not used
 

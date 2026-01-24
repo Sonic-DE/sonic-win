@@ -16,9 +16,7 @@
 #include "scene/surfaceitem.h"
 #include "scene/windowitem.h"
 
-#if KWIN_BUILD_X11
 #include "utils/xcbutils.h"
-#endif
 
 #include <QCoreApplication>
 #include <QMatrix4x4>
@@ -42,11 +40,9 @@ ContrastEffect::ContrastEffect()
     // ### Hackish way to announce support.
     //     Should be included in _NET_SUPPORTED instead.
     if (m_shader && m_shader->isValid()) {
-#if KWIN_BUILD_X11
         if (effects->xcbConnection()) {
             m_net_wm_contrast_region = effects->announceSupportProperty(s_contrastAtomName, this);
         }
-#endif
         // X11 only build - no Wayland contrast manager
     }
 
@@ -54,14 +50,12 @@ ContrastEffect::ContrastEffect()
     connect(effects, &EffectsHandler::windowDeleted, this, &ContrastEffect::slotWindowDeleted);
     connect(effects, &EffectsHandler::virtualScreenGeometryChanged, this, &ContrastEffect::slotScreenGeometryChanged);
 
-#if KWIN_BUILD_X11
     connect(effects, &EffectsHandler::propertyNotify, this, &ContrastEffect::slotPropertyNotify);
     connect(effects, &EffectsHandler::xcbConnectionChanged, this, [this]() {
         if (m_shader && m_shader->isValid()) {
             m_net_wm_contrast_region = effects->announceSupportProperty(s_contrastAtomName, this);
         }
     });
-#endif
 
     // Fetch the contrast regions for all windows
     const QList<EffectWindow *> windowList = effects->stackingOrder();
@@ -95,7 +89,6 @@ void ContrastEffect::updateContrastRegion(EffectWindow *w)
     QMatrix4x4 matrix;
     bool valid = false;
 
-#if KWIN_BUILD_X11
     if (m_net_wm_contrast_region != XCB_ATOM_NONE) {
         float colorTransform[16];
         const QByteArray value = w->readProperty(m_net_wm_contrast_region, m_net_wm_contrast_region, 32);
@@ -121,7 +114,6 @@ void ContrastEffect::updateContrastRegion(EffectWindow *w)
 
         valid = !value.isNull();
     }
-#endif
 
     // X11 only build - no Wayland surface contrast support
 
@@ -194,14 +186,12 @@ void ContrastEffect::slotWindowDeleted(EffectWindow *w)
     }
 }
 
-#if KWIN_BUILD_X11
 void ContrastEffect::slotPropertyNotify(EffectWindow *w, long atom)
 {
     if (w && atom == m_net_wm_contrast_region && m_net_wm_contrast_region != XCB_ATOM_NONE) {
         updateContrastRegion(w);
     }
 }
-#endif
 
 QMatrix4x4 ContrastEffect::colorMatrix(qreal contrast, qreal intensity, qreal saturation)
 {

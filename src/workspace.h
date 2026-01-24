@@ -98,7 +98,6 @@ public:
 
     bool hasWindow(const Window *);
 
-#if KWIN_BUILD_X11
     bool workspaceEvent(xcb_generic_event_t *);
 
     /**
@@ -148,7 +147,6 @@ public:
      * @return KWin::Unmanaged* Found Unmanaged or @c null if there is no Unmanaged with given Id.
      */
     X11Window *findUnmanaged(xcb_window_t w) const;
-#endif
 
     Window *findWindow(const QUuid &internalId) const;
     Window *findWindow(std::function<bool(const Window *)> func) const;
@@ -228,11 +226,9 @@ public:
     QRectF adjustWindowSize(const Window *window, QRectF moveResizeGeom, Gravity gravity) const;
     void raiseWindow(Window *window, bool nogroup = false);
     void lowerWindow(Window *window, bool nogroup = false);
-#if KWIN_BUILD_X11
     void raiseWindowRequest(Window *window, NET::RequestSource src = NET::FromApplication, uint32_t timestamp = 0);
     void lowerWindowRequest(X11Window *window, NET::RequestSource src, xcb_timestamp_t timestamp);
     void restoreSessionStackingOrder(X11Window *window);
-#endif
     void restackWindowUnderActive(Window *window);
     void stackBelow(Window *window, Window *reference);
     void stackAbove(Window *window, Window *reference);
@@ -253,9 +249,7 @@ public:
         return m_windows;
     }
 
-#if KWIN_BUILD_X11
     void stackScreenEdgesUnderOverrideRedirect();
-#endif
 
     SessionManager *sessionManager() const;
 
@@ -312,7 +306,6 @@ public:
     void windowToPreviousDesktop(Window *window);
     void windowToNextDesktop(Window *window);
 
-#if KWIN_BUILD_X11
     QList<X11Window *> ensureStackingOrder(const QList<X11Window *> &windows) const;
 
     void addManualOverlay(xcb_window_t id)
@@ -323,7 +316,6 @@ public:
     {
         manual_overlays.removeOne(id);
     }
-#endif
 
     /**
      * Shows the menu operations menu for the window and makes it active if
@@ -340,10 +332,8 @@ public:
     void updateMinimizedOfTransients(Window *);
     void updateOnAllDesktopsOfTransients(Window *);
 
-#if KWIN_BUILD_X11
     void checkTransients(xcb_window_t w);
     SessionInfo *takeSessionInfo(X11Window *);
-#endif
 
     // D-Bus interface
     QString supportInformation() const;
@@ -372,7 +362,6 @@ public:
     bool showingDesktop() const;
 
     void setActiveWindow(Window *window);
-#if KWIN_BUILD_X11
     void removeX11Window(X11Window *); // Only called from X11Window::destroyWindow() or X11Window::releaseWindow()
     Group *findGroup(xcb_window_t leader) const;
     void addGroup(Group *group);
@@ -382,7 +371,6 @@ public:
 
     void removeUnmanaged(X11Window *);
     bool checkStartupNotification(xcb_window_t w, KStartupInfoId &id, KStartupInfoData &data);
-#endif
     void removeDeleted(Window *);
     void addDeleted(Window *);
 
@@ -545,9 +533,7 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void desktopResized();
-#if KWIN_BUILD_X11
     void selectWmInputEventMask();
-#endif
     void delayFocus();
     void slotReloadConfig();
     void updateCurrentActivity(const QString &new_activity);
@@ -576,9 +562,7 @@ Q_SIGNALS:
     void windowRemoved(KWin::Window *);
     void windowActivated(KWin::Window *);
     void windowMinimizedChanged(KWin::Window *);
-#if KWIN_BUILD_X11
     void groupAdded(KWin::Group *);
-#endif
     void deletedRemoved(KWin::Window *);
     void configChanged();
     void showingDesktopChanged(bool showing, bool animated);
@@ -613,7 +597,6 @@ private:
     void addToStack(Window *window);
     void removeFromStack(Window *window);
 
-#if KWIN_BUILD_X11
     void initializeX11();
     void cleanupX11();
 
@@ -625,7 +608,6 @@ private:
     X11Window *createUnmanaged(xcb_window_t windowId);
     void addUnmanaged(X11Window *c);
     bool updateXStackingOrder();
-#endif
     void setupWindowConnections(Window *window);
 
     void addWaylandWindow(Window *window);
@@ -694,13 +676,11 @@ private:
     QList<Group *> groups;
 
     bool was_user_interaction;
-#if KWIN_BUILD_X11
     QList<xcb_window_t> manual_overlays; // Topmost last
     std::unique_ptr<X11EventFilter> m_wasUserInteractionFilter;
     std::unique_ptr<Xcb::Window> m_nullFocus;
     std::unique_ptr<X11EventFilter> m_movingClientFilter;
     std::unique_ptr<X11EventFilter> m_syncAlarmFilter;
-#endif
 
     int block_focus;
 
@@ -720,9 +700,7 @@ private:
     QTimer reconfigureTimer;
 
     static Workspace *_self;
-#if KWIN_BUILD_X11
     std::unique_ptr<KStartupInfo> m_startup;
-#endif
     QHash<const VirtualDesktop *, QRectF> m_workAreas;
     QHash<const VirtualDesktop *, StrutRects> m_restrictedAreas;
     QHash<const VirtualDesktop *, QHash<const Output *, QRectF>> m_screenAreas;
@@ -807,7 +785,6 @@ inline Window *Workspace::mostRecentlyActivatedWindow() const
     return should_get_focus.count() > 0 ? should_get_focus.last() : m_activeWindow;
 }
 
-#if KWIN_BUILD_X11
 inline void Workspace::addGroup(Group *group)
 {
     Q_EMIT groupAdded(group);
@@ -818,7 +795,6 @@ inline void Workspace::removeGroup(Group *group)
 {
     groups.removeAll(group);
 }
-#endif
 
 inline const QList<Window *> &Workspace::stackingOrder() const
 {

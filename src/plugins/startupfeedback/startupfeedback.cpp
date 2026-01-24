@@ -20,9 +20,7 @@
 #include <QTimer>
 // KDE
 #include <KConfigGroup>
-#if KWIN_BUILD_X11
 #include <KSelectionOwner>
-#endif
 #include <KSharedConfig>
 #include <KWindowSystem>
 // KWin
@@ -76,10 +74,8 @@ static const int s_startupDefaultTimeout = 5;
 
 StartupFeedbackEffect::StartupFeedbackEffect()
     : m_bounceSizesRatio(1.0)
-#if KWIN_BUILD_X11
     , m_startupInfo(new KStartupInfo(KStartupInfo::CleanOnCantDetect, this))
     , m_selection(nullptr)
-#endif
     , m_active(false)
     , m_frame(0)
     , m_progress(0)
@@ -89,7 +85,6 @@ StartupFeedbackEffect::StartupFeedbackEffect()
     , m_configWatcher(KConfigWatcher::create(KSharedConfig::openConfig("klaunchrc", KConfig::NoGlobals)))
     , m_splashVisible(false)
 {
-#if KWIN_BUILD_X11
     // TODO: move somewhere that is x11-specific
     if (KWindowSystem::isPlatformX11()) {
         m_selection = new KSelectionOwner("_KDE_STARTUP_FEEDBACK", effects->xcbConnection(), effects->x11RootWindow(), this);
@@ -106,7 +101,6 @@ StartupFeedbackEffect::StartupFeedbackEffect()
         const auto icon = QIcon::fromTheme(data.findIcon(), QIcon::fromTheme(QStringLiteral("system-run")));
         Q_EMIT effects->startupChanged(id.id(), icon);
     });
-#endif
 
     connect(effects, &EffectsHandler::startupAdded, this, &StartupFeedbackEffect::gotNewStartup);
     connect(effects, &EffectsHandler::startupRemoved, this, &StartupFeedbackEffect::gotRemoveStartup);
@@ -145,9 +139,7 @@ void StartupFeedbackEffect::reconfigure(Effect::ReconfigureFlags flags)
 
     c = m_configWatcher->config()->group(QStringLiteral("BusyCursorSettings"));
     m_timeout = std::chrono::seconds(c.readEntry("Timeout", s_startupDefaultTimeout));
-#if KWIN_BUILD_X11
     m_startupInfo->setTimeout(m_timeout.count());
-#endif
     const bool busyBlinking = c.readEntry("Blinking", false);
     const bool busyBouncing = c.readEntry("Bouncing", true);
     if (!busyCursor) {

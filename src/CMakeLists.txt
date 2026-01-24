@@ -246,7 +246,6 @@ target_link_libraries(kwin
         KDecoration3::KDecoration
         KDecoration3::KDecoration3Private
 
-        UDev::UDev
         XKB::XKB
         EGL::EGL
         epoxy::epoxy
@@ -262,42 +261,40 @@ if (TARGET K::KGlobalAccelD)
     target_link_libraries(kwin PRIVATE K::KGlobalAccelD)
 endif()
 
-if (KWIN_BUILD_X11)
-    target_sources(kwin
-        PRIVATE
-            atoms.cpp
-            events.cpp
-            compositor_x11.cpp
-            group.cpp
-            moving_client_x11_filter.cpp
-            netinfo.cpp
-            rootinfo_filter.cpp
-            scene/surfaceitem_x11.cpp
-            syncalarmx11filter.cpp
-            was_user_interaction_x11_filter.cpp
-            window_property_notify_x11_filter.cpp
-            x11eventfilter.cpp
-            x11syncmanager.cpp
-            x11window.cpp
-    )
-    target_link_libraries(kwin
-        PRIVATE
-            XCB::COMPOSITE
-            XCB::CURSOR
-            XCB::DAMAGE
-            XCB::GLX
-            XCB::ICCCM
-            XCB::KEYSYMS
-            XCB::RANDR
-            XCB::RENDER
-            XCB::SHAPE
-            XCB::SHM
-            XCB::SYNC
-            XCB::XCB
-            XCB::XFIXES
-            XCB::XINERAMA
-    )
-endif()
+target_sources(kwin
+    PRIVATE
+        atoms.cpp
+        events.cpp
+        compositor_x11.cpp
+        group.cpp
+        moving_client_x11_filter.cpp
+        netinfo.cpp
+        rootinfo_filter.cpp
+        scene/surfaceitem_x11.cpp
+        syncalarmx11filter.cpp
+        was_user_interaction_x11_filter.cpp
+        window_property_notify_x11_filter.cpp
+        x11eventfilter.cpp
+        x11syncmanager.cpp
+        x11window.cpp
+)
+target_link_libraries(kwin
+    PRIVATE
+        XCB::COMPOSITE
+        XCB::CURSOR
+        XCB::DAMAGE
+        XCB::GLX
+        XCB::ICCCM
+        XCB::KEYSYMS
+        XCB::RANDR
+        XCB::RENDER
+        XCB::SHAPE
+        XCB::SHM
+        XCB::SYNC
+        XCB::XCB
+        XCB::XFIXES
+        XCB::XINERAMA
+)
 
 if (KWIN_BUILD_NOTIFICATIONS)
     target_link_libraries(kwin PRIVATE KF6::Notifications)
@@ -358,12 +355,9 @@ if (KWIN_BUILD_TABBOX)
         tabbox/tabbox_logging.cpp
         tabbox/tabboxconfig.cpp
         tabbox/tabboxhandler.cpp
+        tabbox/x11_filter.cpp
     )
     add_subdirectory(tabbox/switchers)
-
-    if (KWIN_BUILD_X11)
-        target_sources(kwin PRIVATE tabbox/x11_filter.cpp)
-    endif()
 endif()
 
 qt_generate_dbus_interface(virtualkeyboard_dbus.h org.kde.kwin.VirtualKeyboard.xml OPTIONS -A)
@@ -371,19 +365,17 @@ qt_generate_dbus_interface(tabletmodemanager.h org.kde.KWin.TabletModeManager.xm
 
 generate_export_header(kwin EXPORT_FILE_NAME kwin_export.h)
 
-if (KWIN_BUILD_X11 AND KWIN_BUILD_X11_BACKEND)
-    add_executable(kwin_x11 main_x11.cpp)
-    target_link_libraries(kwin_x11
-        KWinX11Platform
-        kwin
-        KF6::GlobalAccel
-    )
-    target_compile_definitions(kwin_x11 PRIVATE
-        -DTRANSLATION_DOMAIN=\"kwin_x11\"
-    )
-    kcoreaddons_target_static_plugins(kwin_x11 NAMESPACE "${KWIN_PLUGINDIR}/effects/plugins")
-    install(TARGETS kwin_x11 ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-endif()
+add_executable(kwin_x11 main_x11.cpp)
+target_link_libraries(kwin_x11
+    KWinX11Platform
+    kwin
+    KF6::GlobalAccel
+)
+target_compile_definitions(kwin_x11 PRIVATE
+    -DTRANSLATION_DOMAIN=\"kwin_x11\"
+)
+kcoreaddons_target_static_plugins(kwin_x11 NAMESPACE "${KWIN_PLUGINDIR}/effects/plugins")
+install(TARGETS kwin_x11 ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(TARGETS kwin EXPORT KWinX11Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
@@ -412,9 +404,7 @@ export_dbus_interface(org.kde.KWin.TabletModeManager.xml ${CMAKE_CURRENT_BINARY_
 
 install(EXPORT KWinX11Targets DESTINATION "${KDE_INSTALL_CMAKEPACKAGEDIR}/KWinX11" FILE KWinX11Targets.cmake NAMESPACE KWinX11:: )
 
-if (KWIN_BUILD_X11)
-    install(FILES atoms.h DESTINATION ${KDE_INSTALL_INCLUDEDIR}/kwin-x11 COMPONENT Devel)
-endif()
+install(FILES atoms.h DESTINATION ${KDE_INSTALL_INCLUDEDIR}/kwin-x11 COMPONENT Devel)
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/config-kwin.h
@@ -532,7 +522,6 @@ install(FILES
     utils/resource.h
     utils/serviceutils.h
     utils/softwarevsyncmonitor.h
-    utils/udev.h
     utils/version.h
     utils/vsyncmonitor.h
     utils/xcbutils.h

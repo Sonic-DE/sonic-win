@@ -34,9 +34,7 @@
 #include "virtualdesktops.h"
 #include "window.h"
 #include "workspace.h"
-#if KWIN_BUILD_X11
 #include "x11window.h"
-#endif
 
 #if KWIN_BUILD_ACTIVITIES
 #include "activities.h"

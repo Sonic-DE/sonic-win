@@ -91,7 +91,6 @@ private:
     int m_forceVisibleByActivityCount = 0;
 };
 
-#if KWIN_BUILD_X11
 /**
  * The WindowItemX11 class represents an X11 window (both on X11 and Wayland sessions).
  *
@@ -108,7 +107,6 @@ public:
 private Q_SLOTS:
     void initialize();
 };
-#endif
 
 /**
  * The WindowItemWayland class represents a Wayland window.

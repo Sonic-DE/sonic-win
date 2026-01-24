@@ -268,14 +268,12 @@ public:
      */
     Q_INVOKABLE void raiseWindow(KWin::Window *window);
 
-#if KWIN_BUILD_X11
     /**
      * Finds the Client with the given @p windowId.
      * @param windowId The window Id of the Client
      * @return The found Client or @c null
      */
     Q_SCRIPTABLE KWin::Window *getClient(qulonglong windowId);
-#endif
 
     /**
      * Finds up to count windows at a particular location,
