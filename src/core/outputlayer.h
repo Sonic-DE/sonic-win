@@ -61,18 +61,6 @@ public:
     std::optional<OutputLayerBeginFrameInfo> beginFrame();
     bool endFrame(const QRegion &renderedRegion, const QRegion &damagedRegion, OutputFrame *frame);
 
-    /**
-     * Tries to import the newest buffer of the surface for direct scanout and does some early checks
-     * for whether or not direct scanout *could* be successful
-     * A presentation request on the output must however be used afterwards to find out if it's actually successful!
-     */
-    bool importScanoutBuffer(SurfaceItem *item, const std::shared_ptr<OutputFrame> &frame);
-
-    /**
-     * Notify that there's no scanout candidate this frame
-     */
-    void notifyNoScanoutCandidate();
-
     virtual DrmDevice *scanoutDevice() const = 0;
     virtual QHash<uint32_t, QList<uint64_t>> supportedDrmFormats() const = 0;
 
@@ -96,7 +84,6 @@ public:
     OutputTransform bufferTransform() const;
 
 protected:
-    virtual bool doImportScanoutBuffer(GraphicsBuffer *buffer, const ColorDescription &color, RenderingIntent intent, const std::shared_ptr<OutputFrame> &frame);
     virtual std::optional<OutputLayerBeginFrameInfo> doBeginFrame() = 0;
     virtual bool doEndFrame(const QRegion &renderedRegion, const QRegion &damagedRegion, OutputFrame *frame) = 0;
 
@@ -108,7 +95,6 @@ protected:
     bool m_enabled = false;
     OutputTransform m_offloadTransform = OutputTransform::Kind::Normal;
     OutputTransform m_bufferTransform = OutputTransform::Kind::Normal;
-    QPointer<SurfaceItem> m_scanoutCandidate;
     Output *const m_output;
 };
 

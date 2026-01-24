@@ -63,17 +63,6 @@ bool OutputLayer::needsRepaint() const
     return !m_repaints.isEmpty();
 }
 
-bool OutputLayer::doImportScanoutBuffer(GraphicsBuffer *buffer, const ColorDescription &color, RenderingIntent intent, const std::shared_ptr<OutputFrame> &frame)
-{
-    return false;
-}
-
-bool OutputLayer::importScanoutBuffer(SurfaceItem *surfaceItem, const std::shared_ptr<OutputFrame> &frame)
-{
-    // Scanout buffer import is not supported
-    return false;
-}
-
 std::optional<OutputLayerBeginFrameInfo> OutputLayer::beginFrame()
 {
     m_sourceRect = QRectF(QPointF(0, 0), m_targetRect.size());
@@ -85,14 +74,6 @@ std::optional<OutputLayerBeginFrameInfo> OutputLayer::beginFrame()
 bool OutputLayer::endFrame(const QRegion &renderedRegion, const QRegion &damagedRegion, OutputFrame *frame)
 {
     return doEndFrame(renderedRegion, damagedRegion, frame);
-}
-
-void OutputLayer::notifyNoScanoutCandidate()
-{
-    if (m_scanoutCandidate) {
-        m_scanoutCandidate->setScanoutHint(nullptr, {});
-        m_scanoutCandidate = nullptr;
-    }
 }
 
 void OutputLayer::setEnabled(bool enable)
