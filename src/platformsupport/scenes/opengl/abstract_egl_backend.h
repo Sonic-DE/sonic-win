@@ -23,7 +23,7 @@ struct DmaBufAttributes;
 class Output;
 
 // DMA-BUF feedback tranche structure (from Wayland linux-dmabuf-v1 protocol)
-// Kept for format/modifier advertisement even in X11-only builds
+// Kept for format/modifier advertisement
 struct DmaBufFeedbackTranche
 {
     dev_t device;

@@ -34,7 +34,6 @@ WindowItem::WindowItem(Window *window, Item *parent)
     connect(window, &Window::frameGeometryChanged, this, &WindowItem::updatePosition);
     updatePosition();
 
-    // X11 only build - no Wayland lock state handling
     if (!window->readyForPainting()) {
         connect(window, &Window::readyForPaintingChanged, this, &WindowItem::updateVisibility);
     }
@@ -150,7 +149,6 @@ bool WindowItem::computeVisibility() const
     if (!m_window->readyForPainting()) {
         return false;
     }
-    // X11 only build - no Wayland screen lock handling
     if (!m_window->isOnCurrentDesktop()) {
         if (m_forceVisibleByDesktopCount == 0) {
             return false;
@@ -311,11 +309,8 @@ WindowItemX11::WindowItemX11(X11Window *window, Item *parent)
 
 void WindowItemX11::initialize()
 {
-    // X11 only build - always use X11 surface item
     updateSurfaceItem(std::make_unique<SurfaceItemX11>(static_cast<X11Window *>(window()), this));
 }
-
-// X11 only build - WindowItemWayland not used
 
 WindowItemInternal::WindowItemInternal(InternalWindow *window, Item *parent)
     : WindowItem(window, parent)

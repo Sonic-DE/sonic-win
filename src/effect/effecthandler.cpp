@@ -1318,7 +1318,6 @@ bool EffectsHandler::blocksDirectScanout() const
 
 Display *EffectsHandler::waylandDisplay() const
 {
-    // X11 only build - no Wayland display
     return nullptr;
 }
 
@@ -1570,13 +1569,11 @@ bool EffectsHandler::isCursorHidden() const
 
 KWin::EffectWindow *EffectsHandler::inputPanel() const
 {
-    // X11 only build - no input panel
     return nullptr;
 }
 
 bool EffectsHandler::isInputPanelOverlay() const
 {
-    // X11 only build - no input panel
     return true;
 }
 

@@ -40,7 +40,6 @@ Shadow::~Shadow()
 std::unique_ptr<Shadow> Shadow::createShadow(Window *window)
 {
     auto shadow = createShadowFromDecoration(window);
-    // X11 only build - no Wayland shadow support
     if (!shadow && kwinApp()->x11Connection()) {
         shadow = createShadowFromX11(window);
     }
@@ -82,7 +81,6 @@ std::unique_ptr<Shadow> Shadow::createShadowFromDecoration(Window *window)
 
 std::unique_ptr<Shadow> Shadow::createShadowFromWayland(Window *window)
 {
-    // X11 only build - no Wayland shadows
     return nullptr;
 }
 
@@ -231,8 +229,6 @@ bool Shadow::updateShadow()
         }
         return false;
     }
-
-    // X11 only build - no Wayland shadow update
 
     if (InternalWindow *window = qobject_cast<InternalWindow *>(m_window)) {
         if (init(window->handle())) {

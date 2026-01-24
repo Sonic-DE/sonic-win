@@ -45,7 +45,6 @@ VirtualDesktop::~VirtualDesktop()
 
 void VirtualDesktopManager::setVirtualDesktopManagement(PlasmaVirtualDesktopManagementInterface *management)
 {
-    // X11 only build - Wayland virtual desktop management not needed
     Q_UNUSED(management);
 }
 

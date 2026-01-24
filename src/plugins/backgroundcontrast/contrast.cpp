@@ -43,7 +43,6 @@ ContrastEffect::ContrastEffect()
         if (effects->xcbConnection()) {
             m_net_wm_contrast_region = effects->announceSupportProperty(s_contrastAtomName, this);
         }
-        // X11 only build - no Wayland contrast manager
     }
 
     connect(effects, &EffectsHandler::windowAdded, this, &ContrastEffect::slotWindowAdded);
@@ -66,7 +65,6 @@ ContrastEffect::ContrastEffect()
 
 ContrastEffect::~ContrastEffect()
 {
-    // X11 only build - no Wayland contrast manager to clean up
 }
 
 void ContrastEffect::slotScreenGeometryChanged()
@@ -115,8 +113,6 @@ void ContrastEffect::updateContrastRegion(EffectWindow *w)
         valid = !value.isNull();
     }
 
-    // X11 only build - no Wayland surface contrast support
-
     if (auto internal = w->internalWindow()) {
         const auto property = internal->property("kwin_background_region");
         if (property.isValid()) {
@@ -154,7 +150,6 @@ void ContrastEffect::updateContrastRegion(EffectWindow *w)
 
 void ContrastEffect::slotWindowAdded(EffectWindow *w)
 {
-    // X11 only build - no Wayland surface contrast connections
 
     if (auto internal = w->internalWindow()) {
         internal->installEventFilter(this);
@@ -179,7 +174,6 @@ bool ContrastEffect::eventFilter(QObject *watched, QEvent *event)
 
 void ContrastEffect::slotWindowDeleted(EffectWindow *w)
 {
-    // X11 only build - no Wayland contrast connections to clean up
     if (auto it = m_windowData.find(w); it != m_windowData.end()) {
         effects->makeOpenGLContextCurrent();
         m_windowData.erase(it);

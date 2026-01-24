@@ -127,8 +127,6 @@ BlurEffect::BlurEffect()
         net_wm_blur_region = effects->announceSupportProperty(s_blurAtomName, this);
     }
 
-    // X11 only build - no Wayland blur manager
-
     connect(effects, &EffectsHandler::windowAdded, this, &BlurEffect::slotWindowAdded);
     connect(effects, &EffectsHandler::windowDeleted, this, &BlurEffect::slotWindowDeleted);
     connect(effects, &EffectsHandler::screenRemoved, this, &BlurEffect::slotScreenRemoved);
@@ -148,7 +146,6 @@ BlurEffect::BlurEffect()
 
 BlurEffect::~BlurEffect()
 {
-    // X11 only build - no Wayland blur manager to clean up
 }
 
 void BlurEffect::initBlurStrengthValues()
@@ -246,8 +243,6 @@ void BlurEffect::updateBlurRegion(EffectWindow *w)
         }
     }
 
-    // X11 only build - no Wayland surface blur support
-
     if (auto internal = w->internalWindow()) {
         const auto property = internal->property("kwin_blur");
         if (property.isValid()) {
@@ -274,7 +269,6 @@ void BlurEffect::updateBlurRegion(EffectWindow *w)
 
 void BlurEffect::slotWindowAdded(EffectWindow *w)
 {
-    // X11 only build - no Wayland surface blur connections
 
     if (auto internal = w->internalWindow()) {
         internal->installEventFilter(this);
@@ -295,7 +289,6 @@ void BlurEffect::slotWindowDeleted(EffectWindow *w)
         effects->makeOpenGLContextCurrent();
         m_windows.erase(it);
     }
-    // X11 only build - no Wayland blur connections to clean up
 }
 
 void BlurEffect::slotScreenRemoved(KWin::Output *screen)

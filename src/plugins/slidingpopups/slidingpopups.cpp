@@ -35,8 +35,6 @@ SlidingPopupsEffect::SlidingPopupsEffect()
 {
     SlidingPopupsConfig::instance(effects->config());
 
-    // X11 only build - no Wayland slide manager
-
     m_slideLength = QFontMetrics(QGuiApplication::font()).height() * 8;
 
     m_atom = effects->announceSupportProperty("_KDE_SLIDE", this);
@@ -64,7 +62,6 @@ SlidingPopupsEffect::SlidingPopupsEffect()
 
 SlidingPopupsEffect::~SlidingPopupsEffect()
 {
-    // X11 only build - no Wayland slide manager to clean up
 
     // Cancel animations here while both m_animations and m_animationsData are still valid.
     // slotWindowDeleted may access m_animationsData when an animation is removed.
@@ -191,8 +188,6 @@ void SlidingPopupsEffect::setupSlideData(EffectWindow *w)
     if (m_atom != XCB_ATOM_NONE) {
         slotPropertyNotify(w, m_atom);
     }
-
-    // X11 only build - no Wayland surface slide setup
 
     if (auto internal = w->internalWindow()) {
         internal->installEventFilter(this);
@@ -360,7 +355,6 @@ void SlidingPopupsEffect::setupAnimData(EffectWindow *w)
 
 void SlidingPopupsEffect::slotWaylandSlideOnShowChanged(EffectWindow *)
 {
-    // X11 only build - no Wayland surface slide support
 }
 
 void SlidingPopupsEffect::setupInternalWindowSlide(EffectWindow *w)

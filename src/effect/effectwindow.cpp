@@ -57,7 +57,6 @@ EffectWindow::EffectWindow(WindowItem *windowItem)
     // can still figure out whether it is/was a managed window.
     d->managed = d->m_window->isClient();
 
-    d->m_waylandWindow = false; // X11 only build
     d->m_x11Window = qobject_cast<KWin::X11Window *>(d->m_window) != nullptr;
 
     connect(d->m_window, &Window::hiddenChanged, this, [this]() {

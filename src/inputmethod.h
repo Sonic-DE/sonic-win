@@ -19,7 +19,7 @@ namespace KWin
 class Window;
 
 /**
- * Stub InputMethod class for X11-only build.
+ * Stub InputMethod class.
  * The full input method functionality requires Wayland protocols.
  */
 class KWIN_EXPORT InputMethod : public QObject

@@ -29,7 +29,6 @@ IdleInhibition::~IdleInhibition() = default;
 
 void IdleInhibition::registerClient(Window *client)
 {
-    // X11 only build - idle inhibition via surface not supported
     // X11 apps use DPMS or screensaver inhibit APIs directly
 }
 
@@ -45,7 +44,6 @@ void IdleInhibition::uninhibit(Window *client)
 
 void IdleInhibition::update(Window *client)
 {
-    // X11 only build - no surface-based idle inhibition
 }
 
 void IdleInhibition::slotWorkspaceCreated()
@@ -56,9 +54,7 @@ void IdleInhibition::slotWorkspaceCreated()
 
 void IdleInhibition::slotDesktopChanged()
 {
-    // X11 only build - no surface-based idle inhibition
 }
-
 }
 
 #include "moc_idle_inhibition.cpp"

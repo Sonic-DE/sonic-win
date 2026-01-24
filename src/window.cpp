@@ -562,14 +562,12 @@ Layer Window::belongsToLayer() const
     if (isUnmanaged() || isInternal()) {
         return OverlayLayer;
     }
-    // X11 only build - lock screen handling simplified
     if (isLockScreen()) {
         return OverlayLayer;
     }
     if (isInputMethod()) {
         return OverlayLayer;
     }
-    // X11 only build - no Wayland lock screen overlay
     if (isDesktop()) {
         return DesktopLayer;
     }
@@ -720,8 +718,6 @@ void Window::setDesktops(QList<VirtualDesktop *> desktops)
     }
 
     m_desktops = desktops;
-
-    // X11 only build - no Wayland window management interface
 
     auto transients_stacking_order = workspace()->ensureStackingOrder(transients());
     for (auto it = transients_stacking_order.constBegin(); it != transients_stacking_order.constEnd(); ++it) {
@@ -1833,12 +1829,10 @@ bool Window::hasStrut() const
 
 void Window::setupWindowManagementInterface()
 {
-    // X11 only build - no Wayland window management interface
 }
 
 void Window::destroyWindowManagementInterface()
 {
-    // X11 only build - no Wayland window management interface to destroy
     m_windowManagementInterface = nullptr;
 }
 
@@ -2841,7 +2835,6 @@ void Window::pointerLeaveEvent()
 
 QRectF Window::iconGeometry() const
 {
-    // X11 only build - no Wayland window management interface
     // Check all mainwindows of this window.
     const auto windows = mainWindows();
     for (Window *mainWindow : windows) {

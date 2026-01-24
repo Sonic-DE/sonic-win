@@ -91,8 +91,6 @@ WorkspaceScene::WorkspaceScene(std::unique_ptr<ItemRenderer> renderer)
     connect(workspace(), &Workspace::geometryChanged, this, [this]() {
         setGeometry(workspace()->geometry());
     });
-
-    // X11 only build - no Wayland DnD icon support
 }
 
 WorkspaceScene::~WorkspaceScene()
@@ -101,12 +99,10 @@ WorkspaceScene::~WorkspaceScene()
 
 void WorkspaceScene::createDndIconItem()
 {
-    // X11 only build - no-op
 }
 
 void WorkspaceScene::destroyDndIconItem()
 {
-    // X11 only build - no-op
 }
 
 Item *WorkspaceScene::containerItem() const
@@ -186,7 +182,6 @@ static bool addCandidates(SurfaceItem *item, QList<SurfaceItem *> &candidates, s
 
 QList<SurfaceItem *> WorkspaceScene::scanoutCandidates(ssize_t maxCount) const
 {
-    // X11 only build - no scanout candidates
     return {};
     QList<SurfaceItem *> ret;
     if (!effects->blocksDirectScanout()) {
@@ -249,7 +244,6 @@ double WorkspaceScene::desiredHdrHeadroom() const
 
 void WorkspaceScene::frame(SceneDelegate *delegate, OutputFrame *frame)
 {
-    // X11 only build - no Wayland surface frame handling needed
 }
 
 QRegion WorkspaceScene::prePaint(SceneDelegate *delegate)

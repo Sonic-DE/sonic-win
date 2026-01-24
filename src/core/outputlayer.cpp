@@ -70,7 +70,7 @@ bool OutputLayer::doImportScanoutBuffer(GraphicsBuffer *buffer, const ColorDescr
 
 bool OutputLayer::importScanoutBuffer(SurfaceItem *surfaceItem, const std::shared_ptr<OutputFrame> &frame)
 {
-    // Scanout buffer import is not supported in X11-only builds
+    // Scanout buffer import is not supported
     return false;
 }
 

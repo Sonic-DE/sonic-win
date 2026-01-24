@@ -205,8 +205,6 @@ void Workspace::init()
     //  load is needed to be called again when starting xwayalnd to sync to RootInfo, see BUG 385260
     vds->save();
 
-    // X11 only build - no Wayland output configuration store
-
     slotOutputBackendOutputsQueried();
     connect(kwinApp()->outputBackend(), &OutputBackend::outputsQueried, this, &Workspace::slotOutputBackendOutputsQueried);
 
@@ -234,8 +232,6 @@ void Workspace::init()
 
     Scripting::create(this);
 
-    // X11 only build - no Wayland window connections
-
     // broadcast that Workspace is ready, but first process all events.
     QMetaObject::invokeMethod(this, &Workspace::workspaceInitialized, Qt::QueuedConnection);
 
@@ -244,8 +240,6 @@ void Workspace::init()
     connect(this, &Workspace::windowAdded, m_placementTracker.get(), &PlacementTracker::add);
     connect(this, &Workspace::windowRemoved, m_placementTracker.get(), &PlacementTracker::remove);
     m_placementTracker->init(getPlacementTrackerHash());
-
-    // X11 only build - no Wayland external brightness
 
 #if KWIN_BUILD_SCREENLOCKER
     connect(ScreenLocker::KSldApp::self(), &ScreenLocker::KSldApp::locked, this, &Workspace::slotEndInteractiveMoveResize);
@@ -317,7 +311,6 @@ void Workspace::initializeX11()
     desktop_geometry.height = m_geometry.height();
     rootInfo->setDesktopGeometry(desktop_geometry);
 
-    // X11 only build - always use X11 path
     {
         // Extra NETRootInfo instance in Client mode is needed to get the values of the properties
         NETRootInfo client_info(kwinApp()->x11Connection(), NET::ActiveWindow | NET::CurrentDesktop);
@@ -438,8 +431,6 @@ Workspace::~Workspace()
     blockStackingUpdates(true);
 
     cleanupX11();
-
-    // X11 only build - no Wayland windows to destroy
 
     while (!m_windows.isEmpty()) {
         m_windows[0]->destroyWindow();
@@ -1156,7 +1147,6 @@ Output *Workspace::findOutput(Output *reference, Direction direction, bool wrapA
 
 void Workspace::slotOutputBackendOutputsQueried()
 {
-    // X11 only build - no Wayland output configuration
     updateOutputs();
 }
 
@@ -1164,8 +1154,6 @@ void Workspace::updateOutputs(const std::optional<QList<Output *>> &outputOrder)
 {
     const auto availableOutputs = kwinApp()->outputBackend()->outputs();
     const auto oldOutputs = m_outputs;
-
-    // X11 only build - don't cancel move/resize on X11 output changes
 
     m_outputs.clear();
     for (Output *output : availableOutputs) {
@@ -1301,7 +1289,6 @@ void Workspace::maybeDestroyDpmsFilter()
 
 void Workspace::assignBrightnessDevices()
 {
-    // X11 only build - no Wayland brightness device handling
 }
 
 void Workspace::slotDesktopAdded(VirtualDesktop *desktop)
@@ -1352,7 +1339,6 @@ void Workspace::selectWmInputEventMask()
         presentMask = attr->your_event_mask;
     }
 
-    // X11 only build - always include full event mask
     uint32_t wmMask = XCB_EVENT_MASK_PROPERTY_CHANGE
         | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
         | XCB_EVENT_MASK_SUBSTRUCTURE_NOTIFY
@@ -1556,7 +1542,6 @@ QString Workspace::supportInformation() const
     support.append(QStringLiteral("Qt compile version: %1\n").arg(QStringLiteral(QT_VERSION_STR)));
     support.append(QStringLiteral("XCB compile version: %1\n\n").arg(XCB_VERSION_STRING));
     support.append(QStringLiteral("Operation Mode: "));
-    support.append(QStringLiteral("X11")); // X11 only build
     support.append(QStringLiteral("\n\n"));
 
     support.append(QStringLiteral("Build Options\n"));
@@ -2073,8 +2058,6 @@ void Workspace::desktopResized()
         window->setMoveResizeOutput(outputAt(window->moveResizeGeometry().center()));
         window->setOutput(outputAt(window->frameGeometry().center()));
     }
-
-    // X11 only build - no Wayland windows to update
 
     // restore cursor position
     const auto oldCursorOutput = std::find_if(m_oldScreenGeometries.cbegin(), m_oldScreenGeometries.cend(), [](const auto &geometry) {

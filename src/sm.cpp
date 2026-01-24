@@ -361,13 +361,11 @@ void SessionManager::finishSaveSession(const QString &name)
 bool SessionManager::closeWaylandWindows()
 {
     Q_ASSERT(calledFromDBus());
-    // X11 only build - no Wayland windows to close
     return true;
 }
 
 void SessionManager::updateWaylandCancelNotification()
 {
-    // X11 only build - no-op
 }
 
 void SessionManager::quit()

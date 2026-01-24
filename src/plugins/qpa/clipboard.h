@@ -12,7 +12,7 @@
 namespace KWin::QPA
 {
 
-// Stub clipboard for X11-only build
+// Stub clipboard
 // X11 handles clipboard natively through the X server
 class Clipboard : public QObject, public QPlatformClipboard
 {

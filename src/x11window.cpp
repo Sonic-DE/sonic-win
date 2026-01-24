@@ -65,7 +65,6 @@ namespace KWin
 
 static uint32_t frameEventMask()
 {
-    // X11 only build - always use full X11 event mask
     return XCB_EVENT_MASK_FOCUS_CHANGE
         | XCB_EVENT_MASK_STRUCTURE_NOTIFY
         | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
@@ -85,7 +84,6 @@ static uint32_t frameEventMask()
 
 static uint32_t wrapperEventMask()
 {
-    // X11 only build - always use full X11 event mask
     return XCB_EVENT_MASK_FOCUS_CHANGE
         | XCB_EVENT_MASK_STRUCTURE_NOTIFY
         | XCB_EVENT_MASK_SUBSTRUCTURE_REDIRECT
@@ -104,7 +102,6 @@ static uint32_t wrapperEventMask()
 
 static uint32_t clientEventMask()
 {
-    // X11 only build - always use full X11 event mask
     return XCB_EVENT_MASK_FOCUS_CHANGE
         | XCB_EVENT_MASK_PROPERTY_CHANGE
         | XCB_EVENT_MASK_ENTER_WINDOW
@@ -1565,7 +1562,6 @@ void X11Window::updateInputShape()
     }
     if (Xcb::Extensions::self()->isShapeInputAvailable()) {
         xcb_connection_t *c = kwinApp()->x11Connection();
-        // X11 only build - use full X11 input shape handling
         {
             // There appears to be no way to find out if a window has input
             // shape set or not, so always propagate the input shape
@@ -1798,7 +1794,6 @@ void X11Window::updateVisibility()
         return;
     }
     if (isHiddenByShowDesktop()) {
-        // X11 only build - don't skip for Wayland
         if (Compositor::compositing() && options->hiddenPreviews() != HiddenPreviewsNever) {
             internalKeep();
         } else {
@@ -2884,7 +2879,6 @@ QSizeF X11Window::nextClientSizeToFrameSize(const QSizeF &size) const
 
 QRectF X11Window::nextFrameRectToBufferRect(const QRectF &rect) const
 {
-    // X11 only build - always use decorated path
     if (isDecorated()) {
         return rect;
     }
@@ -3033,7 +3027,6 @@ void X11Window::ackSync()
         m_syncRequest.timeout->stop();
     }
 
-    // X11 only build - finish sync immediately (no Xwayland)
     finishSync();
     setAllowCommits(true);
 }
@@ -3941,7 +3934,6 @@ void X11Window::handleCommitted()
 
 void X11Window::setAllowCommits(bool allow)
 {
-    // X11 only build - no Xwayland commits handling needed
 }
 
 QPointF X11Window::gravityAdjustment(xcb_gravity_t gravity) const

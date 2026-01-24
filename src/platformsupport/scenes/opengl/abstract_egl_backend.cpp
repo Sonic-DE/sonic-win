@@ -94,7 +94,7 @@ void AbstractEglBackend::setEglDisplay(EglDisplay *display)
 
 void AbstractEglBackend::initWayland()
 {
-    // X11-only build - Wayland server initialization not needed
+    // Wayland server initialization not needed
 }
 
 void AbstractEglBackend::initClientExtensions()

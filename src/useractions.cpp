@@ -397,7 +397,6 @@ void UserActionsMenu::showHideActivityMenu()
 
 void UserActionsMenu::initDesktopPopup()
 {
-    // X11 only build - use X11-style desktop menu
     if (m_desktopMenu) {
         return;
     }

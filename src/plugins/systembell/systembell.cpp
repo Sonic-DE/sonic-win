@@ -71,8 +71,6 @@ SystemBellEffect::SystemBellEffect()
             qCWarning(KWIN_SYSTEMBELL) << "Failed to set application properties on canberra context for audio notification:" << ca_strerror(ret);
         }
     }
-
-    // X11 only build - Wayland system bell code removed
 }
 
 SystemBellEffect::~SystemBellEffect()
@@ -80,7 +78,6 @@ SystemBellEffect::~SystemBellEffect()
     if (m_caContext) {
         ca_context_destroy(m_caContext);
     }
-    // X11 only build - no Wayland system bell to clean up
 }
 
 void SystemBellEffect::reconfigure(ReconfigureFlags flags)

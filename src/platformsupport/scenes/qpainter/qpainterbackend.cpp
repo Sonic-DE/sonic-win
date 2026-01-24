@@ -31,7 +31,7 @@ CompositingType QPainterBackend::compositingType() const
 
 std::unique_ptr<SurfaceTexture> QPainterBackend::createSurfaceTextureWayland(SurfacePixmap *pixmap)
 {
-    return nullptr; // X11 only build
+    return nullptr;
 }
 
 void QPainterBackend::setFailed(const QString &reason)

@@ -12,7 +12,6 @@ namespace KWin
 DragAndDropIconItem::DragAndDropIconItem(DragAndDropIcon *icon, Item *parent)
     : Item(parent)
 {
-    // X11 only build - DnD icons are Wayland-specific
 }
 
 DragAndDropIconItem::~DragAndDropIconItem()

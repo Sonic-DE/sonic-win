@@ -41,7 +41,7 @@ bool WindowSystem::showingDesktop()
 
 void WindowSystem::requestToken(QWindow *win, uint32_t serial, const QString &appId)
 {
-    // X11-only build - XDG activation tokens are Wayland-specific
+    // XDG activation tokens are Wayland-specific
     Q_UNUSED(win);
     Q_UNUSED(serial);
     Q_UNUSED(appId);

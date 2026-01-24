@@ -20,12 +20,12 @@ InputMethod::~InputMethod() = default;
 
 void InputMethod::init()
 {
-    // No-op for X11 only build
+    // No-op
 }
 
 void InputMethod::setEnabled(bool enable)
 {
-    // No-op for X11 only build
+    // No-op
 }
 }
 

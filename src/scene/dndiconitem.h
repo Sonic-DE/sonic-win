@@ -15,7 +15,7 @@ namespace KWin
 
 class DragAndDropIcon;
 
-// Stub class for X11-only build - DnD icons are Wayland-specific
+// Stub class - DnD icons are Wayland-specific
 class DragAndDropIconItem : public Item
 {
     Q_OBJECT

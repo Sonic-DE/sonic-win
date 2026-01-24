@@ -231,7 +231,6 @@ bool InputEventFilter::tabletPadRingEvent(TabletPadRingEvent *event)
 
 bool InputEventFilter::passToInputMethod(KeyboardKeyEvent *event)
 {
-    // X11 only build - no Wayland input method handling
     if (!kwinApp()->inputMethod()) {
         return false;
     }
@@ -261,7 +260,6 @@ public:
 };
 
 #if KWIN_BUILD_SCREENLOCKER
-// X11 only build - LockScreenFilter is a no-op since screen locking requires Wayland
 class LockScreenFilter : public InputEventFilter
 {
 public:
@@ -269,7 +267,7 @@ public:
         : InputEventFilter(InputFilterOrder::LockScreen)
     {
     }
-    // All methods return false - screen is never locked in X11 only build
+    // All methods return false
     bool pointerMotion(PointerMotionEvent *event) override
     {
         return false;
@@ -403,7 +401,6 @@ public:
         if (!effects || !effects->hasKeyboardGrab()) {
             return false;
         }
-        // X11 only build - no Wayland seat to update
         if (!passToInputMethod(event)) {
             QKeyEvent keyEvent(event->state == KeyboardKeyState::Released ? QEvent::KeyRelease : QEvent::KeyPress,
                                event->key,
@@ -661,7 +658,6 @@ public:
         if (!m_active) {
             return false;
         }
-        // X11 only build - no Wayland seat to update
 
         if (event->state == KeyboardKeyState::Repeated || event->state == KeyboardKeyState::Pressed) {
             // x11 variant does this on key press, so do the same
@@ -959,7 +955,6 @@ public:
 
     bool touchDown(qint32 id, const QPointF &pos, std::chrono::microseconds time) override
     {
-        // X11 only build - no Wayland seat touch sequence check
         if (!input()->touch()->focus() || !input()->touch()->focus()->isInternal()) {
             return false;
         }
@@ -1176,7 +1171,6 @@ public:
     }
     bool touchDown(qint32 id, const QPointF &pos, std::chrono::microseconds time) override
     {
-        // X11 only build - no Wayland seat touch sequence check
         if (input()->touch()->decorationPressId() != -1) {
             // already on a decoration, ignore further touch points, but filter out
             return true;
@@ -1412,7 +1406,6 @@ public:
     }
     bool touchDown(qint32 id, const QPointF &pos, std::chrono::microseconds time) override
     {
-        // X11 only build - no Wayland seat touch sequence check
         if (m_touchInProgress) {
             // cancel existing touch
             workspace()->screenEdges()->gestureRecognizer()->cancelSwipeGesture();
@@ -1499,7 +1492,6 @@ public:
     }
     bool touchDown(qint32 id, const QPointF &pos, std::chrono::microseconds time) override
     {
-        // X11 only build - no Wayland seat touch sequence check
         Window *window = input()->touch()->focus();
         if (!window || !window->isClient()) {
             return false;
@@ -1614,7 +1606,7 @@ public:
 };
 
 /**
- * X11 only build - ForwardInputFilter is a no-op since there's no Wayland seat
+ * ForwardInputFilter is a no-op since there's no Wayland seat
  * Input is handled via X11 mechanisms instead
  */
 class ForwardInputFilter : public InputEventFilter
@@ -1624,7 +1616,7 @@ public:
         : InputEventFilter(InputFilterOrder::Forward)
     {
     }
-    // All methods return false - no Wayland forwarding in X11 only build
+    // All methods return false
     bool pointerMotion(PointerMotionEvent *event) override
     {
         return false;
@@ -1739,7 +1731,6 @@ public:
     }
 };
 
-// X11 only build - DragAndDropInputFilter is a no-op
 class DragAndDropInputFilter : public QObject, public InputEventFilter
 {
     Q_OBJECT
@@ -1747,10 +1738,9 @@ public:
     DragAndDropInputFilter()
         : InputEventFilter(InputFilterOrder::DragAndDrop)
     {
-        // X11 only build - no Wayland drag and drop
     }
 
-    // All methods return false - no Wayland DnD in X11 only build
+    // All methods return false
     bool pointerMotion(PointerMotionEvent *event) override
     {
         return false;
@@ -1838,7 +1828,6 @@ void InputRedirection::init()
 void InputRedirection::setupWorkspace()
 {
     connect(workspace(), &Workspace::outputsChanged, this, &InputRedirection::updateScreens);
-    // X11 only build - initialize input subsystems unconditionally
     m_keyboard->init();
     m_pointer->init();
     m_touch->init();
@@ -1918,7 +1907,6 @@ public:
 
     void update()
     {
-        // X11 only build - no Wayland serial to update
     }
 };
 
@@ -2328,7 +2316,6 @@ Window *InputRedirection::findToplevel(const QPointF &pos)
     if (!Workspace::self()) {
         return nullptr;
     }
-    // X11 only build - screen is never locked
     // if an effect overrides the cursor we don't have a window to focus
     if (effects && effects->isMouseInterception()) {
         return nullptr;
@@ -2351,7 +2338,6 @@ Window *InputRedirection::findToplevel(const QPointF &pos)
         if (!window->readyForPainting()) {
             continue;
         }
-        // X11 only build - screen lock check removed
         if (window->hitTest(pos)) {
             return window;
         }
