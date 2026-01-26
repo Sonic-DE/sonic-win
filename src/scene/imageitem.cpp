@@ -82,6 +82,45 @@ WindowQuadList ImageItemOpenGL::buildQuads() const
     return ret;
 }
 
+ImageItemVulkan::ImageItemVulkan(Item *parent)
+    : ImageItem(parent)
+{
+}
+
+ImageItemVulkan::~ImageItemVulkan()
+{
+}
+
+void ImageItemVulkan::preprocess()
+{
+    // TODO: Implement Vulkan texture upload
+    // For now, just check if image has changed
+    if (!m_image.isNull() && m_textureKey != m_image.cacheKey()) {
+        m_textureKey = m_image.cacheKey();
+        // In the future, create/update Vulkan texture here
+    }
+}
+
+WindowQuadList ImageItemVulkan::buildQuads() const
+{
+    const QRectF geometry = boundingRect();
+    if (geometry.isEmpty()) {
+        return WindowQuadList{};
+    }
+
+    const QRectF imageRect = m_image.rect();
+
+    WindowQuad quad;
+    quad[0] = WindowVertex(geometry.topLeft(), imageRect.topLeft());
+    quad[1] = WindowVertex(geometry.topRight(), imageRect.topRight());
+    quad[2] = WindowVertex(geometry.bottomRight(), imageRect.bottomRight());
+    quad[3] = WindowVertex(geometry.bottomLeft(), imageRect.bottomLeft());
+
+    WindowQuadList ret;
+    ret.append(quad);
+    return ret;
+}
+
 } // namespace KWin
 
 #include "moc_imageitem.cpp"

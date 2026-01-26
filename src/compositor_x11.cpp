@@ -17,8 +17,10 @@
 #include "opengl/glplatform.h"
 #include "options.h"
 #include "platformsupport/scenes/opengl/openglbackend.h"
+#include "platformsupport/scenes/vulkan/vulkanbackend.h"
 #include "scene/surfaceitem_x11.h"
 #include "scene/workspacescene_opengl.h"
+#include "scene/workspacescene_vulkan.h"
 #include "utils/common.h"
 #include "utils/xcbutils.h"
 #include "window.h"
@@ -248,6 +250,29 @@ bool X11Compositor::attemptOpenGLCompositing()
     return true;
 }
 
+bool X11Compositor::attemptVulkanCompositing()
+{
+    std::unique_ptr<VulkanBackend> backend = kwinApp()->outputBackend()->createVulkanBackend();
+    if (!backend) {
+        qCDebug(KWIN_CORE) << "Failed to create Vulkan backend";
+        return false;
+    }
+
+    backend->init();
+    if (backend->isFailed()) {
+        qCDebug(KWIN_CORE) << "Vulkan backend initialization failed";
+        return false;
+    }
+
+    // TODO: Check Vulkan capabilities and validation
+
+    m_scene = std::make_unique<WorkspaceSceneVulkan>(backend.get());
+    m_backend = std::move(backend);
+
+    qCDebug(KWIN_CORE) << "Vulkan compositing has been successfully initialized";
+    return true;
+}
+
 void X11Compositor::start()
 {
     if (m_suspended) {
@@ -308,6 +333,13 @@ void X11Compositor::start()
             stop = attemptOpenGLCompositing();
             if (stop) {
                 QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
+            }
+            break;
+        case VulkanCompositing:
+            qCDebug(KWIN_CORE) << "Attempting to load the Vulkan scene";
+            stop = attemptVulkanCompositing();
+            if (stop) {
+                QQuickWindow::setGraphicsApi(QSGRendererInterface::Vulkan);
             }
             break;
         case NoCompositing:

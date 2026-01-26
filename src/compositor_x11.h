@@ -114,6 +114,7 @@ private:
     explicit X11Compositor(QObject *parent);
 
     bool attemptOpenGLCompositing();
+    bool attemptVulkanCompositing();
 
     void releaseCompositorSelection();
     void destroyCompositorSelection();

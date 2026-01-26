@@ -230,7 +230,6 @@ bool InputEventFilter::tabletPadRingEvent(TabletPadRingEvent *event)
 
 bool InputEventFilter::passToInputMethod(KeyboardKeyEvent *event)
 {
-    // Input method functionality removed (was Wayland-only)
     return false;
 }
 
@@ -1564,13 +1563,11 @@ public:
 
     bool pointerButton(PointerButtonEvent *event) override
     {
-        // Input method functionality removed (was Wayland-only)
         return false;
     }
 
     bool touchDown(qint32 id, const QPointF &point, std::chrono::microseconds time) override
     {
-        // Input method functionality removed (was Wayland-only)
         return false;
     }
 

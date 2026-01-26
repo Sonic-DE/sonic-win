@@ -24,6 +24,7 @@ namespace KWin
 class Output;
 class InputBackend;
 class OpenGLBackend;
+class VulkanBackend;
 class OutputConfiguration;
 class EglDisplay;
 class Session;
@@ -49,6 +50,7 @@ public:
     virtual bool initialize() = 0;
     virtual std::unique_ptr<InputBackend> createInputBackend();
     virtual std::unique_ptr<OpenGLBackend> createOpenGLBackend();
+    virtual std::unique_ptr<VulkanBackend> createVulkanBackend();
 
     virtual EglDisplay *sceneEglDisplayObject() const = 0;
     /**

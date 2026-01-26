@@ -182,6 +182,8 @@ target_sources(kwin PRIVATE
     scene/windowitem.cpp
     scene/workspacescene.cpp
     scene/workspacescene_opengl.cpp
+    scene/workspacescene_vulkan.cpp
+    scene/itemrenderer_vulkan.cpp
     screenedge.cpp
     scripting/dbuscall.cpp
     scripting/desktopbackgrounditem.cpp
@@ -588,6 +590,8 @@ install(FILES
     scene/windowitem.h
     scene/workspacescene.h
     scene/workspacescene_opengl.h
+    scene/workspacescene_vulkan.h
+    scene/itemrenderer_vulkan.h
     DESTINATION ${KDE_INSTALL_INCLUDEDIR}/kwin-x11/scene COMPONENT Devel
 )
 
