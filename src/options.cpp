@@ -749,17 +749,27 @@ void Options::loadConfig()
     bool useCompositing = false;
     CompositingType compositingMode = NoCompositing;
     QString compositingBackend = config.readEntry("Backend", "OpenGL");
-    // Only OpenGL compositing is supported on X11
-    if (compositingBackend != "OpenGL") {
-        compositingBackend = "OpenGL";
+    // OpenGL and Vulkan compositing are supported on X11
+    if (compositingBackend == "Vulkan") {
+        compositingMode = VulkanCompositing;
+    } else {
+        // Default to OpenGL
+        if (compositingBackend != "OpenGL") {
+            compositingBackend = "OpenGL";
+        }
+        compositingMode = OpenGLCompositing;
     }
-    compositingMode = OpenGLCompositing;
 
     if (const char *c = getenv("KWIN_COMPOSE")) {
         switch (c[0]) {
         case 'O':
             qCDebug(KWIN_CORE) << "Compositing forced to OpenGL mode by environment variable";
             compositingMode = OpenGLCompositing;
+            useCompositing = true;
+            break;
+        case 'V':
+            qCDebug(KWIN_CORE) << "Compositing forced to Vulkan mode by environment variable";
+            compositingMode = VulkanCompositing;
             useCompositing = true;
             break;
         case 'Q':

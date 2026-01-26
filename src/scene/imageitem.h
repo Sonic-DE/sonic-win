@@ -48,4 +48,20 @@ private:
     qint64 m_textureKey = 0;
 };
 
+class ImageItemVulkan : public ImageItem
+{
+    Q_OBJECT
+
+public:
+    explicit ImageItemVulkan(Item *parent = nullptr);
+    ~ImageItemVulkan() override;
+
+protected:
+    void preprocess() override;
+    WindowQuadList buildQuads() const override;
+
+private:
+    qint64 m_textureKey = 0;
+};
+
 } // namespace KWin

@@ -231,7 +231,6 @@ QPlatformNativeInterface *Integration::nativeInterface() const
 
 QPlatformInputContext *Integration::inputContext() const
 {
-    // Input method functionality removed (was Wayland-only)
     return nullptr;
 }
 

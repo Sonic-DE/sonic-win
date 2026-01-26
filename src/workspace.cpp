@@ -1730,9 +1730,12 @@ QString Workspace::supportInformation() const
             support.append(QStringLiteral("OpenGL 2 Shaders are used\n"));
             break;
         }
+        case VulkanCompositing:
+            support.append("Compositing Type: Vulkan\n");
+            break;
         case NoCompositing:
         default:
-            support.append(QStringLiteral("Something is really broken, OpenGL is not being used"));
+            support.append(QStringLiteral("Something is really broken, no compositing backend is active"));
         }
         support.append(QStringLiteral("\nLoaded Effects:\n"));
         support.append(QStringLiteral("---------------\n"));
