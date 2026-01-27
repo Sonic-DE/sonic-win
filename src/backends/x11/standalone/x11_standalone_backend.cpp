@@ -24,6 +24,9 @@
 #if HAVE_X11_XINPUT
 #include "x11_standalone_xinputintegration.h"
 #endif
+#if HAVE_VULKAN
+#include "x11_standalone_vulkan_backend.h"
+#endif
 #include "core/renderloop.h"
 #include "opengl/egldisplay.h"
 #include "options.h"
@@ -48,6 +51,7 @@
 #include <QThread>
 #include <private/qtx11extras_p.h>
 
+#include <optional>
 #include <span>
 
 namespace KWin
@@ -175,6 +179,13 @@ std::unique_ptr<OpenGLBackend> X11StandaloneBackend::createOpenGLBackend()
     }
 }
 
+#if HAVE_VULKAN
+std::unique_ptr<KWin::VulkanBackend> X11StandaloneBackend::createVulkanBackend()
+{
+    return std::make_unique<X11StandaloneVulkanBackend>(this);
+}
+#endif
+
 std::unique_ptr<Edge> X11StandaloneBackend::createScreenEdge(ScreenEdges *edges)
 {
     if (!m_screenEdgesFilter) {
@@ -261,6 +272,9 @@ void X11StandaloneBackend::createEffectsHandler(Compositor *compositor, Workspac
 QList<CompositingType> X11StandaloneBackend::supportedCompositors() const
 {
     QList<CompositingType> compositors;
+#if HAVE_VULKAN
+    compositors << VulkanCompositing;
+#endif
 #if HAVE_GLX
     compositors << OpenGLCompositing;
 #endif
@@ -367,17 +381,23 @@ void X11StandaloneBackend::doUpdateOutputs()
                     }
 
                     X11Output::Information information{
-                        .name = outputInfo.name(),
-                        .manufacturer = QString(),
-                        .model = QString(),
-                        .serialNumber = QString(),
-                        .eisaId = QString(),
-                        .physicalSize = physicalSize,
-                        .edid = Edid(),
                         .capabilities = Output::Capabilities(),
-                        .mstPath = QByteArray(),
-                        .maxPeakBrightness = std::nullopt,
+                        .edid = Edid(),
+                        .eisaId = QString(),
+                        .internal = false,
+                        .name = outputInfo.name(),
+                        .nonDesktop = false,
+                        .manufacturer = QString(),
                         .maxAverageBrightness = std::nullopt,
+                        .maxPeakBrightness = std::nullopt,
+                        .minBrightness = 0,
+                        .model = QString(),
+                        .mstPath = QByteArray(),
+                        .panelOrientation = OutputTransform::Normal,
+                        .physicalSize = physicalSize,
+                        .placeholder = false,
+                        .serialNumber = QString(),
+                        .subPixel = Output::SubPixel::Unknown,
                     };
 
                     auto edidProperty = Xcb::RandR::OutputProperty(xcbOutput, atoms->edid, XCB_ATOM_INTEGER, 0, 100, false, false);

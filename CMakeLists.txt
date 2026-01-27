@@ -347,6 +347,11 @@ if (KWIN_BUILD_SCREENLOCKER)
     )
 endif()
 
+find_package(Vulkan)
+if (Vulkan_FOUND)
+    set(HAVE_VULKAN 1)
+endif()
+
 ecm_find_qmlmodule(QtQuick 2.3)
 ecm_find_qmlmodule(QtQuick.Controls 2.15)
 ecm_find_qmlmodule(QtQuick.Layouts 1.3)
