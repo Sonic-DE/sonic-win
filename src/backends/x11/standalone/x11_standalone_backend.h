@@ -37,6 +37,7 @@ class Cursor;
 class Compositor;
 class WorkspaceScene;
 class Window;
+class VulkanBackend;
 
 class KWIN_EXPORT X11StandaloneBackend : public OutputBackend
 {
@@ -53,8 +54,10 @@ public:
 
     std::unique_ptr<OpenGLBackend> createOpenGLBackend() override;
     std::unique_ptr<InputBackend> createInputBackend() override;
+#if HAVE_VULKAN
+    std::unique_ptr<KWin::VulkanBackend> createVulkanBackend() override;
+#endif
     QList<CompositingType> supportedCompositors() const override;
-
     void initOutputs();
     void scheduleUpdateOutputs();
     void updateOutputs();

@@ -106,6 +106,22 @@ public:
      */
     void copyPixels(const QRegion &region, const QSize &screenSize);
 
+    /**
+     * @brief Check if external fence fd export is supported (VK_KHR_external_fence_fd)
+     */
+    bool supportsExternalFenceFd() const
+    {
+        return m_supportsExternalFenceFd;
+    }
+
+    /**
+     * @brief Get the vkGetFenceFdKHR function pointer (only valid if supportsExternalFenceFd() returns true)
+     */
+    PFN_vkGetFenceFdKHR vkGetFenceFdKHR() const
+    {
+        return m_vkGetFenceFdKHR;
+    }
+
 protected:
     /**
      * @brief Sets the backend initialization to failed.
@@ -151,6 +167,10 @@ private:
 
     // Debug messenger for validation layers
     VkDebugUtilsMessengerEXT m_debugMessenger = VK_NULL_HANDLE;
+
+    // External fence fd support
+    bool m_supportsExternalFenceFd = false;
+    PFN_vkGetFenceFdKHR m_vkGetFenceFdKHR = nullptr;
 };
 
 } // namespace KWin

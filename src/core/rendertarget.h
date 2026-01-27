@@ -10,6 +10,7 @@
 #include "core/output.h"
 
 #include <QImage>
+#include <any>
 
 namespace KWin
 {
@@ -23,6 +24,9 @@ public:
     explicit RenderTarget(GLFramebuffer *fbo, const ColorDescription &colorDescription = ColorDescription::sRGB);
     explicit RenderTarget(QImage *image, const ColorDescription &colorDescription = ColorDescription::sRGB);
 
+    // Vulkan constructor
+    explicit RenderTarget(class VulkanRenderTarget *vulkanTarget, const ColorDescription &colorDescription = ColorDescription::sRGB);
+
     QSize size() const;
     OutputTransform transform() const;
     const ColorDescription &colorDescription() const;
@@ -31,9 +35,18 @@ public:
     GLFramebuffer *framebuffer() const;
     GLTexture *texture() const;
 
+    // Vulkan accessors
+    VulkanRenderTarget *vulkanTarget() const;
+
+    bool isVulkan() const
+    {
+        return m_vulkanTarget.has_value();
+    }
+
 private:
     QImage *m_image = nullptr;
     GLFramebuffer *m_framebuffer = nullptr;
+    std::any m_vulkanTarget;
     const OutputTransform m_transform;
     const ColorDescription m_colorDescription;
 };

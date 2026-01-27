@@ -8,10 +8,17 @@
 */
 #pragma once
 
+#include "config-kwin.h"
+
+#if HAVE_VULKAN
+
 #include "platformsupport/scenes/vulkan/vulkanbackend.h"
+#include "platformsupport/scenes/vulkan/vulkantexture.h"
 #include "scene/decorationitem.h"
 #include "scene/shadowitem.h"
 #include "scene/workspacescene.h"
+
+#include <memory>
 
 namespace KWin
 {
@@ -41,14 +48,29 @@ private:
     VulkanBackend *m_backend;
 };
 
+/**
+ * @brief Vulkan implementation of shadow texture provider
+ */
 class VulkanShadowTextureProvider : public ShadowTextureProvider
 {
 public:
     explicit VulkanShadowTextureProvider(Shadow *shadow);
+    ~VulkanShadowTextureProvider() override;
 
     void update() override;
+
+    std::shared_ptr<VulkanTexture> texture() const
+    {
+        return m_texture;
+    }
+
+private:
+    std::shared_ptr<VulkanTexture> m_texture;
 };
 
+/**
+ * @brief Vulkan implementation of decoration renderer
+ */
 class SceneVulkanDecorationRenderer : public DecorationRenderer
 {
     Q_OBJECT
@@ -60,13 +82,27 @@ public:
         Bottom,
         Count
     };
+
     explicit SceneVulkanDecorationRenderer(Decoration::DecoratedWindowImpl *client);
+    ~SceneVulkanDecorationRenderer() override;
 
     void render(const QRegion &region) override;
 
+    std::shared_ptr<VulkanTexture> texture() const
+    {
+        return m_texture;
+    }
+
 private:
-    void resizeImages();
-    // TODO: Add Vulkan-specific decoration image storage
+    void renderPart(const QRectF &rect, const QRectF &partRect, const QPoint &textureOffset, qreal devicePixelRatio, bool rotated = false);
+    static const QMargins texturePadForPart(const QRectF &rect, const QRectF &partRect);
+    void resizeTexture();
+    int toNativeSize(double size) const;
+
+    std::shared_ptr<VulkanTexture> m_texture;
+    QImage m_scratchImage;
 };
 
 } // namespace KWin
+
+#endif // HAVE_VULKAN

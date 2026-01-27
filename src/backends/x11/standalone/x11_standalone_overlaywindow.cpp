@@ -14,6 +14,7 @@
 #include "scene/workspacescene.h"
 #include "utils/xcbutils.h"
 #include "x11_standalone_backend.h"
+#include "x11_standalone_logging.h"
 
 #include <QList>
 
@@ -94,11 +95,14 @@ void OverlayWindowX11::show()
 {
     Q_ASSERT(m_window != XCB_WINDOW_NONE);
     if (m_shown) {
+        qCDebug(KWIN_X11STANDALONE) << "Overlay window already shown, skipping";
         return;
     }
+    qCDebug(KWIN_X11STANDALONE) << "Mapping overlay window and subwindows";
     xcb_map_subwindows(connection(), m_window);
     xcb_map_window(connection(), m_window);
     m_shown = true;
+    qCDebug(KWIN_X11STANDALONE) << "Overlay window shown successfully";
 }
 
 void OverlayWindowX11::hide()

@@ -46,6 +46,13 @@ if (HAVE_GLX)
     )
 endif()
 
+if (HAVE_VULKAN)
+    target_sources(KWinX11Platform PRIVATE
+        x11_standalone_vulkan_backend.cpp
+    )
+    target_link_libraries(KWinX11Platform Vulkan::Vulkan)
+endif()
+
 if (HAVE_DL_LIBRARY)
     target_link_libraries(KWinX11Platform ${DL_LIBRARY})
 endif()
