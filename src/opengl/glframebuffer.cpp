@@ -200,7 +200,7 @@ void GLFramebuffer::initDepthStencilAttachment()
     glGenRenderbuffers(1, &buffer);
     glBindRenderbuffer(GL_RENDERBUFFER, buffer);
     glRenderbufferStorage(GL_RENDERBUFFER, stencilFormat, m_size.width(), m_size.height());
-    glFramebufferRenderbuffer(GL_RENDERBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, buffer);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, buffer);
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
         glDeleteRenderbuffers(1, &buffer);
     } else {
