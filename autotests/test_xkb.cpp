@@ -372,7 +372,7 @@ static const TransKey g_rgQtToSymX[] = {
     {XKB_KEY_twosuperior, Qt::Key_twosuperior, Qt::KeyboardModifiers()},
     {XKB_KEY_threesuperior, Qt::Key_threesuperior, Qt::KeyboardModifiers()},
     {XKB_KEY_acute, Qt::Key_acute, Qt::KeyboardModifiers()},
-    {XKB_KEY_mu, Qt::Key_mu, Qt::KeyboardModifiers()},
+    {XKB_KEY_mu, Qt::Key_micro, Qt::KeyboardModifiers()},
     {XKB_KEY_paragraph, Qt::Key_paragraph, Qt::KeyboardModifiers()},
     {XKB_KEY_periodcentered, Qt::Key_periodcentered, Qt::KeyboardModifiers()},
     {XKB_KEY_cedilla, Qt::Key_cedilla, Qt::KeyboardModifiers()},
