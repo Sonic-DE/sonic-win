@@ -104,7 +104,7 @@ void ItemRendererVulkan::beginFrame(const RenderTarget &renderTarget, const Rend
     if (m_currentFramebuffer) {
         // Set up clear values
         std::array<VkClearValue, 2> clearValues{};
-        clearValues[0].color = {{0.0f, 0.0f, 1.0f, 1.0f}}; // Clear to blue for better visibility
+        clearValues[0].color = {{0.0f, 0.0f, 0.0f, 0.0f}}; // Clear to transparent black
         if (m_currentFramebuffer->renderPass()->config().hasDepth) {
             clearValues[1].depthStencil = {1.0f, 0};
         }
