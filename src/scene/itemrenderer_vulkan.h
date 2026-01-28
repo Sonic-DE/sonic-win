@@ -23,8 +23,6 @@
 #include <unordered_set>
 #include <vulkan/vulkan.h>
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(KWin::ShaderTraits)
-
 namespace KWin
 {
 

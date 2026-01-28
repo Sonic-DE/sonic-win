@@ -358,3 +358,35 @@ target_link_libraries(testCursorShape
 )
 add_test(NAME kwin-testCursorShape COMMAND testCursorShape)
 ecm_mark_as_test(testCursorShape)
+
+########################################################
+# Test Surface Textures (OpenGL and Vulkan)
+########################################################
+add_executable(testSurfaceTexture surface_texture_test.cpp)
+target_link_libraries(testSurfaceTexture
+    Qt::Test
+    kwin
+
+    XCB::XCB
+    XCB::XFIXES
+
+    ${X11_X11_LIB}
+)
+add_test(NAME kwin-testSurfaceTexture COMMAND testSurfaceTexture)
+ecm_mark_as_test(testSurfaceTexture)
+
+########################################################
+# Test Item Renderers (OpenGL and Vulkan)
+########################################################
+add_executable(testItemRenderer item_renderer_test.cpp)
+target_link_libraries(testItemRenderer
+    Qt::Test
+    kwin
+
+    XCB::XCB
+    XCB::XFIXES
+
+    ${X11_X11_LIB}
+)
+add_test(NAME kwin-testItemRenderer COMMAND testItemRenderer)
+ecm_mark_as_test(testItemRenderer)
