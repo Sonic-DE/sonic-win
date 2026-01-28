@@ -139,11 +139,20 @@ bool VulkanSurfaceTextureX11::create()
         return false;
     }
 
+    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - attempting to create texture for pixmap of size" << m_size;
+
     // Try DMA-BUF import first (if available)
-    if (m_context->supportsDmaBufImport() && createWithDmaBuf()) {
-        m_useDmaBuf = true;
-        qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - using DMA-BUF import";
-        return true;
+    if (m_context->supportsDmaBufImport()) {
+        qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - DMA-BUF import supported, attempting";
+        if (createWithDmaBuf()) {
+            m_useDmaBuf = true;
+            qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - using DMA-BUF import";
+            return true;
+        } else {
+            qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - DMA-BUF import failed, falling back to CPU upload";
+        }
+    } else {
+        qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - DMA-BUF import not supported, using CPU upload";
     }
 
     // Fall back to CPU upload
@@ -177,6 +186,8 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
         return false;
     }
 
+    qCDebug(KWIN_CORE) << "createWithDmaBuf: attempting to import pixmap" << nativePixmap;
+
     // Query buffers from the pixmap using DRI3
     xcb_dri3_buffers_from_pixmap_cookie_t cookie = xcb_dri3_buffers_from_pixmap(c, nativePixmap);
     xcb_dri3_buffers_from_pixmap_reply_t *reply = xcb_dri3_buffers_from_pixmap_reply(c, cookie, nullptr);
@@ -185,6 +196,8 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
         qCDebug(KWIN_CORE) << "createWithDmaBuf: xcb_dri3_buffers_from_pixmap failed";
         return false;
     }
+
+    qCDebug(KWIN_CORE) << "createWithDmaBuf: received reply with" << reply->nfd << "planes, width:" << reply->width << "height:" << reply->height << "depth:" << reply->depth;
 
     const int planeCount = reply->nfd;
     if (planeCount <= 0 || planeCount > 4) {
@@ -200,6 +213,7 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
 
     // Get the pixmap depth to determine format
     const uint8_t depth = reply->depth;
+    qCDebug(KWIN_CORE) << "createWithDmaBuf: pixmap depth is" << depth;
     const uint32_t drmFormat = depthToDrmFormat(depth);
     if (drmFormat == 0) {
         qCWarning(KWIN_CORE) << "createWithDmaBuf: unsupported pixmap depth:" << depth;
@@ -210,6 +224,8 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
         free(reply);
         return false;
     }
+
+    qCDebug(KWIN_CORE) << "createWithDmaBuf: DRM format is" << Qt::hex << drmFormat;
 
     // Convert DRM format to Vulkan format
     VkFormat vkFormat = drmFormatToVkFormat(drmFormat);
@@ -222,6 +238,8 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
         free(reply);
         return false;
     }
+
+    qCDebug(KWIN_CORE) << "createWithDmaBuf: Vulkan format is" << vkFormat;
 
     // Build DmaBufAttributes - save values before freeing reply
     DmaBufAttributes dmaBufAttrs;
@@ -246,8 +264,12 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
 
     // Import the DMA-BUF as a Vulkan texture
     m_texture = m_context->importDmaBufAsTexture(dmaBufAttrs);
-    if (!m_texture || !m_texture->isValid()) {
-        qCWarning(KWIN_CORE) << "createWithDmaBuf: failed to import DMA-BUF as Vulkan texture";
+    if (!m_texture) {
+        qCWarning(KWIN_CORE) << "createWithDmaBuf: failed to import DMA-BUF as Vulkan texture (null texture)";
+        return false;
+    }
+    if (!m_texture->isValid()) {
+        qCWarning(KWIN_CORE) << "createWithDmaBuf: failed to import DMA-BUF as Vulkan texture (invalid texture)";
         return false;
     }
 
@@ -266,25 +288,40 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
 
 bool VulkanSurfaceTextureX11::createWithCpuUpload()
 {
+    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::createWithCpuUpload() - creating texture with size" << m_size;
+
     // Create a Vulkan texture with the appropriate format
     // X11 typically uses BGRA or BGR format depending on visual depth
     VkFormat format = VK_FORMAT_B8G8R8A8_UNORM;
 
     m_texture = VulkanTexture::allocate(m_context, m_size, format);
-    if (!m_texture || !m_texture->isValid()) {
-        qCWarning(KWIN_CORE) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to allocate texture";
+    if (!m_texture) {
+        qCWarning(KWIN_CORE) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to allocate texture (null texture)";
         return false;
     }
+    if (!m_texture->isValid()) {
+        qCWarning(KWIN_CORE) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to allocate texture (invalid texture)";
+        return false;
+    }
+
+    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::createWithCpuUpload() - texture allocated successfully";
 
     // Create staging buffer for CPU → GPU transfers
     const VkDeviceSize bufferSize = m_size.width() * m_size.height() * 4; // BGRA = 4 bytes per pixel
     m_stagingBuffer = VulkanBuffer::createStagingBuffer(m_context, bufferSize);
 
-    if (!m_stagingBuffer || !m_stagingBuffer->isValid()) {
-        qCWarning(KWIN_CORE) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to create staging buffer";
+    if (!m_stagingBuffer) {
+        qCWarning(KWIN_CORE) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to create staging buffer (null buffer)";
         m_texture.reset();
         return false;
     }
+    if (!m_stagingBuffer->isValid()) {
+        qCWarning(KWIN_CORE) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to create staging buffer (invalid buffer)";
+        m_texture.reset();
+        return false;
+    }
+
+    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::createWithCpuUpload() - staging buffer created successfully";
 
     // Do initial upload
     updateWithCpuUpload(QRegion(QRect(QPoint(0, 0), m_size)));
@@ -319,13 +356,17 @@ void VulkanSurfaceTextureX11::update(const QRegion &region)
 void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
 {
     if (!m_texture || !m_stagingBuffer) {
+        qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - texture or staging buffer not available";
         return;
     }
 
     const xcb_pixmap_t nativePixmap = m_pixmap->pixmap();
     if (nativePixmap == XCB_PIXMAP_NONE) {
+        qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - invalid pixmap";
         return;
     }
+
+    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - updating region" << region.boundingRect();
 
     // Use the global X11 connection
     xcb_connection_t *c = connection();
@@ -357,11 +398,21 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
         return;
     }
 
+    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - xcb_get_image succeeded, data length:" << xcb_get_image_data_length(reply);
+
     const uint8_t *data = xcb_get_image_data(reply);
     const int dataLength = xcb_get_image_data_length(reply);
 
     // Copy data to staging buffer
     void *mappedData = m_stagingBuffer->map();
+    if (!mappedData) {
+        qCWarning(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - failed to map staging buffer";
+        free(reply);
+        return;
+    }
+
+    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - staging buffer mapped successfully";
+
     if (mappedData) {
         // Handle full texture update vs partial update
         if (x == 0 && y == 0 && width == m_size.width() && height == m_size.height()) {
@@ -388,6 +439,8 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
         qCWarning(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - failed to begin command buffer";
         return;
     }
+
+    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - command buffer allocated successfully";
 
     // Transition image to transfer destination layout
     m_texture->transitionLayout(cmd,
@@ -431,6 +484,8 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
                                 VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
                                 VK_PIPELINE_STAGE_TRANSFER_BIT,
                                 VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT);
+
+    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - image layout transition recorded";
 
     m_context->endSingleTimeCommands(cmd);
 }

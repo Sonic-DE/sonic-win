@@ -384,8 +384,18 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
             // This requires the surface pixmap to have a VulkanSurfaceTexture
             if (auto vulkanSurfaceTexture = dynamic_cast<VulkanSurfaceTextureX11 *>(surfacePixmap->texture())) {
                 if (auto texture = vulkanSurfaceTexture->texture()) {
-                    node.textures.append(texture);
+                    // Validate that the texture is valid before using it
+                    if (texture->isValid()) {
+                        node.textures.append(texture);
+                        qCDebug(KWIN_CORE) << "ItemRendererVulkan::createRenderNode() - added valid texture to node";
+                    } else {
+                        qCWarning(KWIN_CORE) << "ItemRendererVulkan::createRenderNode() - texture is invalid, skipping";
+                    }
+                } else {
+                    qCDebug(KWIN_CORE) << "ItemRendererVulkan::createRenderNode() - no Vulkan texture available";
                 }
+            } else {
+                qCDebug(KWIN_CORE) << "ItemRendererVulkan::createRenderNode() - surface pixmap texture is not VulkanSurfaceTextureX11";
             }
         }
     }
@@ -489,7 +499,14 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
         // Bind vertex buffer
         VkBuffer vertexBuffers[] = {streamingBuffer->buffer()};
         VkDeviceSize offsets[] = {0};
-        vkCmdBindVertexBuffers(cmd, 0, 1, vertexBuffers, offsets);
+
+        // Validate vertex buffer before binding
+        if (vertexBuffers[0] == VK_NULL_HANDLE) {
+            qCWarning(KWIN_CORE) << "Vertex buffer is null, skipping vertex buffer binding";
+        } else {
+            vkCmdBindVertexBuffers(cmd, 0, 1, vertexBuffers, offsets);
+            qCDebug(KWIN_CORE) << "Bound vertex buffer successfully";
+        }
     }
 
     // Render each node
@@ -504,6 +521,12 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
         VulkanPipeline *pipeline = pipelineManager->pipeline(node.traits);
         if (!pipeline) {
             qCWarning(KWIN_CORE) << "Failed to get pipeline for traits:" << static_cast<int>(node.traits);
+            continue;
+        }
+
+        // Validate pipeline before using it
+        if (!pipeline->isValid()) {
+            qCWarning(KWIN_CORE) << "Pipeline is invalid for traits:" << static_cast<int>(node.traits);
             continue;
         }
 
@@ -541,6 +564,12 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
         // Update and bind descriptor sets for textures
         if (!node.textures.isEmpty() && node.textures[0]) {
             VkDescriptorSet descriptorSet = m_context->allocateDescriptorSet(pipeline->descriptorSetLayout());
+            if (descriptorSet == VK_NULL_HANDLE) {
+                qCWarning(KWIN_CORE) << "Failed to allocate descriptor set, skipping texture binding";
+                continue;
+            }
+
+            // Validate descriptor set before using it
             if (descriptorSet != VK_NULL_HANDLE) {
                 // Update descriptor set with texture
                 VkDescriptorImageInfo imageInfo{};
@@ -548,6 +577,12 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
                 imageInfo.imageView = node.textures[0]->imageView();
                 if (imageInfo.imageView == VK_NULL_HANDLE) {
                     qCWarning(KWIN_CORE) << "Texture has null image view, skipping descriptor update";
+                    continue;
+                }
+
+                // Validate image view before using it
+                if (imageInfo.imageView == VK_NULL_HANDLE) {
+                    qCWarning(KWIN_CORE) << "Descriptor set image view is null, skipping update";
                     continue;
                 }
                 imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
