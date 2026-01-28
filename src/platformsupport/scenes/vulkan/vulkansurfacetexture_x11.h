@@ -40,9 +40,9 @@ public:
     /**
      * @brief Get the Vulkan texture for rendering.
      */
-    std::shared_ptr<VulkanTexture> texture() const
+    VulkanTexture *texture() const
     {
-        return m_texture;
+        return m_texture.get();
     }
 
 private:
@@ -52,7 +52,7 @@ private:
 
     SurfacePixmapX11 *m_pixmap;
     VulkanContext *m_context;
-    std::shared_ptr<VulkanTexture> m_texture;
+    std::unique_ptr<VulkanTexture> m_texture;
     std::unique_ptr<VulkanBuffer> m_stagingBuffer;
     QSize m_size;
     bool m_useDmaBuf = false;

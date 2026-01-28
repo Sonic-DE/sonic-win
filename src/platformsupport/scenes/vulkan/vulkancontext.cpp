@@ -21,7 +21,7 @@
 namespace KWin
 {
 
-thread_local VulkanContext *VulkanContext::s_currentContext = nullptr;
+VulkanContext *VulkanContext::s_currentContext = nullptr;
 
 VulkanContext::VulkanContext(VulkanBackend *backend)
     : m_backend(backend)
@@ -266,7 +266,7 @@ VkDescriptorSet VulkanContext::allocateDescriptorSet(VkDescriptorSetLayout layou
     return descriptorSet;
 }
 
-std::shared_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBufAttributes &attributes)
+std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBufAttributes &attributes)
 {
     if (!m_supportsDmaBufImport) {
         qCWarning(KWIN_CORE) << "DMA-BUF import not supported";
@@ -408,7 +408,7 @@ std::shared_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     }
 
     // Create VulkanTexture wrapper
-    auto texture = std::shared_ptr<VulkanTexture>(new VulkanTexture(this));
+    auto texture = std::unique_ptr<VulkanTexture>(new VulkanTexture(this));
     texture->m_image = image;
     texture->m_imageView = imageView;
     texture->m_sampler = sampler;
@@ -438,7 +438,7 @@ VulkanFramebuffer *VulkanContext::popFramebuffer()
     return m_framebufferStack.pop();
 }
 
-VulkanFramebuffer *VulkanContext::currentFramebuffer() const
+VulkanFramebuffer *VulkanContext::currentFramebuffer()
 {
     if (m_framebufferStack.isEmpty()) {
         return nullptr;

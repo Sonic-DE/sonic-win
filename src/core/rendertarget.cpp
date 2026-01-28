@@ -26,6 +26,7 @@ RenderTarget::RenderTarget(QImage *image, const ColorDescription &colorDescripti
 
 RenderTarget::RenderTarget(VulkanRenderTarget *vulkanTarget, const ColorDescription &colorDescription)
     : m_vulkanTarget(vulkanTarget)
+    , m_transform(vulkanTarget->transform())
     , m_colorDescription(colorDescription)
 {
 }

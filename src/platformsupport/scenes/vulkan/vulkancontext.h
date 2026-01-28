@@ -106,7 +106,7 @@ public:
     /**
      * @brief Import a DMA-BUF as a Vulkan texture (if supported).
      */
-    std::shared_ptr<VulkanTexture> importDmaBufAsTexture(const DmaBufAttributes &attributes);
+    std::unique_ptr<VulkanTexture> importDmaBufAsTexture(const DmaBufAttributes &attributes);
 
     /**
      * @brief Check if DMA-BUF import is supported.
@@ -126,7 +126,7 @@ public:
     /**
      * @brief Get the current framebuffer.
      */
-    VulkanFramebuffer *currentFramebuffer() const;
+    VulkanFramebuffer *currentFramebuffer();
 
     /**
      * @brief Get the currently active context for this thread.
@@ -173,7 +173,7 @@ private:
 
     bool m_supportsDmaBufImport = false;
 
-    static thread_local VulkanContext *s_currentContext;
+    static VulkanContext *s_currentContext;
 };
 
 } // namespace KWin

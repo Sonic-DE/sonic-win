@@ -54,6 +54,24 @@ static bool isDri3Available(xcb_connection_t *c)
     return dri3Available == 1;
 }
 
+// Convert pixmap depth to DRM format
+static uint32_t depthToDrmFormat(uint8_t depth)
+{
+    switch (depth) {
+    case 32:
+        return DRM_FORMAT_ARGB8888;
+    case 24:
+        return DRM_FORMAT_XRGB8888;
+    case 30:
+        return DRM_FORMAT_XRGB2101010;
+    case 16:
+        return DRM_FORMAT_RGB565;
+    default:
+        qCWarning(KWIN_CORE) << "Unknown pixmap depth:" << depth;
+        return 0;
+    }
+}
+
 // Convert DRM format to Vulkan format
 static VkFormat drmFormatToVkFormat(uint32_t drmFormat)
 {
@@ -180,10 +198,23 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
     uint32_t *strides = xcb_dri3_buffers_from_pixmap_strides(reply);
     uint32_t *offsets = xcb_dri3_buffers_from_pixmap_offsets(reply);
 
+    // Get the pixmap depth to determine format
+    const uint8_t depth = reply->depth;
+    const uint32_t drmFormat = depthToDrmFormat(depth);
+    if (drmFormat == 0) {
+        qCWarning(KWIN_CORE) << "createWithDmaBuf: unsupported pixmap depth:" << depth;
+        // Close the file descriptors
+        for (int i = 0; i < planeCount; i++) {
+            close(fds[i]);
+        }
+        free(reply);
+        return false;
+    }
+
     // Convert DRM format to Vulkan format
-    VkFormat vkFormat = drmFormatToVkFormat(reply->format);
+    VkFormat vkFormat = drmFormatToVkFormat(drmFormat);
     if (vkFormat == VK_FORMAT_UNDEFINED) {
-        qCWarning(KWIN_CORE) << "createWithDmaBuf: unsupported DRM format:" << Qt::hex << reply->format;
+        qCWarning(KWIN_CORE) << "createWithDmaBuf: unsupported DRM format:" << Qt::hex << drmFormat;
         // Close the file descriptors
         for (int i = 0; i < planeCount; i++) {
             close(fds[i]);
@@ -197,7 +228,7 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
     dmaBufAttrs.planeCount = planeCount;
     dmaBufAttrs.width = reply->width;
     dmaBufAttrs.height = reply->height;
-    dmaBufAttrs.format = reply->format;
+    dmaBufAttrs.format = drmFormat;
     dmaBufAttrs.modifier = reply->modifier;
 
     // Save dimensions for debug logging

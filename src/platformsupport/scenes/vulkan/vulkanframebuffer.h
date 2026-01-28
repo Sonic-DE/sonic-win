@@ -106,17 +106,17 @@ public:
     /**
      * @brief Get the color attachment texture (if owned).
      */
-    std::shared_ptr<VulkanTexture> colorTexture() const
+    VulkanTexture *colorTexture() const
     {
-        return m_colorTexture;
+        return m_colorTexture.get();
     }
 
     /**
      * @brief Get the depth attachment texture (if owned).
      */
-    std::shared_ptr<VulkanTexture> depthTexture() const
+    VulkanTexture *depthTexture() const
     {
-        return m_depthTexture;
+        return m_depthTexture.get();
     }
 
     /**
@@ -163,8 +163,8 @@ private:
     VkFramebuffer m_framebuffer = VK_NULL_HANDLE;
 
     // Owned textures (if created with createWithTexture)
-    std::shared_ptr<VulkanTexture> m_colorTexture;
-    std::shared_ptr<VulkanTexture> m_depthTexture;
+    std::unique_ptr<VulkanTexture> m_colorTexture;
+    std::unique_ptr<VulkanTexture> m_depthTexture;
 };
 
 } // namespace KWin

@@ -42,7 +42,7 @@ public:
     struct RenderNode
     {
         ShaderTraits traits;
-        QVarLengthArray<std::shared_ptr<VulkanTexture>, 4> textures;
+        QVarLengthArray<VulkanTexture *, 4> textures;
         RenderGeometry geometry;
         QMatrix4x4 transformMatrix;
         int firstVertex = 0;
