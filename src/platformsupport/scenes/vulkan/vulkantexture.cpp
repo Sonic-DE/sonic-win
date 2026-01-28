@@ -36,6 +36,7 @@ VulkanTexture::VulkanTexture(VulkanTexture &&other) noexcept
     , m_imageView(other.m_imageView)
     , m_sampler(other.m_sampler)
     , m_allocation(other.m_allocation)
+    , m_deviceMemory(other.m_deviceMemory)
     , m_format(other.m_format)
     , m_size(other.m_size)
     , m_currentLayout(other.m_currentLayout)
@@ -48,6 +49,7 @@ VulkanTexture::VulkanTexture(VulkanTexture &&other) noexcept
     other.m_imageView = VK_NULL_HANDLE;
     other.m_sampler = VK_NULL_HANDLE;
     other.m_allocation = nullptr;
+    other.m_deviceMemory = VK_NULL_HANDLE;
 }
 
 VulkanTexture &VulkanTexture::operator=(VulkanTexture &&other) noexcept
@@ -60,6 +62,7 @@ VulkanTexture &VulkanTexture::operator=(VulkanTexture &&other) noexcept
         m_imageView = other.m_imageView;
         m_sampler = other.m_sampler;
         m_allocation = other.m_allocation;
+        m_deviceMemory = other.m_deviceMemory;
         m_format = other.m_format;
         m_size = other.m_size;
         m_currentLayout = other.m_currentLayout;
@@ -72,6 +75,7 @@ VulkanTexture &VulkanTexture::operator=(VulkanTexture &&other) noexcept
         other.m_imageView = VK_NULL_HANDLE;
         other.m_sampler = VK_NULL_HANDLE;
         other.m_allocation = nullptr;
+        other.m_deviceMemory = VK_NULL_HANDLE;
     }
     return *this;
 }
@@ -93,10 +97,21 @@ void VulkanTexture::cleanup()
         m_imageView = VK_NULL_HANDLE;
     }
 
-    if (m_ownsImage && m_image != VK_NULL_HANDLE && VulkanAllocator::isInitialized()) {
-        vmaDestroyImage(VulkanAllocator::allocator(), m_image, m_allocation);
+    if (m_ownsImage && m_image != VK_NULL_HANDLE) {
+        // Handle VMA-managed memory
+        if (m_allocation != nullptr && VulkanAllocator::isInitialized()) {
+            vmaDestroyImage(VulkanAllocator::allocator(), m_image, m_allocation);
+            m_allocation = nullptr;
+        } else if (m_deviceMemory != VK_NULL_HANDLE) {
+            // Handle raw Vulkan memory (e.g., DMA-BUF imports)
+            vkDestroyImage(device, m_image, nullptr);
+            vkFreeMemory(device, m_deviceMemory, nullptr);
+            m_deviceMemory = VK_NULL_HANDLE;
+        } else {
+            // Image without memory allocation (shouldn't happen for owned images)
+            vkDestroyImage(device, m_image, nullptr);
+        }
         m_image = VK_NULL_HANDLE;
-        m_allocation = nullptr;
     }
 }
 

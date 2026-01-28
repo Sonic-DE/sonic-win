@@ -268,6 +268,7 @@ private:
     VkImageView m_imageView = VK_NULL_HANDLE;
     VkSampler m_sampler = VK_NULL_HANDLE;
     VmaAllocation m_allocation = nullptr;
+    VkDeviceMemory m_deviceMemory = VK_NULL_HANDLE; // For non-VMA memory (e.g., DMA-BUF imports)
 
     VkFormat m_format = VK_FORMAT_UNDEFINED;
     QSize m_size;
