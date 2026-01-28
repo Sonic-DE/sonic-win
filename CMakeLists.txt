@@ -192,6 +192,31 @@ set_package_properties(EGL PROPERTIES
     TYPE REQUIRED
     PURPOSE "Required to build KWin with EGL support"
 )
+if (EGL_FOUND)
+    set(HAVE_EGL 1)
+    add_definitions(-DHAVE_EGL=1)
+else()
+    set(HAVE_EGL 0)
+endif()
+
+# Also set HAVE_GLES2 based on EGL availability and functionality
+if (EGL_FOUND)
+    include(CheckCXXSourceCompiles)
+    set(CMAKE_REQUIRED_LIBRARIES ${EGL_LIBRARIES})
+    set(CMAKE_REQUIRED_INCLUDES ${EGL_INCLUDE_DIRS})
+
+    check_cxx_source_compiles("
+        #include <EGL/egl.h>
+        #include <GLES2/gl2.h>
+        int main() {
+            EGLDisplay display = eglGetDisplay(NULL);
+            return 0;
+        }" HAVE_GLES2)
+
+    if (HAVE_GLES2)
+        add_definitions(-DHAVE_GLES2=1)
+    endif()
+endif()
 
 find_package(epoxy 1.3)
 set_package_properties(epoxy PROPERTIES
@@ -350,6 +375,28 @@ endif()
 find_package(Vulkan)
 if (Vulkan_FOUND)
     set(HAVE_VULKAN 1)
+    add_definitions(-DHAVE_VULKAN=1)
+else()
+    set(HAVE_VULKAN 0)
+endif()
+
+# Also set HAVE_GLES2 based on EGL availability and functionality
+if (EGL_FOUND)
+    include(CheckCXXSourceCompiles)
+    set(CMAKE_REQUIRED_LIBRARIES ${EGL_LIBRARIES})
+    set(CMAKE_REQUIRED_INCLUDES ${EGL_INCLUDE_DIRS})
+
+    check_cxx_source_compiles("
+        #include <EGL/egl.h>
+        #include <GLES2/gl2.h>
+        int main() {
+            EGLDisplay display = eglGetDisplay(NULL);
+            return 0;
+        }" HAVE_GLES2)
+
+    if (HAVE_GLES2)
+        add_definitions(-DHAVE_GLES2=1)
+    endif()
 endif()
 
 ecm_find_qmlmodule(QtQuick 2.3)

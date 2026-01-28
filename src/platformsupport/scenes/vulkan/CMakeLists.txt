@@ -1,4 +1,19 @@
-find_package(Vulkan REQUIRED)
+# Only build Vulkan support if Vulkan is available
+find_package(Vulkan QUIET)
+
+message(STATUS "Vulkan_FOUND: ${Vulkan_FOUND}")
+if(Vulkan_FOUND)
+    message(STATUS "Vulkan_VERSION: ${Vulkan_VERSION}")
+    message(STATUS "Vulkan_INCLUDE_DIRS: ${Vulkan_INCLUDE_DIRS}")
+    message(STATUS "Vulkan_LIBRARIES: ${Vulkan_LIBRARIES}")
+endif()
+
+if(NOT Vulkan_FOUND)
+    message(STATUS "Vulkan not found, skipping Vulkan support")
+    return()
+endif()
+
+message(STATUS "Building Vulkan support")
 
 # Check for Vulkan shader compiler
 find_program(GLSLC_EXECUTABLE glslc HINTS $ENV{VULKAN_SDK}/bin)
@@ -55,6 +70,7 @@ else()
     # For now, assume it will be provided or downloaded
 endif()
 
+message(STATUS "Adding Vulkan sources to kwin target")
 target_sources(kwin PRIVATE
     # Core Vulkan backend
     vulkanbackend.cpp
