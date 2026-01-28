@@ -140,7 +140,19 @@ X11StandaloneVulkanBackend::~X11StandaloneVulkanBackend()
         m_overlayWindow->destroy();
     }
 
+    // Destruction order is important:
+    // 1. Swapchain (holds framebuffers, image views, sync objects)
+    // 2. Context (holds VMA allocator, command/descriptor pools)
+    // 3. Surface (needs instance)
+    // 4. X11 resources
+    // 5. Base class handles device and instance destruction
+    m_swapchain.reset();
     m_context.reset();
+
+    if (m_surface != VK_NULL_HANDLE) {
+        vkDestroySurfaceKHR(instance(), m_surface, nullptr);
+        m_surface = VK_NULL_HANDLE;
+    }
 
     if (m_colormap != XCB_COLORMAP_NONE) {
         xcb_free_colormap(connection(), m_colormap);
@@ -149,11 +161,6 @@ X11StandaloneVulkanBackend::~X11StandaloneVulkanBackend()
 
     if (m_window) {
         xcb_destroy_window(connection(), m_window);
-    }
-
-    if (m_surface != VK_NULL_HANDLE) {
-        vkDestroySurfaceKHR(instance(), m_surface, nullptr);
-        m_surface = VK_NULL_HANDLE;
     }
 
     m_overlayWindow->destroy();

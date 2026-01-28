@@ -134,18 +134,22 @@ bool VulkanSwapchain::create(const QSize &size)
     }
 
     if (!createImageViews()) {
+        cleanupSwapchain();
         return false;
     }
 
     if (!createRenderPass()) {
+        cleanupSwapchain();
         return false;
     }
 
     if (!createFramebuffers()) {
+        cleanupSwapchain();
         return false;
     }
 
     if (!createSyncObjects()) {
+        cleanup(); // Full cleanup including sync objects
         return false;
     }
 
@@ -323,7 +327,7 @@ bool VulkanSwapchain::createImageViews()
 {
     VkDevice device = m_context->backend()->device();
 
-    m_imageViews.resize(m_images.size());
+    m_imageViews.resize(m_images.size(), VK_NULL_HANDLE);
 
     for (size_t i = 0; i < m_images.size(); i++) {
         VkImageViewCreateInfo viewInfo{};
@@ -344,6 +348,7 @@ bool VulkanSwapchain::createImageViews()
         VkResult result = vkCreateImageView(device, &viewInfo, nullptr, &m_imageViews[i]);
         if (result != VK_SUCCESS) {
             qCWarning(KWIN_CORE) << "Failed to create image view:" << result;
+            // Cleanup already-created image views (cleanupSwapchain handles VK_NULL_HANDLE)
             return false;
         }
     }

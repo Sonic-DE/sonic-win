@@ -147,6 +147,9 @@ void VulkanContext::cleanup()
         vkDestroyCommandPool(device, m_commandPool, nullptr);
         m_commandPool = VK_NULL_HANDLE;
     }
+
+    // Shutdown VMA allocator - must be done before device is destroyed
+    VulkanAllocator::shutdown();
 }
 
 bool VulkanContext::makeCurrent()
@@ -412,6 +415,7 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     texture->m_image = image;
     texture->m_imageView = imageView;
     texture->m_sampler = sampler;
+    texture->m_deviceMemory = memory; // Store device memory for cleanup
     texture->m_format = imageInfo.format;
     texture->m_size = QSize(attributes.width, attributes.height);
     texture->m_currentLayout = VK_IMAGE_LAYOUT_UNDEFINED;
