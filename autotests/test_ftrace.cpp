@@ -29,7 +29,7 @@ private:
 
 TestFTrace::TestFTrace()
 {
-    m_tempFile.open();
+    (void)m_tempFile.open();
     qputenv("KWIN_PERF_FTRACE_FILE", m_tempFile.fileName().toLatin1());
 
     KWin::FTraceLogger::create();
