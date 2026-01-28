@@ -268,3 +268,93 @@ target_link_libraries(testColorspaces
 )
 add_test(NAME kwin-testColorspaces COMMAND testColorspaces)
 ecm_mark_as_test(testColorspaces)
+
+########################################################
+# Test Backend Consistency (OpenGL/Vulkan patterns)
+########################################################
+add_executable(testBackendConsistency backend_consistency_test.cpp)
+target_link_libraries(testBackendConsistency
+    Qt::Test
+    kwin
+)
+add_test(NAME kwin-testBackendConsistency COMMAND testBackendConsistency)
+ecm_mark_as_test(testBackendConsistency)
+
+########################################################
+# Test Vulkan Format Conversions
+########################################################
+if(HAVE_VULKAN)
+    add_executable(testVulkanFormat vulkan_format_test.cpp)
+    target_link_libraries(testVulkanFormat
+        Qt::Test
+        kwin
+    )
+    add_test(NAME kwin-testVulkanFormat COMMAND testVulkanFormat)
+    ecm_mark_as_test(testVulkanFormat)
+endif()
+
+########################################################
+# Test RenderTarget
+########################################################
+add_executable(testRenderTarget render_target_test.cpp)
+target_link_libraries(testRenderTarget
+    Qt::Test
+    kwin
+)
+add_test(NAME kwin-testRenderTarget COMMAND testRenderTarget)
+ecm_mark_as_test(testRenderTarget)
+
+########################################################
+# Test Texture Formats (OpenGL/Vulkan)
+########################################################
+add_executable(testTextureFormat texture_format_test.cpp)
+target_link_libraries(testTextureFormat
+    Qt::Test
+    kwin
+)
+add_test(NAME kwin-testTextureFormat COMMAND testTextureFormat)
+ecm_mark_as_test(testTextureFormat)
+
+########################################################
+# Test QuickTile Mode
+########################################################
+add_executable(testQuickTile test_quick_tile.cpp)
+target_link_libraries(testQuickTile
+    Qt::Test
+    kwin
+)
+add_test(NAME kwin-testQuickTile COMMAND testQuickTile)
+ecm_mark_as_test(testQuickTile)
+
+########################################################
+# Test Electric Border Enums
+########################################################
+add_executable(testElectricBorder test_electric_border.cpp)
+target_link_libraries(testElectricBorder
+    Qt::Test
+    kwin
+)
+add_test(NAME kwin-testElectricBorder COMMAND testElectricBorder)
+ecm_mark_as_test(testElectricBorder)
+
+########################################################
+# Test Placement Policy
+########################################################
+add_executable(testPlacementPolicy test_placement_policy.cpp)
+target_link_libraries(testPlacementPolicy
+    Qt::Test
+    kwin
+)
+add_test(NAME kwin-testPlacementPolicy COMMAND testPlacementPolicy)
+ecm_mark_as_test(testPlacementPolicy)
+
+########################################################
+# Test Cursor Shape
+########################################################
+add_executable(testCursorShape test_cursor_shape.cpp)
+target_link_libraries(testCursorShape
+    Qt::Test
+    kwin
+)
+add_test(NAME kwin-testCursorShape COMMAND testCursorShape)
+ecm_mark_as_test(testCursorShape)
