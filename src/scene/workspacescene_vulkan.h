@@ -59,13 +59,13 @@ public:
 
     void update() override;
 
-    std::shared_ptr<VulkanTexture> texture() const
+    VulkanTexture *texture() const
     {
-        return m_texture;
+        return m_texture.get();
     }
 
 private:
-    std::shared_ptr<VulkanTexture> m_texture;
+    std::unique_ptr<VulkanTexture> m_texture;
 };
 
 /**
@@ -88,9 +88,9 @@ public:
 
     void render(const QRegion &region) override;
 
-    std::shared_ptr<VulkanTexture> texture() const
+    VulkanTexture *texture() const
     {
-        return m_texture;
+        return m_texture.get();
     }
 
 private:
@@ -99,7 +99,7 @@ private:
     void resizeTexture();
     int toNativeSize(double size) const;
 
-    std::shared_ptr<VulkanTexture> m_texture;
+    std::unique_ptr<VulkanTexture> m_texture;
     QImage m_scratchImage;
 };
 

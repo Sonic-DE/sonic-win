@@ -203,7 +203,7 @@ void VulkanTexture::updateSampler()
     createSampler();
 }
 
-std::shared_ptr<VulkanTexture> VulkanTexture::upload(VulkanContext *context, const QImage &image)
+std::unique_ptr<VulkanTexture> VulkanTexture::upload(VulkanContext *context, const QImage &image)
 {
     if (image.isNull()) {
         return nullptr;
@@ -217,7 +217,7 @@ std::shared_ptr<VulkanTexture> VulkanTexture::upload(VulkanContext *context, con
         return upload(context, converted);
     }
 
-    auto texture = std::shared_ptr<VulkanTexture>(new VulkanTexture(context));
+    auto texture = std::unique_ptr<VulkanTexture>(new VulkanTexture(context));
 
     if (!texture->createImage(image.size(), format,
                               VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
@@ -285,9 +285,9 @@ std::shared_ptr<VulkanTexture> VulkanTexture::upload(VulkanContext *context, con
     return texture;
 }
 
-std::shared_ptr<VulkanTexture> VulkanTexture::allocate(VulkanContext *context, const QSize &size, VkFormat format)
+std::unique_ptr<VulkanTexture> VulkanTexture::allocate(VulkanContext *context, const QSize &size, VkFormat format)
 {
-    auto texture = std::shared_ptr<VulkanTexture>(new VulkanTexture(context));
+    auto texture = std::unique_ptr<VulkanTexture>(new VulkanTexture(context));
 
     if (!texture->createImage(size, format,
                               VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
@@ -306,9 +306,9 @@ std::shared_ptr<VulkanTexture> VulkanTexture::allocate(VulkanContext *context, c
     return texture;
 }
 
-std::shared_ptr<VulkanTexture> VulkanTexture::createRenderTarget(VulkanContext *context, const QSize &size, VkFormat format)
+std::unique_ptr<VulkanTexture> VulkanTexture::createRenderTarget(VulkanContext *context, const QSize &size, VkFormat format)
 {
-    auto texture = std::shared_ptr<VulkanTexture>(new VulkanTexture(context));
+    auto texture = std::unique_ptr<VulkanTexture>(new VulkanTexture(context));
 
     if (!texture->createImage(size, format,
                               VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT | VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT,
@@ -327,7 +327,7 @@ std::shared_ptr<VulkanTexture> VulkanTexture::createRenderTarget(VulkanContext *
     return texture;
 }
 
-std::shared_ptr<VulkanTexture> VulkanTexture::createDepthStencil(VulkanContext *context, const QSize &size)
+std::unique_ptr<VulkanTexture> VulkanTexture::createDepthStencil(VulkanContext *context, const QSize &size)
 {
     VkFormat depthFormat = findDepthFormat(context->backend());
     if (depthFormat == VK_FORMAT_UNDEFINED) {
@@ -335,7 +335,7 @@ std::shared_ptr<VulkanTexture> VulkanTexture::createDepthStencil(VulkanContext *
         return nullptr;
     }
 
-    auto texture = std::shared_ptr<VulkanTexture>(new VulkanTexture(context));
+    auto texture = std::unique_ptr<VulkanTexture>(new VulkanTexture(context));
 
     if (!texture->createImage(size, depthFormat,
                               VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
@@ -355,10 +355,10 @@ std::shared_ptr<VulkanTexture> VulkanTexture::createDepthStencil(VulkanContext *
     return texture;
 }
 
-std::shared_ptr<VulkanTexture> VulkanTexture::createNonOwningWrapper(VulkanContext *context, VkImage image,
+std::unique_ptr<VulkanTexture> VulkanTexture::createNonOwningWrapper(VulkanContext *context, VkImage image,
                                                                      VkFormat format, const QSize &size)
 {
-    auto texture = std::shared_ptr<VulkanTexture>(new VulkanTexture(context));
+    auto texture = std::unique_ptr<VulkanTexture>(new VulkanTexture(context));
 
     texture->m_image = image;
     texture->m_format = format;

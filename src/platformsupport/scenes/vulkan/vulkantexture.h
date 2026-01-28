@@ -58,27 +58,27 @@ public:
     /**
      * @brief Create a texture from a QImage.
      */
-    static std::shared_ptr<VulkanTexture> upload(VulkanContext *context, const QImage &image);
+    static std::unique_ptr<VulkanTexture> upload(VulkanContext *context, const QImage &image);
 
     /**
      * @brief Create an empty texture with the specified size and format.
      */
-    static std::shared_ptr<VulkanTexture> allocate(VulkanContext *context, const QSize &size, VkFormat format);
+    static std::unique_ptr<VulkanTexture> allocate(VulkanContext *context, const QSize &size, VkFormat format);
 
     /**
      * @brief Create a render target texture (for framebuffer attachment).
      */
-    static std::shared_ptr<VulkanTexture> createRenderTarget(VulkanContext *context, const QSize &size, VkFormat format);
+    static std::unique_ptr<VulkanTexture> createRenderTarget(VulkanContext *context, const QSize &size, VkFormat format);
 
     /**
      * @brief Create a depth/stencil texture.
      */
-    static std::shared_ptr<VulkanTexture> createDepthStencil(VulkanContext *context, const QSize &size);
+    static std::unique_ptr<VulkanTexture> createDepthStencil(VulkanContext *context, const QSize &size);
 
     /**
      * @brief Create a non-owning wrapper around an existing VkImage (e.g., swapchain image).
      */
-    static std::shared_ptr<VulkanTexture> createNonOwningWrapper(VulkanContext *context, VkImage image,
+    static std::unique_ptr<VulkanTexture> createNonOwningWrapper(VulkanContext *context, VkImage image,
                                                                  VkFormat format, const QSize &size);
 
     /**
