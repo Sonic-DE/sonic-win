@@ -392,6 +392,7 @@ std::pair<OutputConfiguration, QList<Output *>> OutputConfigurationStore::setupT
             .brightness = state.brightness,
             .allowSdrSoftwareBrightness = state.allowSdrSoftwareBrightness,
             .colorPowerTradeoff = state.colorPowerTradeoff,
+            .dimming = std::nullopt,
         };
         if (setupState.enabled) {
             priorities.push_back(std::make_pair(output, setupState.priority));
@@ -514,10 +515,17 @@ std::pair<OutputConfiguration, QList<Output *>> OutputConfigurationStore::genera
             .referenceLuminance = existingData.referenceLuminance.value_or(std::clamp(output->maxAverageBrightness().value_or(200), 200.0, 500.0)),
             .wideColorGamut = existingData.wideColorGamut.value_or(false),
             .autoRotationPolicy = existingData.autoRotation.value_or(Output::AutoRotationPolicy::InTabletMode),
+            .iccProfilePath = existingData.iccProfilePath,
+            .iccProfile = existingData.iccProfilePath ? IccProfile::load(*existingData.iccProfilePath).value_or(nullptr) : nullptr,
+            .maxPeakBrightnessOverride = existingData.maxPeakBrightnessOverride,
+            .maxAverageBrightnessOverride = existingData.maxAverageBrightnessOverride,
+            .minBrightnessOverride = existingData.minBrightnessOverride,
+            .sdrGamutWideness = existingData.sdrGamutWideness,
             .colorProfileSource = existingData.colorProfileSource.value_or(Output::ColorProfileSource::sRGB),
             .brightness = existingData.brightness.value_or(1.0),
             .allowSdrSoftwareBrightness = existingData.allowSdrSoftwareBrightness.value_or(output->brightnessDevice() == nullptr),
             .colorPowerTradeoff = existingData.colorPowerTradeoff.value_or(Output::ColorPowerTradeoff::PreferEfficiency),
+            .dimming = std::nullopt,
         };
         if (enable) {
             const auto modeSize = changeset->transform->map(mode->size());
