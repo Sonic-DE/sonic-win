@@ -211,6 +211,9 @@ void X11StandaloneVulkanBackend::init()
         return;
     }
 
+    // Connect to workspace geometry changes for resize handling
+    connect(workspace(), &Workspace::geometryChanged, this, &X11StandaloneVulkanBackend::screenGeometryChanged);
+
     qCDebug(KWIN_X11STANDALONE) << "Successfully initialized Vulkan backend";
 }
 
@@ -303,6 +306,8 @@ bool X11StandaloneVulkanBackend::initOverlayWindow()
                           0, 0, size.width(), size.height(), 0, XCB_WINDOW_CLASS_INPUT_OUTPUT,
                           visual, XCB_CW_COLORMAP, &m_colormap);
 
+        // Resize overlay BEFORE setup - this sets m_size which is needed for input shape
+        overlayWindow()->resize(size);
         overlayWindow()->setup(m_window);
         qCDebug(KWIN_X11STANDALONE) << "Successfully created and setup overlay window";
         return true;
