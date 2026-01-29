@@ -6,6 +6,7 @@
 #include "syncobjtimeline.h"
 
 #include <cerrno>
+#include <cstring>
 #include <sys/eventfd.h>
 #include <sys/ioctl.h>
 #include <xf86drm.h>
@@ -45,12 +46,10 @@ SyncReleasePoint::~SyncReleasePoint()
 
 static FileDescriptor mergeSyncFds(const FileDescriptor &fd1, const FileDescriptor &fd2)
 {
-    struct sync_merge_data data
-    {
-        .name = "merged release fence",
-        .fd2 = fd2.get(),
-        .fence = -1,
-    };
+    struct sync_merge_data data{};
+    std::strncpy(data.name, "merged release fence", sizeof(data.name) - 1);
+    data.fd2 = fd2.get();
+    data.fence = -1;
     int err = -1;
     do {
         err = ioctl(fd1.get(), SYNC_IOC_MERGE, &data);
