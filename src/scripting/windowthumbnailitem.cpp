@@ -393,7 +393,7 @@ void WindowThumbnailItem::updateImplicitSize()
 QImage WindowThumbnailItem::fallbackImage() const
 {
     if (m_client) {
-        return m_client->icon().pixmap(window(), boundingRect().size().toSize()).toImage();
+        return m_client->icon().pixmap(boundingRect().size().toSize(), window()->devicePixelRatio()).toImage();
     }
     return QImage();
 }
@@ -412,7 +412,7 @@ QRectF WindowThumbnailItem::paintedRect() const
         return QRectF();
     }
     if (!Compositor::compositing()) {
-        const QSizeF iconSize = m_client->icon().actualSize(window(), boundingRect().size().toSize());
+        const QSizeF iconSize = m_client->icon().actualSize(boundingRect().size().toSize());
         return centeredSize(boundingRect(), iconSize);
     }
 
