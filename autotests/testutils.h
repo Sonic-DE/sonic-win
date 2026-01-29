@@ -14,7 +14,7 @@
 
 namespace
 {
-static void forceXcb()
+[[maybe_unused]] static void forceXcb()
 {
     qputenv("QT_QPA_PLATFORM", QByteArrayLiteral("xcb"));
 }
@@ -27,7 +27,7 @@ namespace KWin
  * Wrapper to create an 0,0x10,10 input only window for testing purposes
  */
 #ifndef NO_NONE_WINDOW
-static xcb_window_t createWindow()
+[[maybe_unused]] static xcb_window_t createWindow()
 {
     xcb_window_t w = xcb_generate_id(connection());
     const uint32_t values[] = {true};
@@ -43,7 +43,7 @@ static xcb_window_t createWindow()
  * casts XCB_WINDOW_NONE to uint32_t. Needed to make QCOMPARE working.
  */
 #ifndef NO_NONE_WINDOW
-static uint32_t noneWindow()
+[[maybe_unused]] static uint32_t noneWindow()
 {
     return XCB_WINDOW_NONE;
 }
