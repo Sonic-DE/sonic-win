@@ -590,10 +590,16 @@ install(FILES
     scene/windowitem.h
     scene/workspacescene.h
     scene/workspacescene_opengl.h
-    $<$<BOOL:${HAVE_VULKAN}>:scene/workspacescene_vulkan.h>
-    $<$<BOOL:${HAVE_VULKAN}>:scene/itemrenderer_vulkan.h>
     DESTINATION ${KDE_INSTALL_INCLUDEDIR}/kwin-x11/scene COMPONENT Devel
 )
+
+if(HAVE_VULKAN)
+    install(FILES
+        scene/workspacescene_vulkan.h
+        scene/itemrenderer_vulkan.h
+        DESTINATION ${KDE_INSTALL_INCLUDEDIR}/kwin-x11/scene COMPONENT Devel
+    )
+endif()
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KWinX11")
 
