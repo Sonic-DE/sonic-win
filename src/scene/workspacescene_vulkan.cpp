@@ -363,7 +363,8 @@ void SceneVulkanDecorationRenderer::resizeTexture()
         // and sRGB color space (Qt paints in sRGB, so we need SRGB format for gamma correction)
         m_texture = VulkanTexture::allocate(context, size, VK_FORMAT_B8G8R8A8_SRGB);
         if (m_texture) {
-            m_texture->setContentTransform(OutputTransform::FlipY);
+            // Do NOT set FlipY here - QImage has Y=0 at top, which matches Vulkan's texture
+            // coordinate system (V=0 at top). FlipY would cause decorations to appear upside down.
             m_texture->setFilter(VK_FILTER_LINEAR);
             m_texture->setWrapMode(VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
         }
