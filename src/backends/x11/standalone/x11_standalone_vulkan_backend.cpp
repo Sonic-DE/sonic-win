@@ -405,16 +405,21 @@ OutputLayer *X11StandaloneVulkanBackend::primaryLayer(Output *output)
 void X11StandaloneVulkanBackend::screenGeometryChanged()
 {
     const QSize size = workspace()->geometry().size();
+    qWarning() << "VULKAN: screenGeometryChanged called, new size:" << size;
     doneCurrent();
 
     if (m_window) {
+        qWarning() << "VULKAN: Configuring window" << m_window << "to size" << size;
         const uint16_t mask = XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT;
         const uint32_t values[] = {uint32_t(size.width()), uint32_t(size.height())};
         xcb_configure_window(connection(), m_window, mask, values);
     }
 
+    qWarning() << "VULKAN: Resizing overlay window to" << size;
     overlayWindow()->resize(size);
+    qWarning() << "VULKAN: Calling Xcb::sync()";
     Xcb::sync();
+    qWarning() << "VULKAN: screenGeometryChanged completed";
 }
 
 xcb_connection_t *X11StandaloneVulkanBackend::connection() const

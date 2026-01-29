@@ -57,11 +57,18 @@ OffscreenEffect::~OffscreenEffect() = default;
 
 bool OffscreenEffect::supported()
 {
+    // TODO: Add Vulkan support for offscreen rendering
+    // Currently only OpenGL is supported for offscreen effects
     return effects->isOpenGLCompositing();
 }
 
 void OffscreenEffect::redirect(EffectWindow *window)
 {
+    // OffscreenEffect uses OpenGL - skip if not OpenGL compositing (e.g., Vulkan)
+    if (!effects->isOpenGLCompositing()) {
+        return;
+    }
+
     std::unique_ptr<OffscreenData> &offscreenData = d->windows[window];
     if (offscreenData) {
         return;
@@ -363,6 +370,11 @@ void CrossFadeEffect::drawWindow(const RenderTarget &renderTarget, const RenderV
 
 void CrossFadeEffect::redirect(EffectWindow *window)
 {
+    // CrossFadeEffect uses OpenGL - skip if not OpenGL compositing (e.g., Vulkan)
+    if (!effects->isOpenGLCompositing()) {
+        return;
+    }
+
     if (d->windows.empty()) {
         connect(effects, &EffectsHandler::windowDeleted, this, &CrossFadeEffect::handleWindowDeleted);
     }

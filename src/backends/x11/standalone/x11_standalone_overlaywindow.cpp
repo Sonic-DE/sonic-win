@@ -119,8 +119,10 @@ void OverlayWindowX11::setShape(const QRegion &reg)
     // Avoid setting the same shape again, it causes flicker (apparently it is not a no-op
     // and triggers something).
     if (reg == m_shape) {
+        qDebug() << "OVERLAY: setShape - same shape, skipping";
         return;
     }
+    qWarning() << "OVERLAY: setShape - CHANGING shape from" << m_shape.boundingRect() << "to" << reg.boundingRect();
     const QList<xcb_rectangle_t> xrects = Xcb::regionToRects(reg);
     xcb_shape_rectangles(connection(), XCB_SHAPE_SO_SET, XCB_SHAPE_SK_BOUNDING, XCB_CLIP_ORDERING_UNSORTED,
                          m_window, 0, 0, xrects.count(), xrects.data());
