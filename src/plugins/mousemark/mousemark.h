@@ -22,8 +22,8 @@ class MouseMarkEffect
     Q_OBJECT
     Q_PROPERTY(int width READ configuredWidth)
     Q_PROPERTY(QColor color READ configuredColor)
-    Q_PROPERTY(Qt::KeyboardModifiers modifiers READ freedraw_modifiers)
-    Q_PROPERTY(Qt::KeyboardModifiers modifiers READ arrowdraw_modifiers)
+    Q_PROPERTY(Qt::KeyboardModifiers freedrawModifiers READ freedraw_modifiers)
+    Q_PROPERTY(Qt::KeyboardModifiers arrowdrawModifiers READ arrowdraw_modifiers)
 public:
     MouseMarkEffect();
     ~MouseMarkEffect() override;
