@@ -76,6 +76,9 @@ void ItemRendererVulkan::beginFrame(const RenderTarget &renderTarget, const Rend
     m_outputsInFlight++;
     m_frameNumber++;
 
+    // Reset vertex buffer offset for new frame - all items will upload vertices sequentially
+    m_vertexBufferOffset = 0;
+
     // Allocate command buffer for this frame
     m_currentCommandBuffer = m_context->allocateCommandBuffer();
     if (m_currentCommandBuffer == VK_NULL_HANDLE) {
@@ -747,35 +750,42 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
     auto *pipelineManager = m_context->pipelineManager();
     VulkanBuffer *streamingBuffer = m_context->streamingBuffer();
 
-    // Calculate total vertex data size
-    size_t totalVertexSize = 0;
+    // Calculate total vertex count for this batch
+    size_t totalVertexCount = 0;
     for (const RenderNode &node : context.renderNodes) {
-        totalVertexSize += node.geometry.count() * sizeof(GLVertex2D);
+        totalVertexCount += node.geometry.count();
     }
 
-    // Upload all vertex data to streaming buffer
+    // Upload all vertex data to streaming buffer at current offset
+    // Each renderItem() call advances the offset to avoid overwriting previous data
     std::vector<GLVertex2D> allVertices;
-    allVertices.reserve(totalVertexSize / sizeof(GLVertex2D));
+    allVertices.reserve(totalVertexCount);
 
-    int currentVertexOffset = 0;
+    // firstVertex is the GLOBAL vertex index in the buffer (not local to this batch)
+    int localVertexOffset = 0;
     for (RenderNode &node : const_cast<QList<RenderNode> &>(context.renderNodes)) {
-        node.firstVertex = currentVertexOffset;
+        node.firstVertex = static_cast<int>(m_vertexBufferOffset / sizeof(GLVertex2D)) + localVertexOffset;
         for (int i = 0; i < node.geometry.count(); ++i) {
             allVertices.push_back(node.geometry.at(i));
         }
-        currentVertexOffset += node.vertexCount;
+        localVertexOffset += node.vertexCount;
     }
 
     if (!allVertices.empty()) {
         void *mappedData = streamingBuffer->map();
         if (mappedData) {
-            memcpy(mappedData, allVertices.data(), allVertices.size() * sizeof(GLVertex2D));
+            // Copy to the current offset position in the buffer
+            uint8_t *dst = static_cast<uint8_t *>(mappedData) + m_vertexBufferOffset;
+            memcpy(dst, allVertices.data(), allVertices.size() * sizeof(GLVertex2D));
             streamingBuffer->unmap();
-            // Flush to ensure vertex data is visible to GPU (needed for non-HOST_COHERENT memory)
-            streamingBuffer->flush(0, allVertices.size() * sizeof(GLVertex2D));
+            // Flush the region we wrote to
+            streamingBuffer->flush(m_vertexBufferOffset, allVertices.size() * sizeof(GLVertex2D));
+
+            // Advance the offset for the next renderItem() call
+            m_vertexBufferOffset += allVertices.size() * sizeof(GLVertex2D);
         }
 
-        // Bind vertex buffer
+        // Bind vertex buffer at offset 0 - firstVertex handles the actual offset
         VkBuffer vertexBuffers[] = {streamingBuffer->buffer()};
         VkDeviceSize offsets[] = {0};
 
@@ -784,7 +794,7 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
             qCWarning(KWIN_CORE) << "Vertex buffer is null, skipping vertex buffer binding";
         } else {
             vkCmdBindVertexBuffers(cmd, 0, 1, vertexBuffers, offsets);
-            qCDebug(KWIN_CORE) << "Bound vertex buffer successfully";
+            qCDebug(KWIN_CORE) << "Bound vertex buffer at offset 0, using firstVertex for actual position";
         }
     }
 

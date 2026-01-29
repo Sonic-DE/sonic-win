@@ -118,6 +118,9 @@ private:
     // Track frame rendering to coordinate descriptor pool reset
     int m_outputsInFlight = 0;
     uint64_t m_frameNumber = 0;
+
+    // Track vertex buffer offset for streaming (reset each frame)
+    size_t m_vertexBufferOffset = 0;
 };
 
 } // namespace KWin
