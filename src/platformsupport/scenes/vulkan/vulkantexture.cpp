@@ -492,7 +492,7 @@ QMatrix4x4 VulkanTexture::matrix(VulkanCoordinateType type) const
         // Scale to convert pixel coordinates to normalized coordinates
         matrix.scale(1.0 / m_size.width(), 1.0 / m_size.height());
 
-        // Apply content transform around the center (NO Y-flip for Vulkan)
+        // NO Y-flip - don't match OpenGL - causes upside-down
         matrix.translate(m_size.width() / 2.0, m_size.height() / 2.0);
         matrix *= m_contentTransform.toMatrix();
         matrix.translate(-m_size.width() / 2.0, -m_size.height() / 2.0);

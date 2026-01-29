@@ -460,18 +460,34 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
                 }
             }
         } else {
-            // Depth 32 (ARGB) - copy directly, alpha is valid
+            // Depth 32 (ARGB) - copy with forced alpha=0xFF
+            // Many X11 apps don't properly set alpha even on 32-bit visuals
+            uint8_t *dst = static_cast<uint8_t *>(mappedData);
+            const int dstStride = m_size.width() * 4;
+
             if (x == 0 && y == 0 && width == m_size.width() && height == m_size.height()) {
                 // Full update
-                memcpy(mappedData, data, dataLength);
+                const int pixelCount = width * height;
+                for (int i = 0; i < pixelCount; ++i) {
+                    dst[i * 4 + 0] = data[i * 4 + 0]; // B
+                    dst[i * 4 + 1] = data[i * 4 + 1]; // G
+                    dst[i * 4 + 2] = data[i * 4 + 2]; // R
+                    dst[i * 4 + 3] = 0xFF; // A = opaque
+                }
             } else {
-                // Partial update - need to handle row-by-row copy with correct stride
+                // Partial update
                 const int srcStride = width * 4;
-                const int dstStride = m_size.width() * 4;
-                uint8_t *dst = static_cast<uint8_t *>(mappedData) + (y * dstStride) + (x * 4);
+                dst += (y * dstStride) + (x * 4);
 
                 for (int row = 0; row < height; ++row) {
-                    memcpy(dst + row * dstStride, data + row * srcStride, srcStride);
+                    for (int col = 0; col < width; ++col) {
+                        const int srcIdx = row * srcStride + col * 4;
+                        const int dstIdx = row * dstStride + col * 4;
+                        dst[dstIdx + 0] = data[srcIdx + 0]; // B
+                        dst[dstIdx + 1] = data[srcIdx + 1]; // G
+                        dst[dstIdx + 2] = data[srcIdx + 2]; // R
+                        dst[dstIdx + 3] = 0xFF; // A = opaque
+                    }
                 }
             }
         }
