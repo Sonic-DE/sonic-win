@@ -147,6 +147,12 @@ QRegion DecorationItem::opaque() const
 void DecorationItem::preprocess()
 {
     const QRegion damage = m_renderer->damage();
+    static int preprocessLogCount = 0;
+    if (preprocessLogCount < 10) {
+        qWarning() << "DecorationItem::preprocess() - damage=" << damage.boundingRect()
+                   << "isEmpty=" << damage.isEmpty();
+        preprocessLogCount++;
+    }
     if (!damage.isEmpty()) {
         m_renderer->render(damage);
         m_renderer->resetDamage();

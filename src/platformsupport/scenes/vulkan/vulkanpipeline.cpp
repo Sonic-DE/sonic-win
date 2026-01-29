@@ -86,7 +86,7 @@ bool VulkanPipeline::createDescriptorSetLayout()
     bindings[0].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
     bindings[0].pImmutableSamplers = nullptr;
 
-    // Binding 1: Uniform buffer
+    // Binding 1: Uniform buffer for fragment shader parameters
     bindings[1].binding = 1;
     bindings[1].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
     bindings[1].descriptorCount = 1;
@@ -112,7 +112,7 @@ bool VulkanPipeline::createPipelineLayout()
 {
     // Push constant range for MVP and texture matrices
     VkPushConstantRange pushConstantRange{};
-    pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
+    pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
     pushConstantRange.offset = 0;
     pushConstantRange.size = sizeof(VulkanPushConstants);
 

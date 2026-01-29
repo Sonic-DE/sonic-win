@@ -17,9 +17,44 @@
 #include "vulkantexture.h"
 
 #include <QDebug>
+#include <drm_fourcc.h>
 
 namespace KWin
 {
+
+// Convert DRM format to Vulkan format
+static VkFormat drmFormatToVkFormat(uint32_t drmFormat)
+{
+    switch (drmFormat) {
+    case DRM_FORMAT_ARGB8888:
+        return VK_FORMAT_B8G8R8A8_UNORM;
+    case DRM_FORMAT_XRGB8888:
+        return VK_FORMAT_B8G8R8A8_UNORM;
+    case DRM_FORMAT_ABGR8888:
+        return VK_FORMAT_R8G8B8A8_UNORM;
+    case DRM_FORMAT_XBGR8888:
+        return VK_FORMAT_R8G8B8A8_UNORM;
+    case DRM_FORMAT_RGB888:
+        return VK_FORMAT_R8G8B8_UNORM;
+    case DRM_FORMAT_BGR888:
+        return VK_FORMAT_B8G8R8_UNORM;
+    case DRM_FORMAT_RGB565:
+        return VK_FORMAT_R5G6B5_UNORM_PACK16;
+    case DRM_FORMAT_BGR565:
+        return VK_FORMAT_B5G6R5_UNORM_PACK16;
+    case DRM_FORMAT_ARGB2101010:
+        return VK_FORMAT_A2R10G10B10_UNORM_PACK32;
+    case DRM_FORMAT_XRGB2101010:
+        return VK_FORMAT_A2R10G10B10_UNORM_PACK32;
+    case DRM_FORMAT_ABGR2101010:
+        return VK_FORMAT_A2B10G10R10_UNORM_PACK32;
+    case DRM_FORMAT_XBGR2101010:
+        return VK_FORMAT_A2B10G10R10_UNORM_PACK32;
+    default:
+        qCWarning(KWIN_CORE) << "Unsupported DRM format:" << Qt::hex << drmFormat;
+        return VK_FORMAT_UNDEFINED;
+    }
+}
 
 VulkanContext *VulkanContext::s_currentContext = nullptr;
 
@@ -98,11 +133,12 @@ bool VulkanContext::createCommandPool()
 bool VulkanContext::createDescriptorPool()
 {
     // Create a descriptor pool with enough descriptors for typical usage
-    // These numbers can be tuned based on actual usage patterns
+    // Each render node needs 1 descriptor set with 2 bindings (texture + UBO)
+    // With ~90 nodes/frame and proactive reset at 80%, we reset every ~1.5 seconds
     std::array<VkDescriptorPoolSize, 3> poolSizes = {{
-        {VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000},
-        {VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000},
-        {VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 100},
+        {VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, DESCRIPTOR_POOL_MAX_SETS},
+        {VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, DESCRIPTOR_POOL_MAX_SETS},
+        {VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000},
     }};
 
     VkDescriptorPoolCreateInfo poolInfo{};
@@ -110,7 +146,7 @@ bool VulkanContext::createDescriptorPool()
     poolInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
     poolInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
     poolInfo.pPoolSizes = poolSizes.data();
-    poolInfo.maxSets = 1000;
+    poolInfo.maxSets = DESCRIPTOR_POOL_MAX_SETS;
 
     VkResult result = vkCreateDescriptorPool(m_backend->device(), &poolInfo, nullptr, &m_descriptorPool);
     if (result != VK_SUCCESS) {
@@ -118,6 +154,7 @@ bool VulkanContext::createDescriptorPool()
         return false;
     }
 
+    qCWarning(KWIN_CORE) << "Created descriptor pool with maxSets=" << poolInfo.maxSets;
     return true;
 }
 
@@ -253,6 +290,15 @@ void VulkanContext::endSingleTimeCommands(VkCommandBuffer commandBuffer)
 
 VkDescriptorSet VulkanContext::allocateDescriptorSet(VkDescriptorSetLayout layout)
 {
+    // Proactively reset pool when approaching capacity
+    // This ensures we reset at a safe point before we run out
+    if (m_descriptorAllocCount >= DESCRIPTOR_POOL_RESET_THRESHOLD) {
+        qCDebug(KWIN_CORE) << "Proactive descriptor pool reset at" << m_descriptorAllocCount << "allocations";
+        vkDeviceWaitIdle(m_backend->device());
+        vkResetDescriptorPool(m_backend->device(), m_descriptorPool, 0);
+        m_descriptorAllocCount = 0;
+    }
+
     VkDescriptorSetAllocateInfo allocInfo{};
     allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
     allocInfo.descriptorPool = m_descriptorPool;
@@ -261,18 +307,48 @@ VkDescriptorSet VulkanContext::allocateDescriptorSet(VkDescriptorSetLayout layou
 
     VkDescriptorSet descriptorSet;
     VkResult result = vkAllocateDescriptorSets(m_backend->device(), &allocInfo, &descriptorSet);
+
+    // If pool is exhausted, try emergency reset
+    // VK_ERROR_OUT_OF_POOL_MEMORY = -1000069000, VK_ERROR_FRAGMENTED_POOL = -1000069001
+    const bool poolExhausted = (result == VK_ERROR_OUT_OF_POOL_MEMORY) || (result == VK_ERROR_FRAGMENTED_POOL) || (static_cast<int>(result) == -1000069000) || (static_cast<int>(result) == -1000069001);
+    if (poolExhausted) {
+        qCWarning(KWIN_CORE) << "Descriptor pool exhausted at" << m_descriptorAllocCount << "allocations, emergency reset";
+        vkDeviceWaitIdle(m_backend->device());
+        vkResetDescriptorPool(m_backend->device(), m_descriptorPool, 0);
+        m_descriptorAllocCount = 0;
+
+        // Retry allocation
+        result = vkAllocateDescriptorSets(m_backend->device(), &allocInfo, &descriptorSet);
+    }
+
     if (result != VK_SUCCESS) {
         qCWarning(KWIN_CORE) << "Failed to allocate descriptor set:" << result;
         return VK_NULL_HANDLE;
     }
 
+    m_descriptorAllocCount++;
     return descriptorSet;
+}
+
+void VulkanContext::resetDescriptorPool()
+{
+    if (m_descriptorPool != VK_NULL_HANDLE) {
+        vkResetDescriptorPool(m_backend->device(), m_descriptorPool, 0);
+        m_descriptorAllocCount = 0;
+    }
 }
 
 std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBufAttributes &attributes)
 {
     if (!m_supportsDmaBufImport) {
         qCWarning(KWIN_CORE) << "DMA-BUF import not supported";
+        return nullptr;
+    }
+
+    // Convert DRM format to Vulkan format
+    VkFormat vkFormat = drmFormatToVkFormat(attributes.format);
+    if (vkFormat == VK_FORMAT_UNDEFINED) {
+        qCWarning(KWIN_CORE) << "DMA-BUF import: unsupported DRM format" << Qt::hex << attributes.format;
         return nullptr;
     }
 
@@ -285,7 +361,7 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
     imageInfo.pNext = &externalMemoryInfo;
     imageInfo.imageType = VK_IMAGE_TYPE_2D;
-    imageInfo.format = static_cast<VkFormat>(attributes.format);
+    imageInfo.format = vkFormat;
     imageInfo.extent.width = attributes.width;
     imageInfo.extent.height = attributes.height;
     imageInfo.extent.depth = 1;

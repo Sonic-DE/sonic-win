@@ -226,9 +226,9 @@ std::unique_ptr<VulkanTexture> VulkanTexture::upload(VulkanContext *context, con
 
     VkFormat format = qImageFormatToVkFormat(image.format());
     if (format == VK_FORMAT_UNDEFINED) {
-        // Convert to a supported format
+        // Convert to a supported format and recurse
+        // qImageFormatToVkFormat will return the correct SRGB format for RGBA8888
         QImage converted = image.convertToFormat(QImage::Format_RGBA8888);
-        format = VK_FORMAT_R8G8B8A8_UNORM;
         return upload(context, converted);
     }
 
@@ -480,30 +480,27 @@ QMatrix4x4 VulkanTexture::matrix(VulkanCoordinateType type) const
 
     QMatrix4x4 matrix;
 
+    // Vulkan texture coordinates: V=0 at TOP (same as screen Y=0)
+    // OpenGL texture coordinates: V=0 at BOTTOM (opposite of screen Y=0)
+    //
+    // OpenGL needs Y-flip in texture matrix to compensate for V=0 at bottom.
+    // Vulkan does NOT need Y-flip because V=0 is already at top.
+    // The viewport negative height handles framebuffer Y-flip separately.
+    //
+    // DO NOT add scale(1, -1) here - it causes upside-down rendering!
     if (type == VulkanCoordinateType::Unnormalized) {
-        matrix.scale(m_size.width(), m_size.height());
-    }
+        // Scale to convert pixel coordinates to normalized coordinates
+        matrix.scale(1.0 / m_size.width(), 1.0 / m_size.height());
 
-    // Apply content transform
-    // Vulkan has Y-axis pointing down, so we may need to flip
-    switch (m_contentTransform.kind()) {
-    case OutputTransform::Normal:
-        break;
-    case OutputTransform::FlipY:
-        matrix.translate(0, 1);
-        matrix.scale(1, -1);
-        break;
-    case OutputTransform::Rotate90:
-        matrix.rotate(90, 0, 0, 1);
-        break;
-    case OutputTransform::Rotate180:
-        matrix.rotate(180, 0, 0, 1);
-        break;
-    case OutputTransform::Rotate270:
-        matrix.rotate(270, 0, 0, 1);
-        break;
-    default:
-        break;
+        // Apply content transform around the center (NO Y-flip for Vulkan)
+        matrix.translate(m_size.width() / 2.0, m_size.height() / 2.0);
+        matrix *= m_contentTransform.toMatrix();
+        matrix.translate(-m_size.width() / 2.0, -m_size.height() / 2.0);
+    } else {
+        // Normalized coordinates - apply transform around center (0.5, 0.5)
+        matrix.translate(0.5, 0.5);
+        matrix *= m_contentTransform.toMatrix();
+        matrix.translate(-0.5, -0.5);
     }
 
     m_cachedMatrix = matrix;
@@ -572,6 +569,11 @@ void VulkanTexture::transitionLayout(VkCommandBuffer cmd, VkImageLayout oldLayou
         break;
     }
 
+    // TOP_OF_PIPE doesn't support any access flags - override if needed
+    if (srcStage == VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT) {
+        barrier.srcAccessMask = 0;
+    }
+
     switch (newLayout) {
     case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
         barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
@@ -597,19 +599,22 @@ void VulkanTexture::transitionLayout(VkCommandBuffer cmd, VkImageLayout oldLayou
 
 VkFormat VulkanTexture::qImageFormatToVkFormat(QImage::Format format)
 {
+    // Qt paints in sRGB color space, so we use SRGB formats to ensure
+    // proper gamma conversion when sampling in shaders.
+    // This matches the format used by VulkanSurfaceTextureX11 for X11 windows.
     switch (format) {
     case QImage::Format_RGBA8888:
     case QImage::Format_RGBA8888_Premultiplied:
-        return VK_FORMAT_R8G8B8A8_UNORM;
+        return VK_FORMAT_R8G8B8A8_SRGB;
     case QImage::Format_RGBX8888:
-        return VK_FORMAT_R8G8B8A8_UNORM;
+        return VK_FORMAT_R8G8B8A8_SRGB;
     case QImage::Format_RGB888:
-        return VK_FORMAT_R8G8B8_UNORM;
+        return VK_FORMAT_R8G8B8_SRGB;
     case QImage::Format_ARGB32:
     case QImage::Format_ARGB32_Premultiplied:
-        return VK_FORMAT_B8G8R8A8_UNORM;
+        return VK_FORMAT_B8G8R8A8_SRGB;
     case QImage::Format_RGB32:
-        return VK_FORMAT_B8G8R8A8_UNORM;
+        return VK_FORMAT_B8G8R8A8_SRGB;
     case QImage::Format_Grayscale8:
         return VK_FORMAT_R8_UNORM;
     case QImage::Format_Grayscale16:

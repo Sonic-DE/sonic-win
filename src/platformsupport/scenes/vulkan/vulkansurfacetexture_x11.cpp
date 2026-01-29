@@ -117,6 +117,11 @@ VulkanSurfaceTextureX11::VulkanSurfaceTextureX11(VulkanBackend *backend, Surface
 
 VulkanSurfaceTextureX11::~VulkanSurfaceTextureX11()
 {
+    // Clear base class handles BEFORE destroying m_texture to prevent double-destruction.
+    // The base class destructor would otherwise try to destroy these already-freed handles.
+    m_image = VK_NULL_HANDLE;
+    m_imageView = VK_NULL_HANDLE;
+
     m_stagingBuffer.reset();
     m_texture.reset();
 }
@@ -139,26 +144,26 @@ bool VulkanSurfaceTextureX11::create()
         return false;
     }
 
-    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - attempting to create texture for pixmap of size" << m_size;
+    qWarning() << "VulkanSurfaceTextureX11::create() - attempting to create texture for pixmap of size" << m_size;
 
     // Try DMA-BUF import first (if available)
     if (m_context->supportsDmaBufImport()) {
-        qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - DMA-BUF import supported, attempting";
+        qWarning() << "VulkanSurfaceTextureX11::create() - DMA-BUF import supported, attempting";
         if (createWithDmaBuf()) {
             m_useDmaBuf = true;
-            qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - using DMA-BUF import";
+            qWarning() << "VulkanSurfaceTextureX11::create() - SUCCESS: using DMA-BUF import";
             return true;
         } else {
-            qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - DMA-BUF import failed, falling back to CPU upload";
+            qWarning() << "VulkanSurfaceTextureX11::create() - DMA-BUF import failed, falling back to CPU upload";
         }
     } else {
-        qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - DMA-BUF import not supported, using CPU upload";
+        qWarning() << "VulkanSurfaceTextureX11::create() - DMA-BUF import not supported, using CPU upload";
     }
 
     // Fall back to CPU upload
     if (createWithCpuUpload()) {
         m_useDmaBuf = false;
-        qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::create() - using CPU upload";
+        qWarning() << "VulkanSurfaceTextureX11::create() - SUCCESS: using CPU upload";
         return true;
     }
 
@@ -291,8 +296,9 @@ bool VulkanSurfaceTextureX11::createWithCpuUpload()
     qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::createWithCpuUpload() - creating texture with size" << m_size;
 
     // Create a Vulkan texture with the appropriate format
-    // X11 typically uses BGRA or BGR format depending on visual depth
-    VkFormat format = VK_FORMAT_B8G8R8A8_UNORM;
+    // X11 data is sRGB encoded, so we use SRGB format for correct sampling
+    // This makes the hardware do sRGB-to-linear conversion on texture fetch
+    VkFormat format = VK_FORMAT_B8G8R8A8_SRGB;
 
     m_texture = VulkanTexture::allocate(m_context, m_size, format);
     if (!m_texture) {
@@ -330,8 +336,8 @@ bool VulkanSurfaceTextureX11::createWithCpuUpload()
     m_image = m_texture->image();
     m_imageView = m_texture->imageView();
 
-    // Texture is flipped compared to OpenGL coordinate system
-    m_texture->setContentTransform(OutputTransform::FlipY);
+    // Note: We don't apply FlipY here because the viewport already has Y-flip via negative height.
+    // The texture data from X11 has Y=0 at top, which matches Vulkan's image coordinate system.
 
     return true;
 }
@@ -398,10 +404,14 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
         return;
     }
 
-    qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - xcb_get_image succeeded, data length:" << xcb_get_image_data_length(reply);
-
     const uint8_t *data = xcb_get_image_data(reply);
     const int dataLength = xcb_get_image_data_length(reply);
+    const uint8_t depth = reply->depth;
+    const int bytesPerPixel = (depth == 24) ? 4 : 4; // X11 pads 24-bit to 32-bit
+
+    qWarning() << "VulkanSurfaceTextureX11::updateWithCpuUpload() - xcb_get_image: depth=" << depth
+               << "dataLength=" << dataLength << "expected=" << (width * height * bytesPerPixel)
+               << "size=" << width << "x" << height;
 
     // Copy data to staging buffer
     void *mappedData = m_stagingBuffer->map();
@@ -414,21 +424,61 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
     qCDebug(KWIN_CORE) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - staging buffer mapped successfully";
 
     if (mappedData) {
-        // Handle full texture update vs partial update
-        if (x == 0 && y == 0 && width == m_size.width() && height == m_size.height()) {
-            // Full update
-            memcpy(mappedData, data, dataLength);
-        } else {
-            // Partial update - need to handle row-by-row copy with correct stride
-            const int srcStride = width * 4;
-            const int dstStride = m_size.width() * 4;
-            uint8_t *dst = static_cast<uint8_t *>(mappedData) + (y * dstStride) + (x * 4);
+        // For depth 24 (XRGB), the X byte (padding/alpha) may be 0 or garbage.
+        // We need to set it to 0xFF for proper alpha blending.
+        const bool needsAlphaFix = (depth == 24);
 
-            for (int row = 0; row < height; ++row) {
-                memcpy(dst + row * dstStride, data + row * srcStride, srcStride);
+        if (needsAlphaFix) {
+            // Copy pixel-by-pixel, fixing alpha channel
+            // X11 XRGB is stored as BGRX in memory (little-endian), byte 3 is the X/alpha
+            uint8_t *dst = static_cast<uint8_t *>(mappedData);
+            const int dstStride = m_size.width() * 4;
+
+            if (x == 0 && y == 0 && width == m_size.width() && height == m_size.height()) {
+                // Full update
+                const int pixelCount = width * height;
+                for (int i = 0; i < pixelCount; ++i) {
+                    dst[i * 4 + 0] = data[i * 4 + 0]; // B
+                    dst[i * 4 + 1] = data[i * 4 + 1]; // G
+                    dst[i * 4 + 2] = data[i * 4 + 2]; // R
+                    dst[i * 4 + 3] = 0xFF; // A = opaque
+                }
+            } else {
+                // Partial update
+                const int srcStride = width * 4;
+                dst += (y * dstStride) + (x * 4);
+
+                for (int row = 0; row < height; ++row) {
+                    for (int col = 0; col < width; ++col) {
+                        const int srcIdx = row * srcStride + col * 4;
+                        const int dstIdx = row * dstStride + col * 4;
+                        dst[dstIdx + 0] = data[srcIdx + 0]; // B
+                        dst[dstIdx + 1] = data[srcIdx + 1]; // G
+                        dst[dstIdx + 2] = data[srcIdx + 2]; // R
+                        dst[dstIdx + 3] = 0xFF; // A = opaque
+                    }
+                }
+            }
+        } else {
+            // Depth 32 (ARGB) - copy directly, alpha is valid
+            if (x == 0 && y == 0 && width == m_size.width() && height == m_size.height()) {
+                // Full update
+                memcpy(mappedData, data, dataLength);
+            } else {
+                // Partial update - need to handle row-by-row copy with correct stride
+                const int srcStride = width * 4;
+                const int dstStride = m_size.width() * 4;
+                uint8_t *dst = static_cast<uint8_t *>(mappedData) + (y * dstStride) + (x * 4);
+
+                for (int row = 0; row < height; ++row) {
+                    memcpy(dst + row * dstStride, data + row * srcStride, srcStride);
+                }
             }
         }
         m_stagingBuffer->unmap();
+        // Flush the staging buffer to ensure data is visible to GPU
+        // VMA may allocate non-coherent memory, so explicit flush is required
+        m_stagingBuffer->flush(0, m_size.width() * m_size.height() * 4);
     }
 
     free(reply);

@@ -8,9 +8,11 @@
 */
 
 #include "itemrenderer_vulkan.h"
+#include "core/pixelgrid.h"
 #include "core/rendertarget.h"
 #include "core/renderviewport.h"
 #include "effect/effect.h"
+#include "effect/globals.h"
 #include "platformsupport/scenes/vulkan/vulkanbackend.h"
 #include "platformsupport/scenes/vulkan/vulkanbuffer.h"
 #include "platformsupport/scenes/vulkan/vulkancontext.h"
@@ -25,11 +27,16 @@
 #include "scene/decorationitem.h"
 #include "scene/imageitem.h"
 #include "scene/item.h"
+#include "scene/itemgeometry.h"
+#include "scene/outlinedborderitem.h"
+#include "scene/shadowitem.h"
 #include "scene/surfaceitem.h"
 #include "scene/windowitem.h"
+#include "scene/workspacescene_vulkan.h"
 #include "utils/common.h"
 
 #include <cstring>
+#include <typeinfo>
 
 namespace KWin
 {
@@ -64,6 +71,11 @@ void ItemRendererVulkan::beginFrame(const RenderTarget &renderTarget, const Rend
         return;
     }
 
+    // Don't reset descriptor pool here - it will be reset on-demand when exhausted
+    // This avoids invalidating descriptors that are still in use by in-flight command buffers
+    m_outputsInFlight++;
+    m_frameNumber++;
+
     // Allocate command buffer for this frame
     m_currentCommandBuffer = m_context->allocateCommandBuffer();
     if (m_currentCommandBuffer == VK_NULL_HANDLE) {
@@ -95,10 +107,21 @@ void ItemRendererVulkan::beginFrame(const RenderTarget &renderTarget, const Rend
         }
     }
 
-    // Calculate projection matrix
+    // Use the viewport's projection matrix which includes render target transform
+    // This is important for multi-monitor setups with different orientations
+    m_currentProjection = viewport.projectionMatrix();
     const QSize size = viewport.renderRect().size().toSize();
-    m_currentProjection.setToIdentity();
-    m_currentProjection.ortho(0, size.width(), size.height(), 0, -1, 1);
+
+    static int projLogCount = 0;
+    if (projLogCount < 3) {
+        qWarning() << "VULKAN: Projection matrix:" << m_currentProjection;
+        qWarning() << "VULKAN: Viewport renderRect=" << viewport.renderRect() << "scale=" << viewport.scale();
+        qWarning() << "VULKAN: Framebuffer=" << m_currentFramebuffer
+                   << "size=" << (m_currentFramebuffer ? m_currentFramebuffer->size() : QSize())
+                   << "syncInfo.imageAvailable=" << m_currentSyncInfo.imageAvailableSemaphore
+                   << "syncInfo.renderFinished=" << m_currentSyncInfo.renderFinishedSemaphore;
+        projLogCount++;
+    }
 
     // Begin render pass if we have a framebuffer
     if (m_currentFramebuffer) {
@@ -115,12 +138,14 @@ void ItemRendererVulkan::beginFrame(const RenderTarget &renderTarget, const Rend
         qCDebug(KWIN_CORE) << "Render pass begun successfully";
     }
 
-    // Set viewport
+    // Set viewport with Y-flip to match OpenGL coordinate conventions
+    // Vulkan has Y pointing down, but our ortho projection expects Y=0 at top
+    // Using negative height (VK_KHR_maintenance1) flips the Y axis
     VkViewport vkViewport{};
     vkViewport.x = 0.0f;
-    vkViewport.y = 0.0f;
+    vkViewport.y = static_cast<float>(size.height()); // Start at bottom
     vkViewport.width = static_cast<float>(size.width());
-    vkViewport.height = static_cast<float>(size.height());
+    vkViewport.height = -static_cast<float>(size.height()); // Negative flips Y
     vkViewport.minDepth = 0.0f;
     vkViewport.maxDepth = 1.0f;
     vkCmdSetViewport(m_currentCommandBuffer, 0, 1, &vkViewport);
@@ -298,6 +323,11 @@ void ItemRendererVulkan::endFrame()
     m_currentCommandBuffer = VK_NULL_HANDLE;
     m_currentFramebuffer = nullptr;
     m_currentSyncInfo = VulkanSyncInfo{};
+
+    // Decrement output counter - when it reaches 0, next beginFrame can reset pool
+    if (m_outputsInFlight > 0) {
+        m_outputsInFlight--;
+    }
 }
 
 void ItemRendererVulkan::renderBackground(const RenderTarget &renderTarget, const RenderViewport &viewport, const QRegion &region)
@@ -320,144 +350,359 @@ QVector4D ItemRendererVulkan::modulate(float opacity, float brightness) const
     return QVector4D(rgb, rgb, rgb, a);
 }
 
+// Helper to build geometry from quads using RenderGeometry (matching OpenGL's clipQuads approach)
+static RenderGeometry buildGeometryFromQuads(const WindowQuadList &quads, qreal deviceScale)
+{
+    RenderGeometry geometry;
+    geometry.reserve(quads.count() * 6);
+
+    for (const WindowQuad &quad : quads) {
+        geometry.appendWindowQuad(quad, deviceScale);
+    }
+
+    return geometry;
+}
+
 void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
 {
-    const QList<Item *> children = item->childItems();
-    const QMatrix4x4 matrix = context->transformStack.top();
-    const qreal opacity = context->opacityStack.top();
+    const QList<Item *> sortedChildItems = item->sortedChildItems();
+    const qreal scale = context->renderTargetScale;
 
-    // Get the item's quads and textures
-    WindowQuadList quads = item->quads();
-    if (quads.isEmpty()) {
-        // Process children even if this item has no quads
-        for (Item *child : children) {
-            context->transformStack.push(matrix * child->transform());
-            context->opacityStack.push(opacity * child->opacity());
-            createRenderNode(child, context);
-            context->transformStack.pop();
-            context->opacityStack.pop();
-        }
-        return;
+    // Build transform matrix for this item (matching OpenGL approach)
+    const auto logicalPosition = QVector2D(item->position().x(), item->position().y());
+
+    QMatrix4x4 matrix;
+    matrix.translate(roundVector(logicalPosition * scale).toVector3D());
+    if (context->transformStack.size() == 1) {
+        matrix *= context->rootTransform;
     }
+    if (!item->transform().isIdentity()) {
+        matrix.scale(scale, scale);
+        matrix *= item->transform();
+        matrix.scale(1 / scale, 1 / scale);
+    }
+    context->transformStack.push(context->transformStack.top() * matrix);
+    context->opacityStack.push(context->opacityStack.top() * item->opacity());
 
-    // Create render node for this item
-    RenderNode node;
-    node.opacity = opacity;
-    node.hasAlpha = true; // Conservative default
-    node.transformMatrix = matrix;
-    node.traits = ShaderTrait::MapTexture;
-
-    // Get color description for color management
-    if (auto surfaceItem = qobject_cast<SurfaceItem *>(item)) {
-        node.colorDescription = surfaceItem->colorDescription();
-        node.renderingIntent = surfaceItem->renderingIntent();
-        node.bufferReleasePoint = surfaceItem->bufferReleasePoint();
-        if (node.bufferReleasePoint) {
-            m_releasePoints.insert(node.bufferReleasePoint);
+    // Process child items with z < 0 first (behind this item)
+    for (Item *childItem : sortedChildItems) {
+        if (childItem->z() >= 0) {
+            break;
+        }
+        if (childItem->explicitVisible()) {
+            createRenderNode(childItem, context);
         }
     }
 
-    // Handle rounded corners
-    if (!context->cornerStack.isEmpty()) {
-        const RenderCorner &corner = context->cornerStack.top();
-        if (!corner.radius.isNull()) {
-            node.traits |= ShaderTrait::RoundedCorners;
-            node.box = QVector4D(corner.box.x(), corner.box.y(),
-                                 corner.box.width(), corner.box.height());
-            node.borderRadius = QVector4D(
-                corner.radius.topLeft(),
-                corner.radius.topRight(),
-                corner.radius.bottomRight(),
-                corner.radius.bottomLeft());
-        }
+    // Handle border radius (matching OpenGL approach)
+    if (const BorderRadius radius = item->borderRadius(); !radius.isNull()) {
+        const QRectF nativeRect = snapToPixelGridF(scaledRect(item->rect(), scale));
+        const BorderRadius nativeRadius = radius.scaled(scale).rounded();
+        context->cornerStack.push({
+            .box = nativeRect,
+            .radius = nativeRadius,
+        });
+    } else if (!context->cornerStack.isEmpty()) {
+        const auto &top = std::as_const(context->cornerStack).top();
+        context->cornerStack.push({
+            .box = matrix.inverted().mapRect(top.box),
+            .radius = top.radius,
+        });
     }
 
-    // Handle opacity modulation
-    if (opacity < 1.0) {
-        node.traits |= ShaderTrait::Modulate;
-    }
+    // Preprocess the item to ensure pixmap/texture is created
+    item->preprocess();
 
-    // Get textures from the item
-    if (auto surfaceItem = qobject_cast<SurfaceItem *>(item)) {
-        if (auto *surfacePixmap = surfaceItem->pixmap()) {
-            // Try to get the Vulkan texture from the surface pixmap
-            // This requires the surface pixmap to have a VulkanSurfaceTexture
-            if (auto vulkanSurfaceTexture = dynamic_cast<VulkanSurfaceTextureX11 *>(surfacePixmap->texture())) {
-                if (auto texture = vulkanSurfaceTexture->texture()) {
-                    // Validate that the texture is valid before using it
-                    if (texture->isValid()) {
-                        node.textures.append(texture);
-                        qCDebug(KWIN_CORE) << "ItemRendererVulkan::createRenderNode() - added valid texture to node";
-                    } else {
-                        qCWarning(KWIN_CORE) << "ItemRendererVulkan::createRenderNode() - texture is invalid, skipping";
-                    }
-                } else {
-                    qCDebug(KWIN_CORE) << "ItemRendererVulkan::createRenderNode() - no Vulkan texture available";
+    // Build geometry from quads (using RenderGeometry like OpenGL)
+    RenderGeometry geometry = buildGeometryFromQuads(item->quads(), scale);
+
+    // Handle different item types (matching OpenGL's approach)
+    if (auto shadowItem = qobject_cast<ShadowItem *>(item)) {
+        // ShadowItem - use VulkanShadowTextureProvider
+        auto *textureProvider = static_cast<VulkanShadowTextureProvider *>(shadowItem->textureProvider());
+        qWarning() << "VULKAN: ShadowItem geometry=" << geometry.count() << "vertices"
+                   << "textureProvider=" << textureProvider
+                   << "texture=" << (textureProvider ? textureProvider->texture() : nullptr);
+        if (!geometry.isEmpty()) {
+            if (textureProvider && textureProvider->texture()) {
+                VulkanTexture *texture = textureProvider->texture();
+                qWarning() << "VULKAN: ShadowItem texture size=" << texture->size()
+                           << "valid=" << texture->isValid();
+
+                // Post-process texture coordinates (convert pixel coords to normalized)
+                geometry.postProcessTextureCoordinates(texture->matrix(VulkanCoordinateType::Unnormalized));
+
+                RenderNode node;
+                node.traits = ShaderTrait::MapTexture;
+                node.textures.append(texture);
+                node.opacity = context->opacityStack.top();
+                node.hasAlpha = true;
+                node.colorDescription = item->colorDescription();
+                node.renderingIntent = item->renderingIntent();
+                node.bufferReleasePoint = nullptr;
+                node.transformMatrix = context->transformStack.top();
+
+                // Copy geometry to node
+                for (const auto &vertex : geometry) {
+                    node.geometry.append({
+                        .position = vertex.position,
+                        .texcoord = vertex.texcoord,
+                    });
                 }
-            } else {
-                qCDebug(KWIN_CORE) << "ItemRendererVulkan::createRenderNode() - surface pixmap texture is not VulkanSurfaceTextureX11";
+                node.vertexCount = node.geometry.count();
+
+                if (node.opacity < 1.0) {
+                    node.traits |= ShaderTrait::Modulate;
+                }
+
+                context->renderNodes.append(node);
+                // Log shadow transform for debugging
+                float tx = node.transformMatrix.column(3).x();
+                float ty = node.transformMatrix.column(3).y();
+                qWarning() << "VULKAN: ShadowItem ADDED render node with" << node.vertexCount << "vertices"
+                           << "transform=(" << tx << "," << ty << ")"
+                           << "texSize=" << texture->size();
             }
         }
-    }
+    } else if (auto decorationItem = qobject_cast<DecorationItem *>(item)) {
+        // DecorationItem - use SceneVulkanDecorationRenderer
+        auto *renderer = static_cast<const SceneVulkanDecorationRenderer *>(decorationItem->renderer());
+        qWarning() << "VULKAN: DecorationItem geometry=" << geometry.count() << "vertices"
+                   << "renderer=" << renderer
+                   << "texture=" << (renderer ? renderer->texture() : nullptr);
+        if (!geometry.isEmpty()) {
+            if (renderer && renderer->texture()) {
+                VulkanTexture *texture = renderer->texture();
+                qWarning() << "VULKAN: DecorationItem texture size=" << texture->size()
+                           << "valid=" << texture->isValid();
 
-    // Build geometry from quads
-    for (const WindowQuad &quad : quads) {
-        const QPointF p0 = matrix.map(QPointF(quad[0].x(), quad[0].y()));
-        const QPointF p1 = matrix.map(QPointF(quad[1].x(), quad[1].y()));
-        const QPointF p2 = matrix.map(QPointF(quad[2].x(), quad[2].y()));
-        const QPointF p3 = matrix.map(QPointF(quad[3].x(), quad[3].y()));
+                // Post-process texture coordinates (convert pixel coords to normalized)
+                geometry.postProcessTextureCoordinates(texture->matrix(VulkanCoordinateType::Unnormalized));
 
-        // Triangle 1: p0, p1, p2
-        node.geometry.append({
-            .position = QVector2D(p0.x(), p0.y()),
-            .texcoord = QVector2D(quad[0].u(), quad[0].v()),
-        });
-        node.geometry.append({
-            .position = QVector2D(p1.x(), p1.y()),
-            .texcoord = QVector2D(quad[1].u(), quad[1].v()),
-        });
-        node.geometry.append({
-            .position = QVector2D(p2.x(), p2.y()),
-            .texcoord = QVector2D(quad[2].u(), quad[2].v()),
-        });
+                RenderNode node;
+                node.traits = ShaderTrait::MapTexture;
+                node.textures.append(texture);
+                node.opacity = context->opacityStack.top();
+                node.hasAlpha = true;
+                node.colorDescription = item->colorDescription();
+                node.renderingIntent = item->renderingIntent();
+                node.bufferReleasePoint = nullptr;
+                node.transformMatrix = context->transformStack.top();
 
-        // Triangle 2: p0, p2, p3
-        node.geometry.append({
-            .position = QVector2D(p0.x(), p0.y()),
-            .texcoord = QVector2D(quad[0].u(), quad[0].v()),
-        });
-        node.geometry.append({
-            .position = QVector2D(p2.x(), p2.y()),
-            .texcoord = QVector2D(quad[2].u(), quad[2].v()),
-        });
-        node.geometry.append({
-            .position = QVector2D(p3.x(), p3.y()),
-            .texcoord = QVector2D(quad[3].u(), quad[3].v()),
-        });
-    }
+                // Copy geometry to node
+                for (const auto &vertex : geometry) {
+                    node.geometry.append({
+                        .position = vertex.position,
+                        .texcoord = vertex.texcoord,
+                    });
+                }
+                node.vertexCount = node.geometry.count();
 
-    node.vertexCount = node.geometry.count();
-    context->renderNodes.append(node);
+                if (node.opacity < 1.0) {
+                    node.traits |= ShaderTrait::Modulate;
+                }
 
-    // Process children
-    for (Item *child : children) {
-        context->transformStack.push(matrix * child->transform());
-        context->opacityStack.push(opacity * child->opacity());
-
-        // Handle window item corners
-        if (qobject_cast<WindowItem *>(child) && !child->borderRadius().isNull()) {
-            RenderCorner corner;
-            corner.box = child->rect();
-            corner.radius = child->borderRadius();
-            context->cornerStack.push(corner);
-            createRenderNode(child, context);
-            context->cornerStack.pop();
-        } else {
-            createRenderNode(child, context);
+                context->renderNodes.append(node);
+                qWarning() << "VULKAN: DecorationItem ADDED render node with" << node.vertexCount << "vertices";
+            }
         }
+    } else if (auto surfaceItem = qobject_cast<SurfaceItem *>(item)) {
+        // SurfaceItem - main window content
+        SurfacePixmap *pixmap = surfaceItem->pixmap();
+        auto vulkanSurfaceTexture = pixmap ? dynamic_cast<VulkanSurfaceTextureX11 *>(pixmap->texture()) : nullptr;
+        if (pixmap && !geometry.isEmpty()) {
+            if (vulkanSurfaceTexture && vulkanSurfaceTexture->texture() && vulkanSurfaceTexture->texture()->isValid()) {
+                VulkanTexture *texture = vulkanSurfaceTexture->texture();
 
-        context->transformStack.pop();
-        context->opacityStack.pop();
+                // Log geometry details
+                qWarning() << "VULKAN: SurfaceItem texture=" << texture->size()
+                           << "itemPos=" << item->position() << "itemRect=" << item->rect()
+                           << "quads=" << item->quads().count() << "geomVerts=" << geometry.count();
+
+                // Log vertices for LARGE items (backgrounds) to debug rendering
+                static int largeSurfaceLogCount = 0;
+                if (texture->size().height() >= 1000 && largeSurfaceLogCount < 10) {
+                    qWarning() << "VULKAN: LARGE SurfaceItem (background?) VERTS:";
+                    for (int i = 0; i < qMin(geometry.count(), 6); i++) {
+                        qWarning() << "  v" << i << ": pos=" << geometry[i].position << "tex=" << geometry[i].texcoord;
+                    }
+                    qWarning() << "VULKAN: LARGE SurfaceItem transform:" << context->transformStack.top();
+                    largeSurfaceLogCount++;
+                }
+
+                // Log vertices for small items (panels) to debug sizing issue
+                static int smallSurfaceLogCount = 0;
+                if (texture->size().height() < 100 && smallSurfaceLogCount < 5) {
+                    qWarning() << "VULKAN: SMALL SurfaceItem VERTS (panel?):";
+                    for (int i = 0; i < qMin(geometry.count(), 6); i++) {
+                        qWarning() << "  v" << i << ": pos=" << geometry[i].position << "tex=" << geometry[i].texcoord;
+                    }
+                    smallSurfaceLogCount++;
+                }
+
+                // Post-process texture coordinates (convert pixel coords to normalized)
+                QMatrix4x4 texMatrix = texture->matrix(VulkanCoordinateType::Unnormalized);
+                geometry.postProcessTextureCoordinates(texMatrix);
+
+                // Log transform matrix and NORMALIZED tex coords for small items (panels)
+                static int smallTransformLogCount = 0;
+                if (texture->size().height() < 100 && smallTransformLogCount < 5) {
+                    qWarning() << "VULKAN: SMALL SurfaceItem texMatrix(0,0)=" << texMatrix(0, 0)
+                               << "texMatrix(1,1)=" << texMatrix(1, 1)
+                               << "texMatrix(0,3)=" << texMatrix(0, 3)
+                               << "texMatrix(1,3)=" << texMatrix(1, 3);
+                    qWarning() << "VULKAN: SMALL SurfaceItem NORMALIZED tex coords:";
+                    for (int i = 0; i < qMin(geometry.count(), 6); i++) {
+                        qWarning() << "  v" << i << ": tex=" << geometry[i].texcoord;
+                    }
+                    qWarning() << "VULKAN: SMALL SurfaceItem transform:" << context->transformStack.top();
+                    smallTransformLogCount++;
+                }
+
+                RenderNode node;
+                node.traits = ShaderTrait::MapTexture;
+                node.textures.append(texture);
+                node.opacity = context->opacityStack.top();
+                node.hasAlpha = pixmap->hasAlphaChannel();
+                node.colorDescription = surfaceItem->colorDescription();
+                node.renderingIntent = surfaceItem->renderingIntent();
+                node.bufferReleasePoint = surfaceItem->bufferReleasePoint();
+                node.transformMatrix = context->transformStack.top();
+
+                if (node.bufferReleasePoint) {
+                    m_releasePoints.insert(node.bufferReleasePoint);
+                }
+
+                // Copy geometry to node
+                for (const auto &vertex : geometry) {
+                    node.geometry.append({
+                        .position = vertex.position,
+                        .texcoord = vertex.texcoord,
+                    });
+                }
+                node.vertexCount = node.geometry.count();
+
+                // Handle rounded corners
+                if (!context->cornerStack.isEmpty()) {
+                    const auto &top = context->cornerStack.top();
+                    if (!top.radius.isNull()) {
+                        node.traits |= ShaderTrait::RoundedCorners;
+                        node.hasAlpha = true;
+                        node.box = QVector4D(top.box.x() + top.box.width() * 0.5,
+                                             top.box.y() + top.box.height() * 0.5,
+                                             top.box.width() * 0.5,
+                                             top.box.height() * 0.5);
+                        node.borderRadius = top.radius.toVector();
+                    }
+                }
+
+                // Handle opacity modulation
+                if (node.opacity < 1.0) {
+                    node.traits |= ShaderTrait::Modulate;
+                }
+
+                context->renderNodes.append(node);
+                qWarning() << "VULKAN: SurfaceItem ADDED render node with" << node.vertexCount << "vertices, opacity=" << node.opacity;
+            } else {
+                qWarning() << "VULKAN: SurfaceItem SKIPPED - invalid texture";
+            }
+        }
+    } else if (auto imageItem = qobject_cast<ImageItemVulkan *>(item)) {
+        // ImageItemVulkan - use the texture from preprocess()
+        qWarning() << "VULKAN: ImageItemVulkan geometry=" << geometry.count() << "vertices"
+                   << "texture=" << imageItem->texture();
+        if (!geometry.isEmpty() && imageItem->texture()) {
+            VulkanTexture *texture = imageItem->texture();
+            qWarning() << "VULKAN: ImageItemVulkan texture size=" << texture->size()
+                       << "valid=" << texture->isValid();
+
+            // Post-process texture coordinates (convert pixel coords to normalized)
+            geometry.postProcessTextureCoordinates(texture->matrix(VulkanCoordinateType::Unnormalized));
+
+            RenderNode node;
+            node.traits = ShaderTrait::MapTexture;
+            node.textures.append(texture);
+            node.opacity = context->opacityStack.top();
+            node.hasAlpha = true;
+            node.colorDescription = item->colorDescription();
+            node.renderingIntent = item->renderingIntent();
+            node.bufferReleasePoint = nullptr;
+            node.transformMatrix = context->transformStack.top();
+
+            // Copy geometry to node
+            for (const auto &vertex : geometry) {
+                node.geometry.append({
+                    .position = vertex.position,
+                    .texcoord = vertex.texcoord,
+                });
+            }
+            node.vertexCount = node.geometry.count();
+
+            if (node.opacity < 1.0) {
+                node.traits |= ShaderTrait::Modulate;
+            }
+
+            context->renderNodes.append(node);
+            qWarning() << "VULKAN: ImageItemVulkan ADDED render node with" << node.vertexCount << "vertices";
+        }
+    } else if (auto borderItem = qobject_cast<OutlinedBorderItem *>(item)) {
+        // OutlinedBorderItem - uses Border trait, no texture needed
+        qWarning() << "VULKAN: OutlinedBorderItem geometry=" << geometry.count() << "vertices";
+        if (!geometry.isEmpty()) {
+            const BorderOutline outline = borderItem->outline();
+            const int thickness = std::round(outline.thickness() * scale);
+            const QRectF outerRect = snapToPixelGridF(scaledRect(borderItem->rect(), scale));
+            const QRectF innerRect = outerRect.adjusted(thickness, thickness, -thickness, -thickness);
+            qWarning() << "VULKAN: OutlinedBorderItem outerRect=" << outerRect << "innerRect=" << innerRect
+                       << "color=" << outline.color();
+
+            RenderNode node;
+            node.traits = ShaderTrait::Border;
+            node.opacity = context->opacityStack.top();
+            node.hasAlpha = true;
+            node.transformMatrix = context->transformStack.top();
+            node.box = QVector4D(outerRect.x(), outerRect.y(), outerRect.width(), outerRect.height());
+            // Inner box stored in borderRadius for the Border shader
+            node.borderRadius = QVector4D(innerRect.x(), innerRect.y(), innerRect.width(), innerRect.height());
+            node.borderColor = outline.color();
+
+            // Copy geometry to node
+            for (const auto &vertex : geometry) {
+                node.geometry.append({
+                    .position = vertex.position,
+                    .texcoord = vertex.texcoord,
+                });
+            }
+            node.vertexCount = node.geometry.count();
+
+            if (node.opacity < 1.0) {
+                node.traits |= ShaderTrait::Modulate;
+            }
+
+            context->renderNodes.append(node);
+            qWarning() << "VULKAN: OutlinedBorderItem ADDED render node with" << node.vertexCount << "vertices";
+        }
+    } else {
+        // Unhandled item type
+        qWarning() << "VULKAN: UNHANDLED item type:" << item->metaObject()->className()
+                   << "geometry=" << geometry.count() << "vertices";
+    }
+
+    // Process children with z >= 0 (in front of this item)
+    for (Item *childItem : sortedChildItems) {
+        if (childItem->z() < 0) {
+            continue;
+        }
+        if (childItem->explicitVisible()) {
+            createRenderNode(childItem, context);
+        }
+    }
+
+    // Pop stacks at the end (matching the push at the start)
+    context->transformStack.pop();
+    context->opacityStack.pop();
+    if (!context->cornerStack.isEmpty()) {
+        context->cornerStack.pop();
     }
 }
 
@@ -494,6 +739,8 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
         if (mappedData) {
             memcpy(mappedData, allVertices.data(), allVertices.size() * sizeof(GLVertex2D));
             streamingBuffer->unmap();
+            // Flush to ensure vertex data is visible to GPU (needed for non-HOST_COHERENT memory)
+            streamingBuffer->flush(0, allVertices.size() * sizeof(GLVertex2D));
         }
 
         // Bind vertex buffer
@@ -545,88 +792,147 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
         // Set push constants (MVP matrix and texture matrix)
         VulkanPushConstants pc{};
         const QMatrix4x4 mvp = context.projectionMatrix * node.transformMatrix;
+
+        // Debug: log what we're drawing and where
+        static int drawDebugCount = 0;
+        if (drawDebugCount < 10 && !node.textures.isEmpty()) {
+            QSize texSize = node.textures[0]->size();
+            // Extract translation from transform matrix (column 3, rows 0-1)
+            float tx = node.transformMatrix.column(3).x();
+            float ty = node.transformMatrix.column(3).y();
+            qWarning() << "VULKAN: RENDER NODE - texSize=" << texSize
+                       << "firstVert=" << node.firstVertex << "vertCount=" << node.vertexCount
+                       << "translate=(" << tx << "," << ty << ")";
+            // Log first vertex position
+            if (!node.geometry.isEmpty()) {
+                qWarning() << "  First vertex pos=(" << node.geometry[0].position.x()
+                           << "," << node.geometry[0].position.y() << ")";
+            }
+            drawDebugCount++;
+        }
+
         memcpy(pc.mvp, mvp.data(), sizeof(pc.mvp));
+        // Texture matrix is identity - we already applied it via postProcessTextureCoordinates()
+        // on the CPU side before uploading the geometry, so the shader doesn't need to transform again
         memset(pc.textureMatrix, 0, sizeof(pc.textureMatrix));
         pc.textureMatrix[0] = 1.0f;
         pc.textureMatrix[5] = 1.0f;
         pc.textureMatrix[10] = 1.0f;
         pc.textureMatrix[15] = 1.0f;
 
-        if (!node.textures.isEmpty() && node.textures[0]) {
-            const QMatrix4x4 &textureMatrix = node.textures[0]->matrix();
-            memcpy(pc.textureMatrix, textureMatrix.data(), sizeof(pc.textureMatrix));
-        }
-
         vkCmdPushConstants(cmd, pipeline->layout(),
                            VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
                            0, sizeof(VulkanPushConstants), &pc);
 
-        // Update and bind descriptor sets for textures
+        // Update and bind descriptor sets for textures and UBO
+        // Pipeline requires descriptor set 0, so we must bind one before drawing
         if (!node.textures.isEmpty() && node.textures[0]) {
             VkDescriptorSet descriptorSet = m_context->allocateDescriptorSet(pipeline->descriptorSetLayout());
             if (descriptorSet == VK_NULL_HANDLE) {
-                qCWarning(KWIN_CORE) << "Failed to allocate descriptor set, skipping texture binding";
+                qCWarning(KWIN_CORE) << "Failed to allocate descriptor set, skipping node";
                 continue;
             }
 
-            // Validate descriptor set before using it
-            if (descriptorSet != VK_NULL_HANDLE) {
-                // Update descriptor set with texture
-                VkDescriptorImageInfo imageInfo{};
-                imageInfo.sampler = node.textures[0]->sampler();
-                imageInfo.imageView = node.textures[0]->imageView();
-                if (imageInfo.imageView == VK_NULL_HANDLE) {
-                    qCWarning(KWIN_CORE) << "Texture has null image view, skipping descriptor update";
-                    continue;
-                }
-
-                // Validate image view before using it
-                if (imageInfo.imageView == VK_NULL_HANDLE) {
-                    qCWarning(KWIN_CORE) << "Descriptor set image view is null, skipping update";
-                    continue;
-                }
-                imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-
-                VkWriteDescriptorSet descriptorWrite{};
-                descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-                descriptorWrite.dstSet = descriptorSet;
-                descriptorWrite.dstBinding = 0;
-                descriptorWrite.dstArrayElement = 0;
-                descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-                descriptorWrite.descriptorCount = 1;
-                descriptorWrite.pImageInfo = &imageInfo;
-
-                vkUpdateDescriptorSets(m_backend->device(), 1, &descriptorWrite, 0, nullptr);
-                vkCmdBindDescriptorSets(cmd, VK_PIPELINE_BIND_POINT_GRAPHICS,
-                                        pipeline->layout(), 0, 1, &descriptorSet, 0, nullptr);
-                qCDebug(KWIN_CORE) << "Bound descriptor set with texture";
-            } else {
-                qCWarning(KWIN_CORE) << "Failed to allocate descriptor set, skipping texture binding";
+            // Update descriptor set with texture (binding 0)
+            VkDescriptorImageInfo imageInfo{};
+            imageInfo.sampler = node.textures[0]->sampler();
+            imageInfo.imageView = node.textures[0]->imageView();
+            if (imageInfo.imageView == VK_NULL_HANDLE) {
+                qCWarning(KWIN_CORE) << "Texture has null image view, skipping node";
+                continue;
             }
+            imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+
+            // Prepare uniform buffer data
+            VulkanUniforms uniforms{};
+            const QVector4D modulation = modulate(node.opacity, 1.0f);
+            memcpy(uniforms.uniformColor, &modulation, sizeof(uniforms.uniformColor));
+            uniforms.opacity = node.opacity;
+            uniforms.brightness = 1.0f;
+            uniforms.saturation = 1.0f;
+            memcpy(uniforms.geometryBox, &node.box, sizeof(uniforms.geometryBox));
+            memcpy(uniforms.borderRadius, &node.borderRadius, sizeof(uniforms.borderRadius));
+            uniforms.borderThickness = node.borderThickness;
+            const QVector4D borderColor(node.borderColor.redF(), node.borderColor.greenF(),
+                                        node.borderColor.blueF(), node.borderColor.alphaF());
+            memcpy(uniforms.borderColor, &borderColor, sizeof(uniforms.borderColor));
+
+            // Upload uniforms to buffer
+            static int uniformIndex = 0;
+            VkDeviceSize uniformOffset = (uniformIndex % 1024) * sizeof(VulkanUniforms);
+            m_uniformBuffer->upload(&uniforms, sizeof(VulkanUniforms), uniformOffset);
+            uniformIndex++;
+
+            // UBO descriptor (binding 1)
+            VkDescriptorBufferInfo bufferInfo{};
+            bufferInfo.buffer = m_uniformBuffer->buffer();
+            bufferInfo.offset = uniformOffset;
+            bufferInfo.range = sizeof(VulkanUniforms);
+
+            // Update both bindings
+            std::array<VkWriteDescriptorSet, 2> descriptorWrites{};
+
+            // Binding 0: Texture
+            descriptorWrites[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+            descriptorWrites[0].dstSet = descriptorSet;
+            descriptorWrites[0].dstBinding = 0;
+            descriptorWrites[0].dstArrayElement = 0;
+            descriptorWrites[0].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+            descriptorWrites[0].descriptorCount = 1;
+            descriptorWrites[0].pImageInfo = &imageInfo;
+
+            // Binding 1: UBO
+            descriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+            descriptorWrites[1].dstSet = descriptorSet;
+            descriptorWrites[1].dstBinding = 1;
+            descriptorWrites[1].dstArrayElement = 0;
+            descriptorWrites[1].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+            descriptorWrites[1].descriptorCount = 1;
+            descriptorWrites[1].pBufferInfo = &bufferInfo;
+
+            vkUpdateDescriptorSets(m_backend->device(), static_cast<uint32_t>(descriptorWrites.size()),
+                                   descriptorWrites.data(), 0, nullptr);
+            vkCmdBindDescriptorSets(cmd, VK_PIPELINE_BIND_POINT_GRAPHICS,
+                                    pipeline->layout(), 0, 1, &descriptorSet, 0, nullptr);
+            qCDebug(KWIN_CORE) << "Bound descriptor set with texture and UBO";
+        } else {
+            // No texture available but pipeline expects one - skip this node
+            // TODO: Add default 1x1 white texture for non-textured draws
+            qCDebug(KWIN_CORE) << "No texture for MapTexture pipeline, skipping node";
+            continue;
         }
 
-        // Update uniform buffer for fragment shader parameters
-        VulkanUniforms uniforms{};
-        const QVector4D modulation = modulate(node.opacity, 1.0f);
-        memcpy(uniforms.uniformColor, &modulation, sizeof(uniforms.uniformColor));
-        uniforms.opacity = node.opacity;
-        uniforms.saturation = 1.0f;
-        memcpy(uniforms.geometryBox, &node.box, sizeof(uniforms.geometryBox));
-        memcpy(uniforms.borderRadius, &node.borderRadius, sizeof(uniforms.borderRadius));
-        uniforms.borderThickness = node.borderThickness;
-        const QVector4D borderColor(node.borderColor.redF(), node.borderColor.greenF(),
-                                    node.borderColor.blueF(), node.borderColor.alphaF());
-        memcpy(uniforms.borderColor, &borderColor, sizeof(uniforms.borderColor));
-
-        // For now, use push constants for basic rendering
-        // A complete implementation would use uniform buffers
-
-        // Draw
+        // Draw (descriptor set is guaranteed bound since we continue above if not)
         if (node.vertexCount > 0) {
             vkCmdDraw(cmd, node.vertexCount, 1, node.firstVertex, 0);
-            qCDebug(KWIN_CORE) << "Drew" << node.vertexCount << "vertices";
-        } else {
-            qCDebug(KWIN_CORE) << "Skipped draw call with 0 vertices";
+
+            // Log ALL large texture draws (backgrounds)
+            if (!node.textures.isEmpty()) {
+                QSize texSize = node.textures[0]->size();
+                static int largeDrawCount = 0;
+                static int smallDrawCount = 0;
+
+                if (texSize.height() >= 1000) {
+                    // This is a background - log every time to track
+                    if (largeDrawCount < 30) {
+                        qWarning() << "VULKAN: DRAW LARGE (background?)" << node.vertexCount << "verts"
+                                   << "texSize=" << texSize
+                                   << "opacity=" << node.opacity
+                                   << "firstVert=" << node.firstVertex;
+                        // Log first few vertex positions
+                        if (!node.geometry.isEmpty()) {
+                            qWarning() << "  v0 pos=" << node.geometry[0].position << "tex=" << node.geometry[0].texcoord;
+                            if (node.geometry.size() > 1)
+                                qWarning() << "  v1 pos=" << node.geometry[1].position << "tex=" << node.geometry[1].texcoord;
+                        }
+                        largeDrawCount++;
+                    }
+                } else if (smallDrawCount < 10) {
+                    qWarning() << "VULKAN: DRAW SMALL" << node.vertexCount << "verts at offset" << node.firstVertex
+                               << "texSize=" << texSize << "opacity=" << node.opacity;
+                    smallDrawCount++;
+                }
+            }
         }
     }
 }
@@ -651,20 +957,32 @@ void ItemRendererVulkan::renderItem(const RenderTarget &renderTarget, const Rend
         .renderTargetScale = viewport.scale(),
     };
 
-    // Initialize stacks
-    context.transformStack.push(context.rootTransform);
+    // Initialize stacks (matching OpenGL approach)
+    // Push identity - rootTransform is applied in createRenderNode when stack size is 1
+    context.transformStack.push(QMatrix4x4());
     context.opacityStack.push(data.opacity());
 
     // Build render nodes from item tree
     createRenderNode(item, &context);
 
     // Set scissor for clipping if needed
+    static int scissorDebugCount = 0;
+    if (scissorDebugCount < 20) {
+        qWarning() << "VULKAN: renderItem - hardwareClipping=" << context.hardwareClipping
+                   << "regionEmpty=" << region.isEmpty()
+                   << "regionBounds=" << region.boundingRect()
+                   << "mask=" << Qt::hex << mask
+                   << "renderNodesCount=" << context.renderNodes.size();
+        scissorDebugCount++;
+    }
+
     if (context.hardwareClipping && !region.isEmpty()) {
         const QRect clipRect = region.boundingRect();
         VkRect2D scissor{};
         scissor.offset = {clipRect.x(), clipRect.y()};
         scissor.extent = {static_cast<uint32_t>(clipRect.width()), static_cast<uint32_t>(clipRect.height())};
         vkCmdSetScissor(m_currentCommandBuffer, 0, 1, &scissor);
+        qWarning() << "VULKAN: SET SCISSOR to" << clipRect;
     }
 
     // Render all nodes

@@ -216,12 +216,20 @@ SceneVulkanDecorationRenderer::~SceneVulkanDecorationRenderer()
 
 void SceneVulkanDecorationRenderer::render(const QRegion &region)
 {
+    static int renderLogCount = 0;
+    if (renderLogCount < 5) {
+        qWarning() << "SceneVulkanDecorationRenderer::render() called, region=" << region.boundingRect()
+                   << "imagesDirty=" << areImageSizesDirty();
+        renderLogCount++;
+    }
+
     if (areImageSizesDirty()) {
         resizeTexture();
         resetImageSizesDirty();
     }
 
     if (!m_texture) {
+        qWarning() << "SceneVulkanDecorationRenderer::render() - no texture!";
         return;
     }
 
@@ -252,6 +260,14 @@ void SceneVulkanDecorationRenderer::renderPart(const QRectF &rect, const QRectF 
 {
     if (!rect.isValid() || !m_texture) {
         return;
+    }
+
+    static int partLogCount = 0;
+    if (partLogCount < 10) {
+        qWarning() << "SceneVulkanDecorationRenderer::renderPart()"
+                   << "rect=" << rect << "partRect=" << partRect
+                   << "offset=" << textureOffset << "rotated=" << rotated;
+        partLogCount++;
     }
 
     const QMargins padding = texturePadForPart(rect, partRect);
@@ -343,7 +359,9 @@ void SceneVulkanDecorationRenderer::resizeTexture()
             return;
         }
 
-        m_texture = VulkanTexture::allocate(context, size, VK_FORMAT_R8G8B8A8_UNORM);
+        // Use BGRA SRGB format to match QImage::Format_ARGB32_Premultiplied memory layout
+        // and sRGB color space (Qt paints in sRGB, so we need SRGB format for gamma correction)
+        m_texture = VulkanTexture::allocate(context, size, VK_FORMAT_B8G8R8A8_SRGB);
         if (m_texture) {
             m_texture->setContentTransform(OutputTransform::FlipY);
             m_texture->setFilter(VK_FILTER_LINEAR);

@@ -114,6 +114,10 @@ private:
 
     // GPU-GPU synchronization info for the current frame
     VulkanSyncInfo m_currentSyncInfo;
+
+    // Track frame rendering to coordinate descriptor pool reset
+    int m_outputsInFlight = 0;
+    uint64_t m_frameNumber = 0;
 };
 
 } // namespace KWin
