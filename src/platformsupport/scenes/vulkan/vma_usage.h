@@ -25,4 +25,16 @@
 #define VMA_DEBUG_DETECT_CORRUPTION 1
 #endif
 
+// Suppress warnings from third-party VMA header
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+#pragma GCC diagnostic ignored "-Wundef"
+#pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
+
 #include "thirdparty/vk_mem_alloc.h"
+
+#if defined(__GNUC__) || defined(__clang__)
+#pragma GCC diagnostic pop
+#endif
