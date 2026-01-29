@@ -103,8 +103,14 @@ void X11Filter::keyPress(xcb_generic_event_t *event)
     KKeyServer::xcbKeyPressEventToQt(keyEvent, &keyQt);
 
     KeyboardKeyEvent keyKDE{
+        .device = nullptr,
+        .state = KeyboardKeyState::Pressed,
         .key = Qt::Key(keyQt & ~Qt::KeyboardModifierMask),
+        .nativeScanCode = keyEvent->detail,
+        .nativeVirtualKey = 0,
+        .text = QString(),
         .modifiers = Qt::KeyboardModifier(keyQt & Qt::KeyboardModifierMask),
+        .modifiersRelevantForGlobalShortcuts = Qt::KeyboardModifier(keyQt & Qt::KeyboardModifierMask),
         .timestamp = std::chrono::milliseconds(keyEvent->time),
     };
 
