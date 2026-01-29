@@ -294,6 +294,45 @@ if(HAVE_VULKAN)
 endif()
 
 ########################################################
+# Test Vulkan Pipeline Configuration
+########################################################
+if(HAVE_VULKAN)
+    add_executable(testVulkanPipeline vulkan_pipeline_test.cpp)
+    target_link_libraries(testVulkanPipeline
+        Qt::Test
+        kwin
+    )
+    add_test(NAME kwin-testVulkanPipeline COMMAND testVulkanPipeline)
+    ecm_mark_as_test(testVulkanPipeline)
+endif()
+
+########################################################
+# Test Vulkan Surface Texture
+########################################################
+if(HAVE_VULKAN)
+    add_executable(testVulkanSurfaceTexture vulkan_surface_texture_test.cpp)
+    target_link_libraries(testVulkanSurfaceTexture
+        Qt::Test
+        kwin
+    )
+    add_test(NAME kwin-testVulkanSurfaceTexture COMMAND testVulkanSurfaceTexture)
+    ecm_mark_as_test(testVulkanSurfaceTexture)
+endif()
+
+########################################################
+# Test Vulkan Render Node Creation
+########################################################
+if(HAVE_VULKAN)
+    add_executable(testVulkanRenderNode vulkan_render_node_test.cpp)
+    target_link_libraries(testVulkanRenderNode
+        Qt::Test
+        kwin
+    )
+    add_test(NAME kwin-testVulkanRenderNode COMMAND testVulkanRenderNode)
+    ecm_mark_as_test(testVulkanRenderNode)
+endif()
+
+########################################################
 # Test RenderTarget
 ########################################################
 add_executable(testRenderTarget render_target_test.cpp)

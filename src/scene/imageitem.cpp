@@ -6,7 +6,13 @@
 
 #include "scene/imageitem.h"
 
+#include "config-kwin.h"
 #include "opengl/gltexture.h"
+#if HAVE_VULKAN
+#include "compositor.h"
+#include "platformsupport/scenes/vulkan/vulkantexture.h"
+#include "scene/workspacescene_vulkan.h"
+#endif
 
 namespace KWin
 {
@@ -89,16 +95,49 @@ ImageItemVulkan::ImageItemVulkan(Item *parent)
 
 ImageItemVulkan::~ImageItemVulkan()
 {
+#if HAVE_VULKAN
+    m_texture.reset();
+#endif
+}
+
+VulkanTexture *ImageItemVulkan::texture() const
+{
+#if HAVE_VULKAN
+    return m_texture.get();
+#else
+    return nullptr;
+#endif
 }
 
 void ImageItemVulkan::preprocess()
 {
-    // TODO: Implement Vulkan texture upload
-    // For now, just check if image has changed
-    if (!m_image.isNull() && m_textureKey != m_image.cacheKey()) {
+#if HAVE_VULKAN
+    if (m_image.isNull()) {
+        m_texture.reset();
+        m_textureKey = 0;
+    } else if (m_textureKey != m_image.cacheKey()) {
         m_textureKey = m_image.cacheKey();
-        // In the future, create/update Vulkan texture here
+
+        auto *scene = dynamic_cast<WorkspaceSceneVulkan *>(Compositor::self()->scene());
+        if (!scene) {
+            return;
+        }
+        auto *context = scene->backend()->vulkanContext();
+        if (!context) {
+            return;
+        }
+
+        if (!m_texture || m_texture->size() != m_image.size()) {
+            m_texture = VulkanTexture::upload(context, m_image);
+            if (m_texture) {
+                m_texture->setFilter(VK_FILTER_LINEAR);
+                m_texture->setWrapMode(VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE);
+            }
+        } else {
+            m_texture->update(m_image, m_image.rect());
+        }
     }
+#endif
 }
 
 WindowQuadList ImageItemVulkan::buildQuads() const

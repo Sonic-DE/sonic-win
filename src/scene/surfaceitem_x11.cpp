@@ -158,10 +158,33 @@ QList<QRectF> SurfaceItemX11::shape() const
     const QRectF clipRect = m_window->clientGeometry().translated(-m_window->bufferGeometry().topLeft());
     QList<QRectF> shape = m_window->shapeRegion();
     QList<QRectF> shapeRegion;
+
+    // Debug logging for small windows (panels)
+    static int shapeDebugCount = 0;
+    bool shouldLog = m_window->bufferGeometry().height() < 100 && shapeDebugCount < 10;
+    if (shouldLog) {
+        qWarning() << "SurfaceItemX11::shape() DEBUG:"
+                   << "bufferGeom=" << m_window->bufferGeometry()
+                   << "clientGeom=" << m_window->clientGeometry()
+                   << "clipRect=" << clipRect
+                   << "shapeRegionCount=" << shape.size();
+        for (int i = 0; i < shape.size() && i < 5; i++) {
+            qWarning() << "  shapeIn[" << i << "]=" << shape[i];
+        }
+    }
+
     // bounded to clipRect
     for (QRectF &shapePart : shape) {
         shapeRegion += shapePart.intersected(clipRect);
     }
+
+    if (shouldLog) {
+        for (int i = 0; i < shapeRegion.size() && i < 5; i++) {
+            qWarning() << "  shapeOut[" << i << "]=" << shapeRegion[i];
+        }
+        shapeDebugCount++;
+    }
+
     return shapeRegion;
 }
 
@@ -213,8 +236,10 @@ xcb_visualid_t SurfacePixmapX11::visual() const
 
 void SurfacePixmapX11::create()
 {
+    qWarning() << "SurfacePixmapX11::create() called";
     const X11Window *window = static_cast<SurfaceItemX11 *>(m_item)->window();
     if (window->isDeleted()) {
+        qWarning() << "SurfacePixmapX11::create() - window is deleted";
         return;
     }
 
@@ -254,6 +279,7 @@ void SurfacePixmapX11::create()
     // this class is only used on X11 where the logical size and
     // device pixel size is guaranteed to be the same and we can convert safely
     m_size = bufferGeometry.size().toSize();
+    qWarning() << "SurfacePixmapX11::create() - SUCCESS, pixmap:" << m_pixmap << "size:" << m_size;
 }
 
 } // namespace KWin

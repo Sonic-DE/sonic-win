@@ -231,6 +231,11 @@ void SurfaceItem::destroyPixmap()
 
 void SurfaceItem::preprocess()
 {
+    static int preprocessCount = 0;
+    if (++preprocessCount <= 3) {
+        qWarning() << "SurfaceItem::preprocess() called";
+    }
+
     updatePixmap();
 
     if (SurfacePixmap *surfacePixmap = pixmap(); surfacePixmap && !surfacePixmap->isDiscarded()) {
@@ -242,10 +247,18 @@ void SurfaceItem::preprocess()
                 resetDamage();
             }
         } else if (surfacePixmap->isValid()) {
+            qWarning() << "SurfaceItem::preprocess() - calling surfaceTexture->create()";
             if (surfaceTexture->create()) {
+                qWarning() << "SurfaceItem::preprocess() - texture create succeeded";
                 resetDamage();
+            } else {
+                qWarning() << "SurfaceItem::preprocess() - texture create FAILED";
             }
+        } else {
+            qWarning() << "SurfaceItem::preprocess() - surfacePixmap not valid";
         }
+    } else {
+        qWarning() << "SurfaceItem::preprocess() - no valid surfacePixmap";
     }
 }
 

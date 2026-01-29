@@ -104,6 +104,12 @@ public:
     VkDescriptorSet allocateDescriptorSet(VkDescriptorSetLayout layout);
 
     /**
+     * @brief Reset the descriptor pool, freeing all allocated descriptor sets.
+     * Call at the start of each frame before allocating new descriptor sets.
+     */
+    void resetDescriptorPool();
+
+    /**
      * @brief Import a DMA-BUF as a Vulkan texture (if supported).
      */
     std::unique_ptr<VulkanTexture> importDmaBufAsTexture(const DmaBufAttributes &attributes);
@@ -172,6 +178,13 @@ private:
     QStack<VulkanFramebuffer *> m_framebufferStack;
 
     bool m_supportsDmaBufImport = false;
+
+    // Track descriptor allocations for proactive pool reset
+    // With ~90 nodes/frame across 3 monitors, 10000 sets lasts ~110 frames (~1.8s at 60fps)
+    // Reset at 80% = 8000 allocations, triggers vkDeviceWaitIdle for safe reset
+    uint32_t m_descriptorAllocCount = 0;
+    static constexpr uint32_t DESCRIPTOR_POOL_MAX_SETS = 10000;
+    static constexpr uint32_t DESCRIPTOR_POOL_RESET_THRESHOLD = 8000; // Reset at 80%
 
     static VulkanContext *s_currentContext;
 };

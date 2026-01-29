@@ -48,6 +48,8 @@ private:
     qint64 m_textureKey = 0;
 };
 
+class VulkanTexture;
+
 class ImageItemVulkan : public ImageItem
 {
     Q_OBJECT
@@ -56,11 +58,14 @@ public:
     explicit ImageItemVulkan(Item *parent = nullptr);
     ~ImageItemVulkan() override;
 
+    VulkanTexture *texture() const;
+
 protected:
     void preprocess() override;
     WindowQuadList buildQuads() const override;
 
 private:
+    std::unique_ptr<VulkanTexture> m_texture;
     qint64 m_textureKey = 0;
 };
 

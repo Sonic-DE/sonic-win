@@ -11,6 +11,8 @@
 #include "compositor.h"
 #include "core/outputbackend.h"
 #include "core/overlaywindow.h"
+#include "platformsupport/scenes/vulkan/vulkanpipelinemanager.h"
+#include "platformsupport/scenes/vulkan/vulkanrenderpass.h"
 #include "platformsupport/scenes/vulkan/vulkanrendertarget.h"
 #include "platformsupport/scenes/vulkan/vulkansurfacetexture_x11.h"
 #include "scene/surfaceitem_x11.h"
@@ -277,6 +279,9 @@ bool X11StandaloneVulkanBackend::initSwapchain()
     }
 
     qCDebug(KWIN_X11STANDALONE) << "Successfully created Vulkan swapchain";
+
+    // Connect the swapchain's render pass to the pipeline manager
+    m_context->pipelineManager()->setRenderPass(m_swapchain->renderPass()->renderPass());
 
     return true;
 }
