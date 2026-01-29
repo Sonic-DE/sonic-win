@@ -514,10 +514,25 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
             if (vulkanSurfaceTexture && vulkanSurfaceTexture->texture() && vulkanSurfaceTexture->texture()->isValid()) {
                 VulkanTexture *texture = vulkanSurfaceTexture->texture();
 
-                // Log geometry details
-                qWarning() << "VULKAN: SurfaceItem texture=" << texture->size()
-                           << "itemPos=" << item->position() << "itemRect=" << item->rect()
-                           << "quads=" << item->quads().count() << "geomVerts=" << geometry.count();
+                // Log geometry details - compare texture size vs bufferSize AND geometry dimensions
+                // Find geometry bounding box to show actual rendered size
+                float minX = 999999, maxX = -999999, minY = 999999, maxY = -999999;
+                for (int i = 0; i < geometry.count(); ++i) {
+                    minX = std::min(minX, geometry[i].position.x());
+                    maxX = std::max(maxX, geometry[i].position.x());
+                    minY = std::min(minY, geometry[i].position.y());
+                    maxY = std::max(maxY, geometry[i].position.y());
+                }
+                float geomWidth = maxX - minX;
+                float geomHeight = maxY - minY;
+
+                // Always log for panels (small surfaces)
+                if (texture->size().height() < 200 || texture->size() != surfaceItem->bufferSize()) {
+                    qWarning() << "VULKAN: SurfaceItem texSize=" << texture->size()
+                               << "bufferSize=" << surfaceItem->bufferSize()
+                               << "geomBounds=(" << geomWidth << "x" << geomHeight << ")"
+                               << "itemPos=" << item->position();
+                }
 
                 // Log vertices for LARGE items (backgrounds) to debug rendering
                 static int largeSurfaceLogCount = 0;
@@ -557,6 +572,23 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
                     }
                     qWarning() << "VULKAN: SMALL SurfaceItem transform:" << context->transformStack.top();
                     smallTransformLogCount++;
+                }
+
+                // ALSO log LARGE surfaces (backgrounds/windows) to compare
+                static int largeTransformLogCount = 0;
+                if (texture->size().height() >= 500 && largeTransformLogCount < 5) {
+                    qWarning() << "VULKAN: LARGE SurfaceItem texMatrix(0,0)=" << texMatrix(0, 0)
+                               << "texMatrix(1,1)=" << texMatrix(1, 1)
+                               << "texMatrix(0,3)=" << texMatrix(0, 3)
+                               << "texMatrix(1,3)=" << texMatrix(1, 3);
+                    qWarning() << "VULKAN: LARGE SurfaceItem texSize=" << texture->size()
+                               << "NORMALIZED tex coords:";
+                    for (int i = 0; i < qMin(geometry.count(), 6); i++) {
+                        qWarning() << "  v" << i << ": pos=" << geometry[i].position << "tex=" << geometry[i].texcoord;
+                    }
+                    qWarning() << "VULKAN: LARGE SurfaceItem transform:" << context->transformStack.top();
+                    qWarning() << "VULKAN: LARGE SurfaceItem opacity=" << context->opacityStack.top();
+                    largeTransformLogCount++;
                 }
 
                 RenderNode node;
