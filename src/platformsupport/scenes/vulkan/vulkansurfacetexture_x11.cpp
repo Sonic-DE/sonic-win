@@ -518,8 +518,10 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
     // Copy buffer to image
     VkBufferImageCopy copyRegion{};
     copyRegion.bufferOffset = 0;
-    copyRegion.bufferRowLength = 0; // Tightly packed
-    copyRegion.bufferImageHeight = 0;
+    // bufferRowLength specifies the row stride in PIXELS (not bytes)
+    // We always write with full texture stride, so set this to full width
+    copyRegion.bufferRowLength = static_cast<uint32_t>(m_size.width());
+    copyRegion.bufferImageHeight = static_cast<uint32_t>(m_size.height());
     copyRegion.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
     copyRegion.imageSubresource.mipLevel = 0;
     copyRegion.imageSubresource.baseArrayLayer = 0;
@@ -531,7 +533,8 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
         copyRegion.imageExtent = {static_cast<uint32_t>(m_size.width()),
                                   static_cast<uint32_t>(m_size.height()), 1};
     } else {
-        // Partial copy
+        // Partial copy - buffer data is at the same offset we wrote to in staging buffer
+        // The staging buffer has full texture stride, which we specified in bufferRowLength
         copyRegion.bufferOffset = (y * m_size.width() + x) * 4;
         copyRegion.imageOffset = {x, y, 0};
         copyRegion.imageExtent = {static_cast<uint32_t>(width),
