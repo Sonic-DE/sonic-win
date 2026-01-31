@@ -471,9 +471,9 @@ OutputConfigurationError Workspace::applyOutputConfiguration(const OutputConfigu
             const auto changeset = config.constChangeSet(output);
             maxScale = std::max(maxScale, changeset ? changeset->scale.value_or(output->scale()) : output->scale());
         }
-        kwinApp()->setXwaylandScale(maxScale);
+        kwinApp()->setXScale(maxScale);
     } else {
-        kwinApp()->setXwaylandScale(1);
+        kwinApp()->setXScale(1);
     }
     m_orientationSensor->setEnabled(m_outputConfigStore->isAutoRotateActive(kwinApp()->outputBackend()->outputs(), kwinApp()->tabletModeManager()->effectiveTabletMode()));
 

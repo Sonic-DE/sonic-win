@@ -207,12 +207,12 @@ public:
         m_compositeWindow = window;
     }
 
-    qreal xwaylandScale() const
+    qreal xScale() const
     {
-        return m_xwaylandScale;
+        return m_xScale;
     }
 
-    void setXwaylandScale(qreal scale);
+    void setXScale(qreal scale);
 
 #if KWIN_BUILD_ACTIVITIES
     bool usesKActivities() const
@@ -332,7 +332,7 @@ public:
 Q_SIGNALS:
     void x11ConnectionChanged();
     void x11ConnectionAboutToBeDestroyed();
-    void xwaylandScaleChanged();
+    void xScaleChanged();
     void workspaceCreated();
     void virtualTerminalCreated();
 
@@ -385,7 +385,7 @@ private:
     std::unique_ptr<Session> m_session;
     std::unique_ptr<OutputBackend> m_outputBackend;
     bool m_terminating = false;
-    qreal m_xwaylandScale = 1;
+    qreal m_xScale = 1;
     QProcessEnvironment m_processEnvironment;
     std::unique_ptr<PluginManager> m_pluginManager;
     std::unique_ptr<ColorManager> m_colorManager;

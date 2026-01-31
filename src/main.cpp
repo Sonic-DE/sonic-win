@@ -357,13 +357,13 @@ static X11EventFilterContainer *takeEventFilter(X11EventFilter *eventFilter,
     return nullptr;
 }
 
-void Application::setXwaylandScale(qreal scale)
+void Application::setXScale(qreal scale)
 {
     Q_ASSERT(scale != 0);
-    if (scale != m_xwaylandScale) {
-        m_xwaylandScale = scale;
+    if (scale != m_xScale) {
+        m_xScale = scale;
         applyXwaylandScale();
-        Q_EMIT xwaylandScaleChanged();
+        Q_EMIT xScaleChanged();
     }
 }
 
@@ -375,7 +375,7 @@ void Application::applyXwaylandScale()
 
     KConfigGroup xwaylandGroup = kwinApp()->config()->group(QStringLiteral("Xwayland"));
     if (xwaylandClientsScale) {
-        xwaylandGroup.writeEntry("Scale", m_xwaylandScale, KConfig::Notify);
+        xwaylandGroup.writeEntry("Scale", m_xScale, KConfig::Notify);
     } else {
         xwaylandGroup.deleteEntry("Scale", KConfig::Notify);
     }

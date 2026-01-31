@@ -49,6 +49,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QProcess>
+#include <cmath>
 // xcb
 #include <xcb/xcb_icccm.h>
 // system
@@ -3966,8 +3967,8 @@ QPointF X11Window::gravityAdjustment(xcb_gravity_t gravity) const
         dy = 0;
         break;
     case XCB_GRAVITY_CENTER:
-        dx = Xcb::fromXNative((int(Xcb::toXNative(borderLeft())) - int(Xcb::toXNative(borderRight()))) / 2);
-        dy = Xcb::fromXNative((int(Xcb::toXNative(borderTop())) - int(Xcb::toXNative(borderBottom()))) / 2);
+        dx = Xcb::fromXNative((int(Xcb::toXNative(Xcb::nativeRound(borderLeft()))) - int(Xcb::toXNative(Xcb::nativeRound(borderRight())))) / 2);
+        dy = Xcb::fromXNative((int(Xcb::toXNative(Xcb::nativeRound(borderTop()))) - int(Xcb::toXNative(Xcb::nativeRound(borderBottom())))) / 2);
         break;
     case XCB_GRAVITY_STATIC: // don't move
         dx = 0;
@@ -4366,7 +4367,7 @@ void X11Window::moveResizeInternal(const QRectF &rect, MoveResizeMode mode)
         clientGeometry = nextFrameRectToClientRect(frameGeometry);
     }
     const QRectF bufferGeometry = nextFrameRectToBufferRect(frameGeometry);
-    const qreal bufferScale = kwinApp()->xwaylandScale();
+    const qreal bufferScale = kwinApp()->xScale();
 
     if (m_bufferGeometry == bufferGeometry && m_clientGeometry == clientGeometry && m_frameGeometry == frameGeometry && m_bufferScale == bufferScale) {
         return;
