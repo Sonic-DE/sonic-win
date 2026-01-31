@@ -345,6 +345,11 @@ bool BlurEffect::enabledByDefault()
 
 bool BlurEffect::supported()
 {
+    // Blur effect requires OpenGL - it uses GLTexture and GLFramebuffer which don't work in Vulkan
+    // Return false for Vulkan backend to prevent 1/4 scale rendering issue
+    if (!effects->isOpenGLCompositing()) {
+        return false;
+    }
     return effects->openglContext() && effects->openglContext()->supportsBlits();
 }
 
