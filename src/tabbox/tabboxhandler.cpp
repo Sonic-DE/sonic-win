@@ -328,12 +328,11 @@ TabBoxHandler::TabBoxHandler(QObject *parent)
     : QObject(parent)
 {
     KWin::TabBox::tabBox = this;
-    d = new TabBoxHandlerPrivate(this);
+    d.reset(new TabBoxHandlerPrivate(this));
 }
 
 TabBoxHandler::~TabBoxHandler()
 {
-    delete d;
 }
 
 const KWin::TabBox::TabBoxConfig &TabBoxHandler::config() const
