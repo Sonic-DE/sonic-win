@@ -1098,7 +1098,7 @@ private:
             qint32 winGravity = 0;
         };
         explicit NormalHints()
-            : Property(){};
+            : Property() { };
         explicit NormalHints(WindowId window)
             : Property(0, window, XCB_ATOM_WM_NORMAL_HINTS, XCB_ATOM_WM_SIZE_HINTS, 0, 18)
         {
