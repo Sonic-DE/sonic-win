@@ -70,8 +70,6 @@ private:
     void loadSessionInfo(const QString &sessionName);
     void addSessionInfo(KConfigGroup &cg);
 
-    void updateWaylandCancelNotification();
-
     SessionState m_sessionState = SessionState::Normal;
 
     int m_sessionActiveClient;

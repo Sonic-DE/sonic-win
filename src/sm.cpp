@@ -364,10 +364,6 @@ bool SessionManager::closeWaylandWindows()
     return true;
 }
 
-void SessionManager::updateWaylandCancelNotification()
-{
-}
-
 void SessionManager::quit()
 {
     qApp->quit();
