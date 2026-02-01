@@ -403,6 +403,18 @@ if (COMPILER_UNUSED_PARAMETER_SUPPORTED)
     add_compile_options(-Wno-unused-parameter)
 endif()
 
+# Valgrind memory leak detection support
+option(KWIN_WITH_VALGRIND "Enable Valgrind memory leak detection support" OFF)
+if(KWIN_WITH_VALGRIND)
+    find_package(Valgrind)
+    if(Valgrind_FOUND)
+        add_definitions(-DKWIN_WITH_VALGRIND=1)
+        message(STATUS "Valgrind found, memory leak detection enabled")
+    else()
+        message(WARNING "Valgrind requested but not found")
+    endif()
+endif()
+
 add_definitions(
     -DQT_NO_KEYWORDS
     -DQT_USE_QSTRINGBUILDER
