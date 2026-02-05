@@ -1,21 +1,22 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2026 This file is copyright:
 # This file is distributed under the same license as the kwin package.
 #
-# Xəyyam Qocayev <xxmn77@gmail.com>, 2020, 2021.
+# SPDX-FileCopyrightText: 2026 X əyyam
+# SPDX-FileCopyrightText: 2026 Kheyyam <xxmn77@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2021-06-10 11:34+0400\n"
-"Last-Translator: Kheyyam Gojayev <xxmn77@gmail.com>\n"
+"PO-Revision-Date: 2026-02-05 00:28+0400\n"
+"Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
 "Language: az\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.04.1\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #: declarative-plugin/buttonsmodel.cpp:56
 #, kde-format
@@ -70,15 +71,13 @@ msgstr "Digər pəncərələrin üzərində tutmaq"
 #: declarative-plugin/buttonsmodel.cpp:76
 #, kde-format
 msgid "Spacer"
-msgstr ""
+msgstr "Ayırıcı"
 
 #: kcm.cpp:177
-#, fuzzy, kde-format
-#| msgctxt "%1 is the name of a border size"
-#| msgid "Theme's default (%1)"
+#, kde-format
 msgctxt "%1 is the name of a border size"
 msgid "Theme default (%1)"
-msgstr "Standart mövzu (%1)"
+msgstr "İlkin tərtibatdan (%1)"
 
 #: kwin-applywindowdecoration.cpp:32
 #, kde-format
@@ -88,8 +87,8 @@ msgid ""
 "available, or which is already set."
 msgstr ""
 "Bu vasitə, təsadüfən mövcud olmayan və ya əvvəlcədən qurulmuş birinə təyin "
-"etmədən, hazırda aktiv iclas üçün pəncərə bəzək mövzusunu təyin etməyə imkan "
-"verir."
+"etmədən, hazırda aktiv iclas üçün pəncərə tərtibatı mövzusunu təyin etməyə "
+"imkan verir."
 
 #: kwin-applywindowdecoration.cpp:33
 #, kde-format
@@ -98,15 +97,15 @@ msgid ""
 "full path will attempt to find a theme in that directory, and then apply "
 "that if one can be deduced."
 msgstr ""
-"KWin üçün təyin etmək istifadədiyiniz pəncərə dekorasiyası mövzusunun adı. "
-"Tam yolu keçmək, bu kataloqda mövzunu tapmağa cəhd edəcək və aşkatlandığı "
-"halda onu tətbiq edəcəkdir."
+"KWin üçün təyin etmək istədiyiniz pəncərə tərtibatının adı. Tam yolu verilən "
+"zaman, göstərilən kataloqda tərtibatı axtarmağa, onu yoxlamağa və aktiv "
+"etməyə cəhd ediləcəkdir."
 
 #: kwin-applywindowdecoration.cpp:34
 #, kde-format
 msgid ""
 "Show all the themes available on the system (and which is the current theme)"
-msgstr "Sistemdə mövcud olan bütün mövzuları göstərmək (həmçinin cari mövzunu)"
+msgstr "Bütün sistemdə mövcud olan və istifadə olunan mövzulara baxmaq"
 
 #: kwin-applywindowdecoration.cpp:65
 #, kde-format
@@ -114,8 +113,8 @@ msgid ""
 "Resolved %1 to the KWin Aurorae theme \"%2\", and will attempt to set that "
 "as your current theme."
 msgstr ""
-"%1, \"%2\" KWin Aurorae  mövzusu ilə həll edildi və bunu cari mövzunuz "
-"olaraq təyin etməyə çalışacaq."
+"%1, \"%2\" KWin Aurorae mövzusu ilə həll edildi və bunu cari mövzunuz olaraq "
+"təyin etməyə çalışacaq."
 
 #: kwin-applywindowdecoration.cpp:71
 #, kde-format
@@ -123,21 +122,21 @@ msgid ""
 "You attempted to pass a file path, but this could not be resolved to a "
 "theme, and we will have to abort, due to having no theme to set"
 msgstr ""
-"Siz bütün yolu keçməyə cəhd etdiniz, lakin, bu bir mövzu ilə həll oluna "
-"bilmədi və təyin ediləcək mövzu olmadığı üçün ləğv ediləcəkdir"
+"Tərtibatı quraşdırmaq əməliyyatı ləğv edildi, çünki fayla aparan yol düzgün "
+"təyin edilməyib"
 
 #: kwin-applywindowdecoration.cpp:77
 #, kde-format
 msgid ""
 "The requested theme \"%1\" is already set as the window decoration theme."
 msgstr ""
-"Tələb olunan \"%1\" mövzusu artıq pəncərə dekorasiyası mövzusu kimi təyin "
+"Tələb olunan \"%1\" mövzusu artıq pəncərə tərtibatı mövzusu kimi təyin "
 "olunub."
 
 #: kwin-applywindowdecoration.cpp:99
 #, kde-format
 msgid "Successfully applied the cursor theme %1 to your current Plasma session"
-msgstr "%1 kursor mövzusu cari Plasma sesiyası üçün tətbiq edildi"
+msgstr "%1 kursor mövzusu cari Plasma sessiyası üçün tətbiq edildi"
 
 #: kwin-applywindowdecoration.cpp:103
 #, kde-format
@@ -145,9 +144,8 @@ msgid ""
 "Failed to save your theme settings - the reason is unknown, but this is an "
 "unrecoverable error. You may find that simply trying again will work."
 msgstr ""
-"Mpvzu ayarları saxlanıla bilmədi - səbəb naməlumdur, lakin bu bərpa edilə "
-"bilməyən xətadır. Siz sadəcə olaraq yenidən cəhd edərək nəticə əldə edə "
-"bilərsiniz."
+"Mövzu ayarları saxlanıla bilmədi - səbəb məlum deyil. Bu düzəldilməsi mümkün "
+"olmayan bir xətadır, lakin bu bir daha baş verməyə bilər."
 
 #: kwin-applywindowdecoration.cpp:107
 #, kde-format
@@ -160,7 +158,7 @@ msgstr ""
 #: kwin-applywindowdecoration.cpp:112
 #, kde-format
 msgid "You have the following KWin window decoration themes on your system:"
-msgstr "Sisteminizdə aşağıdakı pəncərə dekorasiyası mövzuları var:"
+msgstr "Sisteminizdə aşağıdakı pəncərə tərtibatı mövzuları var:"
 
 #: ui/Buttons.qml:85
 #, kde-format
@@ -178,9 +176,7 @@ msgid "Drag buttons between here and the titlebar"
 msgstr "Düymələri bu sahə və başlıq paneli arasına daşıyın"
 
 #: ui/ConfigureTitlebar.qml:16
-#, fuzzy, kde-format
-#| msgctxt "tab label"
-#| msgid "Titlebar Buttons"
+#, kde-format
 msgid "Titlebar Buttons"
 msgstr "Başlıq paneli düymələri"
 
@@ -220,7 +216,7 @@ msgstr "Başlıq paneli düymələri"
 #, kde-format
 msgctxt "@action:button as in, \"Get New Window Decorations\""
 msgid "Get New…"
-msgstr ""
+msgstr "Yenisini endirmək..."
 
 #: ui/Themes.qml:93
 #, fuzzy, kde-format
