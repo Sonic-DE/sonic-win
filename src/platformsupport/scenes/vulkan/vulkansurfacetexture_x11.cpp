@@ -69,6 +69,11 @@ VulkanSurfaceTextureX11::~VulkanSurfaceTextureX11()
     m_stagingBuffer.reset();
 }
 
+bool VulkanSurfaceTextureX11::isValid() const
+{
+    return m_texture && m_texture->isValid();
+}
+
 bool VulkanSurfaceTextureX11::create()
 {
     if (!m_pixmap || !m_pixmap->isValid()) {

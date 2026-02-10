@@ -36,6 +36,7 @@ public:
 
     bool create() override;
     void update(const QRegion &region) override;
+    bool isValid() const override;
 
     /**
      * @brief Get the Vulkan texture for rendering.
