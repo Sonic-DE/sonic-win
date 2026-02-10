@@ -176,6 +176,24 @@ public:
      */
     void cleanupPendingResources();
 
+    /**
+     * @brief Queue an image view for deferred destruction.
+     * Image views must be destroyed before their parent images.
+     */
+    void queueImageViewForDestruction(VkImageView imageView);
+
+    /**
+     * @brief Queue an image for deferred destruction.
+     * Images can only be destroyed after all their views are destroyed.
+     */
+    void queueImageForDestruction(VkImage image);
+
+    /**
+     * @brief Queue both image view and image for deferred destruction in correct order.
+     * This is the recommended way to destroy image+view pairs.
+     */
+    void queueImageAndViewForDestruction(VkImageView imageView, VkImage image);
+
 private:
     bool createCommandPool();
     bool createDescriptorPool();
@@ -203,6 +221,23 @@ private:
 
     // Deferred sampler destruction queue (samplers in use by in-flight command buffers)
     QVector<std::pair<VkSampler, VkFence>> m_pendingSamplerDestructions;
+
+    // Deferred image destruction queue (images waiting for their views to be destroyed)
+    struct PendingImageDestruction
+    {
+        VkImage image;
+        VkFence fence;
+    };
+    QVector<PendingImageDestruction> m_pendingImageDestructions;
+
+    // Deferred image view destruction queue (views must be destroyed before images)
+    struct PendingImageViewDestruction
+    {
+        VkImageView imageView;
+        VkFence fence;
+        VkImage parentImage; // Image this view belongs to (for tracking)
+    };
+    QVector<PendingImageViewDestruction> m_pendingImageViewDestructions;
 
     static VulkanContext *s_currentContext;
 };
