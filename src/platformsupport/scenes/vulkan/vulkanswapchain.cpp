@@ -275,7 +275,7 @@ bool VulkanSwapchain::createSwapchain(const QSize &size)
     vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, m_surface, &presentModeCount, presentModes.data());
 
     if (formats.empty() || presentModes.empty()) {
-        qCWarning(KWIN_CORE) << "Surface doesn't support any formats or present modes";
+        qCWarning(KWIN_VULKAN) << "Surface doesn't support any formats or present modes";
         return false;
     }
 
@@ -307,7 +307,7 @@ bool VulkanSwapchain::createSwapchain(const QSize &size)
 
     VkResult result = vkCreateSwapchainKHR(device, &createInfo, nullptr, &m_swapchain);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create swapchain:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create swapchain:" << result;
         return false;
     }
 
@@ -350,7 +350,7 @@ bool VulkanSwapchain::createImageViews()
 
         VkResult result = vkCreateImageView(device, &viewInfo, nullptr, &m_imageViews[i]);
         if (result != VK_SUCCESS) {
-            qCWarning(KWIN_CORE) << "Failed to create image view:" << result;
+            qCWarning(KWIN_VULKAN) << "Failed to create image view:" << result;
             // Cleanup already-created image views (cleanupSwapchain handles VK_NULL_HANDLE)
             return false;
         }
@@ -375,7 +375,7 @@ bool VulkanSwapchain::createFramebuffers()
         m_framebuffers[i] = VulkanFramebuffer::create(m_context, m_renderPass.get(),
                                                       m_imageViews[i], fbSize);
         if (!m_framebuffers[i]) {
-            qCWarning(KWIN_CORE) << "Failed to create framebuffer" << i;
+            qCWarning(KWIN_VULKAN) << "Failed to create framebuffer" << i;
             return false;
         }
     }
@@ -396,7 +396,7 @@ bool VulkanSwapchain::createSyncObjects()
 
     for (uint32_t i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
         if (vkCreateSemaphore(device, &semaphoreInfo, nullptr, &m_imageAvailableSemaphores[i]) != VK_SUCCESS || vkCreateSemaphore(device, &semaphoreInfo, nullptr, &m_renderFinishedSemaphores[i]) != VK_SUCCESS || vkCreateFence(device, &fenceInfo, nullptr, &m_inFlightFences[i]) != VK_SUCCESS) {
-            qCWarning(KWIN_CORE) << "Failed to create synchronization objects";
+            qCWarning(KWIN_VULKAN) << "Failed to create synchronization objects";
             return false;
         }
     }
@@ -426,14 +426,14 @@ uint32_t VulkanSwapchain::acquireNextImage(uint64_t timeout)
                                             VK_NULL_HANDLE, &m_currentImageIndex);
 
     if (result == VK_ERROR_OUT_OF_DATE_KHR) {
-        qCDebug(KWIN_CORE) << "Swapchain out of date, needs recreation";
+        qCDebug(KWIN_VULKAN) << "Swapchain out of date, needs recreation";
         m_needsRecreation = true;
         return std::numeric_limits<uint32_t>::max();
     } else if (result == VK_SUBOPTIMAL_KHR) {
-        qCDebug(KWIN_CORE) << "Swapchain suboptimal, needs recreation";
+        qCDebug(KWIN_VULKAN) << "Swapchain suboptimal, needs recreation";
         m_needsRecreation = true;
     } else if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to acquire swapchain image:" << result << "(" << getVulkanResultString(result) << ")";
+        qCWarning(KWIN_VULKAN) << "Failed to acquire swapchain image:" << result << "(" << getVulkanResultString(result) << ")";
         return std::numeric_limits<uint32_t>::max();
     }
 
@@ -467,16 +467,16 @@ bool VulkanSwapchain::present()
     }
 
     if (result == VK_ERROR_OUT_OF_DATE_KHR) {
-        qCDebug(KWIN_CORE) << "Swapchain out of date after present, needs recreation";
+        qCDebug(KWIN_VULKAN) << "Swapchain out of date after present, needs recreation";
         m_needsRecreation = true;
     } else if (result == VK_SUBOPTIMAL_KHR) {
-        qCDebug(KWIN_CORE) << "Swapchain suboptimal after present, needs recreation";
+        qCDebug(KWIN_VULKAN) << "Swapchain suboptimal after present, needs recreation";
         m_needsRecreation = true;
     } else if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to present swapchain image:" << result << "(" << getVulkanResultString(result) << ")";
+        qCWarning(KWIN_VULKAN) << "Failed to present swapchain image:" << result << "(" << getVulkanResultString(result) << ")";
         return false;
     } else {
-        qCDebug(KWIN_CORE) << "Successfully presented swapchain image" << m_currentImageIndex;
+        qCDebug(KWIN_VULKAN) << "Successfully presented swapchain image" << m_currentImageIndex;
     }
 
     return true;

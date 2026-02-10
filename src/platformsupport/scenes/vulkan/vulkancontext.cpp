@@ -51,7 +51,7 @@ static VkFormat drmFormatToVkFormat(uint32_t drmFormat)
     case DRM_FORMAT_XBGR2101010:
         return VK_FORMAT_A2B10G10R10_UNORM_PACK32;
     default:
-        qCWarning(KWIN_CORE) << "Unsupported DRM format:" << Qt::hex << drmFormat;
+        qCWarning(KWIN_VULKAN) << "Unsupported DRM format:" << Qt::hex << drmFormat << Qt::dec;
         return VK_FORMAT_UNDEFINED;
     }
 }
@@ -63,17 +63,17 @@ VulkanContext::VulkanContext(VulkanBackend *backend)
 {
     // Initialize VMA allocator
     if (!VulkanAllocator::initialize(backend)) {
-        qCWarning(KWIN_CORE) << "Failed to initialize VMA allocator";
+        qCWarning(KWIN_VULKAN) << "Failed to initialize VMA allocator";
         return;
     }
 
     if (!createCommandPool()) {
-        qCWarning(KWIN_CORE) << "Failed to create Vulkan command pool";
+        qCWarning(KWIN_VULKAN) << "Failed to create Vulkan command pool";
         return;
     }
 
     if (!createDescriptorPool()) {
-        qCWarning(KWIN_CORE) << "Failed to create Vulkan descriptor pool";
+        qCWarning(KWIN_VULKAN) << "Failed to create Vulkan descriptor pool";
         cleanup();
         return;
     }
@@ -103,7 +103,7 @@ VulkanContext::VulkanContext(VulkanBackend *backend)
         }
     }
 
-    qCDebug(KWIN_CORE) << "VulkanContext created, DMA-BUF import:" << m_supportsDmaBufImport;
+    qCDebug(KWIN_VULKAN) << "VulkanContext created, DMA-BUF import:" << m_supportsDmaBufImport;
 }
 
 VulkanContext::~VulkanContext()
@@ -123,7 +123,7 @@ bool VulkanContext::createCommandPool()
 
     VkResult result = vkCreateCommandPool(m_backend->device(), &poolInfo, nullptr, &m_commandPool);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create command pool:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create command pool:" << result;
         return false;
     }
 
@@ -150,11 +150,11 @@ bool VulkanContext::createDescriptorPool()
 
     VkResult result = vkCreateDescriptorPool(m_backend->device(), &poolInfo, nullptr, &m_descriptorPool);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create descriptor pool:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create descriptor pool:" << result;
         return false;
     }
 
-    qCWarning(KWIN_CORE) << "Created descriptor pool with maxSets=" << poolInfo.maxSets;
+    qCWarning(KWIN_VULKAN) << "Created descriptor pool with maxSets=" << poolInfo.maxSets;
     return true;
 }
 
@@ -243,7 +243,7 @@ VkCommandBuffer VulkanContext::allocateCommandBuffer()
     VkCommandBuffer commandBuffer;
     VkResult result = vkAllocateCommandBuffers(m_backend->device(), &allocInfo, &commandBuffer);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to allocate command buffer:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to allocate command buffer:" << result;
         return VK_NULL_HANDLE;
     }
 
@@ -293,7 +293,7 @@ VkDescriptorSet VulkanContext::allocateDescriptorSet(VkDescriptorSetLayout layou
     // Proactively reset pool when approaching capacity
     // This ensures we reset at a safe point before we run out
     if (m_descriptorAllocCount >= DESCRIPTOR_POOL_RESET_THRESHOLD) {
-        qCDebug(KWIN_CORE) << "Proactive descriptor pool reset at" << m_descriptorAllocCount << "allocations";
+        qCDebug(KWIN_VULKAN) << "Proactive descriptor pool reset at" << m_descriptorAllocCount << "allocations";
         vkDeviceWaitIdle(m_backend->device());
         vkResetDescriptorPool(m_backend->device(), m_descriptorPool, 0);
         m_descriptorAllocCount = 0;
@@ -312,7 +312,7 @@ VkDescriptorSet VulkanContext::allocateDescriptorSet(VkDescriptorSetLayout layou
     // VK_ERROR_OUT_OF_POOL_MEMORY = -1000069000, VK_ERROR_FRAGMENTED_POOL = -1000069001
     const bool poolExhausted = (result == VK_ERROR_OUT_OF_POOL_MEMORY) || (result == VK_ERROR_FRAGMENTED_POOL) || (static_cast<int>(result) == -1000069000) || (static_cast<int>(result) == -1000069001);
     if (poolExhausted) {
-        qCWarning(KWIN_CORE) << "Descriptor pool exhausted at" << m_descriptorAllocCount << "allocations, emergency reset";
+        qCWarning(KWIN_VULKAN) << "Descriptor pool exhausted at" << m_descriptorAllocCount << "allocations, emergency reset";
         vkDeviceWaitIdle(m_backend->device());
         vkResetDescriptorPool(m_backend->device(), m_descriptorPool, 0);
         m_descriptorAllocCount = 0;
@@ -322,7 +322,7 @@ VkDescriptorSet VulkanContext::allocateDescriptorSet(VkDescriptorSetLayout layou
     }
 
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to allocate descriptor set:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to allocate descriptor set:" << result;
         return VK_NULL_HANDLE;
     }
 
@@ -341,14 +341,14 @@ void VulkanContext::resetDescriptorPool()
 std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBufAttributes &attributes)
 {
     if (!m_supportsDmaBufImport) {
-        qCWarning(KWIN_CORE) << "DMA-BUF import not supported";
+        qCWarning(KWIN_VULKAN) << "DMA-BUF import not supported";
         return nullptr;
     }
 
     // Convert DRM format to Vulkan format
     VkFormat vkFormat = drmFormatToVkFormat(attributes.format);
     if (vkFormat == VK_FORMAT_UNDEFINED) {
-        qCWarning(KWIN_CORE) << "DMA-BUF import: unsupported DRM format" << Qt::hex << attributes.format;
+        qCWarning(KWIN_VULKAN) << "DMA-BUF import: unsupported DRM format:" << Qt::hex << attributes.format << Qt::dec;
         return nullptr;
     }
 
@@ -376,7 +376,7 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     VkImage image;
     VkResult result = vkCreateImage(m_backend->device(), &imageInfo, nullptr, &image);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create image for DMA-BUF import:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create image for DMA-BUF import:" << result;
         return nullptr;
     }
 
@@ -407,7 +407,7 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     }
 
     if (memoryTypeIndex == UINT32_MAX) {
-        qCWarning(KWIN_CORE) << "Failed to find suitable memory type for DMA-BUF import";
+        qCWarning(KWIN_VULKAN) << "Failed to find suitable memory type for DMA-BUF import";
         vkDestroyImage(m_backend->device(), image, nullptr);
         return nullptr;
     }
@@ -427,7 +427,7 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     VkDeviceMemory memory;
     result = vkAllocateMemory(m_backend->device(), &allocInfo, nullptr, &memory);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to allocate memory for DMA-BUF import:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to allocate memory for DMA-BUF import:" << result;
         vkDestroyImage(m_backend->device(), image, nullptr);
         return nullptr;
     }
@@ -435,7 +435,7 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     // Bind memory to image
     result = vkBindImageMemory(m_backend->device(), image, memory, 0);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to bind memory to image:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to bind memory to image:" << result;
         vkFreeMemory(m_backend->device(), memory, nullptr);
         vkDestroyImage(m_backend->device(), image, nullptr);
         return nullptr;
@@ -456,7 +456,7 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     VkImageView imageView;
     result = vkCreateImageView(m_backend->device(), &viewInfo, nullptr, &imageView);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create image view:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create image view:" << result;
         vkFreeMemory(m_backend->device(), memory, nullptr);
         vkDestroyImage(m_backend->device(), image, nullptr);
         return nullptr;
@@ -479,7 +479,7 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     VkSampler sampler;
     result = vkCreateSampler(m_backend->device(), &samplerInfo, nullptr, &sampler);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create sampler:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create sampler:" << result;
         vkDestroyImageView(m_backend->device(), imageView, nullptr);
         vkFreeMemory(m_backend->device(), memory, nullptr);
         vkDestroyImage(m_backend->device(), image, nullptr);
@@ -540,7 +540,7 @@ VkFence VulkanContext::getOrCreateFence()
 
         VkResult result = vkCreateFence(m_backend->device(), &fenceInfo, nullptr, &m_fence);
         if (result != VK_SUCCESS) {
-            qCWarning(KWIN_CORE) << "Failed to create fence:" << result;
+            qCWarning(KWIN_VULKAN) << "Failed to create fence:" << result;
             return VK_NULL_HANDLE;
         }
     }
@@ -566,7 +566,7 @@ VkFence VulkanContext::createExportableFence()
     VkFence fence = VK_NULL_HANDLE;
     VkResult result = vkCreateFence(m_backend->device(), &fenceInfo, nullptr, &fence);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create exportable fence:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create exportable fence:" << result;
         return VK_NULL_HANDLE;
     }
 
@@ -587,7 +587,7 @@ FileDescriptor VulkanContext::exportFenceToSyncFd(VkFence fence)
     int fd = -1;
     VkResult result = m_backend->vkGetFenceFdKHR()(m_backend->device(), &getFdInfo, &fd);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to export fence to sync fd:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to export fence to sync fd:" << result;
         return FileDescriptor();
     }
 

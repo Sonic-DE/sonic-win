@@ -101,7 +101,7 @@ bool VulkanPipeline::createDescriptorSetLayout()
     VkResult result = vkCreateDescriptorSetLayout(m_context->backend()->device(), &layoutInfo,
                                                   nullptr, &m_descriptorSetLayout);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create descriptor set layout:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create descriptor set layout:" << result;
         return false;
     }
 
@@ -126,7 +126,7 @@ bool VulkanPipeline::createPipelineLayout()
     VkResult result = vkCreatePipelineLayout(m_context->backend()->device(), &pipelineLayoutInfo,
                                              nullptr, &m_layout);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create pipeline layout:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create pipeline layout:" << result;
         return false;
     }
 
@@ -144,7 +144,7 @@ VkShaderModule VulkanPipeline::createShaderModule(const QByteArray &spirv)
     VkResult result = vkCreateShaderModule(m_context->backend()->device(), &createInfo,
                                            nullptr, &shaderModule);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create shader module:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create shader module:" << result;
         return VK_NULL_HANDLE;
     }
 
@@ -301,7 +301,7 @@ bool VulkanPipeline::createPipeline(VkRenderPass renderPass,
     vkDestroyShaderModule(m_context->backend()->device(), fragModule, nullptr);
 
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create graphics pipeline:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create graphics pipeline:" << result;
         return false;
     }
 

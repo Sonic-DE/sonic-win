@@ -80,7 +80,7 @@ std::unique_ptr<VulkanFramebuffer> VulkanFramebuffer::createWithTexture(VulkanCo
     // Create color texture
     fb->m_colorTexture = VulkanTexture::createRenderTarget(context, size, format);
     if (!fb->m_colorTexture) {
-        qCWarning(KWIN_CORE) << "Failed to create color texture for framebuffer";
+        qCWarning(KWIN_VULKAN) << "Failed to create color texture for framebuffer";
         return nullptr;
     }
 
@@ -90,7 +90,7 @@ std::unique_ptr<VulkanFramebuffer> VulkanFramebuffer::createWithTexture(VulkanCo
     if (renderPass->config().hasDepth) {
         fb->m_depthTexture = VulkanTexture::createDepthStencil(context, size);
         if (!fb->m_depthTexture) {
-            qCWarning(KWIN_CORE) << "Failed to create depth texture for framebuffer";
+            qCWarning(KWIN_VULKAN) << "Failed to create depth texture for framebuffer";
             return nullptr;
         }
         attachments.push_back(fb->m_depthTexture->imageView());
@@ -117,11 +117,11 @@ bool VulkanFramebuffer::createFramebuffer(const std::vector<VkImageView> &attach
     VkResult result = vkCreateFramebuffer(m_context->backend()->device(), &framebufferInfo,
                                           nullptr, &m_framebuffer);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create framebuffer:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create framebuffer:" << result;
         return false;
     }
 
-    qCDebug(KWIN_CORE) << "Successfully created framebuffer with" << attachments.size() << "attachments";
+    qCDebug(KWIN_VULKAN) << "Successfully created framebuffer with" << attachments.size() << "attachments";
     return true;
 }
 
@@ -157,7 +157,7 @@ void VulkanFramebuffer::blitFrom(VkCommandBuffer cmd, VulkanFramebuffer *source,
                                  const QRect &destRect, VkFilter filter)
 {
     if (!source || !source->m_colorTexture || !m_colorTexture) {
-        qCWarning(KWIN_CORE) << "Cannot blit: source or destination texture missing";
+        qCWarning(KWIN_VULKAN) << "Cannot blit: source or destination texture missing";
         return;
     }
 

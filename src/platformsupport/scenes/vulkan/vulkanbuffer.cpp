@@ -40,12 +40,12 @@ bool VulkanAllocator::initialize(VulkanBackend *backend)
 
     VkResult result = vmaCreateAllocator(&allocatorInfo, &s_allocator);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create VMA allocator:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create VMA allocator:" << result;
         return false;
     }
 
     s_initialized = true;
-    qCDebug(KWIN_CORE) << "VMA allocator initialized successfully";
+    qCDebug(KWIN_VULKAN) << "VMA allocator initialized successfully";
     return true;
 }
 
@@ -132,7 +132,7 @@ std::unique_ptr<VulkanBuffer> VulkanBuffer::create(VulkanContext *context, VkDev
                                                    UsageHint usageHint, bool persistentMap)
 {
     if (!VulkanAllocator::isInitialized()) {
-        qCWarning(KWIN_CORE) << "VMA allocator not initialized";
+        qCWarning(KWIN_VULKAN) << "VMA allocator not initialized";
         return nullptr;
     }
 
@@ -171,7 +171,7 @@ std::unique_ptr<VulkanBuffer> VulkanBuffer::create(VulkanContext *context, VkDev
     VkResult result = vmaCreateBuffer(VulkanAllocator::allocator(), &bufferInfo, &allocInfo,
                                       &buffer, &allocation, &allocationInfo);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create Vulkan buffer:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create Vulkan buffer:" << result;
         return nullptr;
     }
 
@@ -222,7 +222,7 @@ std::unique_ptr<VulkanBuffer> VulkanBuffer::createStreamingBuffer(VulkanContext 
 void VulkanBuffer::upload(const void *data, VkDeviceSize dataSize, VkDeviceSize offset)
 {
     if (dataSize + offset > m_size) {
-        qCWarning(KWIN_CORE) << "Buffer upload exceeds buffer size";
+        qCWarning(KWIN_VULKAN) << "Buffer upload exceeds buffer size";
         return;
     }
 
@@ -234,7 +234,7 @@ void VulkanBuffer::upload(const void *data, VkDeviceSize dataSize, VkDeviceSize 
         // Use staging buffer for device-local memory
         auto staging = createStagingBuffer(m_context, dataSize);
         if (!staging) {
-            qCWarning(KWIN_CORE) << "Failed to create staging buffer for upload";
+            qCWarning(KWIN_VULKAN) << "Failed to create staging buffer for upload";
             return;
         }
 
@@ -266,7 +266,7 @@ void *VulkanBuffer::map()
     void *mapped = nullptr;
     VkResult result = vmaMapMemory(VulkanAllocator::allocator(), m_allocation, &mapped);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to map buffer:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to map buffer:" << result;
         return nullptr;
     }
 
@@ -318,7 +318,7 @@ void *VulkanBuffer::allocate(VkDeviceSize size, VkDeviceSize alignment)
     VkDeviceSize alignedOffset = (m_currentOffset + alignment - 1) & ~(alignment - 1);
 
     if (alignedOffset + size > m_size) {
-        qCWarning(KWIN_CORE) << "Streaming buffer exhausted";
+        qCWarning(KWIN_VULKAN) << "Streaming buffer exhausted";
         return nullptr;
     }
 

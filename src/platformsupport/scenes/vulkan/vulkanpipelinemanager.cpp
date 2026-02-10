@@ -67,13 +67,13 @@ bool VulkanPipelineManager::loadShaders()
         if (QFile::exists(vPath) && QFile::exists(fPath)) {
             vertPath = vPath;
             fragPath = fPath;
-            qCDebug(KWIN_CORE) << "Found Vulkan shaders at:" << base;
+            qCDebug(KWIN_VULKAN) << "Found Vulkan shaders at:" << base;
             break;
         }
     }
 
     if (vertPath.isEmpty() || fragPath.isEmpty()) {
-        qCWarning(KWIN_CORE) << "Could not find Vulkan SPIR-V shaders in any of:" << searchPaths;
+        qCWarning(KWIN_VULKAN) << "Could not find Vulkan SPIR-V shaders in any of:" << searchPaths;
         // Try to provide more specific error information
         for (const QString &basePath : searchPaths) {
             if (basePath.isEmpty()) {
@@ -89,10 +89,10 @@ bool VulkanPipelineManager::loadShaders()
             QString fPath = base + QStringLiteral("main.frag.spv");
 
             if (!QFile::exists(vPath)) {
-                qCWarning(KWIN_CORE) << "Vertex shader not found:" << vPath;
+                qCWarning(KWIN_VULKAN) << "Vertex shader not found:" << vPath;
             }
             if (!QFile::exists(fPath)) {
-                qCWarning(KWIN_CORE) << "Fragment shader not found:" << fPath;
+                qCWarning(KWIN_VULKAN) << "Fragment shader not found:" << fPath;
             }
         }
         m_shadersLoaded = false;
@@ -101,12 +101,12 @@ bool VulkanPipelineManager::loadShaders()
 
     QFile vertFile(vertPath);
     if (!vertFile.open(QIODevice::ReadOnly)) {
-        qCWarning(KWIN_CORE) << "Failed to open vertex shader:" << vertPath << "Error:" << vertFile.errorString();
+        qCWarning(KWIN_VULKAN) << "Failed to open vertex shader:" << vertPath << "Error:" << vertFile.errorString();
         return false;
     }
     m_vertexShaderSpirv = vertFile.readAll();
     if (m_vertexShaderSpirv.isEmpty()) {
-        qCWarning(KWIN_CORE) << "Vertex shader file is empty:" << vertPath;
+        qCWarning(KWIN_VULKAN) << "Vertex shader file is empty:" << vertPath;
         vertFile.close();
         return false;
     }
@@ -114,19 +114,19 @@ bool VulkanPipelineManager::loadShaders()
 
     QFile fragFile(fragPath);
     if (!fragFile.open(QIODevice::ReadOnly)) {
-        qCWarning(KWIN_CORE) << "Failed to open fragment shader:" << fragPath << "Error:" << fragFile.errorString();
+        qCWarning(KWIN_VULKAN) << "Failed to open fragment shader:" << fragPath << "Error:" << fragFile.errorString();
         return false;
     }
     m_fragmentShaderSpirv = fragFile.readAll();
     if (m_fragmentShaderSpirv.isEmpty()) {
-        qCWarning(KWIN_CORE) << "Fragment shader file is empty:" << fragPath;
+        qCWarning(KWIN_VULKAN) << "Fragment shader file is empty:" << fragPath;
         fragFile.close();
         return false;
     }
     fragFile.close();
 
     m_shadersLoaded = true;
-    qCDebug(KWIN_CORE) << "Vulkan shaders loaded successfully";
+    qCDebug(KWIN_VULKAN) << "Vulkan shaders loaded successfully";
     return true;
 }
 
@@ -142,12 +142,12 @@ void VulkanPipelineManager::setRenderPass(VkRenderPass renderPass)
 VulkanPipeline *VulkanPipelineManager::pipeline(ShaderTraits traits)
 {
     if (m_renderPass == VK_NULL_HANDLE) {
-        qCWarning(KWIN_CORE) << "Cannot get pipeline: render pass not set";
+        qCWarning(KWIN_VULKAN) << "Cannot get pipeline: render pass not set";
         return nullptr;
     }
 
     if (!m_shadersLoaded) {
-        qCWarning(KWIN_CORE) << "Cannot get pipeline: shaders not loaded";
+        qCWarning(KWIN_VULKAN) << "Cannot get pipeline: shaders not loaded";
         return nullptr;
     }
 
@@ -161,7 +161,7 @@ VulkanPipeline *VulkanPipelineManager::pipeline(ShaderTraits traits)
     auto newPipeline = VulkanPipeline::create(m_context, m_renderPass, traits,
                                               m_vertexShaderSpirv, m_fragmentShaderSpirv);
     if (!newPipeline) {
-        qCWarning(KWIN_CORE) << "Failed to create pipeline for traits:" << static_cast<int>(traits);
+        qCWarning(KWIN_VULKAN) << "Failed to create pipeline for traits:" << static_cast<int>(traits);
         // Try to create a fallback pipeline with minimal traits
         ShaderTraits fallbackTraits = ShaderTrait::MapTexture;
         if (traits & ShaderTrait::UniformColor) {
@@ -169,13 +169,13 @@ VulkanPipeline *VulkanPipelineManager::pipeline(ShaderTraits traits)
         }
         // Only try fallback if it's different from the requested traits
         if (fallbackTraits != traits) {
-            qCDebug(KWIN_CORE) << "Trying fallback pipeline with traits:" << static_cast<int>(fallbackTraits);
+            qCDebug(KWIN_VULKAN) << "Trying fallback pipeline with traits:" << static_cast<int>(fallbackTraits);
             auto fallbackPipeline = VulkanPipeline::create(m_context, m_renderPass, fallbackTraits,
                                                            m_vertexShaderSpirv, m_fragmentShaderSpirv);
             if (fallbackPipeline) {
                 VulkanPipeline *result = fallbackPipeline.get();
                 m_pipelines[traits] = std::move(fallbackPipeline);
-                qCDebug(KWIN_CORE) << "Created fallback Vulkan pipeline for traits:" << static_cast<int>(traits);
+                qCDebug(KWIN_VULKAN) << "Created fallback Vulkan pipeline for traits:" << static_cast<int>(traits);
                 return result;
             }
         }
@@ -185,7 +185,7 @@ VulkanPipeline *VulkanPipelineManager::pipeline(ShaderTraits traits)
     VulkanPipeline *result = newPipeline.get();
     m_pipelines[traits] = std::move(newPipeline);
 
-    qCDebug(KWIN_CORE) << "Created Vulkan pipeline for traits:" << static_cast<int>(traits);
+    qCDebug(KWIN_VULKAN) << "Created Vulkan pipeline for traits:" << static_cast<int>(traits);
     return result;
 }
 
