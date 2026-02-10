@@ -51,6 +51,16 @@ ItemRendererVulkan::ItemRendererVulkan(VulkanBackend *backend)
     m_uniformBuffer = VulkanBuffer::createUniformBuffer(
         m_context,
         sizeof(VulkanUniforms) * 1024); // Support up to 1024 draws per frame
+
+    // Create default 1x1 white texture for non-textured draws
+    QImage whiteImage(1, 1, QImage::Format_ARGB32_Premultiplied);
+    whiteImage.fill(Qt::white);
+    m_defaultWhiteTexture = VulkanTexture::upload(m_context, whiteImage);
+    if (!m_defaultWhiteTexture || !m_defaultWhiteTexture->isValid()) {
+        qCWarning(KWIN_VULKAN) << "Failed to create default white texture";
+    } else {
+        qCDebug(KWIN_VULKAN) << "Created default 1x1 white texture";
+    }
 }
 
 ItemRendererVulkan::~ItemRendererVulkan()
@@ -915,58 +925,58 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
                            VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
                            0, sizeof(VulkanPushConstants), &pc);
 
+        // Allocate descriptor set first (needed for both normal and default texture cases)
+        VkDescriptorSet descriptorSet = m_context->allocateDescriptorSet(pipeline->descriptorSetLayout());
+        if (descriptorSet == VK_NULL_HANDLE) {
+            qCWarning(KWIN_CORE) << "Failed to allocate descriptor set, skipping node";
+            continue;
+        }
+
+        // Track descriptor set for cleanup after frame submission
+        m_frameDescriptorSets.push_back(descriptorSet);
+
+        // Upload uniforms to buffer
+        VulkanUniforms uniforms{};
+        const QVector4D modulation = modulate(node.opacity, 1.0f);
+        memcpy(uniforms.uniformColor, &modulation, sizeof(uniforms.uniformColor));
+        uniforms.opacity = node.opacity;
+        uniforms.brightness = 1.0f;
+        uniforms.saturation = 1.0f;
+        memcpy(uniforms.geometryBox, &node.box, sizeof(uniforms.geometryBox));
+        memcpy(uniforms.borderRadius, &node.borderRadius, sizeof(uniforms.borderRadius));
+        uniforms.borderThickness = node.borderThickness;
+        const QVector4D borderColor(node.borderColor.redF(), node.borderColor.greenF(),
+                                    node.borderColor.blueF(), node.borderColor.alphaF());
+        memcpy(uniforms.borderColor, &borderColor, sizeof(uniforms.borderColor));
+
+        static int uniformIndex = 0;
+        VkDeviceSize uniformOffset = (uniformIndex % 1024) * sizeof(VulkanUniforms);
+        m_uniformBuffer->upload(&uniforms, sizeof(VulkanUniforms), uniformOffset);
+        uniformIndex++;
+
         // Update and bind descriptor sets for textures and UBO
         // Pipeline requires descriptor set 0, so we must bind one before drawing
+        VulkanTexture *texture = nullptr;
         if (!node.textures.isEmpty() && node.textures[0]) {
-            VkDescriptorSet descriptorSet = m_context->allocateDescriptorSet(pipeline->descriptorSetLayout());
-            if (descriptorSet == VK_NULL_HANDLE) {
-                qCWarning(KWIN_CORE) << "Failed to allocate descriptor set, skipping node";
-                continue;
+            VulkanTexture *tex = node.textures[0];
+            if (tex->isValid() && tex->imageView() != VK_NULL_HANDLE) {
+                texture = tex;
             }
+        }
 
-            // Track descriptor set for cleanup after frame submission
-            m_frameDescriptorSets.push_back(descriptorSet);
-
-            // Update descriptor set with texture (binding 0)
+        if (texture) {
+            // Use the node's texture
             VkDescriptorImageInfo imageInfo{};
-            imageInfo.sampler = node.textures[0]->sampler();
-            imageInfo.imageView = node.textures[0]->imageView();
-            if (imageInfo.imageView == VK_NULL_HANDLE) {
-                qCWarning(KWIN_CORE) << "Texture has null image view, skipping node";
-                continue;
-            }
+            imageInfo.sampler = texture->sampler();
+            imageInfo.imageView = texture->imageView();
             imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 
-            // Prepare uniform buffer data
-            VulkanUniforms uniforms{};
-            const QVector4D modulation = modulate(node.opacity, 1.0f);
-            memcpy(uniforms.uniformColor, &modulation, sizeof(uniforms.uniformColor));
-            uniforms.opacity = node.opacity;
-            uniforms.brightness = 1.0f;
-            uniforms.saturation = 1.0f;
-            memcpy(uniforms.geometryBox, &node.box, sizeof(uniforms.geometryBox));
-            memcpy(uniforms.borderRadius, &node.borderRadius, sizeof(uniforms.borderRadius));
-            uniforms.borderThickness = node.borderThickness;
-            const QVector4D borderColor(node.borderColor.redF(), node.borderColor.greenF(),
-                                        node.borderColor.blueF(), node.borderColor.alphaF());
-            memcpy(uniforms.borderColor, &borderColor, sizeof(uniforms.borderColor));
-
-            // Upload uniforms to buffer
-            static int uniformIndex = 0;
-            VkDeviceSize uniformOffset = (uniformIndex % 1024) * sizeof(VulkanUniforms);
-            m_uniformBuffer->upload(&uniforms, sizeof(VulkanUniforms), uniformOffset);
-            uniformIndex++;
-
-            // UBO descriptor (binding 1)
             VkDescriptorBufferInfo bufferInfo{};
             bufferInfo.buffer = m_uniformBuffer->buffer();
             bufferInfo.offset = uniformOffset;
             bufferInfo.range = sizeof(VulkanUniforms);
 
-            // Update both bindings
             std::array<VkWriteDescriptorSet, 2> descriptorWrites{};
-
-            // Binding 0: Texture
             descriptorWrites[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
             descriptorWrites[0].dstSet = descriptorSet;
             descriptorWrites[0].dstBinding = 0;
@@ -975,7 +985,6 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
             descriptorWrites[0].descriptorCount = 1;
             descriptorWrites[0].pImageInfo = &imageInfo;
 
-            // Binding 1: UBO
             descriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
             descriptorWrites[1].dstSet = descriptorSet;
             descriptorWrites[1].dstBinding = 1;
@@ -989,10 +998,43 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
             vkCmdBindDescriptorSets(cmd, VK_PIPELINE_BIND_POINT_GRAPHICS,
                                     pipeline->layout(), 0, 1, &descriptorSet, 0, nullptr);
             qCDebug(KWIN_CORE) << "Bound descriptor set with texture and UBO";
+        } else if (m_defaultWhiteTexture && m_defaultWhiteTexture->isValid()) {
+            // Use default white texture when no texture is available
+            VkDescriptorImageInfo imageInfo{};
+            imageInfo.sampler = m_defaultWhiteTexture->sampler();
+            imageInfo.imageView = m_defaultWhiteTexture->imageView();
+            imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+
+            VkDescriptorBufferInfo bufferInfo{};
+            bufferInfo.buffer = m_uniformBuffer->buffer();
+            bufferInfo.offset = uniformOffset;
+            bufferInfo.range = sizeof(VulkanUniforms);
+
+            std::array<VkWriteDescriptorSet, 2> descriptorWrites{};
+            descriptorWrites[0].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+            descriptorWrites[0].dstSet = descriptorSet;
+            descriptorWrites[0].dstBinding = 0;
+            descriptorWrites[0].dstArrayElement = 0;
+            descriptorWrites[0].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
+            descriptorWrites[0].descriptorCount = 1;
+            descriptorWrites[0].pImageInfo = &imageInfo;
+
+            descriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+            descriptorWrites[1].dstSet = descriptorSet;
+            descriptorWrites[1].dstBinding = 1;
+            descriptorWrites[1].dstArrayElement = 0;
+            descriptorWrites[1].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
+            descriptorWrites[1].descriptorCount = 1;
+            descriptorWrites[1].pBufferInfo = &bufferInfo;
+
+            vkUpdateDescriptorSets(m_backend->device(), static_cast<uint32_t>(descriptorWrites.size()),
+                                   descriptorWrites.data(), 0, nullptr);
+            vkCmdBindDescriptorSets(cmd, VK_PIPELINE_BIND_POINT_GRAPHICS,
+                                    pipeline->layout(), 0, 1, &descriptorSet, 0, nullptr);
+            qCDebug(KWIN_CORE) << "Bound descriptor set with DEFAULT WHITE texture";
         } else {
-            // No texture available but pipeline expects one - skip this node
-            // TODO: Add default 1x1 white texture for non-textured draws
-            qCDebug(KWIN_CORE) << "No texture for MapTexture pipeline, skipping node";
+            // No texture available and no default - skip this node
+            qCWarning(KWIN_CORE) << "No texture for MapTexture pipeline and no default available, skipping node";
             continue;
         }
 

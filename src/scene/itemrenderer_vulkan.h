@@ -122,6 +122,9 @@ private:
     std::unique_ptr<VulkanBuffer> m_uniformBuffer;
     VkDescriptorSet m_currentDescriptorSet = VK_NULL_HANDLE;
 
+    // Default 1x1 white texture for non-textured draws
+    std::unique_ptr<VulkanTexture> m_defaultWhiteTexture;
+
     std::unordered_set<std::shared_ptr<SyncReleasePoint>> m_releasePoints;
 
     // GPU-GPU synchronization info for the current frame
