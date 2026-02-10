@@ -121,6 +121,9 @@ private:
 
     // Track vertex buffer offset for streaming (reset each frame)
     size_t m_vertexBufferOffset = 0;
+
+    // Track descriptor sets allocated during frame for cleanup
+    std::vector<VkDescriptorSet> m_frameDescriptorSets;
 };
 
 } // namespace KWin

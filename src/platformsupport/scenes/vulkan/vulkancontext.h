@@ -179,12 +179,13 @@ private:
 
     bool m_supportsDmaBufImport = false;
 
-    // Track descriptor allocations for proactive pool reset
-    // With ~90 nodes/frame across 3 monitors, 10000 sets lasts ~110 frames (~1.8s at 60fps)
-    // Reset at 80% = 8000 allocations, triggers vkDeviceWaitIdle for safe reset
+    // Track descriptor allocations for debugging
+    // Descriptor sets are freed after each frame in endFrame(), not accumulated
+    // Pool is created with FREE_DESCRIPTOR_SET flag for individual cleanup
+    // With ~90 nodes/frame across 3 monitors, we allocate and free ~90 sets per frame
     uint32_t m_descriptorAllocCount = 0;
     static constexpr uint32_t DESCRIPTOR_POOL_MAX_SETS = 10000;
-    static constexpr uint32_t DESCRIPTOR_POOL_RESET_THRESHOLD = 8000; // Reset at 80%
+    static constexpr uint32_t DESCRIPTOR_POOL_RESET_THRESHOLD = 8000; // For emergency detection only
 
     static VulkanContext *s_currentContext;
 };
