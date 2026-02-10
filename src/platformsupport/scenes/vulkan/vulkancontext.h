@@ -12,6 +12,7 @@
 #include "utils/filedescriptor.h"
 
 #include <QStack>
+#include <QVector>
 #include <memory>
 #include <vulkan/vulkan.h>
 
@@ -162,6 +163,19 @@ public:
      */
     bool supportsExternalFenceFd() const;
 
+    /**
+     * @brief Queue a sampler for deferred destruction.
+     * Samplers in use by in-flight command buffers cannot be destroyed immediately.
+     * This method queues them for destruction when no longer in use.
+     */
+    void queueSamplerForDestruction(VkSampler sampler);
+
+    /**
+     * @brief Clean up any pending resources that are no longer in use.
+     * Called at the start of each frame to safely destroy resources from previous frames.
+     */
+    void cleanupPendingResources();
+
 private:
     bool createCommandPool();
     bool createDescriptorPool();
@@ -186,6 +200,9 @@ private:
     uint32_t m_descriptorAllocCount = 0;
     static constexpr uint32_t DESCRIPTOR_POOL_MAX_SETS = 10000;
     static constexpr uint32_t DESCRIPTOR_POOL_RESET_THRESHOLD = 8000; // For emergency detection only
+
+    // Deferred sampler destruction queue (samplers in use by in-flight command buffers)
+    QVector<std::pair<VkSampler, VkFence>> m_pendingSamplerDestructions;
 
     static VulkanContext *s_currentContext;
 };
