@@ -138,7 +138,7 @@ bool VulkanTexture::createImage(const QSize &size, VkFormat format, VkImageUsage
     VkResult result = vmaCreateImage(VulkanAllocator::allocator(), &imageInfo, &allocInfo,
                                      &m_image, &m_allocation, nullptr);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create Vulkan image:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create Vulkan image:" << result;
         return false;
     }
 
@@ -173,7 +173,7 @@ bool VulkanTexture::createImageView(VkImageAspectFlags aspectFlags)
 
     VkResult result = vkCreateImageView(m_context->backend()->device(), &viewInfo, nullptr, &m_imageView);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create Vulkan image view:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create Vulkan image view:" << result;
         return false;
     }
 
@@ -202,7 +202,7 @@ bool VulkanTexture::createSampler()
 
     VkResult result = vkCreateSampler(m_context->backend()->device(), &samplerInfo, nullptr, &m_sampler);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create Vulkan sampler:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create Vulkan sampler:" << result;
         return false;
     }
 
@@ -237,17 +237,17 @@ std::unique_ptr<VulkanTexture> VulkanTexture::upload(VulkanContext *context, con
     if (!texture->createImage(image.size(), format,
                               VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
                               VK_IMAGE_TILING_OPTIMAL)) {
-        qCWarning(KWIN_CORE) << "Failed to create Vulkan texture image for upload";
+        qCWarning(KWIN_VULKAN) << "Failed to create Vulkan texture image for upload";
         return nullptr;
     }
 
     if (!texture->createImageView()) {
-        qCWarning(KWIN_CORE) << "Failed to create Vulkan texture image view for upload";
+        qCWarning(KWIN_VULKAN) << "Failed to create Vulkan texture image view for upload";
         return nullptr;
     }
 
     if (!texture->createSampler()) {
-        qCWarning(KWIN_CORE) << "Failed to create Vulkan texture sampler for upload";
+        qCWarning(KWIN_VULKAN) << "Failed to create Vulkan texture sampler for upload";
         return nullptr;
     }
 
@@ -346,7 +346,7 @@ std::unique_ptr<VulkanTexture> VulkanTexture::createDepthStencil(VulkanContext *
 {
     VkFormat depthFormat = findDepthFormat(context->backend());
     if (depthFormat == VK_FORMAT_UNDEFINED) {
-        qCWarning(KWIN_CORE) << "No suitable depth format found";
+        qCWarning(KWIN_VULKAN) << "No suitable depth format found";
         return nullptr;
     }
 
@@ -425,13 +425,13 @@ void VulkanTexture::update(const QImage &image, const QRegion &region)
     VkDeviceSize imageSize = image.sizeInBytes();
     auto staging = VulkanBuffer::createStagingBuffer(m_context, imageSize);
     if (!staging) {
-        qCWarning(KWIN_CORE) << "Failed to create staging buffer for texture update";
+        qCWarning(KWIN_VULKAN) << "Failed to create staging buffer for texture update";
         return;
     }
 
     void *mapped = staging->map();
     if (!mapped) {
-        qCWarning(KWIN_CORE) << "Failed to map staging buffer for texture update";
+        qCWarning(KWIN_VULKAN) << "Failed to map staging buffer for texture update";
         return;
     }
 
@@ -440,7 +440,7 @@ void VulkanTexture::update(const QImage &image, const QRegion &region)
 
     VkCommandBuffer cmd = m_context->beginSingleTimeCommands();
     if (cmd == VK_NULL_HANDLE) {
-        qCWarning(KWIN_CORE) << "Failed to begin single time commands for texture update";
+        qCWarning(KWIN_VULKAN) << "Failed to begin single time commands for texture update";
         return;
     }
 

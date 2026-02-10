@@ -111,19 +111,19 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
 {
     switch (messageSeverity) {
     case VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
-        qCDebug(KWIN_CORE) << "Vulkan validation (verbose):" << pCallbackData->pMessage;
+        qCDebug(KWIN_VULKAN) << "Vulkan validation (verbose):" << pCallbackData->pMessage;
         break;
     case VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
-        qCInfo(KWIN_CORE) << "Vulkan validation (info):" << pCallbackData->pMessage;
+        qCInfo(KWIN_VULKAN) << "Vulkan validation (info):" << pCallbackData->pMessage;
         break;
     case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
-        qCWarning(KWIN_CORE) << "Vulkan validation (warning):" << pCallbackData->pMessage;
+        qCWarning(KWIN_VULKAN) << "Vulkan validation (warning):" << pCallbackData->pMessage;
         break;
     case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
-        qCCritical(KWIN_CORE) << "Vulkan validation (error):" << pCallbackData->pMessage;
+        qCCritical(KWIN_VULKAN) << "Vulkan validation (error):" << pCallbackData->pMessage;
         break;
     default:
-        qCDebug(KWIN_CORE) << "Vulkan validation:" << pCallbackData->pMessage;
+        qCDebug(KWIN_VULKAN) << "Vulkan validation:" << pCallbackData->pMessage;
         break;
     }
     return VK_FALSE;
@@ -151,7 +151,7 @@ bool VulkanBackend::checkGraphicsReset()
     if (m_device != VK_NULL_HANDLE) {
         VkResult result = vkDeviceWaitIdle(m_device);
         if (result == VK_ERROR_DEVICE_LOST) {
-            qCWarning(KWIN_CORE) << "Vulkan device lost";
+            qCWarning(KWIN_VULKAN) << "Vulkan device lost";
             return true;
         }
     }
@@ -160,12 +160,13 @@ bool VulkanBackend::checkGraphicsReset()
 
 void VulkanBackend::setFailed(const QString &reason)
 {
-    qCWarning(KWIN_CORE) << "Creating Vulkan backend failed:" << reason;
+    qCWarning(KWIN_VULKAN) << "Creating Vulkan backend failed:" << reason;
     m_failed = true;
 }
 
 bool VulkanBackend::createInstance(const QList<const char *> &requiredExtensions)
 {
+    qCDebug(KWIN_VULKAN) << "Creating Vulkan instance with extensions:" << requiredExtensions;
     VkApplicationInfo appInfo{};
     appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
     appInfo.pApplicationName = "KWin";
@@ -220,7 +221,7 @@ bool VulkanBackend::createInstance(const QList<const char *> &requiredExtensions
     }
 #endif
 
-    qCDebug(KWIN_CORE) << "Vulkan instance created successfully";
+    qCDebug(KWIN_VULKAN) << "Vulkan instance created successfully";
     return true;
 }
 
@@ -256,7 +257,7 @@ bool VulkanBackend::selectPhysicalDevice()
             if (queueFamilies[i].queueFlags & VK_QUEUE_GRAPHICS_BIT) {
                 m_physicalDevice = device;
                 m_graphicsQueueFamily = i;
-                qCDebug(KWIN_CORE) << "Selected Vulkan device:" << deviceProperties.deviceName;
+                qCDebug(KWIN_VULKAN) << "Selected Vulkan device:" << deviceProperties.deviceName;
                 return true;
             }
         }
@@ -312,7 +313,7 @@ bool VulkanBackend::createDevice(const QList<const char *> &requiredDeviceExtens
         extensions.push_back(VK_KHR_EXTERNAL_FENCE_FD_EXTENSION_NAME);
         extensions.push_back(VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME);
         m_supportsExternalFenceFd = true;
-        qCDebug(KWIN_CORE) << "VK_KHR_external_fence_fd extension enabled";
+        qCDebug(KWIN_VULKAN) << "VK_KHR_external_fence_fd extension enabled";
     }
 
     createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
@@ -340,12 +341,12 @@ bool VulkanBackend::createDevice(const QList<const char *> &requiredDeviceExtens
         m_vkGetFenceFdKHR = reinterpret_cast<PFN_vkGetFenceFdKHR>(
             vkGetDeviceProcAddr(m_device, "vkGetFenceFdKHR"));
         if (!m_vkGetFenceFdKHR) {
-            qCWarning(KWIN_CORE) << "Failed to load vkGetFenceFdKHR, disabling external fence support";
+            qCWarning(KWIN_VULKAN) << "Failed to load vkGetFenceFdKHR, disabling external fence support";
             m_supportsExternalFenceFd = false;
         }
     }
 
-    qCDebug(KWIN_CORE) << "Vulkan logical device created successfully";
+    qCDebug(KWIN_VULKAN) << "Vulkan logical device created successfully";
     return true;
 }
 

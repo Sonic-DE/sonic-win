@@ -173,11 +173,11 @@ bool VulkanRenderPass::create()
     VkResult result = vkCreateRenderPass(m_context->backend()->device(), &renderPassInfo,
                                          nullptr, &m_renderPass);
     if (result != VK_SUCCESS) {
-        qCWarning(KWIN_CORE) << "Failed to create render pass:" << result;
+        qCWarning(KWIN_VULKAN) << "Failed to create render pass:" << result;
         return false;
     }
 
-    qCDebug(KWIN_CORE) << "Successfully created render pass for presentation";
+    qCDebug(KWIN_VULKAN) << "Successfully created render pass for presentation";
     return true;
 }
 

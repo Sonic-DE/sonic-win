@@ -78,16 +78,16 @@ VulkanTexture *VulkanRenderTarget::texture() const
 void VulkanRenderTarget::setSyncInfo(const VulkanSyncInfo &syncInfo)
 {
     m_syncInfo = syncInfo;
-    qCDebug(KWIN_CORE) << "Set sync info - imageAvailableSemaphore:" << syncInfo.imageAvailableSemaphore
-                       << "renderFinishedSemaphore:" << syncInfo.renderFinishedSemaphore
-                       << "inFlightFence:" << syncInfo.inFlightFence;
+    qCDebug(KWIN_VULKAN) << "Set sync info - imageAvailableSemaphore:" << quintptr(syncInfo.imageAvailableSemaphore)
+                         << "renderFinishedSemaphore:" << quintptr(syncInfo.renderFinishedSemaphore)
+                         << "inFlightFence:" << quintptr(syncInfo.inFlightFence);
 }
 
 const VulkanSyncInfo &VulkanRenderTarget::syncInfo() const
 {
-    qCDebug(KWIN_CORE) << "Getting sync info - imageAvailableSemaphore:" << m_syncInfo.imageAvailableSemaphore
-                       << "renderFinishedSemaphore:" << m_syncInfo.renderFinishedSemaphore
-                       << "inFlightFence:" << m_syncInfo.inFlightFence;
+    qCDebug(KWIN_VULKAN) << "Getting sync info - imageAvailableSemaphore:" << quintptr(m_syncInfo.imageAvailableSemaphore)
+                         << "renderFinishedSemaphore:" << quintptr(m_syncInfo.renderFinishedSemaphore)
+                         << "inFlightFence:" << quintptr(m_syncInfo.inFlightFence);
     return m_syncInfo;
 }
 

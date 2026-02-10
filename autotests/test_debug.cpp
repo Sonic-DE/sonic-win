@@ -28,6 +28,7 @@ private Q_SLOTS:
     void testQCDebugOutput();
     void testKwinCoreLoggingCategory();
     void testKwinOpenGLLoggingCategory();
+    void testKwinVulkanLoggingCategory();
     void testKwinVirtualKeyboardLoggingCategory();
     void testKwinX11StandaloneLoggingCategory();
     void testKwinTabboxLoggingCategory();
@@ -169,6 +170,23 @@ void TestDebug::testKwinDecorationsLoggingCategory()
     QVERIFY2(!s_messages.isEmpty(), "qCWarning should produce output for KWIN_DECORATIONS category");
     QVERIFY2(s_lastCategory == "kwin_decorations", QString("Category should be 'kwin_decorations', got '%1'").arg(s_lastCategory).toUtf8());
     QVERIFY2(s_messages.last().contains("Testing KWIN_DECORATIONS logging category"),
+             "Message should contain expected text");
+}
+
+void TestDebug::testKwinVulkanLoggingCategory()
+{
+    s_messages.clear();
+    s_lastCategory.clear();
+    qInstallMessageHandler(customMessageHandler);
+
+    // Test that the KWIN_VULKAN logging category works
+    qCDebug(KWIN_VULKAN) << "Testing KWIN_VULKAN logging category";
+
+    qInstallMessageHandler(nullptr);
+
+    QVERIFY2(!s_messages.isEmpty(), "qCDebug should produce output for KWIN_VULKAN category");
+    QVERIFY2(s_lastCategory == "kwin_scene_vulkan", QString("Category should be 'kwin_scene_vulkan', got '%1'").arg(s_lastCategory).toUtf8());
+    QVERIFY2(s_messages.last().contains("Testing KWIN_VULKAN logging category"),
              "Message should contain expected text");
 }
 
