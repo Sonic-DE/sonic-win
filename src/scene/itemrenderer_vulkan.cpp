@@ -35,6 +35,7 @@
 #include "scene/workspacescene_vulkan.h"
 #include "utils/common.h"
 #include "window.h"
+#include "workspace.h"
 
 #include <cstring>
 #include <typeinfo>
@@ -831,6 +832,21 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
         }
     }
 
+    // Set up scissor for hardware clipping if needed
+    // The scissor is set per-node based on the clipping region
+    VkRect2D nodeScissor{};
+    nodeScissor.offset = {0, 0};
+    QSize renderSize;
+    if (m_currentFramebuffer) {
+        renderSize = m_currentFramebuffer->size();
+    } else if (context.viewport) {
+        // Fallback to viewport size from render target
+        renderSize = context.viewport->renderRect().size().toSize();
+    } else {
+        renderSize = QSize(1920, 1080); // Default fallback
+    }
+    nodeScissor.extent = {static_cast<uint32_t>(renderSize.width()), static_cast<uint32_t>(renderSize.height())};
+
     // Render each node
     VulkanPipeline *currentPipeline = nullptr;
 
@@ -982,6 +998,20 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
 
         // Draw (descriptor set is guaranteed bound since we continue above if not)
         if (node.vertexCount > 0) {
+            // Update scissor for hardware clipping if needed
+            if (context.hardwareClipping) {
+                // Convert clip region to device coordinates
+                QRegion scissorRegion = context.viewport->mapToRenderTarget(context.clip);
+                // For simplicity, use bounding rect of clip region
+                QRect scissorRect = scissorRegion.boundingRect();
+                VkRect2D scissor{};
+                scissor.offset.x = scissorRect.x();
+                scissor.offset.y = scissorRect.y();
+                scissor.extent.width = scissorRect.width();
+                scissor.extent.height = scissorRect.height();
+                vkCmdSetScissor(cmd, 0, 1, &scissor);
+            }
+
             vkCmdDraw(cmd, node.vertexCount, 1, node.firstVertex, 0);
 
             // Log ALL large texture draws (backgrounds)
@@ -1013,6 +1043,15 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
             }
         }
     }
+
+    // Reset scissor to full framebuffer if we were using hardware clipping
+    if (context.hardwareClipping && m_currentFramebuffer) {
+        VkRect2D fullScissor{};
+        QSize fbSize = m_currentFramebuffer->size();
+        fullScissor.offset = {0, 0};
+        fullScissor.extent = {static_cast<uint32_t>(fbSize.width()), static_cast<uint32_t>(fbSize.height())};
+        vkCmdSetScissor(cmd, 0, 1, &fullScissor);
+    }
 }
 
 void ItemRendererVulkan::renderItem(const RenderTarget &renderTarget, const RenderViewport &viewport, Item *item, int mask, const QRegion &region, const WindowPaintData &data)
@@ -1022,18 +1061,11 @@ void ItemRendererVulkan::renderItem(const RenderTarget &renderTarget, const Rend
         return;
     }
 
-    // Build render context
-    RenderContext context{
-        .renderNodes = {},
-        .transformStack = {},
-        .opacityStack = {},
-        .cornerStack = {},
-        .projectionMatrix = m_currentProjection,
-        .rootTransform = data.toMatrix(viewport.scale()),
-        .clip = region,
-        .hardwareClipping = static_cast<bool>(mask & Effect::PAINT_WINDOW_TRANSFORMED),
-        .renderTargetScale = viewport.scale(),
-    };
+    // Hardware clipping is needed when the region is clipped AND the window is transformed
+    bool hardwareClipping = region != infiniteRegion() && (static_cast<bool>(mask & Effect::PAINT_WINDOW_TRANSFORMED) || static_cast<bool>(mask & Effect::PAINT_SCREEN_TRANSFORMED));
+
+    // Build render context using constructor
+    RenderContext context(m_currentProjection, data.toMatrix(viewport.scale()), region, hardwareClipping, viewport.scale(), &viewport);
 
     // Initialize stacks (matching OpenGL approach)
     // Push identity - rootTransform is applied in createRenderNode when stack size is 1
@@ -1042,26 +1074,6 @@ void ItemRendererVulkan::renderItem(const RenderTarget &renderTarget, const Rend
 
     // Build render nodes from item tree
     createRenderNode(item, &context);
-
-    // Set scissor for clipping if needed
-    static int scissorDebugCount = 0;
-    if (scissorDebugCount < 20) {
-        qWarning() << "VULKAN: renderItem - hardwareClipping=" << context.hardwareClipping
-                   << "regionEmpty=" << region.isEmpty()
-                   << "regionBounds=" << region.boundingRect()
-                   << "mask=" << Qt::hex << mask
-                   << "renderNodesCount=" << context.renderNodes.size();
-        scissorDebugCount++;
-    }
-
-    if (context.hardwareClipping && !region.isEmpty()) {
-        const QRect clipRect = region.boundingRect();
-        VkRect2D scissor{};
-        scissor.offset = {clipRect.x(), clipRect.y()};
-        scissor.extent = {static_cast<uint32_t>(clipRect.width()), static_cast<uint32_t>(clipRect.height())};
-        vkCmdSetScissor(m_currentCommandBuffer, 0, 1, &scissor);
-        qWarning() << "VULKAN: SET SCISSOR to" << clipRect;
-    }
 
     // Render all nodes
     renderNodes(context, m_currentCommandBuffer);

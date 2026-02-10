@@ -9,6 +9,7 @@
 #pragma once
 
 #include "core/colorspace.h"
+#include "core/renderviewport.h"
 #include "core/syncobjtimeline.h"
 #include "platformsupport/scenes/vulkan/vulkanpipeline.h"
 #include "platformsupport/scenes/vulkan/vulkanrendertarget.h"
@@ -73,6 +74,17 @@ public:
         const QRegion clip;
         const bool hardwareClipping;
         const qreal renderTargetScale;
+        const RenderViewport *viewport;
+
+        RenderContext(const QMatrix4x4 &proj, const QMatrix4x4 &root, const QRegion &c, bool hc, qreal scale, const RenderViewport *vp)
+            : projectionMatrix(proj)
+            , rootTransform(root)
+            , clip(c)
+            , hardwareClipping(hc)
+            , renderTargetScale(scale)
+            , viewport(vp)
+        {
+        }
     };
 
     explicit ItemRendererVulkan(VulkanBackend *backend);
