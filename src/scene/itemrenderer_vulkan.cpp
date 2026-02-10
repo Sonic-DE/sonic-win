@@ -72,6 +72,9 @@ void ItemRendererVulkan::beginFrame(const RenderTarget &renderTarget, const Rend
         return;
     }
 
+    // Clean up any pending resources from previous frames (samplers that were in use)
+    m_context->cleanupPendingResources();
+
     // Don't reset descriptor pool here - it will be reset on-demand when exhausted
     // This avoids invalidating descriptors that are still in use by in-flight command buffers
     m_outputsInFlight++;

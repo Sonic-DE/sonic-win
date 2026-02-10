@@ -327,6 +327,52 @@ void VulkanContext::resetDescriptorPool()
     }
 }
 
+void VulkanContext::queueSamplerForDestruction(VkSampler sampler)
+{
+    if (sampler == VK_NULL_HANDLE) {
+        return;
+    }
+    // Queue the sampler for destruction along with the current in-flight fence
+    // The sampler will be destroyed when the fence is signaled
+    VkFence fence = m_fence != VK_NULL_HANDLE ? m_fence : VK_NULL_HANDLE;
+    m_pendingSamplerDestructions.append({sampler, fence});
+    qCDebug(KWIN_VULKAN) << "Queued sampler for deferred destruction, pending count:" << m_pendingSamplerDestructions.size();
+}
+
+void VulkanContext::cleanupPendingResources()
+{
+    if (m_pendingSamplerDestructions.isEmpty()) {
+        return;
+    }
+
+    qCDebug(KWIN_VULKAN) << "Cleaning up" << m_pendingSamplerDestructions.size() << "pending resources";
+
+    // Check which fences are signaled and destroy corresponding samplers
+    VkDevice device = m_backend->device();
+    for (auto it = m_pendingSamplerDestructions.begin(); it != m_pendingSamplerDestructions.end();) {
+        VkSampler sampler = it->first;
+        VkFence fence = it->second;
+
+        bool canDestroy = true;
+        if (fence != VK_NULL_HANDLE) {
+            // Check if fence is signaled
+            VkResult result = vkGetFenceStatus(device, fence);
+            if (result == VK_NOT_READY) {
+                canDestroy = false;
+            }
+        }
+
+        if (canDestroy) {
+            vkDestroySampler(device, sampler, nullptr);
+            it = m_pendingSamplerDestructions.erase(it);
+        } else {
+            ++it;
+        }
+    }
+
+    qCDebug(KWIN_VULKAN) << "After cleanup:" << m_pendingSamplerDestructions.size() << "resources still pending";
+}
+
 std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBufAttributes &attributes)
 {
     if (!m_supportsDmaBufImport) {

@@ -88,7 +88,8 @@ void VulkanTexture::cleanup()
     }
 
     if (m_sampler != VK_NULL_HANDLE) {
-        vkDestroySampler(device, m_sampler, nullptr);
+        // Use deferred destruction for samplers that may still be in use
+        m_context->queueSamplerForDestruction(m_sampler);
         m_sampler = VK_NULL_HANDLE;
     }
 
@@ -211,8 +212,11 @@ bool VulkanTexture::createSampler()
 
 void VulkanTexture::updateSampler()
 {
+    // Don't destroy the old sampler immediately - it may still be in use by in-flight command buffers.
+    // Instead, mark it as pending destruction. The sampler will be destroyed when no longer in use.
     if (m_sampler != VK_NULL_HANDLE) {
-        vkDestroySampler(m_context->backend()->device(), m_sampler, nullptr);
+        // Queue the old sampler for deferred destruction
+        m_context->queueSamplerForDestruction(m_sampler);
         m_sampler = VK_NULL_HANDLE;
     }
     createSampler();
