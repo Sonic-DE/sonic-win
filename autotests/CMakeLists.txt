@@ -12,6 +12,28 @@ add_test(NAME kwin-testWindowPaintData COMMAND testWindowPaintData)
 ecm_mark_as_test(testWindowPaintData)
 
 ########################################################
+# Test Debug Output (qCDebug)
+########################################################
+set(testDebug_SRCS
+    ../src/utils/common.cpp
+    ../src/backends/x11/standalone/x11_standalone_logging.cpp
+    ../src/tabbox/tabbox_logging.cpp
+    ../src/decorations/decorations_logging.cpp
+    test_debug.cpp
+)
+add_executable(testDebug ${testDebug_SRCS})
+set_target_properties(testDebug PROPERTIES AUTOMOC TRUE)
+target_link_libraries(testDebug
+    Qt::Test
+
+    XCB::XCB
+
+    kwin
+)
+add_test(NAME kwin-testDebug COMMAND testDebug)
+ecm_mark_as_test(testDebug)
+
+########################################################
 # Test VirtualDesktopManager
 ########################################################
 set(testVirtualDesktops_SRCS

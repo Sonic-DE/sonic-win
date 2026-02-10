@@ -28,10 +28,10 @@
 #include <QDebug>
 #endif
 
-Q_LOGGING_CATEGORY(KWIN_CORE, "kwin_core", QtWarningMsg)
-Q_LOGGING_CATEGORY(KWIN_OPENGL, "kwin_scene_opengl", QtWarningMsg)
-Q_LOGGING_CATEGORY(KWIN_QPAINTER, "kwin_scene_qpainter", QtWarningMsg)
-Q_LOGGING_CATEGORY(KWIN_VIRTUALKEYBOARD, "kwin_virtualkeyboard", QtWarningMsg)
+// Use KWIN_LOGGING_LEVEL from CMake to control debug output
+Q_LOGGING_CATEGORY(KWIN_CORE, "kwin_core", KWIN_LOGGING_LEVEL)
+Q_LOGGING_CATEGORY(KWIN_OPENGL, "kwin_scene_opengl", KWIN_LOGGING_LEVEL)
+Q_LOGGING_CATEGORY(KWIN_VIRTUALKEYBOARD, "kwin_virtualkeyboard", KWIN_LOGGING_LEVEL)
 namespace KWin
 {
 

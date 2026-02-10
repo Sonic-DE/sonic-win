@@ -101,7 +101,7 @@ std::unique_ptr<GlxContext> GlxContext::create(GlxBackend *backend, GLXFBConfig 
     QOpenGLContext *qtGlobalShareContext = QOpenGLContext::globalShareContext();
     GLXContext globalShareContext = nullptr;
     if (qtGlobalShareContext) {
-        qDebug(KWIN_X11STANDALONE) << "Global share context format:" << qtGlobalShareContext->format();
+        qCDebug(KWIN_X11STANDALONE) << "Global share context format:" << qtGlobalShareContext->format();
         const auto nativeHandle = qtGlobalShareContext->nativeInterface<QNativeInterface::QGLXContext>();
         if (nativeHandle) {
             globalShareContext = nativeHandle->nativeContext();

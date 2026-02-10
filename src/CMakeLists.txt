@@ -34,6 +34,13 @@ target_compile_definitions(kwin PRIVATE
     -DTRANSLATION_DOMAIN=\"kwin_x11\"
 )
 
+# Enable Qt logging categories for non-release builds
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+    target_compile_definitions(kwin PRIVATE
+        -DQT_LOGGING_RULES="kwin.*=true;libkwin.*=true;LIBKWIN.*=true"
+    )
+endif()
+
 target_sources(kwin PRIVATE
     3rdparty/xcursor.c
     activation.cpp

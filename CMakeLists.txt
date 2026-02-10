@@ -428,6 +428,14 @@ add_definitions(
     -DEGL_NO_PLATFORM_SPECIFIC_TYPES
 )
 
+# Enable debug logging for non-release builds
+string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE_UPPER)
+if(NOT CMAKE_BUILD_TYPE_UPPER STREQUAL "RELEASE")
+    add_definitions(-DKWIN_LOGGING_LEVEL=QtDebugMsg)
+else()
+    add_definitions(-DKWIN_LOGGING_LEVEL=QtWarningMsg)
+endif()
+
 ecm_set_disabled_deprecation_versions(QT 5.15
     KF 6.9.0
 )

@@ -104,7 +104,7 @@ void EglBackend::init()
     ::EGLDisplay shareDisplay = EGL_NO_DISPLAY;
     ::EGLContext shareContext = EGL_NO_CONTEXT;
     if (qtShareContext) {
-        qDebug(KWIN_X11STANDALONE) << "Global share context format:" << qtShareContext->format();
+        qCDebug(KWIN_X11STANDALONE) << "Global share context format:" << qtShareContext->format();
         const auto nativeHandle = qtShareContext->nativeInterface<QNativeInterface::QEGLContext>();
         if (nativeHandle) {
             shareContext = nativeHandle->nativeContext();
