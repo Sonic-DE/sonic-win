@@ -37,7 +37,7 @@ target_compile_definitions(kwin PRIVATE
 # Enable Qt logging categories for non-release builds
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
     target_compile_definitions(kwin PRIVATE
-        -DQT_LOGGING_RULES="kwin.*=true;libkwin.*=true;LIBKWIN.*=true"
+        QT_LOGGING_RULES="kwin.*=true;libkwin.*=true;LIBKWIN.*=true"
     )
 endif()
 
