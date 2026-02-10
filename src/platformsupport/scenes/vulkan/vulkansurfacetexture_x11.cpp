@@ -36,23 +36,25 @@ namespace KWin
 // Helper to check if DRI3 extension is available
 static bool isDri3Available(xcb_connection_t *c)
 {
+    static bool dri3Checked = false;
     static bool dri3Available = false;
 
-    // Query DRI3 extension
-    xcb_dri3_query_version_cookie_t cookie = xcb_dri3_query_version(c, 1, 2);
-    xcb_dri3_query_version_reply_t *reply = xcb_dri3_query_version_reply(c, cookie, nullptr);
+    if (dri3Checked) {
+        return dri3Available;
+    }
+    dri3Checked = true;
 
-    if (reply) {
-        qCDebug(KWIN_VULKAN) << "DRI3 extension available, version:" << reply->major_version << "." << reply->minor_version;
-        // We need at least DRI3 1.2
-        dri3Available = (reply->major_version >= 1 && reply->minor_version >= 2) ? true : false;
-        free(reply);
+    // Check if DRI3 extension is present
+    const xcb_query_extension_reply_t *extReply = xcb_get_extension_data(c, &xcb_dri3_id);
+    dri3Available = extReply && extReply->present;
+
+    if (dri3Available) {
+        qCDebug(KWIN_VULKAN) << "DRI3 extension available";
     } else {
         qCDebug(KWIN_VULKAN) << "DRI3 extension not available";
-        dri3Available = false;
     }
 
-    return dri3Available == 1;
+    return dri3Available;
 }
 
 VulkanSurfaceTextureX11::VulkanSurfaceTextureX11(VulkanBackend *backend, SurfacePixmapX11 *pixmap)
@@ -150,7 +152,38 @@ bool VulkanSurfaceTextureX11::create()
 
 bool VulkanSurfaceTextureX11::createWithDmaBuf()
 {
-    // DMA-BUF import not yet implemented
+    xcb_connection_t *c = connection();
+    if (!c) {
+        qCWarning(KWIN_VULKAN) << "[DMA-BUF] No X11 connection";
+        return false;
+    }
+
+    xcb_pixmap_t pixmap = m_pixmap->pixmap();
+    if (pixmap == XCB_PIXMAP_NONE) {
+        qCWarning(KWIN_VULKAN) << "[DMA-BUF] Invalid pixmap";
+        return false;
+    }
+
+    // Test DRI3 function: xcb_dri3_buffer_from_pixmap()
+    // This is the main function we need for DMA-BUF import
+    xcb_dri3_buffer_from_pixmap_cookie_t bufferCookie = xcb_dri3_buffer_from_pixmap(c, pixmap);
+    xcb_dri3_buffer_from_pixmap_reply_t *bufferReply = xcb_dri3_buffer_from_pixmap_reply(c, bufferCookie, nullptr);
+
+    if (!bufferReply) {
+        qCWarning(KWIN_VULKAN) << "[DMA-BUF] xcb_dri3_buffer_from_pixmap failed";
+        return false;
+    }
+
+    qCDebug(KWIN_VULKAN) << "[DMA-BUF] DRI3 buffer obtained successfully";
+    free(bufferReply);
+
+    // TODO: Implement actual DMA-BUF import to Vulkan
+    // This requires:
+    // 1. Getting the file descriptor from the reply (reply->fd)
+    // 2. Getting the stride, width, height from the reply
+    // 3. Importing the DMA-BUF into Vulkan using VkImportMemoryFdInfoKHR
+
+    qCWarning(KWIN_VULKAN) << "[DMA-BUF] DMA-BUF import not fully implemented yet";
     return false;
 }
 
