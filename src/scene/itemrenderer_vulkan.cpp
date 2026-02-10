@@ -34,6 +34,7 @@
 #include "scene/windowitem.h"
 #include "scene/workspacescene_vulkan.h"
 #include "utils/common.h"
+#include "window.h"
 
 #include <cstring>
 #include <typeinfo>
@@ -78,6 +79,9 @@ void ItemRendererVulkan::beginFrame(const RenderTarget &renderTarget, const Rend
 
     // Reset vertex buffer offset for new frame - all items will upload vertices sequentially
     m_vertexBufferOffset = 0;
+
+    // Clear descriptor sets from previous frame (should be empty after endFrame cleanup)
+    m_frameDescriptorSets.clear();
 
     // Allocate command buffer for this frame
     m_currentCommandBuffer = m_context->allocateCommandBuffer();
@@ -268,6 +272,12 @@ void ItemRendererVulkan::endFrame()
         m_releasePoints.clear();
 
         qCDebug(KWIN_CORE) << "ItemRendererVulkan::endFrame() - GPU-GPU semaphore sync";
+
+        // Don't free descriptor sets here - GPU work is not synchronized
+        // Let them accumulate in pool until blocking sync path cleans them up
+        // Pool size (10000) can handle ~110 frames at 90 descriptors/frame
+        // This avoids CPU stall from vkDeviceWaitIdle on the hot path
+        m_frameDescriptorSets.clear();
     } else {
         qCDebug(KWIN_CORE) << "Using fallback path: no swapchain semaphores, use blocking synchronization";
         // Fallback: no swapchain semaphores, use blocking synchronization
@@ -321,6 +331,15 @@ void ItemRendererVulkan::endFrame()
         m_releasePoints.clear();
 
         qCDebug(KWIN_CORE) << "ItemRendererVulkan::endFrame() - blocking sync (fallback)";
+
+        // Free descriptor sets now that GPU is done with them
+        if (!m_frameDescriptorSets.empty()) {
+            vkFreeDescriptorSets(m_backend->device(), m_context->descriptorPool(),
+                                 static_cast<uint32_t>(m_frameDescriptorSets.size()),
+                                 m_frameDescriptorSets.data());
+            qCDebug(KWIN_VULKAN) << "Freed" << m_frameDescriptorSets.size() << "descriptor sets";
+            m_frameDescriptorSets.clear();
+        }
     }
 
     m_currentCommandBuffer = VK_NULL_HANDLE;
@@ -368,7 +387,12 @@ static RenderGeometry buildGeometryFromQuads(const WindowQuadList &quads, qreal 
 
 void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
 {
-    const QList<Item *> sortedChildItems = item->sortedChildItems();
+    // Create a stable local sorted copy to avoid cache invalidation issues during rendering
+    QList<Item *> sortedChildItems = item->childItems();
+    std::stable_sort(sortedChildItems.begin(), sortedChildItems.end(), [](const Item *a, const Item *b) {
+        return a->z() < b->z();
+    });
+
     const qreal scale = context->renderTargetScale;
 
     // Build transform matrix for this item (matching OpenGL approach)
@@ -388,12 +412,15 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
     context->opacityStack.push(context->opacityStack.top() * item->opacity());
 
     // Process child items with z < 0 first (behind this item)
+    // NOTE: Don't break early - process all items to avoid skipping due to inconsistent sorting
+    // during stacking order changes (panels can disappear if we break early with stale Z values)
+    int processedBehind = 0;
     for (Item *childItem : sortedChildItems) {
-        if (childItem->z() >= 0) {
-            break;
-        }
-        if (childItem->explicitVisible()) {
-            createRenderNode(childItem, context);
+        if (childItem->z() < 0) {
+            if (childItem->explicitVisible()) {
+                createRenderNode(childItem, context);
+                processedBehind++;
+            }
         }
     }
 
@@ -724,12 +751,15 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
     }
 
     // Process children with z >= 0 (in front of this item)
+    // NOTE: Process all items instead of using continue to avoid skipping due to inconsistent sorting
+    // during stacking order changes (panels can disappear if Z values are stale during rendering)
+    int processedFront = 0;
     for (Item *childItem : sortedChildItems) {
-        if (childItem->z() < 0) {
-            continue;
-        }
-        if (childItem->explicitVisible()) {
-            createRenderNode(childItem, context);
+        if (childItem->z() >= 0) {
+            if (childItem->explicitVisible()) {
+                createRenderNode(childItem, context);
+                processedFront++;
+            }
         }
     }
 
@@ -874,6 +904,9 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
                 qCWarning(KWIN_CORE) << "Failed to allocate descriptor set, skipping node";
                 continue;
             }
+
+            // Track descriptor set for cleanup after frame submission
+            m_frameDescriptorSets.push_back(descriptorSet);
 
             // Update descriptor set with texture (binding 0)
             VkDescriptorImageInfo imageInfo{};

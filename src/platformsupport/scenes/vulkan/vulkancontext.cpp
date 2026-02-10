@@ -290,14 +290,8 @@ void VulkanContext::endSingleTimeCommands(VkCommandBuffer commandBuffer)
 
 VkDescriptorSet VulkanContext::allocateDescriptorSet(VkDescriptorSetLayout layout)
 {
-    // Proactively reset pool when approaching capacity
-    // This ensures we reset at a safe point before we run out
-    if (m_descriptorAllocCount >= DESCRIPTOR_POOL_RESET_THRESHOLD) {
-        qCDebug(KWIN_VULKAN) << "Proactive descriptor pool reset at" << m_descriptorAllocCount << "allocations";
-        vkDeviceWaitIdle(m_backend->device());
-        vkResetDescriptorPool(m_backend->device(), m_descriptorPool, 0);
-        m_descriptorAllocCount = 0;
-    }
+    // Do NOT reset pool here - would violate Vulkan spec if called during command buffer recording
+    // Pool will be reset between frames when safe
 
     VkDescriptorSetAllocateInfo allocInfo{};
     allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
@@ -308,17 +302,12 @@ VkDescriptorSet VulkanContext::allocateDescriptorSet(VkDescriptorSetLayout layou
     VkDescriptorSet descriptorSet;
     VkResult result = vkAllocateDescriptorSets(m_backend->device(), &allocInfo, &descriptorSet);
 
-    // If pool is exhausted, try emergency reset
+    // If pool is exhausted, we're out of options - cannot reset during command buffer recording
     // VK_ERROR_OUT_OF_POOL_MEMORY = -1000069000, VK_ERROR_FRAGMENTED_POOL = -1000069001
     const bool poolExhausted = (result == VK_ERROR_OUT_OF_POOL_MEMORY) || (result == VK_ERROR_FRAGMENTED_POOL) || (static_cast<int>(result) == -1000069000) || (static_cast<int>(result) == -1000069001);
     if (poolExhausted) {
-        qCWarning(KWIN_VULKAN) << "Descriptor pool exhausted at" << m_descriptorAllocCount << "allocations, emergency reset";
-        vkDeviceWaitIdle(m_backend->device());
-        vkResetDescriptorPool(m_backend->device(), m_descriptorPool, 0);
-        m_descriptorAllocCount = 0;
-
-        // Retry allocation
-        result = vkAllocateDescriptorSets(m_backend->device(), &allocInfo, &descriptorSet);
+        qCCritical(KWIN_VULKAN) << "Descriptor pool exhausted at" << m_descriptorAllocCount << "allocations - increase DESCRIPTOR_POOL_MAX_SETS";
+        return VK_NULL_HANDLE;
     }
 
     if (result != VK_SUCCESS) {
