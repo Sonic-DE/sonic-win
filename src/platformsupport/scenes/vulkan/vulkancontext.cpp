@@ -341,36 +341,122 @@ void VulkanContext::queueSamplerForDestruction(VkSampler sampler)
 
 void VulkanContext::cleanupPendingResources()
 {
-    if (m_pendingSamplerDestructions.isEmpty()) {
-        return;
-    }
-
-    qCDebug(KWIN_VULKAN) << "Cleaning up" << m_pendingSamplerDestructions.size() << "pending resources";
-
-    // Check which fences are signaled and destroy corresponding samplers
     VkDevice device = m_backend->device();
-    for (auto it = m_pendingSamplerDestructions.begin(); it != m_pendingSamplerDestructions.end();) {
-        VkSampler sampler = it->first;
-        VkFence fence = it->second;
 
-        bool canDestroy = true;
-        if (fence != VK_NULL_HANDLE) {
-            // Check if fence is signaled
-            VkResult result = vkGetFenceStatus(device, fence);
-            if (result == VK_NOT_READY) {
-                canDestroy = false;
+    // Clean up pending samplers
+    if (!m_pendingSamplerDestructions.isEmpty()) {
+        qCDebug(KWIN_VULKAN) << "Cleaning up" << m_pendingSamplerDestructions.size() << "pending samplers";
+        for (auto it = m_pendingSamplerDestructions.begin(); it != m_pendingSamplerDestructions.end();) {
+            VkSampler sampler = it->first;
+            VkFence fence = it->second;
+
+            bool canDestroy = true;
+            if (fence != VK_NULL_HANDLE) {
+                VkResult result = vkGetFenceStatus(device, fence);
+                if (result == VK_NOT_READY) {
+                    canDestroy = false;
+                }
+            }
+
+            if (canDestroy) {
+                vkDestroySampler(device, sampler, nullptr);
+                it = m_pendingSamplerDestructions.erase(it);
+            } else {
+                ++it;
             }
         }
-
-        if (canDestroy) {
-            vkDestroySampler(device, sampler, nullptr);
-            it = m_pendingSamplerDestructions.erase(it);
-        } else {
-            ++it;
-        }
+        qCDebug(KWIN_VULKAN) << "After cleanup:" << m_pendingSamplerDestructions.size() << "samplers still pending";
     }
 
-    qCDebug(KWIN_VULKAN) << "After cleanup:" << m_pendingSamplerDestructions.size() << "resources still pending";
+    // Clean up pending image views (must be done before images)
+    if (!m_pendingImageViewDestructions.isEmpty()) {
+        qCDebug(KWIN_VULKAN) << "Cleaning up" << m_pendingImageViewDestructions.size() << "pending image views";
+        for (auto it = m_pendingImageViewDestructions.begin(); it != m_pendingImageViewDestructions.end();) {
+            VkImageView imageView = it->imageView;
+            VkFence fence = it->fence;
+
+            bool canDestroy = true;
+            if (fence != VK_NULL_HANDLE) {
+                VkResult result = vkGetFenceStatus(device, fence);
+                if (result == VK_NOT_READY) {
+                    canDestroy = false;
+                }
+            }
+
+            if (canDestroy) {
+                vkDestroyImageView(device, imageView, nullptr);
+                it = m_pendingImageViewDestructions.erase(it);
+            } else {
+                ++it;
+            }
+        }
+        qCDebug(KWIN_VULKAN) << "After cleanup:" << m_pendingImageViewDestructions.size() << "image views still pending";
+    }
+
+    // Clean up pending images (only after their views are destroyed)
+    if (!m_pendingImageDestructions.isEmpty()) {
+        qCDebug(KWIN_VULKAN) << "Cleaning up" << m_pendingImageDestructions.size() << "pending images";
+        for (auto it = m_pendingImageDestructions.begin(); it != m_pendingImageDestructions.end();) {
+            VkImage image = it->image;
+            VkFence fence = it->fence;
+
+            bool canDestroy = true;
+            if (fence != VK_NULL_HANDLE) {
+                VkResult result = vkGetFenceStatus(device, fence);
+                if (result == VK_NOT_READY) {
+                    canDestroy = false;
+                }
+            }
+
+            if (canDestroy) {
+                vkDestroyImage(device, image, nullptr);
+                it = m_pendingImageDestructions.erase(it);
+            } else {
+                ++it;
+            }
+        }
+        qCDebug(KWIN_VULKAN) << "After cleanup:" << m_pendingImageDestructions.size() << "images still pending";
+    }
+}
+
+void VulkanContext::queueImageViewForDestruction(VkImageView imageView)
+{
+    if (imageView == VK_NULL_HANDLE) {
+        return;
+    }
+    VkFence fence = m_fence != VK_NULL_HANDLE ? m_fence : VK_NULL_HANDLE;
+    m_pendingImageViewDestructions.append({imageView, fence, VK_NULL_HANDLE});
+    qCDebug(KWIN_VULKAN) << "Queued image view for deferred destruction, pending count:" << m_pendingImageViewDestructions.size();
+}
+
+void VulkanContext::queueImageForDestruction(VkImage image)
+{
+    if (image == VK_NULL_HANDLE) {
+        return;
+    }
+    VkFence fence = m_fence != VK_NULL_HANDLE ? m_fence : VK_NULL_HANDLE;
+    m_pendingImageDestructions.append({image, fence});
+    qCDebug(KWIN_VULKAN) << "Queued image for deferred destruction, pending count:" << m_pendingImageDestructions.size();
+}
+
+void VulkanContext::queueImageAndViewForDestruction(VkImageView imageView, VkImage image)
+{
+    if (imageView == VK_NULL_HANDLE && image == VK_NULL_HANDLE) {
+        return;
+    }
+    VkFence fence = m_fence != VK_NULL_HANDLE ? m_fence : VK_NULL_HANDLE;
+
+    // Queue image view first (must be destroyed before image)
+    if (imageView != VK_NULL_HANDLE) {
+        m_pendingImageViewDestructions.append({imageView, fence, image});
+        qCDebug(KWIN_VULKAN) << "Queued image view for deferred destruction, pending count:" << m_pendingImageViewDestructions.size();
+    }
+
+    // Queue image second (will be destroyed after view)
+    if (image != VK_NULL_HANDLE) {
+        m_pendingImageDestructions.append({image, fence});
+        qCDebug(KWIN_VULKAN) << "Queued image for deferred destruction, pending count:" << m_pendingImageDestructions.size();
+    }
 }
 
 std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBufAttributes &attributes)
