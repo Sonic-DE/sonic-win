@@ -36,6 +36,14 @@
 namespace KWin
 {
 
+// DRM format names for R8 and GR88 (not defined in older drm_fourcc.h)
+#ifndef DRM_FORMAT_R8
+#define DRM_FORMAT_R8 fourcc_code('R', '8', ' ', ' ')
+#endif
+#ifndef DRM_FORMAT_GR88
+#define DRM_FORMAT_GR88 fourcc_code('G', 'R', '8', '8')
+#endif
+
 // DRI3 capability flags
 struct Dri3Capabilities
 {
@@ -240,14 +248,146 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
         return false;
     }
 
-    // TODO: Implement actual DMA-BUF import to Vulkan
-    // This requires:
-    // 1. Getting the file descriptor from xcb_dri3_buffer_from_pixmap()
-    // 2. Getting the stride, width, height from the reply
-    // 3. Importing the DMA-BUF into Vulkan using VkImportMemoryFdInfoKHR
+    // Use xcb_dri3_buffer_from_pixmap to get DMA-BUF fd
+    xcb_dri3_buffer_from_pixmap_cookie_t cookie = xcb_dri3_buffer_from_pixmap(c, pixmap);
+    xcb_dri3_buffer_from_pixmap_reply_t *reply = xcb_dri3_buffer_from_pixmap_reply(c, cookie, nullptr);
+    if (!reply) {
+        qCWarning(KWIN_VULKAN) << "[DMA-BUF] xcb_dri3_buffer_from_pixmap failed";
+        return false;
+    }
 
-    qCWarning(KWIN_VULKAN) << "[DMA-BUF] DMA-BUF import not fully implemented yet";
-    return false;
+    // Get the file descriptor (there are reply->nfd fds)
+    int *fds = xcb_dri3_buffer_from_pixmap_reply_fds(c, reply);
+    if (!fds || reply->nfd < 1) {
+        qCWarning(KWIN_VULKAN) << "[DMA-BUF] No file descriptors in reply";
+        free(reply);
+        return false;
+    }
+
+    qCDebug(KWIN_VULKAN) << "[DMA-BUF] Buffer from pixmap: nfd=" << reply->nfd
+                         << "width=" << reply->width << "height=" << reply->height
+                         << "stride=" << reply->stride << "depth=" << reply->depth
+                         << "bpp=" << reply->bpp;
+
+    // Build DmaBufAttributes from the reply
+    DmaBufAttributes attributes;
+    attributes.width = reply->width;
+    attributes.height = reply->height;
+    attributes.planeCount = reply->nfd;
+
+    // Determine DRM format from depth and bpp
+    // X11 pixmaps are typically XRGB8888 or ARGB8888
+    if (reply->depth == 24 && reply->bpp == 32) {
+        attributes.format = DRM_FORMAT_XRGB8888;
+    } else if (reply->depth == 32 && reply->bpp == 32) {
+        attributes.format = DRM_FORMAT_ARGB8888;
+    } else {
+        qCWarning(KWIN_VULKAN) << "[DMA-BUF] Unsupported depth/bpp:" << reply->depth << "/" << reply->bpp;
+        free(reply);
+        return false;
+    }
+
+    // Set up plane attributes
+    for (int i = 0; i < reply->nfd && i < 4; i++) {
+        // Duplicate the fd since we don't own it
+        int fd = dup(fds[i]);
+        if (fd < 0) {
+            qCWarning(KWIN_VULKAN) << "[DMA-BUF] Failed to duplicate fd for plane" << i;
+            // Clean up already duplicated fds
+            for (int j = 0; j < i; j++) {
+                close(attributes.fd[j].get());
+            }
+            free(reply);
+            return false;
+        }
+        attributes.fd[i] = FileDescriptor(fd);
+        attributes.offset[i] = 0; // X11 DRI3 doesn't provide offsets
+        attributes.pitch[i] = reply->stride;
+    }
+
+    // Modifier is typically DRM_FORMAT_MOD_INVALID for X11 pixmaps
+    attributes.modifier = DRM_FORMAT_MOD_INVALID;
+
+    free(reply);
+
+    // Check if this is a multi-plane format (YUV)
+    const auto formatInfo = FormatInfo::get(attributes.format);
+    if (formatInfo && formatInfo->yuvConversion()) {
+        qCDebug(KWIN_VULKAN) << "[DMA-BUF] Multi-plane YUV format detected:" << attributes.format;
+        return createMultiPlaneWithDmaBuf(attributes);
+    }
+
+    // Single-plane import
+    auto texture = m_context->importDmaBufAsTexture(attributes);
+    if (!texture || !texture->isValid()) {
+        qCWarning(KWIN_VULKAN) << "[DMA-BUF] Failed to import single-plane DMA-BUF";
+        return false;
+    }
+
+    m_texture.planes.append(std::shared_ptr<VulkanTexture>(texture.release()));
+    qCDebug(KWIN_VULKAN) << "[DMA-BUF] Successfully imported single-plane DMA-BUF";
+    return true;
+}
+
+bool VulkanSurfaceTextureX11::createMultiPlaneWithDmaBuf(const DmaBufAttributes &attributes)
+{
+    const auto formatInfo = FormatInfo::get(attributes.format);
+    if (!formatInfo || !formatInfo->yuvConversion()) {
+        qCWarning(KWIN_VULKAN) << "[Multi-Plane] Not a YUV format:" << attributes.format;
+        return false;
+    }
+
+    const auto yuvConversion = formatInfo->yuvConversion();
+    const auto &planes = yuvConversion->plane;
+
+    if (attributes.planeCount != planes.size()) {
+        qCWarning(KWIN_VULKAN) << "[Multi-Plane] Plane count mismatch: expected" << planes.size()
+                               << "got" << attributes.planeCount;
+        return false;
+    }
+
+    qCDebug(KWIN_VULKAN) << "[Multi-Plane] Importing" << planes.size() << "planes for format" << attributes.format;
+
+    // Import each plane separately
+    for (int i = 0; i < planes.size(); i++) {
+        const auto &planeInfo = planes[i];
+
+        // Calculate plane size (may be smaller than overall size due to subsampling)
+        QSize planeSize(
+            attributes.width / planeInfo.widthDivisor,
+            attributes.height / planeInfo.heightDivisor);
+
+        // Convert plane DRM format to Vulkan format
+        VkFormat vkFormat;
+        switch (planeInfo.format) {
+        case DRM_FORMAT_R8:
+            vkFormat = VK_FORMAT_R8_UNORM;
+            break;
+        case DRM_FORMAT_GR88:
+            vkFormat = VK_FORMAT_R8G8_UNORM;
+            break;
+        default:
+            qCWarning(KWIN_VULKAN) << "[Multi-Plane] Unsupported plane format:" << planeInfo.format;
+            m_texture.reset();
+            return false;
+        }
+
+        qCDebug(KWIN_VULKAN) << "[Multi-Plane] Importing plane" << i
+                             << "format" << (planeInfo.format == DRM_FORMAT_R8 ? "R8" : "GR88")
+                             << "size" << planeSize;
+
+        auto texture = m_context->importDmaBufPlaneAsTexture(attributes, i, vkFormat, planeSize);
+        if (!texture || !texture->isValid()) {
+            qCWarning(KWIN_VULKAN) << "[Multi-Plane] Failed to import plane" << i;
+            m_texture.reset();
+            return false;
+        }
+
+        m_texture.planes.append(std::shared_ptr<VulkanTexture>(texture.release()));
+    }
+
+    qCDebug(KWIN_VULKAN) << "[Multi-Plane] Successfully imported" << m_texture.planes.size() << "planes";
+    return true;
 }
 
 bool VulkanSurfaceTextureX11::createWithCpuUpload()
@@ -312,61 +452,53 @@ void VulkanSurfaceTextureX11::update(const QRegion &region)
         qCDebug(KWIN_VULKAN) << "VulkanSurfaceTextureX11::update - DMA-BUF path - zero-copy update";
         qCDebug(KWIN_VULKAN) << "  - Update region:" << region.boundingRect();
         qCDebug(KWIN_VULKAN) << "  - Region count:" << region.rectCount();
+        qCDebug(KWIN_VULKAN) << "  - Plane count:" << m_texture.planes.size();
 
         // Log detailed information about the DMA-BUF texture
         if (m_texture.isValid() && !m_texture.planes.isEmpty()) {
-            VulkanTexture *firstPlane = m_texture.planes.first().get();
-            qCDebug(KWIN_VULKAN) << "  - Texture valid:" << firstPlane->isValid();
-            qCDebug(KWIN_VULKAN) << "  - Current layout:" << firstPlane->currentLayout();
-            qCDebug(KWIN_VULKAN) << "  - Image:" << firstPlane->image();
-            qCDebug(KWIN_VULKAN) << "  - Image view:" << firstPlane->imageView();
-            qCDebug(KWIN_VULKAN) << "  - Texture size:" << firstPlane->size();
-            qCDebug(KWIN_VULKAN) << "  - Pixmap size:" << m_size;
+            // Issue external memory acquire barriers for all planes
+            // This ensures the GPU sees the updated content from the X server
+            VkCommandBuffer cmd = m_context->beginSingleTimeCommands();
 
-            // Check for size mismatches
-            if (firstPlane->size() != m_size) {
-                qCWarning(KWIN_VULKAN) << "  - POTENTIAL ISSUE: Texture size doesn't match pixmap size";
-                qCWarning(KWIN_VULKAN) << "    * Expected size:" << m_size;
-                qCWarning(KWIN_VULKAN) << "    * Actual size:" << firstPlane->size();
-                qCWarning(KWIN_VULKAN) << "    * Size ratio (width):" << (firstPlane->size().width() > 0 ? static_cast<float>(m_size.width()) / firstPlane->size().width() : 0);
-                qCWarning(KWIN_VULKAN) << "    * Size ratio (height):" << (firstPlane->size().height() > 0 ? static_cast<float>(m_size.height()) / firstPlane->size().height() : 0);
+            for (int planeIdx = 0; planeIdx < m_texture.planes.size(); planeIdx++) {
+                VulkanTexture *plane = m_texture.planes[planeIdx].get();
+                qCDebug(KWIN_VULKAN) << "  - Plane" << planeIdx << ":";
+                qCDebug(KWIN_VULKAN) << "    * Texture valid:" << plane->isValid();
+                qCDebug(KWIN_VULKAN) << "    * Current layout:" << plane->currentLayout();
+                qCDebug(KWIN_VULKAN) << "    * Image:" << plane->image();
+                qCDebug(KWIN_VULKAN) << "    * Image view:" << plane->imageView();
+                qCDebug(KWIN_VULKAN) << "    * Texture size:" << plane->size();
+
+                VkImageMemoryBarrier barrier{};
+                barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+                barrier.oldLayout = plane->currentLayout();
+                barrier.newLayout = plane->currentLayout(); // Keep the same layout
+                barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+                barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+                barrier.image = plane->image();
+                barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+                barrier.subresourceRange.baseMipLevel = 0;
+                barrier.subresourceRange.levelCount = 1;
+                barrier.subresourceRange.baseArrayLayer = 0;
+                barrier.subresourceRange.layerCount = 1;
+                // Use memory read bit for external memory synchronization
+                // This tells the driver that new data may be available from external source
+                barrier.srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+                barrier.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+
+                vkCmdPipelineBarrier(cmd,
+                                     VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
+                                     VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
+                                     0,
+                                     0, nullptr,
+                                     0, nullptr,
+                                     1, &barrier);
+
+                qCDebug(KWIN_VULKAN) << "    * Issued external memory acquire barrier";
             }
 
-            // Log layout transition information
-            qCDebug(KWIN_VULKAN) << "  - Layout transition info:";
-
-            // Issue external memory acquire barrier for DMA-BUF synchronization
-            // This ensures the GPU sees the updated content from the X server
-            VkImageMemoryBarrier barrier{};
-            barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-            barrier.oldLayout = firstPlane->currentLayout();
-            barrier.newLayout = firstPlane->currentLayout(); // Keep the same layout
-            barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-            barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-            barrier.image = firstPlane->image();
-            barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-            barrier.subresourceRange.baseMipLevel = 0;
-            barrier.subresourceRange.levelCount = 1;
-            barrier.subresourceRange.baseArrayLayer = 0;
-            barrier.subresourceRange.layerCount = 1;
-            // Use memory read bit for external memory synchronization
-            // This tells the driver that new data may be available from external source
-            barrier.srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
-            barrier.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
-
-            VkCommandBuffer cmd = m_context->beginSingleTimeCommands();
-            vkCmdPipelineBarrier(cmd,
-                                 VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
-                                 VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
-                                 0,
-                                 0, nullptr,
-                                 0, nullptr,
-                                 1, &barrier);
             m_context->endSingleTimeCommands(cmd);
-
-            qCDebug(KWIN_VULKAN) << "  - Memory synchronization:";
-            qCDebug(KWIN_VULKAN) << "    * Issued external memory acquire barrier";
-            qCDebug(KWIN_VULKAN) << "    * External memory type:" << (firstPlane->ownsImage() ? "Owned by texture" : "External memory");
+            qCDebug(KWIN_VULKAN) << "  - Memory synchronization complete for" << m_texture.planes.size() << "planes";
         }
 
         return;

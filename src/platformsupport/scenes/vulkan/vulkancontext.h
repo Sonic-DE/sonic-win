@@ -11,6 +11,7 @@
 #include "kwin_export.h"
 #include "utils/filedescriptor.h"
 
+#include <QSize>
 #include <QStack>
 #include <QVector>
 #include <memory>
@@ -114,6 +115,18 @@ public:
      * @brief Import a DMA-BUF as a Vulkan texture (if supported).
      */
     std::unique_ptr<VulkanTexture> importDmaBufAsTexture(const DmaBufAttributes &attributes);
+
+    /**
+     * @brief Import a single DMA-BUF plane as a Vulkan texture.
+     * @param attributes The DMA-BUF attributes
+     * @param planeIndex The plane index to import (0-3)
+     * @param format The Vulkan format for the plane
+     * @param size The size of this plane (may differ from overall buffer size for YUV)
+     */
+    std::unique_ptr<VulkanTexture> importDmaBufPlaneAsTexture(const DmaBufAttributes &attributes,
+                                                              int planeIndex,
+                                                              VkFormat format,
+                                                              const QSize &size);
 
     /**
      * @brief Check if DMA-BUF import is supported.
