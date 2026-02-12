@@ -86,8 +86,12 @@ void ItemRendererVulkan::beginFrame(const RenderTarget &renderTarget, const Rend
     // Clean up any pending resources from previous frames (samplers that were in use)
     m_context->cleanupPendingResources();
 
-    // Don't reset descriptor pool here - it will be reset on-demand when exhausted
-    // This avoids invalidating descriptors that are still in use by in-flight command buffers
+    // Reset descriptor pool when all previous frames have completed
+    // This prevents pool exhaustion over time while avoiding GPU stalls
+    if (m_outputsInFlight == 0) {
+        m_context->resetDescriptorPool();
+    }
+
     m_outputsInFlight++;
     m_frameNumber++;
 
@@ -287,10 +291,9 @@ void ItemRendererVulkan::endFrame()
 
         qCDebug(KWIN_CORE) << "ItemRendererVulkan::endFrame() - GPU-GPU semaphore sync";
 
-        // Don't free descriptor sets here - GPU work is not synchronized
-        // Let them accumulate in pool until blocking sync path cleans them up
-        // Pool size (10000) can handle ~110 frames at 90 descriptors/frame
-        // This avoids CPU stall from vkDeviceWaitIdle on the hot path
+        // Descriptor sets are not explicitly freed here - they will be freed when
+        // the descriptor pool is reset at the start of the next frame when
+        // m_outputsInFlight reaches 0. This avoids CPU stalls from vkDeviceWaitIdle.
         m_frameDescriptorSets.clear();
     } else {
         qCDebug(KWIN_CORE) << "Using fallback path: no swapchain semaphores, use blocking synchronization";

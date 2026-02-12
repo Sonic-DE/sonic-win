@@ -212,12 +212,11 @@ private:
     bool m_supportsDmaBufImport = false;
 
     // Track descriptor allocations for debugging
-    // Descriptor sets are freed after each frame in endFrame(), not accumulated
-    // Pool is created with FREE_DESCRIPTOR_SET flag for individual cleanup
-    // With ~90 nodes/frame across 3 monitors, we allocate and free ~90 sets per frame
+    // Pool size is calculated dynamically based on output count: outputs * 15000
+    // With pool resetting each frame, this provides headroom for multi-monitor setups
     uint32_t m_descriptorAllocCount = 0;
-    static constexpr uint32_t DESCRIPTOR_POOL_MAX_SETS = 10000;
-    static constexpr uint32_t DESCRIPTOR_POOL_RESET_THRESHOLD = 8000; // For emergency detection only
+    uint32_t m_descriptorPoolMaxSets = 0;
+    static constexpr uint32_t DESCRIPTOR_POOL_SETS_PER_OUTPUT = 15000;
 
     // Deferred sampler destruction queue (samplers in use by in-flight command buffers)
     QVector<std::pair<VkSampler, VkFence>> m_pendingSamplerDestructions;

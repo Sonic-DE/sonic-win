@@ -15,6 +15,7 @@
 #include "vulkanframebuffer.h"
 #include "vulkanpipelinemanager.h"
 #include "vulkantexture.h"
+#include "workspace.h"
 
 #include <QDebug>
 #include <drm_fourcc.h>
@@ -132,13 +133,20 @@ bool VulkanContext::createCommandPool()
 
 bool VulkanContext::createDescriptorPool()
 {
+    // Calculate pool size based on output count: outputs * 15000
+    // This provides adequate headroom for multi-monitor setups
+    uint32_t outputCount = 1; // Default to 1 if workspace not available yet
+    if (workspace()) {
+        outputCount = static_cast<uint32_t>(workspace()->outputs().count());
+    }
+    m_descriptorPoolMaxSets = outputCount * DESCRIPTOR_POOL_SETS_PER_OUTPUT;
+
     // Create a descriptor pool with enough descriptors for typical usage
     // Each render node needs 1 descriptor set with 2 bindings (texture + UBO)
-    // With ~90 nodes/frame and proactive reset at 80%, we reset every ~1.5 seconds
     std::array<VkDescriptorPoolSize, 3> poolSizes = {{
-        {VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, DESCRIPTOR_POOL_MAX_SETS},
-        {VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, DESCRIPTOR_POOL_MAX_SETS},
-        {VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000},
+        {VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, m_descriptorPoolMaxSets},
+        {VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, m_descriptorPoolMaxSets},
+        {VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, outputCount * 1000},
     }};
 
     VkDescriptorPoolCreateInfo poolInfo{};
@@ -146,7 +154,7 @@ bool VulkanContext::createDescriptorPool()
     poolInfo.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
     poolInfo.poolSizeCount = static_cast<uint32_t>(poolSizes.size());
     poolInfo.pPoolSizes = poolSizes.data();
-    poolInfo.maxSets = DESCRIPTOR_POOL_MAX_SETS;
+    poolInfo.maxSets = m_descriptorPoolMaxSets;
 
     VkResult result = vkCreateDescriptorPool(m_backend->device(), &poolInfo, nullptr, &m_descriptorPool);
     if (result != VK_SUCCESS) {
@@ -154,7 +162,7 @@ bool VulkanContext::createDescriptorPool()
         return false;
     }
 
-    qCWarning(KWIN_VULKAN) << "Created descriptor pool with maxSets=" << poolInfo.maxSets;
+    qCWarning(KWIN_VULKAN) << "Created descriptor pool with maxSets=" << poolInfo.maxSets << "for" << outputCount << "outputs";
     return true;
 }
 
@@ -306,7 +314,7 @@ VkDescriptorSet VulkanContext::allocateDescriptorSet(VkDescriptorSetLayout layou
     // VK_ERROR_OUT_OF_POOL_MEMORY = -1000069000, VK_ERROR_FRAGMENTED_POOL = -1000069001
     const bool poolExhausted = (result == VK_ERROR_OUT_OF_POOL_MEMORY) || (result == VK_ERROR_FRAGMENTED_POOL) || (static_cast<int>(result) == -1000069000) || (static_cast<int>(result) == -1000069001);
     if (poolExhausted) {
-        qCCritical(KWIN_VULKAN) << "Descriptor pool exhausted at" << m_descriptorAllocCount << "allocations - increase DESCRIPTOR_POOL_MAX_SETS";
+        qCCritical(KWIN_VULKAN) << "Descriptor pool exhausted at" << m_descriptorAllocCount << "allocations (max:" << m_descriptorPoolMaxSets << ") - pool reset should prevent this";
         return VK_NULL_HANDLE;
     }
 
