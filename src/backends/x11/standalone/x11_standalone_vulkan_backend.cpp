@@ -236,7 +236,9 @@ bool X11StandaloneVulkanBackend::initDevice()
 {
     // Required device extensions
     QList<const char *> requiredDeviceExtensions = {
-        VK_KHR_SWAPCHAIN_EXTENSION_NAME};
+        VK_KHR_SWAPCHAIN_EXTENSION_NAME,
+        VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME,
+        VK_KHR_EXTERNAL_MEMORY_FD_EXTENSION_NAME};
 
     return createDevice(requiredDeviceExtensions);
 }
