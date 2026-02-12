@@ -558,8 +558,16 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
         SurfacePixmap *pixmap = surfaceItem->pixmap();
         auto vulkanSurfaceTexture = pixmap ? dynamic_cast<VulkanSurfaceTextureX11 *>(pixmap->texture()) : nullptr;
         if (pixmap && !geometry.isEmpty()) {
-            if (vulkanSurfaceTexture && vulkanSurfaceTexture->texture() && vulkanSurfaceTexture->texture()->isValid()) {
-                VulkanTexture *texture = vulkanSurfaceTexture->texture();
+            if (vulkanSurfaceTexture && vulkanSurfaceTexture->isValid()) {
+                VulkanSurfaceContents surfaceContents = vulkanSurfaceTexture->texture();
+
+                // Get the first plane for texture coordinates
+                VulkanTexture *texture = surfaceContents.firstPlane();
+
+                if (!texture) {
+                    qWarning() << "VULKAN: SurfaceItem SKIPPED - no valid texture planes";
+                    return;
+                }
 
                 // Log geometry details - compare texture size vs bufferSize AND geometry dimensions
                 // Find geometry bounding box to show actual rendered size
@@ -581,66 +589,13 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
                                << "itemPos=" << item->position();
                 }
 
-                // Log vertices for LARGE items (backgrounds) to debug rendering
-                static int largeSurfaceLogCount = 0;
-                if (texture->size().height() >= 1000 && largeSurfaceLogCount < 10) {
-                    qWarning() << "VULKAN: LARGE SurfaceItem (background?) VERTS:";
-                    for (int i = 0; i < qMin(geometry.count(), 6); i++) {
-                        qWarning() << "  v" << i << ": pos=" << geometry[i].position << "tex=" << geometry[i].texcoord;
-                    }
-                    qWarning() << "VULKAN: LARGE SurfaceItem transform:" << context->transformStack.top();
-                    largeSurfaceLogCount++;
-                }
-
-                // Log vertices for small items (panels) to debug sizing issue
-                static int smallSurfaceLogCount = 0;
-                if (texture->size().height() < 100 && smallSurfaceLogCount < 5) {
-                    qWarning() << "VULKAN: SMALL SurfaceItem VERTS (panel?):";
-                    for (int i = 0; i < qMin(geometry.count(), 6); i++) {
-                        qWarning() << "  v" << i << ": pos=" << geometry[i].position << "tex=" << geometry[i].texcoord;
-                    }
-                    smallSurfaceLogCount++;
-                }
-
                 // Post-process texture coordinates (convert pixel coords to normalized)
                 QMatrix4x4 texMatrix = texture->matrix(VulkanCoordinateType::Unnormalized);
                 geometry.postProcessTextureCoordinates(texMatrix);
 
-                // Log transform matrix and NORMALIZED tex coords for small items (panels)
-                static int smallTransformLogCount = 0;
-                if (texture->size().height() < 100 && smallTransformLogCount < 5) {
-                    qWarning() << "VULKAN: SMALL SurfaceItem texMatrix(0,0)=" << texMatrix(0, 0)
-                               << "texMatrix(1,1)=" << texMatrix(1, 1)
-                               << "texMatrix(0,3)=" << texMatrix(0, 3)
-                               << "texMatrix(1,3)=" << texMatrix(1, 3);
-                    qWarning() << "VULKAN: SMALL SurfaceItem NORMALIZED tex coords:";
-                    for (int i = 0; i < qMin(geometry.count(), 6); i++) {
-                        qWarning() << "  v" << i << ": tex=" << geometry[i].texcoord;
-                    }
-                    qWarning() << "VULKAN: SMALL SurfaceItem transform:" << context->transformStack.top();
-                    smallTransformLogCount++;
-                }
-
-                // ALSO log LARGE surfaces (backgrounds/windows) to compare
-                static int largeTransformLogCount = 0;
-                if (texture->size().height() >= 500 && largeTransformLogCount < 5) {
-                    qWarning() << "VULKAN: LARGE SurfaceItem texMatrix(0,0)=" << texMatrix(0, 0)
-                               << "texMatrix(1,1)=" << texMatrix(1, 1)
-                               << "texMatrix(0,3)=" << texMatrix(0, 3)
-                               << "texMatrix(1,3)=" << texMatrix(1, 3);
-                    qWarning() << "VULKAN: LARGE SurfaceItem texSize=" << texture->size()
-                               << "NORMALIZED tex coords:";
-                    for (int i = 0; i < qMin(geometry.count(), 6); i++) {
-                        qWarning() << "  v" << i << ": pos=" << geometry[i].position << "tex=" << geometry[i].texcoord;
-                    }
-                    qWarning() << "VULKAN: LARGE SurfaceItem transform:" << context->transformStack.top();
-                    qWarning() << "VULKAN: LARGE SurfaceItem opacity=" << context->opacityStack.top();
-                    largeTransformLogCount++;
-                }
-
                 RenderNode node;
                 node.traits = ShaderTrait::MapTexture;
-                node.textures.append(texture);
+                node.textures = surfaceContents.toVarLengthArray();
                 node.opacity = context->opacityStack.top();
                 node.hasAlpha = pixmap->hasAlphaChannel();
                 node.colorDescription = surfaceItem->colorDescription();
