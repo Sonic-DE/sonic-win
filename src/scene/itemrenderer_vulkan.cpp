@@ -761,6 +761,10 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
             context->renderNodes.append(node);
             qWarning() << "VULKAN: OutlinedBorderItem ADDED render node with" << node.vertexCount << "vertices";
         }
+    } else if (qobject_cast<WindowItem *>(item)) {
+        // WindowItem (including WindowItemX11, WindowItemInternal) is a container item
+        // with no geometry of its own - it just holds child items (SurfaceItem, DecorationItem, ShadowItem)
+        // This is expected behavior, no warning needed
     } else {
         // Unhandled item type
         qWarning() << "VULKAN: UNHANDLED item type:" << item->metaObject()->className()
