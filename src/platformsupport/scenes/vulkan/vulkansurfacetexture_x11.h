@@ -9,7 +9,6 @@
 #pragma once
 
 #include "vulkansurfacetexture.h"
-#include "vulkantexture.h"
 
 #include <QSize>
 #include <memory>
@@ -39,11 +38,19 @@ public:
     bool isValid() const override;
 
     /**
-     * @brief Get the Vulkan texture for rendering.
+     * @brief Get the Vulkan image handle from the first plane.
      */
-    VulkanTexture *texture() const
+    VkImage image() const
     {
-        return m_texture.get();
+        return m_texture.planes.isEmpty() ? VK_NULL_HANDLE : m_texture.planes.first()->image();
+    }
+
+    /**
+     * @brief Get the Vulkan image view handle from the first plane.
+     */
+    VkImageView imageView() const
+    {
+        return m_texture.planes.isEmpty() ? VK_NULL_HANDLE : m_texture.planes.first()->imageView();
     }
 
 private:
@@ -53,7 +60,6 @@ private:
 
     SurfacePixmapX11 *m_pixmap;
     VulkanContext *m_context;
-    std::unique_ptr<VulkanTexture> m_texture;
     std::unique_ptr<VulkanBuffer> m_stagingBuffer;
     QSize m_size;
     bool m_useDmaBuf = false;

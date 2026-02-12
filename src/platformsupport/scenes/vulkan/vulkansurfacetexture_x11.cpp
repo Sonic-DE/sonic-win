@@ -136,14 +136,14 @@ VulkanSurfaceTextureX11::VulkanSurfaceTextureX11(VulkanBackend *backend, Surface
 
 VulkanSurfaceTextureX11::~VulkanSurfaceTextureX11()
 {
-    // Clear the texture and staging buffer
+    // Clear the texture planes and staging buffer
     m_texture.reset();
     m_stagingBuffer.reset();
 }
 
 bool VulkanSurfaceTextureX11::isValid() const
 {
-    return m_texture && m_texture->isValid();
+    return m_texture.isValid();
 }
 
 bool VulkanSurfaceTextureX11::create()
@@ -165,13 +165,13 @@ bool VulkanSurfaceTextureX11::create()
     // Texture can be reused if:
     // 1. We have a valid texture
     // 2. The size hasn't changed
-    if (m_texture && m_texture->isValid() && m_size == currentSize) {
+    if (m_texture.isValid() && m_size == currentSize) {
         qCDebug(KWIN_VULKAN) << "VulkanSurfaceTextureX11::create() - reusing cached texture for pixmap" << currentPixmapId;
         return true;
     }
 
     // Texture needs to be recreated - clear the old one
-    if (m_texture) {
+    if (m_texture.isValid()) {
         qCDebug(KWIN_VULKAN) << "VulkanSurfaceTextureX11::create() - invalidating cached texture (size changed:" << (m_size != currentSize) << ")";
         m_texture.reset();
         m_stagingBuffer.reset();
@@ -266,15 +266,12 @@ bool VulkanSurfaceTextureX11::createWithCpuUpload()
     VkFormat format = VK_FORMAT_B8G8R8A8_SRGB;
     qCDebug(KWIN_VULKAN) << "  - Texture format:" << format << "(VK_FORMAT_B8G8R8A8_SRGB)";
 
-    m_texture = VulkanTexture::allocate(m_context, m_size, format);
-    if (!m_texture) {
-        qCWarning(KWIN_VULKAN) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to allocate texture (null texture)";
+    auto texture = VulkanTexture::allocate(m_context, m_size, format);
+    if (!texture || !texture->isValid()) {
+        qCWarning(KWIN_VULKAN) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to allocate texture";
         return false;
     }
-    if (!m_texture->isValid()) {
-        qCWarning(KWIN_VULKAN) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to allocate texture (invalid texture)";
-        return false;
-    }
+    m_texture.planes.append(std::shared_ptr<VulkanTexture>(texture.release()));
 
     qCDebug(KWIN_VULKAN) << "VulkanSurfaceTextureX11::createWithCpuUpload() - texture allocated successfully";
 
@@ -282,13 +279,8 @@ bool VulkanSurfaceTextureX11::createWithCpuUpload()
     const VkDeviceSize bufferSize = m_size.width() * m_size.height() * 4; // BGRA = 4 bytes per pixel
     m_stagingBuffer = VulkanBuffer::createStagingBuffer(m_context, bufferSize);
 
-    if (!m_stagingBuffer) {
-        qCWarning(KWIN_VULKAN) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to create staging buffer (null buffer)";
-        m_texture.reset();
-        return false;
-    }
-    if (!m_stagingBuffer->isValid()) {
-        qCWarning(KWIN_VULKAN) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to create staging buffer (invalid buffer)";
+    if (!m_stagingBuffer || !m_stagingBuffer->isValid()) {
+        qCWarning(KWIN_VULKAN) << "VulkanSurfaceTextureX11::createWithCpuUpload() - failed to create staging buffer";
         m_texture.reset();
         return false;
     }
@@ -322,21 +314,22 @@ void VulkanSurfaceTextureX11::update(const QRegion &region)
         qCDebug(KWIN_VULKAN) << "  - Region count:" << region.rectCount();
 
         // Log detailed information about the DMA-BUF texture
-        if (m_texture) {
-            qCDebug(KWIN_VULKAN) << "  - Texture valid:" << m_texture->isValid();
-            qCDebug(KWIN_VULKAN) << "  - Current layout:" << m_texture->currentLayout();
-            qCDebug(KWIN_VULKAN) << "  - Image:" << m_texture->image();
-            qCDebug(KWIN_VULKAN) << "  - Image view:" << m_texture->imageView();
-            qCDebug(KWIN_VULKAN) << "  - Texture size:" << m_texture->size();
+        if (m_texture.isValid() && !m_texture.planes.isEmpty()) {
+            VulkanTexture *firstPlane = m_texture.planes.first().get();
+            qCDebug(KWIN_VULKAN) << "  - Texture valid:" << firstPlane->isValid();
+            qCDebug(KWIN_VULKAN) << "  - Current layout:" << firstPlane->currentLayout();
+            qCDebug(KWIN_VULKAN) << "  - Image:" << firstPlane->image();
+            qCDebug(KWIN_VULKAN) << "  - Image view:" << firstPlane->imageView();
+            qCDebug(KWIN_VULKAN) << "  - Texture size:" << firstPlane->size();
             qCDebug(KWIN_VULKAN) << "  - Pixmap size:" << m_size;
 
             // Check for size mismatches
-            if (m_texture->size() != m_size) {
+            if (firstPlane->size() != m_size) {
                 qCWarning(KWIN_VULKAN) << "  - POTENTIAL ISSUE: Texture size doesn't match pixmap size";
                 qCWarning(KWIN_VULKAN) << "    * Expected size:" << m_size;
-                qCWarning(KWIN_VULKAN) << "    * Actual size:" << m_texture->size();
-                qCWarning(KWIN_VULKAN) << "    * Size ratio (width):" << (m_texture->size().width() > 0 ? static_cast<float>(m_size.width()) / m_texture->size().width() : 0);
-                qCWarning(KWIN_VULKAN) << "    * Size ratio (height):" << (m_texture->size().height() > 0 ? static_cast<float>(m_size.height()) / m_texture->size().height() : 0);
+                qCWarning(KWIN_VULKAN) << "    * Actual size:" << firstPlane->size();
+                qCWarning(KWIN_VULKAN) << "    * Size ratio (width):" << (firstPlane->size().width() > 0 ? static_cast<float>(m_size.width()) / firstPlane->size().width() : 0);
+                qCWarning(KWIN_VULKAN) << "    * Size ratio (height):" << (firstPlane->size().height() > 0 ? static_cast<float>(m_size.height()) / firstPlane->size().height() : 0);
             }
 
             // Log layout transition information
@@ -346,11 +339,11 @@ void VulkanSurfaceTextureX11::update(const QRegion &region)
             // This ensures the GPU sees the updated content from the X server
             VkImageMemoryBarrier barrier{};
             barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-            barrier.oldLayout = m_texture->currentLayout();
-            barrier.newLayout = m_texture->currentLayout(); // Keep the same layout
+            barrier.oldLayout = firstPlane->currentLayout();
+            barrier.newLayout = firstPlane->currentLayout(); // Keep the same layout
             barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
             barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-            barrier.image = m_texture->image();
+            barrier.image = firstPlane->image();
             barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
             barrier.subresourceRange.baseMipLevel = 0;
             barrier.subresourceRange.levelCount = 1;
@@ -373,7 +366,7 @@ void VulkanSurfaceTextureX11::update(const QRegion &region)
 
             qCDebug(KWIN_VULKAN) << "  - Memory synchronization:";
             qCDebug(KWIN_VULKAN) << "    * Issued external memory acquire barrier";
-            qCDebug(KWIN_VULKAN) << "    * External memory type:" << (m_texture->ownsImage() ? "Owned by texture" : "External memory");
+            qCDebug(KWIN_VULKAN) << "    * External memory type:" << (firstPlane->ownsImage() ? "Owned by texture" : "External memory");
         }
 
         return;
@@ -385,10 +378,12 @@ void VulkanSurfaceTextureX11::update(const QRegion &region)
 
 void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
 {
-    if (!m_texture || !m_stagingBuffer) {
+    if (!m_texture.isValid() || m_texture.planes.isEmpty() || !m_stagingBuffer) {
         qCDebug(KWIN_VULKAN) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - texture or staging buffer not available";
         return;
     }
+
+    VulkanTexture *firstPlane = m_texture.planes.first().get();
 
     const xcb_pixmap_t nativePixmap = m_pixmap->pixmap();
     if (nativePixmap == XCB_PIXMAP_NONE) {
@@ -543,11 +538,11 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
     qCDebug(KWIN_VULKAN) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - command buffer allocated successfully";
 
     // Transition image to transfer destination layout
-    m_texture->transitionLayout(cmd,
-                                m_texture->currentLayout(),
-                                VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-                                VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                VK_PIPELINE_STAGE_TRANSFER_BIT);
+    firstPlane->transitionLayout(cmd,
+                                 firstPlane->currentLayout(),
+                                 VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+                                 VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                 VK_PIPELINE_STAGE_TRANSFER_BIT);
 
     // Copy buffer to image
     VkBufferImageCopy copyRegion{};
@@ -565,16 +560,16 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
 
     vkCmdCopyBufferToImage(cmd,
                            m_stagingBuffer->buffer(),
-                           m_texture->image(),
+                           firstPlane->image(),
                            VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
                            1, &copyRegion);
 
     // Transition back to shader read optimal layout
-    m_texture->transitionLayout(cmd,
-                                VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-                                VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
-                                VK_PIPELINE_STAGE_TRANSFER_BIT,
-                                VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT);
+    firstPlane->transitionLayout(cmd,
+                                 VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
+                                 VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
+                                 VK_PIPELINE_STAGE_TRANSFER_BIT,
+                                 VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT);
 
     m_context->endSingleTimeCommands(cmd);
 
