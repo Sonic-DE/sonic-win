@@ -28,17 +28,22 @@ static VkFormat drmFormatToVkFormat(uint32_t drmFormat)
 {
     switch (drmFormat) {
     case DRM_FORMAT_ARGB8888:
-        return VK_FORMAT_B8G8R8A8_UNORM;
+        // X11 pixmaps are sRGB encoded, use SRGB format for proper color handling
+        return VK_FORMAT_B8G8R8A8_SRGB;
     case DRM_FORMAT_XRGB8888:
-        return VK_FORMAT_B8G8R8A8_UNORM;
+        return VK_FORMAT_B8G8R8A8_SRGB;
     case DRM_FORMAT_ABGR8888:
-        return VK_FORMAT_R8G8B8A8_UNORM;
+        return VK_FORMAT_R8G8B8A8_SRGB;
     case DRM_FORMAT_XBGR8888:
-        return VK_FORMAT_R8G8B8A8_UNORM;
+        return VK_FORMAT_R8G8B8A8_SRGB;
     case DRM_FORMAT_RGB888:
-        return VK_FORMAT_R8G8B8_UNORM;
+        // Use 4-component format for better driver compatibility
+        // The alpha channel will be ignored
+        return VK_FORMAT_R8G8B8A8_SRGB;
     case DRM_FORMAT_BGR888:
-        return VK_FORMAT_B8G8R8_UNORM;
+        // Use 4-component format for better driver compatibility
+        // The alpha channel will be ignored
+        return VK_FORMAT_B8G8R8A8_SRGB;
     case DRM_FORMAT_RGB565:
         return VK_FORMAT_R5G6B5_UNORM_PACK16;
     case DRM_FORMAT_BGR565:
@@ -51,8 +56,14 @@ static VkFormat drmFormatToVkFormat(uint32_t drmFormat)
         return VK_FORMAT_A2B10G10R10_UNORM_PACK32;
     case DRM_FORMAT_XBGR2101010:
         return VK_FORMAT_A2B10G10R10_UNORM_PACK32;
+    // YUV plane formats (for multi-plane textures) - use UNORM for YUV
+    case DRM_FORMAT_R8:
+        return VK_FORMAT_R8_UNORM;
+    case DRM_FORMAT_GR88:
+        return VK_FORMAT_R8G8_UNORM;
+    case DRM_FORMAT_RG88:
+        return VK_FORMAT_R8G8_UNORM;
     default:
-        qCWarning(KWIN_VULKAN) << "Unsupported DRM format:" << Qt::hex << drmFormat << Qt::dec;
         return VK_FORMAT_UNDEFINED;
     }
 }
@@ -625,6 +636,185 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     texture->m_size = QSize(attributes.width, attributes.height);
     texture->m_currentLayout = VK_IMAGE_LAYOUT_UNDEFINED;
     texture->m_ownsImage = true;
+
+    return texture;
+}
+
+std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufPlaneAsTexture(const DmaBufAttributes &attributes,
+                                                                         int planeIndex,
+                                                                         VkFormat format,
+                                                                         const QSize &size)
+{
+    if (!m_supportsDmaBufImport) {
+        qCWarning(KWIN_VULKAN) << "DMA-BUF import not supported";
+        return nullptr;
+    }
+
+    if (planeIndex < 0 || planeIndex >= attributes.planeCount || planeIndex >= 4) {
+        qCWarning(KWIN_VULKAN) << "Invalid plane index:" << planeIndex << "planeCount:" << attributes.planeCount;
+        return nullptr;
+    }
+
+    if (!attributes.fd[planeIndex].isValid()) {
+        qCWarning(KWIN_VULKAN) << "Invalid file descriptor for plane" << planeIndex;
+        return nullptr;
+    }
+
+    // Create VkImage with external memory
+    VkExternalMemoryImageCreateInfo externalMemoryInfo{};
+    externalMemoryInfo.sType = VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO;
+    externalMemoryInfo.handleTypes = VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT;
+
+    VkImageCreateInfo imageInfo{};
+    imageInfo.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+    imageInfo.pNext = &externalMemoryInfo;
+    imageInfo.imageType = VK_IMAGE_TYPE_2D;
+    imageInfo.format = format;
+    imageInfo.extent.width = static_cast<uint32_t>(size.width());
+    imageInfo.extent.height = static_cast<uint32_t>(size.height());
+    imageInfo.extent.depth = 1;
+    imageInfo.mipLevels = 1;
+    imageInfo.arrayLayers = 1;
+    imageInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+    imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+    imageInfo.usage = VK_IMAGE_USAGE_SAMPLED_BIT;
+    imageInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+    imageInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+
+    VkImage image;
+    VkResult result = vkCreateImage(m_backend->device(), &imageInfo, nullptr, &image);
+    if (result != VK_SUCCESS) {
+        qCWarning(KWIN_VULKAN) << "Failed to create image for DMA-BUF plane" << planeIndex << "import:" << result;
+        return nullptr;
+    }
+
+    // Get memory requirements
+    VkMemoryRequirements memReqs;
+    vkGetImageMemoryRequirements(m_backend->device(), image, &memReqs);
+
+    // Find appropriate memory type for DMA-BUF import
+    VkPhysicalDeviceMemoryProperties memProperties;
+    vkGetPhysicalDeviceMemoryProperties(m_backend->physicalDevice(), &memProperties);
+
+    uint32_t memoryTypeIndex = UINT32_MAX;
+    for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
+        if ((memReqs.memoryTypeBits & (1 << i)) && (memProperties.memoryTypes[i].propertyFlags & VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT)) {
+            memoryTypeIndex = i;
+            break;
+        }
+    }
+
+    // Fallback to any compatible memory type if device-local not found
+    if (memoryTypeIndex == UINT32_MAX) {
+        for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
+            if (memReqs.memoryTypeBits & (1 << i)) {
+                memoryTypeIndex = i;
+                break;
+            }
+        }
+    }
+
+    if (memoryTypeIndex == UINT32_MAX) {
+        qCWarning(KWIN_VULKAN) << "Failed to find suitable memory type for DMA-BUF plane import";
+        vkDestroyImage(m_backend->device(), image, nullptr);
+        return nullptr;
+    }
+
+    // Duplicate the fd since Vulkan takes ownership
+    int fd = dup(attributes.fd[planeIndex].get());
+    if (fd < 0) {
+        qCWarning(KWIN_VULKAN) << "Failed to duplicate fd for plane" << planeIndex;
+        vkDestroyImage(m_backend->device(), image, nullptr);
+        return nullptr;
+    }
+
+    // Import memory with VkImportMemoryFdInfoKHR
+    VkImportMemoryFdInfoKHR importFdInfo{};
+    importFdInfo.sType = VK_STRUCTURE_TYPE_IMPORT_MEMORY_FD_INFO_KHR;
+    importFdInfo.handleType = VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT;
+    importFdInfo.fd = fd;
+
+    VkMemoryAllocateInfo allocInfo{};
+    allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+    allocInfo.pNext = &importFdInfo;
+    allocInfo.allocationSize = memReqs.size;
+    allocInfo.memoryTypeIndex = memoryTypeIndex;
+
+    VkDeviceMemory memory;
+    result = vkAllocateMemory(m_backend->device(), &allocInfo, nullptr, &memory);
+    if (result != VK_SUCCESS) {
+        qCWarning(KWIN_VULKAN) << "Failed to allocate memory for DMA-BUF plane" << planeIndex << "import:" << result;
+        // fd is consumed by vkAllocateMemory on failure, no need to close
+        vkDestroyImage(m_backend->device(), image, nullptr);
+        return nullptr;
+    }
+
+    // Bind memory to image
+    result = vkBindImageMemory(m_backend->device(), image, memory, 0);
+    if (result != VK_SUCCESS) {
+        qCWarning(KWIN_VULKAN) << "Failed to bind memory to image for plane" << planeIndex << ":" << result;
+        vkFreeMemory(m_backend->device(), memory, nullptr);
+        vkDestroyImage(m_backend->device(), image, nullptr);
+        return nullptr;
+    }
+
+    // Create image view
+    VkImageViewCreateInfo viewInfo{};
+    viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+    viewInfo.image = image;
+    viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+    viewInfo.format = imageInfo.format;
+    viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+    viewInfo.subresourceRange.baseMipLevel = 0;
+    viewInfo.subresourceRange.levelCount = 1;
+    viewInfo.subresourceRange.baseArrayLayer = 0;
+    viewInfo.subresourceRange.layerCount = 1;
+
+    VkImageView imageView;
+    result = vkCreateImageView(m_backend->device(), &viewInfo, nullptr, &imageView);
+    if (result != VK_SUCCESS) {
+        qCWarning(KWIN_VULKAN) << "Failed to create image view for plane" << planeIndex << ":" << result;
+        vkFreeMemory(m_backend->device(), memory, nullptr);
+        vkDestroyImage(m_backend->device(), image, nullptr);
+        return nullptr;
+    }
+
+    // Create sampler
+    VkSamplerCreateInfo samplerInfo{};
+    samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
+    samplerInfo.magFilter = VK_FILTER_LINEAR;
+    samplerInfo.minFilter = VK_FILTER_LINEAR;
+    samplerInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+    samplerInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+    samplerInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;
+    samplerInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
+    samplerInfo.unnormalizedCoordinates = VK_FALSE;
+    samplerInfo.compareEnable = VK_FALSE;
+    samplerInfo.compareOp = VK_COMPARE_OP_ALWAYS;
+    samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+
+    VkSampler sampler;
+    result = vkCreateSampler(m_backend->device(), &samplerInfo, nullptr, &sampler);
+    if (result != VK_SUCCESS) {
+        qCWarning(KWIN_VULKAN) << "Failed to create sampler for plane" << planeIndex << ":" << result;
+        vkDestroyImageView(m_backend->device(), imageView, nullptr);
+        vkFreeMemory(m_backend->device(), memory, nullptr);
+        vkDestroyImage(m_backend->device(), image, nullptr);
+        return nullptr;
+    }
+
+    // Create VulkanTexture wrapper
+    auto texture = std::unique_ptr<VulkanTexture>(new VulkanTexture(this));
+    texture->m_image = image;
+    texture->m_imageView = imageView;
+    texture->m_sampler = sampler;
+    texture->m_deviceMemory = memory;
+    texture->m_format = imageInfo.format;
+    texture->m_size = size;
+    texture->m_currentLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+    texture->m_ownsImage = true;
+
+    qCDebug(KWIN_VULKAN) << "Successfully imported DMA-BUF plane" << planeIndex << "as Vulkan texture size" << size;
 
     return texture;
 }
