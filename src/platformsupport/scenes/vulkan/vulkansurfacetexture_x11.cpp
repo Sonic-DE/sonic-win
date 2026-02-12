@@ -21,11 +21,14 @@
 
 #include <QImage>
 #include <cstring>
+#include <fcntl.h>
 #include <libdrm/drm_fourcc.h>
 #include <unistd.h>
 #include <xcb/dri3.h>
 #include <xcb/xcb.h>
 #include <xcb/xcb_image.h>
+#include <xf86drm.h>
+#include <xf86drmMode.h>
 
 #include "scene/surfaceitem_x11.h"
 #include "x11window.h"
@@ -33,28 +36,95 @@
 namespace KWin
 {
 
-// Helper to check if DRI3 extension is available
-static bool isDri3Available(xcb_connection_t *c)
+// DRI3 capability flags
+struct Dri3Capabilities
 {
-    static bool dri3Checked = false;
-    static bool dri3Available = false;
+    bool dri3Extension = false; // DRI3 X11 extension present
+    bool gbmModifiers = false; // GBM supports modifiers (DRI3 1.2+)
+    bool syncobjs = false; // DRM syncobjs supported (DRI3 1.4)
+    bool externalMemory = false; // Vulkan external memory support (NVIDIA)
 
-    if (dri3Checked) {
-        return dri3Available;
+    Dri3Capabilities() = default;
+    ~Dri3Capabilities() = default;
+
+    Dri3Capabilities(const Dri3Capabilities &) = delete;
+    Dri3Capabilities &operator=(const Dri3Capabilities &) = delete;
+};
+
+// Static cache for DRI3 capabilities - probed once per compositor session
+static std::unique_ptr<Dri3Capabilities> g_dri3Capabilities;
+
+// Forward declaration
+static std::unique_ptr<Dri3Capabilities> probeDri3Capabilities(xcb_connection_t *c, xcb_pixmap_t pixmap);
+
+// Helper to get DRI3 capabilities (probes once if not already done)
+static const Dri3Capabilities &getDri3Capabilities(xcb_connection_t *c, xcb_pixmap_t pixmap)
+{
+    if (!g_dri3Capabilities) {
+        g_dri3Capabilities = probeDri3Capabilities(c, pixmap);
     }
-    dri3Checked = true;
+    return *g_dri3Capabilities;
+}
+
+// Helper to check if DRI3 extension is available with full capability probing
+static std::unique_ptr<Dri3Capabilities> probeDri3Capabilities(xcb_connection_t *c, xcb_pixmap_t pixmap)
+{
+    auto caps = std::make_unique<Dri3Capabilities>();
 
     // Check if DRI3 extension is present
     const xcb_query_extension_reply_t *extReply = xcb_get_extension_data(c, &xcb_dri3_id);
-    dri3Available = extReply && extReply->present;
+    caps->dri3Extension = extReply && extReply->present;
 
-    if (dri3Available) {
-        qCDebug(KWIN_VULKAN) << "DRI3 extension available";
-    } else {
-        qCDebug(KWIN_VULKAN) << "DRI3 extension not available";
+    if (!caps->dri3Extension) {
+        qCDebug(KWIN_VULKAN) << "[DRI3] DRI3 extension not available";
+        return caps;
     }
 
-    return dri3Available;
+    qCDebug(KWIN_VULKAN) << "[DRI3] DRI3 extension available, probing capabilities...";
+
+    // Probe GBM modifiers support (DRI3 1.2+)
+#ifdef GBM_BO_IMPORT_FD_MODIFIER
+    // GBM_BO_IMPORT_FD_MODIFIER is available at compile time
+    caps->gbmModifiers = true;
+    qCDebug(KWIN_VULKAN) << "[DRI3] GBM_BO_IMPORT_FD_MODIFIER available at compile time (DRI3 1.2+)";
+#else
+    qCDebug(KWIN_VULKAN) << "[DRI3] GBM_BO_IMPORT_FD_MODIFIER not defined at compile time";
+#endif
+
+    // Probe DRM syncobj support (DRI3 1.4) - try to open DRM device directly
+    // Try common DRM device paths
+    const char *drmDevicePaths[] = {
+        "/dev/dri/card0",
+        "/dev/dri/renderD128",
+        "/dev/dri/card1",
+        "/dev/dri/renderD129",
+        nullptr};
+
+    for (int i = 0; drmDevicePaths[i] != nullptr; ++i) {
+        int fd = open(drmDevicePaths[i], O_RDWR | O_CLOEXEC);
+        if (fd < 0) {
+            continue;
+        }
+
+        // Test syncobj support
+        struct drm_syncobj_create syncobjTest = {};
+        if (drmIoctl(fd, DRM_IOCTL_SYNCOBJ_CREATE, &syncobjTest) == 0) {
+            caps->syncobjs = true;
+            qCDebug(KWIN_VULKAN) << "[DRI3] DRM syncobjs supported (DRI3 1.4) via" << drmDevicePaths[i];
+
+            // Clean up the test syncobj
+            struct drm_syncobj_destroy destroyTest = {};
+            destroyTest.handle = syncobjTest.handle;
+            drmIoctl(fd, DRM_IOCTL_SYNCOBJ_DESTROY, &destroyTest);
+        } else {
+            qCDebug(KWIN_VULKAN) << "[DRI3] DRM syncobjs not supported on" << drmDevicePaths[i] << "(DRI3 1.4)";
+        }
+
+        close(fd);
+        break; // Found a usable DRM device
+    }
+
+    return caps;
 }
 
 VulkanSurfaceTextureX11::VulkanSurfaceTextureX11(VulkanBackend *backend, SurfacePixmapX11 *pixmap)
@@ -124,9 +194,15 @@ bool VulkanSurfaceTextureX11::create()
 
     qCWarning(KWIN_VULKAN) << "VulkanSurfaceTextureX11::create() - attempting to create texture for pixmap of size" << m_size;
 
+    // Check DRI3 capabilities before attempting DMA-BUF import (probed once and cached)
+    const auto &caps = getDri3Capabilities(connection(), currentPixmapId);
+
     // Try DMA-BUF import first (if available)
     static bool forceCpuUpload = qgetenv("KWIN_VULKAN_FORCE_CPU") == "1";
-    if (m_context->supportsDmaBufImport() && isDri3Available(connection()) && !forceCpuUpload) {
+    if (m_context->supportsDmaBufImport() && caps.dri3Extension && !forceCpuUpload) {
+        qCInfo(KWIN_VULKAN) << "[DMA-BUF] Capabilities: DRI3=" << caps.dri3Extension
+                            << ", GBM modifiers=" << caps.gbmModifiers
+                            << ", syncobjs=" << caps.syncobjs;
         qCInfo(KWIN_VULKAN) << "[DMA-BUF] Import supported, attempting for pixmap size" << m_size;
         if (createWithDmaBuf()) {
             m_useDmaBuf = true;
@@ -136,7 +212,7 @@ bool VulkanSurfaceTextureX11::create()
             qCWarning(KWIN_VULKAN) << "[DMA-BUF] Import failed, falling back to CPU upload path";
         }
     } else {
-        qCInfo(KWIN_VULKAN) << "[DMA-BUF] Import not supported by Vulkan implementation, using CPU upload";
+        qCInfo(KWIN_VULKAN) << "[DMA-BUF] Import not supported by Vulkan implementation or DRI3, using CPU upload";
     }
 
     // Fall back to CPU upload
@@ -164,22 +240,9 @@ bool VulkanSurfaceTextureX11::createWithDmaBuf()
         return false;
     }
 
-    // Test DRI3 function: xcb_dri3_buffer_from_pixmap()
-    // This is the main function we need for DMA-BUF import
-    xcb_dri3_buffer_from_pixmap_cookie_t bufferCookie = xcb_dri3_buffer_from_pixmap(c, pixmap);
-    xcb_dri3_buffer_from_pixmap_reply_t *bufferReply = xcb_dri3_buffer_from_pixmap_reply(c, bufferCookie, nullptr);
-
-    if (!bufferReply) {
-        qCWarning(KWIN_VULKAN) << "[DMA-BUF] xcb_dri3_buffer_from_pixmap failed";
-        return false;
-    }
-
-    qCDebug(KWIN_VULKAN) << "[DMA-BUF] DRI3 buffer obtained successfully";
-    free(bufferReply);
-
     // TODO: Implement actual DMA-BUF import to Vulkan
     // This requires:
-    // 1. Getting the file descriptor from the reply (reply->fd)
+    // 1. Getting the file descriptor from xcb_dri3_buffer_from_pixmap()
     // 2. Getting the stride, width, height from the reply
     // 3. Importing the DMA-BUF into Vulkan using VkImportMemoryFdInfoKHR
 
@@ -497,32 +560,8 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
     copyRegion.imageSubresource.mipLevel = 0;
     copyRegion.imageSubresource.baseArrayLayer = 0;
     copyRegion.imageSubresource.layerCount = 1;
-
-    // Log detailed information about the buffer-to-image copy operation
-    qCDebug(KWIN_VULKAN) << "Buffer-to-image copy details:";
-    qCDebug(KWIN_VULKAN) << "  - Buffer row length (pixels):" << copyRegion.bufferRowLength;
-    qCDebug(KWIN_VULKAN) << "  - Buffer image height:" << copyRegion.bufferImageHeight;
-    qCDebug(KWIN_VULKAN) << "  - Update region:" << QRect(x, y, width, height);
-    qCDebug(KWIN_VULKAN) << "  - Texture size:" << m_size;
-
-    if (x == 0 && y == 0 && width == m_size.width() && height == m_size.height()) {
-        // Full copy
-        copyRegion.imageOffset = {0, 0, 0};
-        copyRegion.imageExtent = {static_cast<uint32_t>(m_size.width()),
-                                  static_cast<uint32_t>(m_size.height()), 1};
-        qCDebug(KWIN_VULKAN) << "  - Copy type: Full texture update";
-    } else {
-        // Partial copy - buffer data is at the same offset we wrote to in staging buffer
-        // The staging buffer has full texture stride, which we specified in bufferRowLength
-        copyRegion.bufferOffset = (y * m_size.width() + x) * 4;
-        copyRegion.imageOffset = {x, y, 0};
-        copyRegion.imageExtent = {static_cast<uint32_t>(width),
-                                  static_cast<uint32_t>(height), 1};
-        qCDebug(KWIN_VULKAN) << "  - Copy type: Partial texture update";
-        qCDebug(KWIN_VULKAN) << "  - Buffer offset:" << copyRegion.bufferOffset;
-        qCDebug(KWIN_VULKAN) << "  - Image offset:" << copyRegion.imageOffset.x << "," << copyRegion.imageOffset.y;
-        qCDebug(KWIN_VULKAN) << "  - Image extent:" << copyRegion.imageExtent.width << "x" << copyRegion.imageExtent.height;
-    }
+    copyRegion.imageOffset = {0, 0, 0};
+    copyRegion.imageExtent = {static_cast<uint32_t>(m_size.width()), static_cast<uint32_t>(m_size.height()), 1};
 
     vkCmdCopyBufferToImage(cmd,
                            m_stagingBuffer->buffer(),
@@ -530,16 +569,16 @@ void VulkanSurfaceTextureX11::updateWithCpuUpload(const QRegion &region)
                            VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
                            1, &copyRegion);
 
-    // Transition image to shader read layout
+    // Transition back to shader read optimal layout
     m_texture->transitionLayout(cmd,
                                 VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
                                 VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
                                 VK_PIPELINE_STAGE_TRANSFER_BIT,
                                 VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT);
 
-    qCDebug(KWIN_VULKAN) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - image layout transition recorded";
-
     m_context->endSingleTimeCommands(cmd);
+
+    qCDebug(KWIN_VULKAN) << "VulkanSurfaceTextureX11::updateWithCpuUpload() - texture updated successfully";
 }
 
 } // namespace KWin
