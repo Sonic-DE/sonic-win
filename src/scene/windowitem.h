@@ -111,17 +111,6 @@ private Q_SLOTS:
 #endif
 
 /**
- * The WindowItemWayland class represents a Wayland window.
- */
-class KWIN_EXPORT WindowItemWayland : public WindowItem
-{
-    Q_OBJECT
-
-public:
-    explicit WindowItemWayland(Window *window, Item *parent = nullptr);
-};
-
-/**
  * The WindowItemInternal class represents a window created by the compositor, for
  * example, the task switcher, etc.
  */
