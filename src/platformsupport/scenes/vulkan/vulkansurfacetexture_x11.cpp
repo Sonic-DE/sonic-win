@@ -22,6 +22,7 @@
 #include <QImage>
 #include <cstring>
 #include <fcntl.h>
+#include <gbm.h>
 #include <libdrm/drm_fourcc.h>
 #include <unistd.h>
 #include <xcb/dri3.h>
