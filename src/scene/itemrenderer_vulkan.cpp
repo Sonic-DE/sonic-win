@@ -598,6 +598,12 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
                 RenderNode node;
                 node.traits = ShaderTrait::MapTexture;
                 node.textures = surfaceContents.toVarLengthArray();
+
+                // Check if this is a multi-plane YUV texture (3 textures: Y, U, V)
+                if (node.textures.size() >= 3) {
+                    node.traits |= ShaderTrait::YUV;
+                }
+
                 node.opacity = context->opacityStack.top();
                 node.hasAlpha = pixmap->hasAlphaChannel();
                 node.colorDescription = surfaceItem->colorDescription();

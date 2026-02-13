@@ -33,6 +33,7 @@ enum class ShaderTrait {
     TransformColorspace = 1 << 4, ///< Transform color space (HDR, etc.)
     RoundedCorners = 1 << 5, ///< Apply rounded corner clipping
     Border = 1 << 6, ///< Render border
+    YUV = 1 << 7, ///< YUV to RGB conversion (for multi-plane textures)
 };
 
 Q_DECLARE_FLAGS(ShaderTraits, ShaderTrait)

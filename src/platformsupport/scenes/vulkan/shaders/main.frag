@@ -16,6 +16,7 @@ layout(constant_id = 3) const bool TRAIT_ADJUST_SATURATION = false;
 layout(constant_id = 4) const bool TRAIT_TRANSFORM_COLORSPACE = false;
 layout(constant_id = 5) const bool TRAIT_ROUNDED_CORNERS = false;
 layout(constant_id = 6) const bool TRAIT_BORDER = false;
+layout(constant_id = 7) const bool TRAIT_YUV = false;
 
 // Input from vertex shader
 layout(location = 0) in vec2 fragTexCoord;
@@ -24,8 +25,8 @@ layout(location = 1) in vec2 fragPosition;
 // Output color
 layout(location = 0) out vec4 outColor;
 
-// Texture sampler (binding 0)
-layout(set = 0, binding = 0) uniform sampler2D texSampler;
+// Texture samplers (binding 0) - support up to 4 for multi-texturing/YUV
+layout(set = 0, binding = 0) uniform sampler2D texSampler[4];
 
 // Uniform buffer (binding 1)
 layout(set = 0, binding = 1) uniform UniformBufferObject {
@@ -226,12 +227,33 @@ float sdfSubtract(float f1, float f2) {
 
 // === Main ===
 
+// YUV to RGB conversion (BT.709)
+vec3 yuvToRgb(vec3 yuv) {
+    // BT.709 YUV to RGB conversion matrix
+    const mat3 yuvToRgbMatrix = mat3(
+        1.0,     1.0,      1.0,
+        0.0,    -0.2148,   2.1260,
+        1.2802, -0.3806,   0.0
+    );
+    return yuvToRgbMatrix * yuv;
+}
+
 void main() {
     vec4 color = vec4(1.0);
 
     // Get base color
     if (TRAIT_MAP_TEXTURE) {
-        color = texture(texSampler, fragTexCoord);
+        if (TRAIT_YUV) {
+            // Multi-plane YUV: Y in texture[0], U in texture[1], V in texture[2]
+            // Sample Y, U, V planes
+            float y = texture(texSampler[0], fragTexCoord).r;
+            float u = texture(texSampler[1], fragTexCoord).r - 0.5;
+            float v = texture(texSampler[2], fragTexCoord).r - 0.5;
+            color.rgb = yuvToRgb(vec3(y, u, v));
+            color.a = 1.0;
+        } else {
+            color = texture(texSampler[0], fragTexCoord);
+        }
     }
 
     if (TRAIT_UNIFORM_COLOR) {
