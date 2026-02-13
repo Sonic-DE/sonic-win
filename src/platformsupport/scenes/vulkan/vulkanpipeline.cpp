@@ -79,10 +79,10 @@ bool VulkanPipeline::createDescriptorSetLayout()
 {
     std::array<VkDescriptorSetLayoutBinding, 2> bindings{};
 
-    // Binding 0: Texture sampler
+    // Binding 0: Texture sampler (supports up to 4 textures for multi-texturing)
     bindings[0].binding = 0;
     bindings[0].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-    bindings[0].descriptorCount = 1;
+    bindings[0].descriptorCount = 4; // Support up to 4 textures
     bindings[0].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
     bindings[0].pImmutableSamplers = nullptr;
 
