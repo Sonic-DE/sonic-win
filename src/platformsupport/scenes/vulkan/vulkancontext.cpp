@@ -520,9 +520,23 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
         return nullptr;
     }
 
-    // Get memory requirements
-    VkMemoryRequirements memReqs;
-    vkGetImageMemoryRequirements(m_backend->device(), image, &memReqs);
+    // Get memory requirements using vkGetImageMemoryRequirements2 to check for dedicated allocation
+    VkMemoryDedicatedRequirements dedicatedReqs{};
+    dedicatedReqs.sType = VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS;
+    dedicatedReqs.pNext = nullptr;
+
+    VkMemoryRequirements2 memReqs2{};
+    memReqs2.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2;
+    memReqs2.pNext = &dedicatedReqs;
+
+    VkImageMemoryRequirementsInfo2 imageMemReqInfo{};
+    imageMemReqInfo.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_REQUIREMENTS_INFO_2;
+    imageMemReqInfo.image = image;
+    imageMemReqInfo.pNext = nullptr;
+
+    vkGetImageMemoryRequirements2(m_backend->device(), &imageMemReqInfo, &memReqs2);
+
+    VkMemoryRequirements &memReqs = memReqs2.memoryRequirements;
 
     // Find appropriate memory type for DMA-BUF import
     VkPhysicalDeviceMemoryProperties memProperties;
@@ -558,9 +572,16 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     importFdInfo.handleType = VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT;
     importFdInfo.fd = attributes.fd[0].get(); // Use the first plane's fd
 
+    // Add VkMemoryDedicatedAllocateInfo if required by the driver
+    VkMemoryDedicatedAllocateInfo dedicatedInfo{};
+    dedicatedInfo.sType = VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO;
+    dedicatedInfo.pNext = &importFdInfo;
+    dedicatedInfo.image = dedicatedReqs.requiresDedicatedAllocation ? image : VK_NULL_HANDLE;
+    dedicatedInfo.buffer = VK_NULL_HANDLE;
+
     VkMemoryAllocateInfo allocInfo{};
     allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-    allocInfo.pNext = &importFdInfo;
+    allocInfo.pNext = &dedicatedInfo;
     allocInfo.allocationSize = memReqs.size;
     allocInfo.memoryTypeIndex = memoryTypeIndex;
 
@@ -688,9 +709,23 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufPlaneAsTexture(const D
         return nullptr;
     }
 
-    // Get memory requirements
-    VkMemoryRequirements memReqs;
-    vkGetImageMemoryRequirements(m_backend->device(), image, &memReqs);
+    // Get memory requirements using vkGetImageMemoryRequirements2 to check for dedicated allocation
+    VkMemoryDedicatedRequirements dedicatedReqs{};
+    dedicatedReqs.sType = VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS;
+    dedicatedReqs.pNext = nullptr;
+
+    VkMemoryRequirements2 memReqs2{};
+    memReqs2.sType = VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2;
+    memReqs2.pNext = &dedicatedReqs;
+
+    VkImageMemoryRequirementsInfo2 imageMemReqInfo{};
+    imageMemReqInfo.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_REQUIREMENTS_INFO_2;
+    imageMemReqInfo.image = image;
+    imageMemReqInfo.pNext = nullptr;
+
+    vkGetImageMemoryRequirements2(m_backend->device(), &imageMemReqInfo, &memReqs2);
+
+    VkMemoryRequirements &memReqs = memReqs2.memoryRequirements;
 
     // Find appropriate memory type for DMA-BUF import
     VkPhysicalDeviceMemoryProperties memProperties;
@@ -734,9 +769,16 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufPlaneAsTexture(const D
     importFdInfo.handleType = VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT;
     importFdInfo.fd = fd;
 
+    // Add VkMemoryDedicatedAllocateInfo if required by the driver
+    VkMemoryDedicatedAllocateInfo dedicatedInfo{};
+    dedicatedInfo.sType = VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO;
+    dedicatedInfo.pNext = &importFdInfo;
+    dedicatedInfo.image = dedicatedReqs.requiresDedicatedAllocation ? image : VK_NULL_HANDLE;
+    dedicatedInfo.buffer = VK_NULL_HANDLE;
+
     VkMemoryAllocateInfo allocInfo{};
     allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-    allocInfo.pNext = &importFdInfo;
+    allocInfo.pNext = &dedicatedInfo;
     allocInfo.allocationSize = memReqs.size;
     allocInfo.memoryTypeIndex = memoryTypeIndex;
 
