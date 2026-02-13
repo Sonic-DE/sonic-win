@@ -17,6 +17,11 @@
 #include <memory>
 #include <vulkan/vulkan.h>
 
+struct VmaAllocator_T;
+typedef VmaAllocator_T *VmaAllocator;
+struct VmaAllocation_T;
+typedef VmaAllocation_T *VmaAllocation;
+
 namespace KWin
 {
 
@@ -184,6 +189,13 @@ public:
     void queueSamplerForDestruction(VkSampler sampler);
 
     /**
+     * @brief Queue a buffer for deferred destruction.
+     * Buffers in use by in-flight command buffers cannot be destroyed immediately.
+     * This method queues them for destruction when no longer in use.
+     */
+    void queueBufferForDestruction(VkBuffer buffer, VmaAllocation allocation);
+
+    /**
      * @brief Clean up any pending resources that are no longer in use.
      * Called at the start of each frame to safely destroy resources from previous frames.
      */
@@ -198,8 +210,9 @@ public:
     /**
      * @brief Queue an image for deferred destruction.
      * Images can only be destroyed after all their views are destroyed.
+     * For raw Vulkan memory (non-VMA), pass deviceMemory to have it freed after image destruction.
      */
-    void queueImageForDestruction(VkImage image);
+    void queueImageForDestruction(VkImage image, VmaAllocation allocation = nullptr, VkDeviceMemory deviceMemory = VK_NULL_HANDLE);
 
     /**
      * @brief Queue both image view and image for deferred destruction in correct order.
@@ -216,6 +229,7 @@ private:
     VkCommandPool m_commandPool = VK_NULL_HANDLE;
     VkDescriptorPool m_descriptorPool = VK_NULL_HANDLE;
     VkFence m_fence = VK_NULL_HANDLE;
+    bool m_isCleaningUp = false; // Set to true during cleanup to destroy immediately
 
     std::unique_ptr<VulkanPipelineManager> m_pipelineManager;
     std::unique_ptr<VulkanBuffer> m_streamingBuffer;
@@ -239,6 +253,8 @@ private:
     {
         VkImage image;
         VkFence fence;
+        VmaAllocation allocation; // For VMA-managed memory - used with vmaDestroyImage
+        VkDeviceMemory deviceMemory; // For raw Vulkan memory (non-VMA) - freed after image
     };
     QVector<PendingImageDestruction> m_pendingImageDestructions;
 
@@ -250,6 +266,15 @@ private:
         VkImage parentImage; // Image this view belongs to (for tracking)
     };
     QVector<PendingImageViewDestruction> m_pendingImageViewDestructions;
+
+    // Deferred buffer destruction queue (buffers in use by in-flight command buffers)
+    struct PendingBufferDestruction
+    {
+        VkBuffer buffer;
+        VmaAllocation allocation;
+        VkFence fence;
+    };
+    QVector<PendingBufferDestruction> m_pendingBufferDestructions;
 
     static VulkanContext *s_currentContext;
 };

@@ -10,6 +10,7 @@
 #include "vulkancontext.h"
 #include "core/graphicsbuffer.h"
 #include "utils/common.h"
+#include "vma_usage.h"
 #include "vulkanbackend.h"
 #include "vulkanbuffer.h"
 #include "vulkanframebuffer.h"
@@ -184,10 +185,51 @@ void VulkanContext::cleanup()
         return;
     }
 
+    // Set cleanup flag to destroy resources immediately instead of queueing
+    m_isCleaningUp = true;
+
     vkDeviceWaitIdle(device);
 
+    // First, destroy streaming buffer and pipeline manager
+    // This will queue their resources for destruction
     m_streamingBuffer.reset();
     m_pipelineManager.reset();
+
+    // Clean up all pending resources since GPU is now idle
+    // We can destroy everything without checking fences since vkDeviceWaitIdle returned
+
+    // Clean up pending samplers
+    for (auto &item : m_pendingSamplerDestructions) {
+        vkDestroySampler(device, item.first, nullptr);
+    }
+    m_pendingSamplerDestructions.clear();
+
+    // Clean up pending image views
+    for (auto &item : m_pendingImageViewDestructions) {
+        vkDestroyImageView(device, item.imageView, nullptr);
+    }
+    m_pendingImageViewDestructions.clear();
+
+    // Clean up pending images (and their memory if any)
+    for (auto &item : m_pendingImageDestructions) {
+        if (item.allocation != nullptr && VulkanAllocator::isInitialized()) {
+            // VMA-managed image
+            vmaDestroyImage(VulkanAllocator::allocator(), item.image, item.allocation);
+        } else {
+            // Raw Vulkan image
+            vkDestroyImage(device, item.image, nullptr);
+            if (item.deviceMemory != VK_NULL_HANDLE) {
+                vkFreeMemory(device, item.deviceMemory, nullptr);
+            }
+        }
+    }
+    m_pendingImageDestructions.clear();
+
+    // Clean up pending buffers
+    for (auto &item : m_pendingBufferDestructions) {
+        vmaDestroyBuffer(VulkanAllocator::allocator(), item.buffer, item.allocation);
+    }
+    m_pendingBufferDestructions.clear();
 
     if (m_fence != VK_NULL_HANDLE) {
         vkDestroyFence(device, m_fence, nullptr);
@@ -351,6 +393,13 @@ void VulkanContext::queueSamplerForDestruction(VkSampler sampler)
     if (sampler == VK_NULL_HANDLE) {
         return;
     }
+
+    // If we're in cleanup mode, destroy immediately
+    if (m_isCleaningUp) {
+        vkDestroySampler(m_backend->device(), sampler, nullptr);
+        return;
+    }
+
     // Queue the sampler for destruction along with the current in-flight fence
     // The sampler will be destroyed when the fence is signaled
     VkFence fence = m_fence != VK_NULL_HANDLE ? m_fence : VK_NULL_HANDLE;
@@ -418,6 +467,8 @@ void VulkanContext::cleanupPendingResources()
         for (auto it = m_pendingImageDestructions.begin(); it != m_pendingImageDestructions.end();) {
             VkImage image = it->image;
             VkFence fence = it->fence;
+            VmaAllocation allocation = it->allocation;
+            VkDeviceMemory deviceMemory = it->deviceMemory;
 
             bool canDestroy = true;
             if (fence != VK_NULL_HANDLE) {
@@ -428,13 +479,49 @@ void VulkanContext::cleanupPendingResources()
             }
 
             if (canDestroy) {
-                vkDestroyImage(device, image, nullptr);
+                if (allocation != nullptr && VulkanAllocator::isInitialized()) {
+                    // VMA-managed image
+                    vmaDestroyImage(VulkanAllocator::allocator(), image, allocation);
+                } else {
+                    // Raw Vulkan image
+                    vkDestroyImage(device, image, nullptr);
+                    // Free raw Vulkan memory after image is destroyed
+                    if (deviceMemory != VK_NULL_HANDLE) {
+                        vkFreeMemory(device, deviceMemory, nullptr);
+                    }
+                }
                 it = m_pendingImageDestructions.erase(it);
             } else {
                 ++it;
             }
         }
         qCDebug(KWIN_VULKAN) << "After cleanup:" << m_pendingImageDestructions.size() << "images still pending";
+    }
+
+    // Clean up pending buffers
+    if (!m_pendingBufferDestructions.isEmpty()) {
+        qCDebug(KWIN_VULKAN) << "Cleaning up" << m_pendingBufferDestructions.size() << "pending buffers";
+        for (auto it = m_pendingBufferDestructions.begin(); it != m_pendingBufferDestructions.end();) {
+            VkBuffer buffer = it->buffer;
+            VmaAllocation allocation = it->allocation;
+            VkFence fence = it->fence;
+
+            bool canDestroy = true;
+            if (fence != VK_NULL_HANDLE) {
+                VkResult result = vkGetFenceStatus(device, fence);
+                if (result == VK_NOT_READY) {
+                    canDestroy = false;
+                }
+            }
+
+            if (canDestroy) {
+                vmaDestroyBuffer(VulkanAllocator::allocator(), buffer, allocation);
+                it = m_pendingBufferDestructions.erase(it);
+            } else {
+                ++it;
+            }
+        }
+        qCDebug(KWIN_VULKAN) << "After cleanup:" << m_pendingBufferDestructions.size() << "buffers still pending";
     }
 }
 
@@ -443,18 +530,41 @@ void VulkanContext::queueImageViewForDestruction(VkImageView imageView)
     if (imageView == VK_NULL_HANDLE) {
         return;
     }
+
+    // If we're in cleanup mode, destroy immediately
+    if (m_isCleaningUp) {
+        vkDestroyImageView(m_backend->device(), imageView, nullptr);
+        return;
+    }
+
     VkFence fence = m_fence != VK_NULL_HANDLE ? m_fence : VK_NULL_HANDLE;
     m_pendingImageViewDestructions.append({imageView, fence, VK_NULL_HANDLE});
     qCDebug(KWIN_VULKAN) << "Queued image view for deferred destruction, pending count:" << m_pendingImageViewDestructions.size();
 }
 
-void VulkanContext::queueImageForDestruction(VkImage image)
+void VulkanContext::queueImageForDestruction(VkImage image, VmaAllocation allocation, VkDeviceMemory deviceMemory)
 {
     if (image == VK_NULL_HANDLE) {
         return;
     }
+
+    // If we're in cleanup mode, destroy immediately
+    if (m_isCleaningUp) {
+        if (allocation != nullptr && VulkanAllocator::isInitialized()) {
+            // VMA-managed image
+            vmaDestroyImage(VulkanAllocator::allocator(), image, allocation);
+        } else {
+            // Raw Vulkan image
+            vkDestroyImage(m_backend->device(), image, nullptr);
+            if (deviceMemory != VK_NULL_HANDLE) {
+                vkFreeMemory(m_backend->device(), deviceMemory, nullptr);
+            }
+        }
+        return;
+    }
+
     VkFence fence = m_fence != VK_NULL_HANDLE ? m_fence : VK_NULL_HANDLE;
-    m_pendingImageDestructions.append({image, fence});
+    m_pendingImageDestructions.append({image, fence, allocation, deviceMemory});
     qCDebug(KWIN_VULKAN) << "Queued image for deferred destruction, pending count:" << m_pendingImageDestructions.size();
 }
 
@@ -463,6 +573,19 @@ void VulkanContext::queueImageAndViewForDestruction(VkImageView imageView, VkIma
     if (imageView == VK_NULL_HANDLE && image == VK_NULL_HANDLE) {
         return;
     }
+
+    // If we're in cleanup mode, destroy immediately
+    if (m_isCleaningUp) {
+        VkDevice device = m_backend->device();
+        if (imageView != VK_NULL_HANDLE) {
+            vkDestroyImageView(device, imageView, nullptr);
+        }
+        if (image != VK_NULL_HANDLE) {
+            vkDestroyImage(device, image, nullptr);
+        }
+        return;
+    }
+
     VkFence fence = m_fence != VK_NULL_HANDLE ? m_fence : VK_NULL_HANDLE;
 
     // Queue image view first (must be destroyed before image)
@@ -473,9 +596,28 @@ void VulkanContext::queueImageAndViewForDestruction(VkImageView imageView, VkIma
 
     // Queue image second (will be destroyed after view)
     if (image != VK_NULL_HANDLE) {
-        m_pendingImageDestructions.append({image, fence});
+        m_pendingImageDestructions.append({image, fence, nullptr, VK_NULL_HANDLE});
         qCDebug(KWIN_VULKAN) << "Queued image for deferred destruction, pending count:" << m_pendingImageDestructions.size();
     }
+}
+
+void VulkanContext::queueBufferForDestruction(VkBuffer buffer, VmaAllocation allocation)
+{
+    if (buffer == VK_NULL_HANDLE) {
+        return;
+    }
+
+    // If we're in cleanup mode, destroy immediately
+    if (m_isCleaningUp) {
+        if (VulkanAllocator::isInitialized()) {
+            vmaDestroyBuffer(VulkanAllocator::allocator(), buffer, allocation);
+        }
+        return;
+    }
+
+    VkFence fence = m_fence != VK_NULL_HANDLE ? m_fence : VK_NULL_HANDLE;
+    m_pendingBufferDestructions.append({buffer, allocation, fence});
+    qCDebug(KWIN_VULKAN) << "Queued buffer for deferred destruction, pending count:" << m_pendingBufferDestructions.size();
 }
 
 std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBufAttributes &attributes)

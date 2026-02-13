@@ -85,7 +85,10 @@ VulkanBuffer::VulkanBuffer(VulkanContext *context, VkBuffer buffer, VmaAllocatio
 VulkanBuffer::~VulkanBuffer()
 {
     if (m_buffer != VK_NULL_HANDLE && VulkanAllocator::isInitialized()) {
-        vmaDestroyBuffer(VulkanAllocator::allocator(), m_buffer, m_allocation);
+        // Use deferred destruction to wait for GPU to finish using the buffer
+        m_context->queueBufferForDestruction(m_buffer, m_allocation);
+        m_buffer = VK_NULL_HANDLE;
+        m_allocation = nullptr;
     }
 }
 
@@ -108,7 +111,8 @@ VulkanBuffer &VulkanBuffer::operator=(VulkanBuffer &&other) noexcept
 {
     if (this != &other) {
         if (m_buffer != VK_NULL_HANDLE && VulkanAllocator::isInitialized()) {
-            vmaDestroyBuffer(VulkanAllocator::allocator(), m_buffer, m_allocation);
+            // Use deferred destruction to wait for GPU to finish using the buffer
+            m_context->queueBufferForDestruction(m_buffer, m_allocation);
         }
 
         m_context = other.m_context;
