@@ -22,7 +22,7 @@ namespace KWin
 
 class GLShader;
 
-enum class ShaderTrait {
+enum class GLShaderTrait {
     MapTexture = (1 << 0),
     UniformColor = (1 << 1),
     Modulate = (1 << 2),
@@ -33,7 +33,8 @@ enum class ShaderTrait {
     Border = (1 << 7),
 };
 
-Q_DECLARE_FLAGS(ShaderTraits, ShaderTrait)
+Q_DECLARE_FLAGS(GLShaderTraits, GLShaderTrait)
+Q_DECLARE_OPERATORS_FOR_FLAGS(GLShaderTraits)
 
 /**
  * @short Manager for Shaders.
@@ -55,7 +56,7 @@ public:
     /**
      * Returns a shader with the given traits, creating it if necessary.
      */
-    GLShader *shader(ShaderTraits traits);
+    GLShader *shader(GLShaderTraits traits);
 
     /**
      * @return The currently bound shader or @c null if no shader is bound.
@@ -71,7 +72,7 @@ public:
      * Pushes the current shader onto the stack and binds a shader
      * with the given traits.
      */
-    GLShader *pushShader(ShaderTraits traits);
+    GLShader *pushShader(GLShaderTraits traits);
 
     /**
      * Binds the @p shader.
@@ -116,7 +117,7 @@ public:
      * @return new generated shader
      * @since 5.6
      */
-    std::unique_ptr<GLShader> generateCustomShader(ShaderTraits traits, const QByteArray &vertexSource = QByteArray(), const QByteArray &fragmentSource = QByteArray());
+    std::unique_ptr<GLShader> generateCustomShader(GLShaderTraits traits, const QByteArray &vertexSource = QByteArray(), const QByteArray &fragmentSource = QByteArray());
 
     /**
      * Creates a custom shader with the given @p traits and custom @p vertexFile and or @p fragmentFile.
@@ -138,7 +139,7 @@ public:
      * @return new generated shader
      * @see generateCustomShader
      */
-    std::unique_ptr<GLShader> generateShaderFromFile(ShaderTraits traits, const QString &vertexFile = QString(), const QString &fragmentFile = QString());
+    std::unique_ptr<GLShader> generateShaderFromFile(GLShaderTraits traits, const QString &vertexFile = QString(), const QString &fragmentFile = QString());
 
     /**
      * @return a pointer to the ShaderManager instance
@@ -150,12 +151,12 @@ private:
     void bindAttributeLocations(GLShader *shader) const;
 
     std::optional<QByteArray> preprocess(const QByteArray &src, int recursionDepth = 0) const;
-    QByteArray generateVertexSource(ShaderTraits traits) const;
-    QByteArray generateFragmentSource(ShaderTraits traits) const;
-    std::unique_ptr<GLShader> generateShader(ShaderTraits traits);
+    QByteArray generateVertexSource(GLShaderTraits traits) const;
+    QByteArray generateFragmentSource(GLShaderTraits traits) const;
+    std::unique_ptr<GLShader> generateShader(GLShaderTraits traits);
 
     QStack<GLShader *> m_boundShaders;
-    std::map<ShaderTraits, std::unique_ptr<GLShader>> m_shaderHash;
+    std::map<GLShaderTraits, std::unique_ptr<GLShader>> m_shaderHash;
 };
 
 /**
@@ -191,7 +192,7 @@ public:
      * @see ShaderManager::pushShader
      * @since 5.6
      */
-    explicit ShaderBinder(ShaderTraits traits);
+    explicit ShaderBinder(GLShaderTraits traits);
     ~ShaderBinder();
 
     /**
@@ -209,7 +210,7 @@ inline ShaderBinder::ShaderBinder(GLShader *shader)
     ShaderManager::instance()->pushShader(shader);
 }
 
-inline ShaderBinder::ShaderBinder(ShaderTraits traits)
+inline ShaderBinder::ShaderBinder(GLShaderTraits traits)
     : m_shader(nullptr)
 {
     m_shader = ShaderManager::instance()->pushShader(traits);
@@ -226,5 +227,3 @@ inline GLShader *ShaderBinder::shader()
 }
 
 }
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(KWin::ShaderTraits)

@@ -297,7 +297,7 @@ void MouseClickEffect::drawCircleQPainter(const QColor &color, float cx, float c
 
 void MouseClickEffect::paintScreenSetupGl(const RenderTarget &renderTarget, const QMatrix4x4 &projectionMatrix)
 {
-    GLShader *shader = ShaderManager::instance()->pushShader(ShaderTrait::UniformColor | ShaderTrait::TransformColorspace);
+    GLShader *shader = ShaderManager::instance()->pushShader(GLShaderTrait::UniformColor | GLShaderTrait::TransformColorspace);
     shader->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, projectionMatrix);
     shader->setColorspaceUniforms(ColorDescription::sRGB, renderTarget.colorDescription(), RenderingIntent::Perceptual);
 

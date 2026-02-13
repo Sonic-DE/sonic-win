@@ -37,7 +37,7 @@ public:
      *
      * Pipelines are cached and reused for the same trait combinations.
      */
-    VulkanPipeline *pipeline(ShaderTraits traits);
+    VulkanPipeline *pipeline(VulkanShaderTraits traits);
 
     /**
      * @brief Set the render pass to use for pipeline creation.
@@ -93,7 +93,7 @@ private:
     VulkanContext *m_context;
     VkRenderPass m_renderPass = VK_NULL_HANDLE;
 
-    std::map<ShaderTraits, std::unique_ptr<VulkanPipeline>> m_pipelines;
+    std::map<VulkanShaderTraits, std::unique_ptr<VulkanPipeline>> m_pipelines;
     QStack<VulkanPipeline *> m_pipelineStack;
 
     QByteArray m_vertexShaderSpirv;
@@ -107,7 +107,7 @@ private:
 class KWIN_EXPORT VulkanPipelineBinder
 {
 public:
-    VulkanPipelineBinder(VulkanPipelineManager *manager, ShaderTraits traits);
+    VulkanPipelineBinder(VulkanPipelineManager *manager, VulkanShaderTraits traits);
     ~VulkanPipelineBinder();
 
     VulkanPipeline *pipeline() const

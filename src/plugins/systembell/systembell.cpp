@@ -119,9 +119,9 @@ bool SystemBellEffect::loadData()
 
     if (m_visibleBell) {
         if (m_mode == Invert) {
-            m_shader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/systembell/shaders/invert.frag"));
+            m_shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/systembell/shaders/invert.frag"));
         } else {
-            m_shader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/systembell/shaders/color.frag"));
+            m_shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/systembell/shaders/color.frag"));
             ShaderBinder binder(m_shader.get());
             m_shader->setUniform(GLShader::ColorUniform::Color, m_color);
         }

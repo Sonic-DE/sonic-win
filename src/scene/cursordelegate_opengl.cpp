@@ -82,7 +82,7 @@ void CursorDelegateOpenGL::paint(const RenderTarget &renderTarget, const QRegion
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    ShaderBinder binder(ShaderTrait::MapTexture);
+    ShaderBinder binder(GLShaderTrait::MapTexture);
     binder.shader()->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, mvp);
     m_texture->render(clipRegion, cursorRect.size(), clipping);
     glDisable(GL_BLEND);

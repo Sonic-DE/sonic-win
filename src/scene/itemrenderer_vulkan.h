@@ -40,7 +40,7 @@ class KWIN_EXPORT ItemRendererVulkan : public ItemRenderer
 public:
     struct RenderNode
     {
-        ShaderTraits traits;
+        VulkanShaderTraits traits;
         QVarLengthArray<VulkanTexture *, 4> textures;
         RenderGeometry geometry;
         QMatrix4x4 transformMatrix;

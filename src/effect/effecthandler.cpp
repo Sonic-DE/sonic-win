@@ -1477,10 +1477,10 @@ void EffectsHandler::renderOffscreenQuickView(const RenderTarget &renderTarget, 
             return;
         }
 
-        ShaderTraits traits = ShaderTrait::MapTexture | ShaderTrait::TransformColorspace;
+        GLShaderTraits traits = GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace;
         const qreal a = w->opacity();
         if (a != 1.0) {
-            traits |= ShaderTrait::Modulate;
+            traits |= GLShaderTrait::Modulate;
         }
 
         GLShader *shader = ShaderManager::instance()->pushShader(traits);

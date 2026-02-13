@@ -19,7 +19,7 @@
 namespace KWin
 {
 
-VulkanPipeline::VulkanPipeline(VulkanContext *context, ShaderTraits traits)
+VulkanPipeline::VulkanPipeline(VulkanContext *context, VulkanShaderTraits traits)
     : m_context(context)
     , m_traits(traits)
 {
@@ -54,7 +54,7 @@ void VulkanPipeline::cleanup()
 }
 
 std::unique_ptr<VulkanPipeline> VulkanPipeline::create(VulkanContext *context, VkRenderPass renderPass,
-                                                       ShaderTraits traits,
+                                                       VulkanShaderTraits traits,
                                                        const QByteArray &vertexShaderSpirv,
                                                        const QByteArray &fragmentShaderSpirv)
 {
@@ -180,14 +180,14 @@ bool VulkanPipeline::createPipeline(VkRenderPass renderPass,
     std::array<VkSpecializationMapEntry, 8> specEntries{};
     std::array<VkBool32, 8> specData{};
 
-    specData[0] = (m_traits & ShaderTrait::MapTexture) ? VK_TRUE : VK_FALSE;
-    specData[1] = (m_traits & ShaderTrait::UniformColor) ? VK_TRUE : VK_FALSE;
-    specData[2] = (m_traits & ShaderTrait::Modulate) ? VK_TRUE : VK_FALSE;
-    specData[3] = (m_traits & ShaderTrait::AdjustSaturation) ? VK_TRUE : VK_FALSE;
-    specData[4] = (m_traits & ShaderTrait::TransformColorspace) ? VK_TRUE : VK_FALSE;
-    specData[5] = (m_traits & ShaderTrait::RoundedCorners) ? VK_TRUE : VK_FALSE;
-    specData[6] = (m_traits & ShaderTrait::Border) ? VK_TRUE : VK_FALSE;
-    specData[7] = (m_traits & ShaderTrait::YUV) ? VK_TRUE : VK_FALSE;
+    specData[0] = (m_traits & VulkanShaderTrait::MapTexture) ? VK_TRUE : VK_FALSE;
+    specData[1] = (m_traits & VulkanShaderTrait::UniformColor) ? VK_TRUE : VK_FALSE;
+    specData[2] = (m_traits & VulkanShaderTrait::Modulate) ? VK_TRUE : VK_FALSE;
+    specData[3] = (m_traits & VulkanShaderTrait::AdjustSaturation) ? VK_TRUE : VK_FALSE;
+    specData[4] = (m_traits & VulkanShaderTrait::TransformColorspace) ? VK_TRUE : VK_FALSE;
+    specData[5] = (m_traits & VulkanShaderTrait::RoundedCorners) ? VK_TRUE : VK_FALSE;
+    specData[6] = (m_traits & VulkanShaderTrait::Border) ? VK_TRUE : VK_FALSE;
+    specData[7] = (m_traits & VulkanShaderTrait::YUV) ? VK_TRUE : VK_FALSE;
 
     for (uint32_t i = 0; i < 8; ++i) {
         specEntries[i].constantID = i;

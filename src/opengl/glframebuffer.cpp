@@ -229,7 +229,7 @@ void GLFramebuffer::blitFromFramebuffer(const QRect &source, const QRect &destin
         // GLTexture::render renders with origin (0, 0), move it to the correct place
         mat.translate(destination.x(), destination.y());
 
-        ShaderBinder binder(ShaderTrait::MapTexture);
+        ShaderBinder binder(GLShaderTrait::MapTexture);
         binder.shader()->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, mat);
 
         texture->render(source, infiniteRegion(), destination.size(), 1);
@@ -292,7 +292,7 @@ bool GLFramebuffer::blitFromRenderTarget(const RenderTarget &sourceRenderTarget,
         // GLTexture::render renders with origin (0, 0), move it to the correct place
         mat.translate(destination.x(), destination.y());
 
-        ShaderBinder binder(ShaderTrait::MapTexture);
+        ShaderBinder binder(GLShaderTrait::MapTexture);
         binder.shader()->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, mat);
 
         texture->render(sourceViewport.mapToRenderTargetTexture(source), infiniteRegion(), destination.size(), 1);
