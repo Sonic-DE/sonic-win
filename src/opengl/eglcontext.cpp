@@ -52,7 +52,7 @@ EglContext::EglContext(EglDisplay *display, EGLConfig config, ::EGLContext conte
     , m_display(display)
     , m_handle(context)
     , m_config(config)
-    , m_shaderManager(std::make_unique<ShaderManager>())
+    , m_shaderManager(std::make_unique<GLShaderManager>())
     , m_streamingBuffer(std::make_unique<GLVertexBuffer>(GLVertexBuffer::Stream))
     , m_indexBuffer(std::make_unique<IndexBuffer>())
 {

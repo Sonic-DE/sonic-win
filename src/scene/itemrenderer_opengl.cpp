@@ -418,9 +418,9 @@ void ItemRendererOpenGL::renderItem(const RenderTarget &renderTarget, const Rend
         if (!shader || traits != lastTraits) {
             lastTraits = traits;
             if (shader) {
-                ShaderManager::instance()->popShader();
+                GLShaderManager::instance()->popShader();
             }
-            shader = ShaderManager::instance()->pushShader(traits);
+            shader = GLShaderManager::instance()->pushShader(traits);
             if (traits & GLShaderTrait::AdjustSaturation) {
                 const auto toXYZ = renderTarget.colorDescription().containerColorimetry().toXYZ();
                 shader->setUniform(GLShader::FloatUniform::Saturation, data.saturation());
@@ -475,7 +475,7 @@ void ItemRendererOpenGL::renderItem(const RenderTarget &renderTarget, const Rend
     if (shader) {
         glActiveTexture(GL_TEXTURE0);
         shader->setUniform("converter", 0);
-        ShaderManager::instance()->popShader();
+        GLShaderManager::instance()->popShader();
     }
 
     if (m_debug.fractionalEnabled) {
@@ -494,7 +494,7 @@ void ItemRendererOpenGL::renderItem(const RenderTarget &renderTarget, const Rend
 void ItemRendererOpenGL::visualizeFractional(const RenderViewport &viewport, const QRegion &region, const RenderContext &renderContext)
 {
     if (!m_debug.fractionalShader) {
-        m_debug.fractionalShader = ShaderManager::instance()->generateShaderFromFile(
+        m_debug.fractionalShader = GLShaderManager::instance()->generateShaderFromFile(
             GLShaderTrait::MapTexture,
             QStringLiteral(":/scene/shaders/debug_fractional.vert"),
             QStringLiteral(":/scene/shaders/debug_fractional.frag"));

@@ -84,7 +84,7 @@ void ColorBlindnessCorrectionEffect::loadData()
         break;
     }
 
-    m_shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/colorblindnesscorrection/shaders/colorblindnesscorrection.frag"));
+    m_shader = GLShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/colorblindnesscorrection/shaders/colorblindnesscorrection.frag"));
 
     if (!m_shader->isValid()) {
         qCCritical(KWIN_COLORBLINDNESS_CORRECTION) << "Failed to load the shader!";
@@ -95,7 +95,7 @@ void ColorBlindnessCorrectionEffect::loadData()
     m_shader->setUniform("intensity", m_intensity);
     m_shader->setUniform("defectMatrix", defectMatrix);
 
-    for (const auto windows = effects->stackingOrder(); EffectWindow * w : windows) {
+    for (const auto windows = effects->stackingOrder(); EffectWindow *w : windows) {
         correctColor(w);
     }
     effects->addRepaintFull();

@@ -40,18 +40,18 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(GLShaderTraits)
  * @short Manager for Shaders.
  *
  * This class provides some built-in shaders to be used by both compositing scene and effects.
- * The ShaderManager provides methods to bind a built-in or a custom shader and keeps track of
+ * The GLShaderManager provides methods to bind a built-in or a custom shader and keeps track of
  * the shaders which have been bound. When a shader is unbound the previously bound shader
  * will be rebound.
  *
  * @author Martin Gräßlin <mgraesslin@kde.org>
  * @since 4.7
  */
-class KWIN_EXPORT ShaderManager
+class KWIN_EXPORT GLShaderManager
 {
 public:
-    explicit ShaderManager();
-    ~ShaderManager();
+    explicit GLShaderManager();
+    ~GLShaderManager();
 
     /**
      * Returns a shader with the given traits, creating it if necessary.
@@ -142,9 +142,9 @@ public:
     std::unique_ptr<GLShader> generateShaderFromFile(GLShaderTraits traits, const QString &vertexFile = QString(), const QString &fragmentFile = QString());
 
     /**
-     * @return a pointer to the ShaderManager instance
+     * @return a pointer to the GLShaderManager instance
      */
-    static ShaderManager *instance();
+    static GLShaderManager *instance();
 
 private:
     void bindFragDataLocations(GLShader *shader);
@@ -160,7 +160,7 @@ private:
 };
 
 /**
- * An helper class to push a Shader on to ShaderManager's stack and ensuring that the Shader
+ * An helper class to push a Shader on to GLShaderManager's stack and ensuring that the Shader
  * gets popped again from the stack automatically once the object goes out of life.
  *
  * How to use:
@@ -182,11 +182,11 @@ public:
      * @brief Pushes the given @p shader to the ShaderManager's stack.
      *
      * @param shader The Shader to push on the stack
-     * @see ShaderManager::pushShader
+     * @see GLShaderManager::pushShader
      */
     explicit ShaderBinder(GLShader *shader);
     /**
-     * @brief Pushes the Shader with the given @p traits to the ShaderManager's stack.
+     * @brief Pushes the Shader with the given @p traits to the GLShaderManager's stack.
      *
      * @param traits The traits describing the shader
      * @see ShaderManager::pushShader
@@ -207,18 +207,18 @@ private:
 inline ShaderBinder::ShaderBinder(GLShader *shader)
     : m_shader(shader)
 {
-    ShaderManager::instance()->pushShader(shader);
+    GLShaderManager::instance()->pushShader(shader);
 }
 
 inline ShaderBinder::ShaderBinder(GLShaderTraits traits)
     : m_shader(nullptr)
 {
-    m_shader = ShaderManager::instance()->pushShader(traits);
+    m_shader = GLShaderManager::instance()->pushShader(traits);
 }
 
 inline ShaderBinder::~ShaderBinder()
 {
-    ShaderManager::instance()->popShader();
+    GLShaderManager::instance()->popShader();
 }
 
 inline GLShader *ShaderBinder::shader()

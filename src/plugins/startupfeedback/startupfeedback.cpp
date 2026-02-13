@@ -150,7 +150,7 @@ void StartupFeedbackEffect::reconfigure(Effect::ReconfigureFlags flags)
         m_type = BlinkingFeedback;
         if (effects->compositingType() == OpenGLCompositing) {
             ensureResources();
-            m_blinkingShader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/startupfeedback/shaders/blinking-startup.frag"));
+            m_blinkingShader = GLShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/startupfeedback/shaders/blinking-startup.frag"));
             if (m_blinkingShader->isValid()) {
                 qCDebug(KWIN_STARTUPFEEDBACK) << "Blinking Shader is valid";
             } else {
@@ -221,11 +221,11 @@ void StartupFeedbackEffect::paintScreen(const RenderTarget &renderTarget, const 
         GLShader *shader = nullptr;
         if (m_type == BlinkingFeedback && m_blinkingShader && m_blinkingShader->isValid()) {
             const QColor &blinkingColor = BLINKING_COLORS[FRAME_TO_BLINKING_COLOR[m_frame]];
-            ShaderManager::instance()->pushShader(m_blinkingShader.get());
+            GLShaderManager::instance()->pushShader(m_blinkingShader.get());
             shader = m_blinkingShader.get();
             m_blinkingShader->setUniform(GLShader::ColorUniform::Color, blinkingColor);
         } else {
-            shader = ShaderManager::instance()->pushShader(GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace);
+            shader = GLShaderManager::instance()->pushShader(GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace);
         }
         const QRectF pixelGeometry = snapToPixelGridF(scaledRect(m_currentGeometry, viewport.scale()));
         QMatrix4x4 mvp = viewport.projectionMatrix();
@@ -233,7 +233,7 @@ void StartupFeedbackEffect::paintScreen(const RenderTarget &renderTarget, const 
         shader->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, mvp);
         shader->setColorspaceUniforms(ColorDescription::sRGB, renderTarget.colorDescription(), RenderingIntent::Perceptual);
         texture->render(pixelGeometry.size());
-        ShaderManager::instance()->popShader();
+        GLShaderManager::instance()->popShader();
         glDisable(GL_BLEND);
     }
 }

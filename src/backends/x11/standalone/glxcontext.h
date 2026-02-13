@@ -37,7 +37,7 @@ private:
     const GLXWindow m_window;
     const GLXContext m_handle;
     uint32_t m_vao = 0;
-    std::unique_ptr<ShaderManager> m_shaderManager;
+    std::unique_ptr<GLShaderManager> m_shaderManager;
     std::unique_ptr<GLVertexBuffer> m_streamingBuffer;
     std::unique_ptr<IndexBuffer> m_indexBuffer;
     glXSwapIntervalMESA_func m_glXSwapIntervalMESA = nullptr;

@@ -234,7 +234,7 @@ bool OpenGlContext::supportsPackInvert() const
     return m_supportsPackInvert;
 }
 
-ShaderManager *OpenGlContext::shaderManager() const
+GLShaderManager *OpenGlContext::shaderManager() const
 {
     return m_shaderManager;
 }
@@ -271,7 +271,7 @@ bool OpenGlContext::checkSupported() const
     return shader->isValid();
 }
 
-void OpenGlContext::setShaderManager(ShaderManager *manager)
+void OpenGlContext::setShaderManager(GLShaderManager *manager)
 {
     m_shaderManager = manager;
 }

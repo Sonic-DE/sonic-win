@@ -19,7 +19,7 @@ namespace KWin
 {
 
 class EglDisplay;
-class ShaderManager;
+class GLShaderManager;
 struct DmaBufAttributes;
 
 class KWIN_EXPORT EglContext : public OpenGlContext
@@ -46,7 +46,7 @@ private:
     EglDisplay *const m_display;
     const ::EGLContext m_handle;
     const EGLConfig m_config;
-    std::unique_ptr<ShaderManager> m_shaderManager;
+    std::unique_ptr<GLShaderManager> m_shaderManager;
     std::unique_ptr<GLVertexBuffer> m_streamingBuffer;
     std::unique_ptr<IndexBuffer> m_indexBuffer;
     uint32_t m_vao = 0;

@@ -21,7 +21,7 @@
 namespace KWin
 {
 
-class ShaderManager;
+class GLShaderManager;
 class GLFramebuffer;
 class GLVertexBuffer;
 class IndexBuffer;
@@ -67,7 +67,7 @@ public:
     bool haveBufferStorage() const;
     bool haveSyncFences() const;
     bool supportsPackInvert() const;
-    ShaderManager *shaderManager() const;
+    GLShaderManager *shaderManager() const;
     GLVertexBuffer *streamingVbo() const;
     IndexBuffer *indexBuffer() const;
     GLPlatform *glPlatform() const;
@@ -91,7 +91,7 @@ public:
 
 protected:
     bool checkTimerQuerySupport() const;
-    void setShaderManager(ShaderManager *manager);
+    void setShaderManager(GLShaderManager *manager);
     void setStreamingBuffer(GLVertexBuffer *vbo);
     void setIndexBuffer(IndexBuffer *buffer);
     typedef void (*resolveFuncPtr)();
@@ -127,7 +127,7 @@ protected:
     glReadnPixels_func m_glReadnPixels = nullptr;
     glGetnTexImage_func m_glGetnTexImage = nullptr;
     glGetnUniformfv_func m_glGetnUniformfv = nullptr;
-    ShaderManager *m_shaderManager = nullptr;
+    GLShaderManager *m_shaderManager = nullptr;
     GLVertexBuffer *m_streamingBuffer = nullptr;
     IndexBuffer *m_indexBuffer = nullptr;
     QStack<GLFramebuffer *> m_fbos;
