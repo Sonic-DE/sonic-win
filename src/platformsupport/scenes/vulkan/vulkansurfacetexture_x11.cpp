@@ -473,7 +473,7 @@ void VulkanSurfaceTextureX11::update(const QRegion &region)
                 VkImageMemoryBarrier barrier{};
                 barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
                 barrier.oldLayout = plane->currentLayout();
-                barrier.newLayout = plane->currentLayout(); // Keep the same layout
+                barrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
                 barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
                 barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
                 barrier.image = plane->image();
@@ -482,18 +482,20 @@ void VulkanSurfaceTextureX11::update(const QRegion &region)
                 barrier.subresourceRange.levelCount = 1;
                 barrier.subresourceRange.baseArrayLayer = 0;
                 barrier.subresourceRange.layerCount = 1;
-                // Use memory read bit for external memory synchronization
-                // This tells the driver that new data may be available from external source
-                barrier.srcAccessMask = VK_ACCESS_MEMORY_READ_BIT;
-                barrier.dstAccessMask = VK_ACCESS_MEMORY_READ_BIT;
+                // External memory acquire: no prior Vulkan access to flush
+                barrier.srcAccessMask = 0;
+                barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
 
                 vkCmdPipelineBarrier(cmd,
-                                     VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
-                                     VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT | VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
+                                     VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                     VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
                                      0,
                                      0, nullptr,
                                      0, nullptr,
                                      1, &barrier);
+
+                // Track the new layout after the barrier
+                plane->setCurrentLayout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
                 qCDebug(KWIN_VULKAN) << "    * Issued external memory acquire barrier";
             }
