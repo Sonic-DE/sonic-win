@@ -155,6 +155,8 @@ std::unique_ptr<VulkanBuffer> VulkanBuffer::create(VulkanContext *context, VkDev
     case MemoryHint::HostVisible:
         allocInfo.usage = VMA_MEMORY_USAGE_AUTO_PREFER_HOST;
         allocInfo.flags = VMA_ALLOCATION_CREATE_HOST_ACCESS_SEQUENTIAL_WRITE_BIT;
+        // Request coherent memory to eliminate vmaFlushAllocation calls
+        allocInfo.requiredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
         if (persistentMap) {
             allocInfo.flags |= VMA_ALLOCATION_CREATE_MAPPED_BIT;
         }
@@ -162,6 +164,8 @@ std::unique_ptr<VulkanBuffer> VulkanBuffer::create(VulkanContext *context, VkDev
     case MemoryHint::HostCached:
         allocInfo.usage = VMA_MEMORY_USAGE_AUTO_PREFER_HOST;
         allocInfo.flags = VMA_ALLOCATION_CREATE_HOST_ACCESS_RANDOM_BIT;
+        // Request coherent memory to eliminate vmaFlushAllocation calls
+        allocInfo.requiredFlags = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
         if (persistentMap) {
             allocInfo.flags |= VMA_ALLOCATION_CREATE_MAPPED_BIT;
         }
@@ -286,7 +290,17 @@ void VulkanBuffer::unmap()
 
 void VulkanBuffer::flush(VkDeviceSize offset, VkDeviceSize size)
 {
-    vmaFlushAllocation(VulkanAllocator::allocator(), m_allocation, offset, size);
+    // With VK_MEMORY_PROPERTY_HOST_COHERENT_BIT, flushes are unnecessary
+    VmaAllocationInfo allocInfo;
+    vmaGetAllocationInfo(VulkanAllocator::allocator(), m_allocation, &allocInfo);
+
+    VkMemoryPropertyFlags memProps;
+    vmaGetAllocationMemoryProperties(VulkanAllocator::allocator(), m_allocation, &memProps);
+
+    // Only flush if memory is NOT coherent
+    if (!(memProps & VK_MEMORY_PROPERTY_HOST_COHERENT_BIT)) {
+        vmaFlushAllocation(VulkanAllocator::allocator(), m_allocation, offset, size);
+    }
 }
 
 void VulkanBuffer::invalidate(VkDeviceSize offset, VkDeviceSize size)
