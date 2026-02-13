@@ -28,6 +28,7 @@
 #include "scene/imageitem.h"
 #include "scene/item.h"
 #include "scene/itemgeometry.h"
+
 #include "scene/outlinedborderitem.h"
 #include "scene/shadowitem.h"
 #include "scene/surfaceitem.h"
@@ -36,6 +37,7 @@
 #include "utils/common.h"
 #include "window.h"
 #include "workspace.h"
+#include <vector>
 
 #include <cstring>
 #include <typeinfo>
@@ -918,21 +920,21 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
 
         // Update and bind descriptor sets for textures and UBO
         // Pipeline requires descriptor set 0, so we must bind one before drawing
-        VulkanTexture *texture = nullptr;
-        if (!node.textures.isEmpty() && node.textures[0]) {
-            VulkanTexture *tex = node.textures[0];
-            if (tex->isValid() && tex->imageView() != VK_NULL_HANDLE) {
-                texture = tex;
+        std::vector<VkDescriptorImageInfo> imageInfos;
+        imageInfos.reserve(node.textures.size());
+
+        for (VulkanTexture *tex : node.textures) {
+            if (tex && tex->isValid() && tex->imageView() != VK_NULL_HANDLE) {
+                VkDescriptorImageInfo imageInfo{};
+                imageInfo.sampler = tex->sampler();
+                imageInfo.imageView = tex->imageView();
+                imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+                imageInfos.push_back(imageInfo);
             }
         }
 
-        if (texture) {
-            // Use the node's texture
-            VkDescriptorImageInfo imageInfo{};
-            imageInfo.sampler = texture->sampler();
-            imageInfo.imageView = texture->imageView();
-            imageInfo.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-
+        if (!imageInfos.empty()) {
+            // Use the node's textures
             VkDescriptorBufferInfo bufferInfo{};
             bufferInfo.buffer = m_uniformBuffer->buffer();
             bufferInfo.offset = uniformOffset;
@@ -944,8 +946,8 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
             descriptorWrites[0].dstBinding = 0;
             descriptorWrites[0].dstArrayElement = 0;
             descriptorWrites[0].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-            descriptorWrites[0].descriptorCount = 1;
-            descriptorWrites[0].pImageInfo = &imageInfo;
+            descriptorWrites[0].descriptorCount = static_cast<uint32_t>(imageInfos.size());
+            descriptorWrites[0].pImageInfo = imageInfos.data();
 
             descriptorWrites[1].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
             descriptorWrites[1].dstSet = descriptorSet;
