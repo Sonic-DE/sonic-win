@@ -282,7 +282,7 @@ void MouseClickEffect::drawCircleGl(const RenderViewport &viewport, const QColor
         y = s * t + c * y;
     }
     vbo->setVertices(verts);
-    ShaderManager::instance()->getBoundShader()->setUniform(GLShader::ColorUniform::Color, color);
+    GLShaderManager::instance()->getBoundShader()->setUniform(GLShader::ColorUniform::Color, color);
     vbo->render(GL_LINE_LOOP);
 }
 
@@ -297,7 +297,7 @@ void MouseClickEffect::drawCircleQPainter(const QColor &color, float cx, float c
 
 void MouseClickEffect::paintScreenSetupGl(const RenderTarget &renderTarget, const QMatrix4x4 &projectionMatrix)
 {
-    GLShader *shader = ShaderManager::instance()->pushShader(GLShaderTrait::UniformColor | GLShaderTrait::TransformColorspace);
+    GLShader *shader = GLShaderManager::instance()->pushShader(GLShaderTrait::UniformColor | GLShaderTrait::TransformColorspace);
     shader->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, projectionMatrix);
     shader->setColorspaceUniforms(ColorDescription::sRGB, renderTarget.colorDescription(), RenderingIntent::Perceptual);
 
@@ -310,7 +310,7 @@ void MouseClickEffect::paintScreenFinishGl()
 {
     glDisable(GL_BLEND);
 
-    ShaderManager::instance()->popShader();
+    GLShaderManager::instance()->popShader();
 }
 
 TabletToolEvent &MouseClickEffect::getOrCreateTabletPoint(InputDeviceTabletTool *tool)

@@ -280,10 +280,10 @@ ZoomEffect::OffscreenData *ZoomEffect::ensureOffscreenData(const RenderTarget &r
 GLShader *ZoomEffect::shaderForZoom(double zoom)
 {
     if (zoom < m_pixelGridZoom) {
-        return ShaderManager::instance()->shader(GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace);
+        return GLShaderManager::instance()->shader(GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace);
     } else {
         if (!m_pixelGridShader) {
-            m_pixelGridShader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/zoom/shaders/pixelgrid.frag"));
+            m_pixelGridShader = GLShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/zoom/shaders/pixelgrid.frag"));
         }
         return m_pixelGridShader.get();
     }
@@ -388,7 +388,7 @@ void ZoomEffect::paintScreen(const RenderTarget &renderTarget, const RenderViewp
     glClear(GL_COLOR_BUFFER_BIT);
 
     GLShader *shader = shaderForZoom(m_zoom);
-    ShaderManager::instance()->pushShader(shader);
+    GLShaderManager::instance()->pushShader(shader);
     for (auto &[screen, offscreen] : m_offscreenData) {
         QMatrix4x4 matrix;
         matrix.translate(xTranslation * scale, yTranslation * scale);
@@ -402,7 +402,7 @@ void ZoomEffect::paintScreen(const RenderTarget &renderTarget, const RenderViewp
 
         offscreen.texture->render(offscreen.viewport.size() * scale);
     }
-    ShaderManager::instance()->popShader();
+    GLShaderManager::instance()->popShader();
 
     if (m_mousePointer != MousePointerHide) {
         // Draw the mouse-texture at the position matching to zoomed-in image of the desktop. Hiding the
@@ -421,13 +421,13 @@ void ZoomEffect::paintScreen(const RenderTarget &renderTarget, const RenderViewp
 
             glEnable(GL_BLEND);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            auto s = ShaderManager::instance()->pushShader(GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace);
+            auto s = GLShaderManager::instance()->pushShader(GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace);
             s->setColorspaceUniforms(ColorDescription::sRGB, renderTarget.colorDescription(), RenderingIntent::Perceptual);
             QMatrix4x4 mvp = viewport.projectionMatrix();
             mvp.translate(p.x() * scale, p.y() * scale);
             s->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, mvp);
             cursorTexture->render(cursorSize * scale);
-            ShaderManager::instance()->popShader();
+            GLShaderManager::instance()->popShader();
             glDisable(GL_BLEND);
         }
     }

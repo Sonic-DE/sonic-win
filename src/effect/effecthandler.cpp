@@ -1483,7 +1483,7 @@ void EffectsHandler::renderOffscreenQuickView(const RenderTarget &renderTarget, 
             traits |= GLShaderTrait::Modulate;
         }
 
-        GLShader *shader = ShaderManager::instance()->pushShader(traits);
+        GLShader *shader = GLShaderManager::instance()->pushShader(traits);
         const QRectF rect = scaledRect(w->geometry(), viewport.scale());
 
         QMatrix4x4 mvp(viewport.projectionMatrix());
@@ -1507,7 +1507,7 @@ void EffectsHandler::renderOffscreenQuickView(const RenderTarget &renderTarget, 
             glDisable(GL_BLEND);
         }
 
-        ShaderManager::instance()->popShader();
+        GLShaderManager::instance()->popShader();
     }
 }
 

@@ -57,9 +57,9 @@ BlurEffect::BlurEffect()
     BlurConfig::instance(effects->config());
     ensureResources();
 
-    m_contrastPass.shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
-                                                                              QStringLiteral(":/effects/blur/shaders/vertex.vert"),
-                                                                              QStringLiteral(":/effects/blur/shaders/contrast.frag"));
+    m_contrastPass.shader = GLShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
+                                                                                QStringLiteral(":/effects/blur/shaders/vertex.vert"),
+                                                                                QStringLiteral(":/effects/blur/shaders/contrast.frag"));
     if (!m_contrastPass.shader) {
         qCWarning(KWIN_BLUR) << "Failed to load contrast pass shader";
         return;
@@ -69,9 +69,9 @@ BlurEffect::BlurEffect()
         m_contrastPass.halfpixelLocation = m_contrastPass.shader->uniformLocation("halfpixel");
     }
 
-    m_roundedContrastPass.shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
-                                                                                     QStringLiteral(":/effects/blur/shaders/contrast_rounded.vert"),
-                                                                                     QStringLiteral(":/effects/blur/shaders/contrast_rounded.frag"));
+    m_roundedContrastPass.shader = GLShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
+                                                                                       QStringLiteral(":/effects/blur/shaders/contrast_rounded.vert"),
+                                                                                       QStringLiteral(":/effects/blur/shaders/contrast_rounded.frag"));
     if (!m_roundedContrastPass.shader) {
         qCWarning(KWIN_BLUR) << "Failed to load contrast pass shader";
         return;
@@ -84,9 +84,9 @@ BlurEffect::BlurEffect()
         m_roundedContrastPass.opacityLocation = m_roundedContrastPass.shader->uniformLocation("opacity");
     }
 
-    m_downsamplePass.shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
-                                                                                QStringLiteral(":/effects/blur/shaders/vertex.vert"),
-                                                                                QStringLiteral(":/effects/blur/shaders/downsample.frag"));
+    m_downsamplePass.shader = GLShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
+                                                                                  QStringLiteral(":/effects/blur/shaders/vertex.vert"),
+                                                                                  QStringLiteral(":/effects/blur/shaders/downsample.frag"));
     if (!m_downsamplePass.shader) {
         qCWarning(KWIN_BLUR) << "Failed to load downsampling pass shader";
         return;
@@ -96,9 +96,9 @@ BlurEffect::BlurEffect()
         m_downsamplePass.halfpixelLocation = m_downsamplePass.shader->uniformLocation("halfpixel");
     }
 
-    m_upsamplePass.shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
-                                                                              QStringLiteral(":/effects/blur/shaders/vertex.vert"),
-                                                                              QStringLiteral(":/effects/blur/shaders/upsample.frag"));
+    m_upsamplePass.shader = GLShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
+                                                                                QStringLiteral(":/effects/blur/shaders/vertex.vert"),
+                                                                                QStringLiteral(":/effects/blur/shaders/upsample.frag"));
     if (!m_upsamplePass.shader) {
         qCWarning(KWIN_BLUR) << "Failed to load upsampling pass shader";
         return;
@@ -108,9 +108,9 @@ BlurEffect::BlurEffect()
         m_upsamplePass.halfpixelLocation = m_upsamplePass.shader->uniformLocation("halfpixel");
     }
 
-    m_noisePass.shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
-                                                                           QStringLiteral(":/effects/blur/shaders/vertex.vert"),
-                                                                           QStringLiteral(":/effects/blur/shaders/noise.frag"));
+    m_noisePass.shader = GLShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
+                                                                             QStringLiteral(":/effects/blur/shaders/vertex.vert"),
+                                                                             QStringLiteral(":/effects/blur/shaders/noise.frag"));
     if (!m_noisePass.shader) {
         qCWarning(KWIN_BLUR) << "Failed to load noise pass shader";
         return;
@@ -711,7 +711,7 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
 
     // The downsample pass of the dual Kawase algorithm: the background will be scaled down 50% every iteration.
     {
-        ShaderManager::instance()->pushShader(m_downsamplePass.shader.get());
+        GLShaderManager::instance()->pushShader(m_downsamplePass.shader.get());
 
         QMatrix4x4 projectionMatrix;
         projectionMatrix.ortho(QRectF(0.0, 0.0, backgroundRect.width(), backgroundRect.height()));
@@ -733,12 +733,12 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
             vbo->draw(GL_TRIANGLES, 0, 6);
         }
 
-        ShaderManager::instance()->popShader();
+        GLShaderManager::instance()->popShader();
     }
 
     // The upsample pass of the dual Kawase algorithm: the background will be scaled up 200% every iteration.
     {
-        ShaderManager::instance()->pushShader(m_upsamplePass.shader.get());
+        GLShaderManager::instance()->pushShader(m_upsamplePass.shader.get());
 
         QMatrix4x4 projectionMatrix;
         projectionMatrix.ortho(QRectF(0.0, 0.0, backgroundRect.width(), backgroundRect.height()));
@@ -759,11 +759,11 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
             vbo->draw(GL_TRIANGLES, 0, 6);
         }
 
-        ShaderManager::instance()->popShader();
+        GLShaderManager::instance()->popShader();
     }
 
     if (const BorderRadius cornerRadius = w->window()->borderRadius(); !cornerRadius.isNull()) {
-        ShaderManager::instance()->pushShader(m_roundedContrastPass.shader.get());
+        GLShaderManager::instance()->pushShader(m_roundedContrastPass.shader.get());
 
         QMatrix4x4 projectionMatrix = viewport.projectionMatrix();
         projectionMatrix.translate(deviceBackgroundRect.x(), deviceBackgroundRect.y());
@@ -800,9 +800,9 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
 
         glDisable(GL_BLEND);
 
-        ShaderManager::instance()->popShader();
+        GLShaderManager::instance()->popShader();
     } else {
-        ShaderManager::instance()->pushShader(m_contrastPass.shader.get());
+        GLShaderManager::instance()->pushShader(m_contrastPass.shader.get());
 
         QMatrix4x4 projectionMatrix = viewport.projectionMatrix();
         projectionMatrix.translate(deviceBackgroundRect.x(), deviceBackgroundRect.y());
@@ -832,7 +832,7 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
             glDisable(GL_BLEND);
         }
 
-        ShaderManager::instance()->popShader();
+        GLShaderManager::instance()->popShader();
     }
 
     if (m_noiseStrength > 0) {
@@ -847,7 +847,7 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
         }
 
         if (GLTexture *noiseTexture = ensureNoiseTexture()) {
-            ShaderManager::instance()->pushShader(m_noisePass.shader.get());
+            GLShaderManager::instance()->pushShader(m_noisePass.shader.get());
 
             QMatrix4x4 projectionMatrix = viewport.projectionMatrix();
             projectionMatrix.translate(deviceBackgroundRect.x(), deviceBackgroundRect.y());
@@ -860,7 +860,7 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
 
             vbo->draw(GL_TRIANGLES, 6, vertexCount);
 
-            ShaderManager::instance()->popShader();
+            GLShaderManager::instance()->popShader();
         }
 
         glDisable(GL_BLEND);

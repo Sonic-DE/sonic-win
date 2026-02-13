@@ -170,7 +170,7 @@ private:
     QHash<IntUniform, int> m_intLocations;
     QHash<ColorUniform, int> m_colorLocations;
 
-    friend class ShaderManager;
+    friend class GLShaderManager;
 };
 
 }
