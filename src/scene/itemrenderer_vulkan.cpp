@@ -422,14 +422,10 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
     context->opacityStack.push(context->opacityStack.top() * item->opacity());
 
     // Process child items with z < 0 first (behind this item)
-    // NOTE: Don't break early - process all items to avoid skipping due to inconsistent sorting
-    // during stacking order changes (panels can disappear if we break early with stale Z values)
-    int processedBehind = 0;
     for (Item *childItem : sortedChildItems) {
         if (childItem->z() < 0) {
             if (childItem->explicitVisible()) {
                 createRenderNode(childItem, context);
-                processedBehind++;
             }
         }
     }
@@ -726,14 +722,10 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
     }
 
     // Process children with z >= 0 (in front of this item)
-    // NOTE: Process all items instead of using continue to avoid skipping due to inconsistent sorting
-    // during stacking order changes (panels can disappear if Z values are stale during rendering)
-    int processedFront = 0;
     for (Item *childItem : sortedChildItems) {
         if (childItem->z() >= 0) {
             if (childItem->explicitVisible()) {
                 createRenderNode(childItem, context);
-                processedFront++;
             }
         }
     }
