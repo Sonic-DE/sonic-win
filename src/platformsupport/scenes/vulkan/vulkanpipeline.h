@@ -23,9 +23,9 @@ class VulkanContext;
 class VulkanBackend;
 
 /**
- * @brief Shader traits matching OpenGL ShaderTraits for feature parity.
+ * @brief Vulkan-specific shader traits for the Vulkan pipeline.
  */
-enum class ShaderTrait {
+enum class VulkanShaderTrait {
     MapTexture = 1 << 0, ///< Sample from texture
     UniformColor = 1 << 1, ///< Use uniform color
     Modulate = 1 << 2, ///< Apply opacity/brightness modulation
@@ -36,8 +36,8 @@ enum class ShaderTrait {
     YUV = 1 << 7, ///< YUV to RGB conversion (for multi-plane textures)
 };
 
-Q_DECLARE_FLAGS(ShaderTraits, ShaderTrait)
-Q_DECLARE_OPERATORS_FOR_FLAGS(ShaderTraits)
+Q_DECLARE_FLAGS(VulkanShaderTraits, VulkanShaderTrait)
+Q_DECLARE_OPERATORS_FOR_FLAGS(VulkanShaderTraits)
 
 /**
  * @brief Vulkan graphics pipeline wrapper.
@@ -57,7 +57,7 @@ public:
      * @brief Create a pipeline for the given traits and render pass.
      */
     static std::unique_ptr<VulkanPipeline> create(VulkanContext *context, VkRenderPass renderPass,
-                                                  ShaderTraits traits,
+                                                  VulkanShaderTraits traits,
                                                   const QByteArray &vertexShaderSpirv,
                                                   const QByteArray &fragmentShaderSpirv);
 
@@ -96,7 +96,7 @@ public:
     /**
      * @brief Get the shader traits this pipeline was created for.
      */
-    ShaderTraits traits() const
+    VulkanShaderTraits traits() const
     {
         return m_traits;
     }
@@ -107,7 +107,7 @@ public:
     void bind(VkCommandBuffer cmd) const;
 
 private:
-    VulkanPipeline(VulkanContext *context, ShaderTraits traits);
+    VulkanPipeline(VulkanContext *context, VulkanShaderTraits traits);
 
     bool createDescriptorSetLayout();
     bool createPipelineLayout();
@@ -118,7 +118,7 @@ private:
     void cleanup();
 
     VulkanContext *m_context;
-    ShaderTraits m_traits;
+    VulkanShaderTraits m_traits;
 
     VkPipeline m_pipeline = VK_NULL_HANDLE;
     VkPipelineLayout m_layout = VK_NULL_HANDLE;

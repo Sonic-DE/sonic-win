@@ -116,7 +116,7 @@ void MouseMarkEffect::paintScreen(const RenderTarget &renderTarget, const Render
         GLVertexBuffer *vbo = GLVertexBuffer::streamingBuffer();
         vbo->reset();
         const auto scale = viewport.scale();
-        ShaderBinder binder(ShaderTrait::UniformColor | ShaderTrait::TransformColorspace);
+        ShaderBinder binder(GLShaderTrait::UniformColor | GLShaderTrait::TransformColorspace);
         binder.shader()->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, viewport.projectionMatrix());
         binder.shader()->setColorspaceUniforms(ColorDescription::sRGB, renderTarget.colorDescription(), RenderingIntent::Perceptual);
         binder.shader()->setUniform(GLShader::ColorUniform::Color, color);

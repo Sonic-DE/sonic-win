@@ -60,7 +60,7 @@ void VulkanRenderNodeTest::testRenderNodeRequirements()
     // Simulate render node validation logic
     struct MockRenderNode
     {
-        ShaderTraits traits;
+        VulkanShaderTraits traits;
         QList<VulkanTexture *> textures;
         int vertexCount;
     };
@@ -68,29 +68,29 @@ void VulkanRenderNodeTest::testRenderNodeRequirements()
     // Case 1: Valid node with texture
     {
         MockRenderNode node;
-        node.traits = ShaderTrait::MapTexture;
+        node.traits = VulkanShaderTrait::MapTexture;
         node.textures = {reinterpret_cast<VulkanTexture *>(0x1)}; // Mock non-null
         node.vertexCount = 6; // Two triangles
 
-        bool shouldRender = (node.vertexCount > 0) && (!(node.traits & ShaderTrait::MapTexture) || !node.textures.isEmpty());
+        bool shouldRender = (node.vertexCount > 0) && (!(node.traits & VulkanShaderTrait::MapTexture) || !node.textures.isEmpty());
         QVERIFY2(shouldRender, "Node with texture and vertices should render");
     }
 
     // Case 2: Invalid - MapTexture but no textures
     {
         MockRenderNode node;
-        node.traits = ShaderTrait::MapTexture;
+        node.traits = VulkanShaderTrait::MapTexture;
         node.textures = {}; // Empty!
         node.vertexCount = 6;
 
-        bool shouldRender = (node.vertexCount > 0) && (!(node.traits & ShaderTrait::MapTexture) || !node.textures.isEmpty());
+        bool shouldRender = (node.vertexCount > 0) && (!(node.traits & VulkanShaderTrait::MapTexture) || !node.textures.isEmpty());
         QVERIFY2(!shouldRender, "Node with MapTexture but no textures should NOT render");
     }
 
     // Case 3: Invalid - no vertices
     {
         MockRenderNode node;
-        node.traits = ShaderTrait::MapTexture;
+        node.traits = VulkanShaderTrait::MapTexture;
         node.textures = {reinterpret_cast<VulkanTexture *>(0x1)};
         node.vertexCount = 0; // No geometry!
 
@@ -112,11 +112,11 @@ void VulkanRenderNodeTest::testMapTextureRequiresValidTexture()
     // MapTexture means the fragment shader samples from a texture
     // This requires descriptor set 0 to have a valid combined image sampler
 
-    ShaderTraits traits = ShaderTrait::MapTexture;
+    VulkanShaderTraits traits = VulkanShaderTrait::MapTexture;
     QList<VulkanTexture *> emptyTextures;
 
     // The renderer should skip nodes where this condition is true:
-    bool hasMapTextureWithoutTexture = (traits & ShaderTrait::MapTexture) && emptyTextures.isEmpty();
+    bool hasMapTextureWithoutTexture = (traits & VulkanShaderTrait::MapTexture) && emptyTextures.isEmpty();
 
     QVERIFY2(hasMapTextureWithoutTexture,
              "MapTexture without textures should be detected and handled");

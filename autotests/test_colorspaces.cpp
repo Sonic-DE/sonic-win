@@ -260,7 +260,7 @@ void TestColorspaces::testOpenglShader()
 
     QImage openGlResult;
     {
-        ShaderBinder binder(ShaderTrait::MapTexture | ShaderTrait::TransformColorspace);
+        ShaderBinder binder(GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace);
         QMatrix4x4 proj;
         proj.ortho(QRectF(0, 0, input.width(), input.height()));
         binder.shader()->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, proj);

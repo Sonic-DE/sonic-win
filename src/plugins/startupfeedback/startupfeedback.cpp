@@ -150,7 +150,7 @@ void StartupFeedbackEffect::reconfigure(Effect::ReconfigureFlags flags)
         m_type = BlinkingFeedback;
         if (effects->compositingType() == OpenGLCompositing) {
             ensureResources();
-            m_blinkingShader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/startupfeedback/shaders/blinking-startup.frag"));
+            m_blinkingShader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/startupfeedback/shaders/blinking-startup.frag"));
             if (m_blinkingShader->isValid()) {
                 qCDebug(KWIN_STARTUPFEEDBACK) << "Blinking Shader is valid";
             } else {
@@ -225,7 +225,7 @@ void StartupFeedbackEffect::paintScreen(const RenderTarget &renderTarget, const 
             shader = m_blinkingShader.get();
             m_blinkingShader->setUniform(GLShader::ColorUniform::Color, blinkingColor);
         } else {
-            shader = ShaderManager::instance()->pushShader(ShaderTrait::MapTexture | ShaderTrait::TransformColorspace);
+            shader = ShaderManager::instance()->pushShader(GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace);
         }
         const QRectF pixelGeometry = snapToPixelGridF(scaledRect(m_currentGeometry, viewport.scale()));
         QMatrix4x4 mvp = viewport.projectionMatrix();

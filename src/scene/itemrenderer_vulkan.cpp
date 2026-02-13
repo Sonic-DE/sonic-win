@@ -472,7 +472,7 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
                 geometry.postProcessTextureCoordinates(texture->matrix(VulkanCoordinateType::Unnormalized));
 
                 RenderNode node;
-                node.traits = ShaderTrait::MapTexture;
+                node.traits = VulkanShaderTrait::MapTexture;
                 node.textures.append(texture);
                 node.opacity = context->opacityStack.top();
                 node.hasAlpha = true;
@@ -491,7 +491,7 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
                 node.vertexCount = node.geometry.count();
 
                 if (node.opacity < 1.0) {
-                    node.traits |= ShaderTrait::Modulate;
+                    node.traits |= VulkanShaderTrait::Modulate;
                 }
 
                 context->renderNodes.append(node);
@@ -519,7 +519,7 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
                 geometry.postProcessTextureCoordinates(texture->matrix(VulkanCoordinateType::Unnormalized));
 
                 RenderNode node;
-                node.traits = ShaderTrait::MapTexture;
+                node.traits = VulkanShaderTrait::MapTexture;
                 node.textures.append(texture);
                 node.opacity = context->opacityStack.top();
                 node.hasAlpha = true;
@@ -538,7 +538,7 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
                 node.vertexCount = node.geometry.count();
 
                 if (node.opacity < 1.0) {
-                    node.traits |= ShaderTrait::Modulate;
+                    node.traits |= VulkanShaderTrait::Modulate;
                 }
 
                 context->renderNodes.append(node);
@@ -586,12 +586,12 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
                 geometry.postProcessTextureCoordinates(texMatrix);
 
                 RenderNode node;
-                node.traits = ShaderTrait::MapTexture;
+                node.traits = VulkanShaderTrait::MapTexture;
                 node.textures = surfaceContents.toVarLengthArray();
 
                 // Check if this is a multi-plane YUV texture (3 textures: Y, U, V)
                 if (node.textures.size() >= 3) {
-                    node.traits |= ShaderTrait::YUV;
+                    node.traits |= VulkanShaderTrait::YUV;
                 }
 
                 node.opacity = context->opacityStack.top();
@@ -618,7 +618,7 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
                 if (!context->cornerStack.isEmpty()) {
                     const auto &top = context->cornerStack.top();
                     if (!top.radius.isNull()) {
-                        node.traits |= ShaderTrait::RoundedCorners;
+                        node.traits |= VulkanShaderTrait::RoundedCorners;
                         node.hasAlpha = true;
                         node.box = QVector4D(top.box.x() + top.box.width() * 0.5,
                                              top.box.y() + top.box.height() * 0.5,
@@ -630,7 +630,7 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
 
                 // Handle opacity modulation
                 if (node.opacity < 1.0) {
-                    node.traits |= ShaderTrait::Modulate;
+                    node.traits |= VulkanShaderTrait::Modulate;
                 }
 
                 context->renderNodes.append(node);
@@ -652,7 +652,7 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
             geometry.postProcessTextureCoordinates(texture->matrix(VulkanCoordinateType::Unnormalized));
 
             RenderNode node;
-            node.traits = ShaderTrait::MapTexture;
+            node.traits = VulkanShaderTrait::MapTexture;
             node.textures.append(texture);
             node.opacity = context->opacityStack.top();
             node.hasAlpha = true;
@@ -671,7 +671,7 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
             node.vertexCount = node.geometry.count();
 
             if (node.opacity < 1.0) {
-                node.traits |= ShaderTrait::Modulate;
+                node.traits |= VulkanShaderTrait::Modulate;
             }
 
             context->renderNodes.append(node);
@@ -689,7 +689,7 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
                        << "color=" << outline.color();
 
             RenderNode node;
-            node.traits = ShaderTrait::Border;
+            node.traits = VulkanShaderTrait::Border;
             node.opacity = context->opacityStack.top();
             node.hasAlpha = true;
             node.transformMatrix = context->transformStack.top();
@@ -708,7 +708,7 @@ void ItemRendererVulkan::createRenderNode(Item *item, RenderContext *context)
             node.vertexCount = node.geometry.count();
 
             if (node.opacity < 1.0) {
-                node.traits |= ShaderTrait::Modulate;
+                node.traits |= VulkanShaderTrait::Modulate;
             }
 
             context->renderNodes.append(node);

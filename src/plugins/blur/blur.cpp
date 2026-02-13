@@ -57,7 +57,7 @@ BlurEffect::BlurEffect()
     BlurConfig::instance(effects->config());
     ensureResources();
 
-    m_contrastPass.shader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture,
+    m_contrastPass.shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
                                                                               QStringLiteral(":/effects/blur/shaders/vertex.vert"),
                                                                               QStringLiteral(":/effects/blur/shaders/contrast.frag"));
     if (!m_contrastPass.shader) {
@@ -69,7 +69,7 @@ BlurEffect::BlurEffect()
         m_contrastPass.halfpixelLocation = m_contrastPass.shader->uniformLocation("halfpixel");
     }
 
-    m_roundedContrastPass.shader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture,
+    m_roundedContrastPass.shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
                                                                                      QStringLiteral(":/effects/blur/shaders/contrast_rounded.vert"),
                                                                                      QStringLiteral(":/effects/blur/shaders/contrast_rounded.frag"));
     if (!m_roundedContrastPass.shader) {
@@ -84,7 +84,7 @@ BlurEffect::BlurEffect()
         m_roundedContrastPass.opacityLocation = m_roundedContrastPass.shader->uniformLocation("opacity");
     }
 
-    m_downsamplePass.shader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture,
+    m_downsamplePass.shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
                                                                                 QStringLiteral(":/effects/blur/shaders/vertex.vert"),
                                                                                 QStringLiteral(":/effects/blur/shaders/downsample.frag"));
     if (!m_downsamplePass.shader) {
@@ -96,7 +96,7 @@ BlurEffect::BlurEffect()
         m_downsamplePass.halfpixelLocation = m_downsamplePass.shader->uniformLocation("halfpixel");
     }
 
-    m_upsamplePass.shader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture,
+    m_upsamplePass.shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
                                                                               QStringLiteral(":/effects/blur/shaders/vertex.vert"),
                                                                               QStringLiteral(":/effects/blur/shaders/upsample.frag"));
     if (!m_upsamplePass.shader) {
@@ -108,7 +108,7 @@ BlurEffect::BlurEffect()
         m_upsamplePass.halfpixelLocation = m_upsamplePass.shader->uniformLocation("halfpixel");
     }
 
-    m_noisePass.shader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture,
+    m_noisePass.shader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture,
                                                                            QStringLiteral(":/effects/blur/shaders/vertex.vert"),
                                                                            QStringLiteral(":/effects/blur/shaders/noise.frag"));
     if (!m_noisePass.shader) {

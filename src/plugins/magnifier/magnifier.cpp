@@ -134,7 +134,7 @@ void MagnifierEffect::paintScreen(const RenderTarget &renderTarget, const Render
         if (effects->isOpenGLCompositing()) {
             m_fbo->blitFromRenderTarget(renderTarget, viewport, srcArea.toRect(), QRect(QPoint(), m_fbo->size()));
             // paint magnifier
-            auto s = ShaderManager::instance()->pushShader(ShaderTrait::MapTexture);
+            auto s = ShaderManager::instance()->pushShader(GLShaderTrait::MapTexture);
             QMatrix4x4 mvp = viewport.projectionMatrix();
             mvp.translate(area.x() * scale, area.y() * scale);
             s->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, mvp);
@@ -178,7 +178,7 @@ void MagnifierEffect::paintScreen(const RenderTarget &renderTarget, const Render
             verts.push_back(QVector2D(frame.right(), areaF.bottom()));
             vbo->setVertices(verts);
 
-            ShaderBinder binder(ShaderTrait::UniformColor);
+            ShaderBinder binder(GLShaderTrait::UniformColor);
             binder.shader()->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, viewport.projectionMatrix());
             binder.shader()->setUniform(GLShader::ColorUniform::Color, QColor(0, 0, 0));
             vbo->render(GL_TRIANGLES);

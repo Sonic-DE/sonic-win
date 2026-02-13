@@ -43,7 +43,7 @@ class VulkanPipelineTest : public QObject
 private Q_SLOTS:
     void testPipelineManagerRequiresRenderPass();
     void testPushConstantStageFlags();
-    void testShaderTraitsFlags();
+    void testVulkanShaderTraitsFlags();
     void testMapTextureTraitRequiresTexture();
     void testPipelineLayoutDescriptorSetRequirement();
 };
@@ -118,23 +118,23 @@ void VulkanPipelineTest::testPushConstantStageFlags()
 /**
  * @brief Verify ShaderTrait flags are properly defined and combinable.
  */
-void VulkanPipelineTest::testShaderTraitsFlags()
+void VulkanPipelineTest::testVulkanShaderTraitsFlags()
 {
     // Verify MapTexture trait exists and is a power of 2
-    constexpr auto mapTexture = static_cast<int>(ShaderTrait::MapTexture);
+    constexpr auto mapTexture = static_cast<int>(VulkanShaderTrait::MapTexture);
     static_assert(mapTexture == (1 << 0), "MapTexture should be bit 0");
 
-    constexpr auto uniformColor = static_cast<int>(ShaderTrait::UniformColor);
+    constexpr auto uniformColor = static_cast<int>(VulkanShaderTrait::UniformColor);
     static_assert(uniformColor == (1 << 1), "UniformColor should be bit 1");
 
-    constexpr auto modulate = static_cast<int>(ShaderTrait::Modulate);
+    constexpr auto modulate = static_cast<int>(VulkanShaderTrait::Modulate);
     static_assert(modulate == (1 << 2), "Modulate should be bit 2");
 
     // Verify traits can be combined
-    ShaderTraits combined = ShaderTrait::MapTexture | ShaderTrait::Modulate;
-    QVERIFY(combined.testFlag(ShaderTrait::MapTexture));
-    QVERIFY(combined.testFlag(ShaderTrait::Modulate));
-    QVERIFY(!combined.testFlag(ShaderTrait::UniformColor));
+    VulkanShaderTraits combined = VulkanShaderTrait::MapTexture | VulkanShaderTrait::Modulate;
+    QVERIFY(combined.testFlag(VulkanShaderTrait::MapTexture));
+    QVERIFY(combined.testFlag(VulkanShaderTrait::Modulate));
+    QVERIFY(!combined.testFlag(VulkanShaderTrait::UniformColor));
 
     QVERIFY(true);
 }
@@ -155,14 +155,14 @@ void VulkanPipelineTest::testMapTextureTraitRequiresTexture()
     // - Don't add nodes with MapTexture trait if textures list is empty
     // - OR always bind a default texture for MapTexture pipelines
 
-    ShaderTraits traits = ShaderTrait::MapTexture;
+    VulkanShaderTraits traits = VulkanShaderTrait::MapTexture;
 
     // Verify the trait is set
-    QVERIFY(traits.testFlag(ShaderTrait::MapTexture));
+    QVERIFY(traits.testFlag(VulkanShaderTrait::MapTexture));
 
     // Document the requirement: nodes with MapTexture MUST have textures
     // or be skipped during rendering
-    QVERIFY2(traits.testFlag(ShaderTrait::MapTexture),
+    QVERIFY2(traits.testFlag(VulkanShaderTrait::MapTexture),
              "MapTexture trait requires valid textures in the render node");
 }
 
@@ -200,7 +200,7 @@ void VulkanPipelineTest::testPushConstantStageFlags()
     QSKIP("Vulkan support not available");
 }
 
-void VulkanPipelineTest::testShaderTraitsFlags()
+void VulkanPipelineTest::testVulkanShaderTraitsFlags()
 {
     QSKIP("Vulkan support not available");
 }

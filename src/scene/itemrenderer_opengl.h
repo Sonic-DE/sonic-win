@@ -22,7 +22,7 @@ class KWIN_EXPORT ItemRendererOpenGL : public ItemRenderer
 public:
     struct RenderNode
     {
-        ShaderTraits traits;
+        GLShaderTraits traits;
         QVarLengthArray<GLTexture *, 4> textures;
         RenderGeometry geometry;
         QMatrix4x4 transformMatrix;

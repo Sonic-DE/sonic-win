@@ -176,7 +176,7 @@ void ItemRendererOpenGL::createRenderNode(Item *item, RenderContext *context)
             OpenGLShadowTextureProvider *textureProvider = static_cast<OpenGLShadowTextureProvider *>(shadowItem->textureProvider());
             if (textureProvider->shadowTexture()) {
                 RenderNode &renderNode = context->renderNodes.emplace_back(RenderNode{
-                    .traits = ShaderTrait::MapTexture,
+                    .traits = GLShaderTrait::MapTexture,
                     .textures = {textureProvider->shadowTexture()},
                     .geometry = geometry,
                     .transformMatrix = context->transformStack.top(),
@@ -197,7 +197,7 @@ void ItemRendererOpenGL::createRenderNode(Item *item, RenderContext *context)
             auto renderer = static_cast<const SceneOpenGLDecorationRenderer *>(decorationItem->renderer());
             if (renderer->texture()) {
                 RenderNode &renderNode = context->renderNodes.emplace_back(RenderNode{
-                    .traits = ShaderTrait::MapTexture,
+                    .traits = GLShaderTrait::MapTexture,
                     .textures = {renderer->texture()},
                     .geometry = geometry,
                     .transformMatrix = context->transformStack.top(),
@@ -220,7 +220,7 @@ void ItemRendererOpenGL::createRenderNode(Item *item, RenderContext *context)
                 OpenGLSurfaceTexture *surfaceTexture = static_cast<OpenGLSurfaceTexture *>(pixmap->texture());
                 if (surfaceTexture->isValid()) {
                     RenderNode &renderNode = context->renderNodes.emplace_back(RenderNode{
-                        .traits = ShaderTrait::MapTexture,
+                        .traits = GLShaderTrait::MapTexture,
                         .textures = surfaceTexture->texture().toVarLengthArray(),
                         .geometry = geometry,
                         .transformMatrix = context->transformStack.top(),
@@ -238,7 +238,7 @@ void ItemRendererOpenGL::createRenderNode(Item *item, RenderContext *context)
                     if (!context->cornerStack.isEmpty()) {
                         const auto &top = context->cornerStack.top();
 
-                        renderNode.traits |= ShaderTrait::RoundedCorners;
+                        renderNode.traits |= GLShaderTrait::RoundedCorners;
                         renderNode.hasAlpha = true;
                         renderNode.box = QVector4D(top.box.x() + top.box.width() * 0.5,
                                                    top.box.y() + top.box.height() * 0.5,
@@ -253,7 +253,7 @@ void ItemRendererOpenGL::createRenderNode(Item *item, RenderContext *context)
         if (!geometry.isEmpty()) {
             if (imageItem->texture()) {
                 RenderNode &renderNode = context->renderNodes.emplace_back(RenderNode{
-                    .traits = ShaderTrait::MapTexture,
+                    .traits = GLShaderTrait::MapTexture,
                     .textures = {imageItem->texture()},
                     .geometry = geometry,
                     .transformMatrix = context->transformStack.top(),
@@ -276,7 +276,7 @@ void ItemRendererOpenGL::createRenderNode(Item *item, RenderContext *context)
             const QRectF outerRect = snapToPixelGridF(scaledRect(borderItem->rect(), context->renderTargetScale));
             const QRectF innerRect = outerRect.adjusted(thickness, thickness, -thickness, -thickness);
             context->renderNodes.append(RenderNode{
-                .traits = ShaderTrait::Border,
+                .traits = GLShaderTrait::Border,
                 .textures = {},
                 .geometry = geometry,
                 .transformMatrix = context->transformStack.top(),
@@ -396,21 +396,21 @@ void ItemRendererOpenGL::renderItem(const RenderTarget &renderTarget, const Rend
         scissorRegion = viewport.mapToRenderTarget(region);
     }
 
-    ShaderTraits lastTraits;
+    GLShaderTraits lastTraits;
     GLShader *shader = nullptr;
     for (int i = 0; i < renderContext.renderNodes.count(); i++) {
         const RenderNode &renderNode = renderContext.renderNodes[i];
 
-        ShaderTraits traits = renderNode.traits;
+        GLShaderTraits traits = renderNode.traits;
         if (renderNode.opacity != 1.0 || data.brightness() != 1.0) {
-            traits |= ShaderTrait::Modulate;
+            traits |= GLShaderTrait::Modulate;
         }
         if (data.saturation() != 1.0) {
-            traits |= ShaderTrait::AdjustSaturation;
+            traits |= GLShaderTrait::AdjustSaturation;
         }
         const auto colorTransformation = ColorPipeline::create(renderNode.colorDescription, renderTarget.colorDescription(), item->renderingIntent());
         if (!colorTransformation.isIdentity()) {
-            traits |= ShaderTrait::TransformColorspace;
+            traits |= GLShaderTrait::TransformColorspace;
         }
 
         setBlendEnabled(renderNode.hasAlpha || renderNode.opacity < 1.0);
@@ -421,36 +421,36 @@ void ItemRendererOpenGL::renderItem(const RenderTarget &renderTarget, const Rend
                 ShaderManager::instance()->popShader();
             }
             shader = ShaderManager::instance()->pushShader(traits);
-            if (traits & ShaderTrait::AdjustSaturation) {
+            if (traits & GLShaderTrait::AdjustSaturation) {
                 const auto toXYZ = renderTarget.colorDescription().containerColorimetry().toXYZ();
                 shader->setUniform(GLShader::FloatUniform::Saturation, data.saturation());
                 shader->setUniform(GLShader::Vec3Uniform::PrimaryBrightness, QVector3D(toXYZ(1, 0), toXYZ(1, 1), toXYZ(1, 2)));
             }
 
-            if (traits & ShaderTrait::MapTexture) {
+            if (traits & GLShaderTrait::MapTexture) {
                 shader->setUniform(GLShader::IntUniform::Sampler, 0);
                 shader->setUniform(GLShader::IntUniform::Sampler1, 1);
             }
         }
         shader->setUniform(GLShader::Mat4Uniform::ModelViewProjectionMatrix, renderContext.projectionMatrix * renderNode.transformMatrix);
-        if (traits & ShaderTrait::Modulate) {
+        if (traits & GLShaderTrait::Modulate) {
             shader->setUniform(GLShader::Vec4Uniform::ModulationConstant, modulate(renderNode.opacity, data.brightness()));
         }
-        if (traits & ShaderTrait::TransformColorspace) {
+        if (traits & GLShaderTrait::TransformColorspace) {
             shader->setColorspaceUniforms(renderNode.colorDescription, renderTarget.colorDescription(), renderNode.renderingIntent);
         }
-        if (traits & ShaderTrait::RoundedCorners) {
+        if (traits & GLShaderTrait::RoundedCorners) {
             shader->setUniform(GLShader::Vec4Uniform::Box, renderNode.box);
             shader->setUniform(GLShader::Vec4Uniform::CornerRadius, renderNode.borderRadius);
         }
-        if (traits & ShaderTrait::Border) {
+        if (traits & GLShaderTrait::Border) {
             shader->setUniform(GLShader::Vec4Uniform::Box, renderNode.box);
             shader->setUniform(GLShader::Vec4Uniform::CornerRadius, renderNode.borderRadius);
             shader->setUniform(GLShader::IntUniform::Thickness, renderNode.borderThickness);
             shader->setUniform(GLShader::ColorUniform::Color, renderNode.borderColor);
         }
 
-        if (renderNode.traits & ShaderTrait::MapTexture) {
+        if (renderNode.traits & GLShaderTrait::MapTexture) {
             shader->setUniform("converter", renderNode.textures.count() > 1);
             for (int i = 0; i < renderNode.textures.count(); ++i) {
                 glActiveTexture(GL_TEXTURE0 + i);
@@ -461,7 +461,7 @@ void ItemRendererOpenGL::renderItem(const RenderTarget &renderTarget, const Rend
         vbo->draw(scissorRegion, GL_TRIANGLES, renderNode.firstVertex,
                   renderNode.vertexCount, renderContext.hardwareClipping);
 
-        if (renderNode.traits & ShaderTrait::MapTexture) {
+        if (renderNode.traits & GLShaderTrait::MapTexture) {
             for (int i = 0; i < renderNode.textures.count(); ++i) {
                 glActiveTexture(GL_TEXTURE0 + i);
                 renderNode.textures[i]->unbind();
@@ -495,7 +495,7 @@ void ItemRendererOpenGL::visualizeFractional(const RenderViewport &viewport, con
 {
     if (!m_debug.fractionalShader) {
         m_debug.fractionalShader = ShaderManager::instance()->generateShaderFromFile(
-            ShaderTrait::MapTexture,
+            GLShaderTrait::MapTexture,
             QStringLiteral(":/scene/shaders/debug_fractional.vert"),
             QStringLiteral(":/scene/shaders/debug_fractional.frag"));
     }

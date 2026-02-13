@@ -139,7 +139,7 @@ void VulkanPipelineManager::setRenderPass(VkRenderPass renderPass)
     }
 }
 
-VulkanPipeline *VulkanPipelineManager::pipeline(ShaderTraits traits)
+VulkanPipeline *VulkanPipelineManager::pipeline(VulkanShaderTraits traits)
 {
     if (m_renderPass == VK_NULL_HANDLE) {
         qCWarning(KWIN_VULKAN) << "Cannot get pipeline: render pass not set";
@@ -163,9 +163,9 @@ VulkanPipeline *VulkanPipelineManager::pipeline(ShaderTraits traits)
     if (!newPipeline) {
         qCWarning(KWIN_VULKAN) << "Failed to create pipeline for traits:" << static_cast<int>(traits);
         // Try to create a fallback pipeline with minimal traits
-        ShaderTraits fallbackTraits = ShaderTrait::MapTexture;
-        if (traits & ShaderTrait::UniformColor) {
-            fallbackTraits |= ShaderTrait::UniformColor;
+        VulkanShaderTraits fallbackTraits = VulkanShaderTrait::MapTexture;
+        if (traits & VulkanShaderTrait::UniformColor) {
+            fallbackTraits |= VulkanShaderTrait::UniformColor;
         }
         // Only try fallback if it's different from the requested traits
         if (fallbackTraits != traits) {
@@ -218,7 +218,7 @@ void VulkanPipelineManager::clearCache()
 
 // VulkanPipelineBinder implementation
 
-VulkanPipelineBinder::VulkanPipelineBinder(VulkanPipelineManager *manager, ShaderTraits traits)
+VulkanPipelineBinder::VulkanPipelineBinder(VulkanPipelineManager *manager, VulkanShaderTraits traits)
     : m_manager(manager)
     , m_pipeline(manager->pipeline(traits))
 {

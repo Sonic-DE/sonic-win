@@ -280,10 +280,10 @@ ZoomEffect::OffscreenData *ZoomEffect::ensureOffscreenData(const RenderTarget &r
 GLShader *ZoomEffect::shaderForZoom(double zoom)
 {
     if (zoom < m_pixelGridZoom) {
-        return ShaderManager::instance()->shader(ShaderTrait::MapTexture | ShaderTrait::TransformColorspace);
+        return ShaderManager::instance()->shader(GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace);
     } else {
         if (!m_pixelGridShader) {
-            m_pixelGridShader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/zoom/shaders/pixelgrid.frag"));
+            m_pixelGridShader = ShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/zoom/shaders/pixelgrid.frag"));
         }
         return m_pixelGridShader.get();
     }
@@ -421,7 +421,7 @@ void ZoomEffect::paintScreen(const RenderTarget &renderTarget, const RenderViewp
 
             glEnable(GL_BLEND);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            auto s = ShaderManager::instance()->pushShader(ShaderTrait::MapTexture | ShaderTrait::TransformColorspace);
+            auto s = ShaderManager::instance()->pushShader(GLShaderTrait::MapTexture | GLShaderTrait::TransformColorspace);
             s->setColorspaceUniforms(ColorDescription::sRGB, renderTarget.colorDescription(), RenderingIntent::Perceptual);
             QMatrix4x4 mvp = viewport.projectionMatrix();
             mvp.translate(p.x() * scale, p.y() * scale);
