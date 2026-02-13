@@ -100,25 +100,16 @@ void VulkanTexture::cleanup()
     }
 
     if (m_ownsImage && m_image != VK_NULL_HANDLE) {
-        // Handle VMA-managed memory
+        // Handle VMA-managed memory using deferred destruction
         if (m_allocation != nullptr && VulkanAllocator::isInitialized()) {
-            // Use deferred destruction for VMA-allocated images
-            // First free the memory allocation immediately (memory can be freed anytime)
-            vmaFreeMemory(VulkanAllocator::allocator(), m_allocation);
-            m_allocation = nullptr;
-            // Then queue the image for deferred destruction (must wait for GPU)
-            m_context->queueImageForDestruction(m_image);
+            m_context->queueImageForDestruction(m_image, m_allocation);
             m_image = VK_NULL_HANDLE;
+            m_allocation = nullptr;
         } else if (m_deviceMemory != VK_NULL_HANDLE) {
-            // Handle raw Vulkan memory (e.g., DMA-BUF imports)
-            // Use deferred destruction to avoid GPU resource in-use errors
-            m_context->queueImageForDestruction(m_image);
-            vkFreeMemory(device, m_deviceMemory, nullptr);
+            m_context->queueImageForDestruction(m_image, nullptr, m_deviceMemory);
             m_deviceMemory = VK_NULL_HANDLE;
             m_image = VK_NULL_HANDLE;
         } else {
-            // Image without memory allocation (shouldn't happen for owned images)
-            // Use deferred destruction
             m_context->queueImageForDestruction(m_image);
             m_image = VK_NULL_HANDLE;
         }
