@@ -14,6 +14,7 @@
 #include "vulkantexture.h"
 
 #include <QDebug>
+#include <cstring>
 #include <vector>
 
 namespace KWin
@@ -109,6 +110,20 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
     const VkDebugUtilsMessengerCallbackDataEXT *pCallbackData,
     void *pUserData)
 {
+    // List of "False Positive" VUIDs to ignore
+    static const char *ignored_vuids[] = {
+        "VUID-VkImageCreateInfo-pNext-00990",
+        "VUID-VkImportMemoryWin32HandleInfoKHR-handleType-09861"};
+
+    // Check if this message ID should be ignored
+    if (pCallbackData->pMessageIdName) {
+        for (const char *id : ignored_vuids) {
+            if (strcmp(pCallbackData->pMessageIdName, id) == 0) {
+                return VK_FALSE; // Skip this warning/error
+            }
+        }
+    }
+
     switch (messageSeverity) {
     case VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
         qCDebug(KWIN_VULKAN) << "Vulkan validation (verbose):" << pCallbackData->pMessage;
