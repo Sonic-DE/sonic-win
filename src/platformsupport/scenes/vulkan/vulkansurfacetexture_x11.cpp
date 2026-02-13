@@ -447,61 +447,17 @@ void VulkanSurfaceTextureX11::update(const QRegion &region)
                          << "pixmap size:" << m_pixmap->size();
 
     if (m_useDmaBuf) {
-        // For DMA-BUF, we need to issue an external memory acquire barrier
-        // to ensure the GPU sees the updated content from X server
+        // Queue external memory acquire barriers for batched submission at frame start
+        for (int planeIdx = 0; planeIdx < m_texture.planes.size(); planeIdx++) {
+            VulkanTexture *plane = m_texture.planes[planeIdx].get();
+            VkImageLayout oldLayout = plane->currentLayout();
+            VkImageLayout newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 
-        qCDebug(KWIN_VULKAN) << "VulkanSurfaceTextureX11::update - DMA-BUF path - zero-copy update";
-        qCDebug(KWIN_VULKAN) << "  - Update region:" << region.boundingRect();
-        qCDebug(KWIN_VULKAN) << "  - Region count:" << region.rectCount();
-        qCDebug(KWIN_VULKAN) << "  - Plane count:" << m_texture.planes.size();
-
-        // Log detailed information about the DMA-BUF texture
-        if (m_texture.isValid() && !m_texture.planes.isEmpty()) {
-            // Issue external memory acquire barriers for all planes
-            // This ensures the GPU sees the updated content from the X server
-            VkCommandBuffer cmd = m_context->beginSingleTimeCommands();
-
-            for (int planeIdx = 0; planeIdx < m_texture.planes.size(); planeIdx++) {
-                VulkanTexture *plane = m_texture.planes[planeIdx].get();
-                qCDebug(KWIN_VULKAN) << "  - Plane" << planeIdx << ":";
-                qCDebug(KWIN_VULKAN) << "    * Texture valid:" << plane->isValid();
-                qCDebug(KWIN_VULKAN) << "    * Current layout:" << plane->currentLayout();
-                qCDebug(KWIN_VULKAN) << "    * Image:" << plane->image();
-                qCDebug(KWIN_VULKAN) << "    * Image view:" << plane->imageView();
-                qCDebug(KWIN_VULKAN) << "    * Texture size:" << plane->size();
-
-                VkImageMemoryBarrier barrier{};
-                barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-                barrier.oldLayout = plane->currentLayout();
-                barrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-                barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-                barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-                barrier.image = plane->image();
-                barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-                barrier.subresourceRange.baseMipLevel = 0;
-                barrier.subresourceRange.levelCount = 1;
-                barrier.subresourceRange.baseArrayLayer = 0;
-                barrier.subresourceRange.layerCount = 1;
-                // External memory acquire: no prior Vulkan access to flush
-                barrier.srcAccessMask = 0;
-                barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
-
-                vkCmdPipelineBarrier(cmd,
-                                     VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                     VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
-                                     0,
-                                     0, nullptr,
-                                     0, nullptr,
-                                     1, &barrier);
-
-                // Track the new layout after the barrier
-                plane->setCurrentLayout(VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
-
-                qCDebug(KWIN_VULKAN) << "    * Issued external memory acquire barrier";
+            // Only queue barrier if layout transition is needed
+            if (oldLayout != newLayout) {
+                m_context->queueDmaBufBarrier(plane->image(), oldLayout, newLayout);
+                plane->setCurrentLayout(newLayout);
             }
-
-            m_context->endSingleTimeCommands(cmd);
-            qCDebug(KWIN_VULKAN) << "  - Memory synchronization complete for" << m_texture.planes.size() << "planes";
         }
 
         return;

@@ -86,6 +86,22 @@ public:
     VulkanBuffer *streamingBuffer() const;
 
     /**
+     * @brief Queue a DMA-BUF image barrier to be issued at frame start.
+     *
+     * Instead of immediately submitting barriers (which causes vkQueueWaitIdle per texture),
+     * this batches all barriers and issues them together in flushPendingDmaBufBarriers().
+     */
+    void queueDmaBufBarrier(VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout);
+
+    /**
+     * @brief Issue all pending DMA-BUF barriers into the given command buffer.
+     *
+     * This should be called once per frame, after beginFrame() but before beginRenderPass().
+     * Collapses all per-texture barriers into a single vkCmdPipelineBarrier call.
+     */
+    void flushPendingDmaBufBarriers(VkCommandBuffer commandBuffer);
+
+    /**
      * @brief Allocate a primary command buffer from the command pool.
      */
     VkCommandBuffer allocateCommandBuffer();
@@ -275,6 +291,15 @@ private:
         VkFence fence;
     };
     QVector<PendingBufferDestruction> m_pendingBufferDestructions;
+
+    // Pending DMA-BUF image barriers (batched for single vkCmdPipelineBarrier per frame)
+    struct PendingDmaBufBarrier
+    {
+        VkImage image;
+        VkImageLayout oldLayout;
+        VkImageLayout newLayout;
+    };
+    QVector<PendingDmaBufBarrier> m_pendingDmaBufBarriers;
 
     static VulkanContext *s_currentContext;
 };

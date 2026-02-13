@@ -151,6 +151,9 @@ void ItemRendererVulkan::beginFrame(const RenderTarget &renderTarget, const Rend
         projLogCount++;
     }
 
+    // Flush any pending DMA-BUF barriers before beginning the render pass
+    m_context->flushPendingDmaBufBarriers(m_currentCommandBuffer);
+
     // Begin render pass if we have a framebuffer
     if (m_currentFramebuffer) {
         // Set up clear values
