@@ -299,8 +299,8 @@ void ItemRendererVulkan::endFrame()
         // m_outputsInFlight reaches 0. This avoids CPU stalls from vkDeviceWaitIdle.
         m_frameDescriptorSets.clear();
     } else {
-        qCDebug(KWIN_CORE) << "Using fallback path: no swapchain semaphores, use blocking synchronization";
-        // Fallback: no swapchain semaphores, use blocking synchronization
+        qCDebug(KWIN_CORE) << "Using fallback path: no swapchain semaphores, use non-blocking synchronization";
+        // Fallback: no swapchain semaphores, use non-blocking synchronization
         // This path is used for:
         // - Rendering to offscreen textures
         // - Backends without proper semaphore support
@@ -318,8 +318,6 @@ void ItemRendererVulkan::endFrame()
                             }
                         }
                         qCDebug(KWIN_CORE) << "ItemRendererVulkan::endFrame() - non-blocking sync with export fence";
-                    } else {
-                        vkWaitForFences(m_backend->device(), 1, &exportableFence, VK_TRUE, UINT64_MAX);
                     }
                     m_releasePoints.clear();
                     vkDestroyFence(m_backend->device(), exportableFence, nullptr);
@@ -332,7 +330,7 @@ void ItemRendererVulkan::endFrame()
             }
         }
 
-        // Final fallback: blocking synchronization
+        // Non-blocking fallback: submit without waiting
         VkFence fence = m_context->getOrCreateFence();
         vkResetFences(m_backend->device(), 1, &fence);
 
@@ -344,22 +342,14 @@ void ItemRendererVulkan::endFrame()
             m_currentSyncInfo = VulkanSyncInfo{};
             return;
         }
-        qCDebug(KWIN_CORE) << "Successfully submitted command buffer with export fence";
-
-        // Wait for the frame to complete
-        vkWaitForFences(m_backend->device(), 1, &fence, VK_TRUE, UINT64_MAX);
+        qCDebug(KWIN_CORE) << "Successfully submitted command buffer without blocking";
         m_releasePoints.clear();
 
-        qCDebug(KWIN_CORE) << "ItemRendererVulkan::endFrame() - blocking sync (fallback)";
+        qCDebug(KWIN_CORE) << "ItemRendererVulkan::endFrame() - non-blocking sync (optimized fallback)";
 
-        // Free descriptor sets now that GPU is done with them
-        if (!m_frameDescriptorSets.empty()) {
-            vkFreeDescriptorSets(m_backend->device(), m_context->descriptorPool(),
-                                 static_cast<uint32_t>(m_frameDescriptorSets.size()),
-                                 m_frameDescriptorSets.data());
-            qCDebug(KWIN_VULKAN) << "Freed" << m_frameDescriptorSets.size() << "descriptor sets";
-            m_frameDescriptorSets.clear();
-        }
+        // Descriptor sets will be freed when the descriptor pool is reset at the start
+        // of the next frame (when m_outputsInFlight reaches 0), avoiding CPU stalls
+        m_frameDescriptorSets.clear();
     }
 
     m_currentCommandBuffer = VK_NULL_HANDLE;
