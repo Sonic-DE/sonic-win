@@ -388,6 +388,51 @@ void VulkanContext::resetDescriptorPool()
     }
 }
 
+void VulkanContext::queueDmaBufBarrier(VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout)
+{
+    m_pendingDmaBufBarriers.append({image, oldLayout, newLayout});
+}
+
+void VulkanContext::flushPendingDmaBufBarriers(VkCommandBuffer commandBuffer)
+{
+    if (m_pendingDmaBufBarriers.isEmpty()) {
+        return;
+    }
+
+    QVector<VkImageMemoryBarrier> barriers;
+    barriers.reserve(m_pendingDmaBufBarriers.size());
+
+    for (const auto &pending : m_pendingDmaBufBarriers) {
+        VkImageMemoryBarrier barrier{};
+        barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+        barrier.oldLayout = pending.oldLayout;
+        barrier.newLayout = pending.newLayout;
+        barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+        barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+        barrier.image = pending.image;
+        barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+        barrier.subresourceRange.baseMipLevel = 0;
+        barrier.subresourceRange.levelCount = 1;
+        barrier.subresourceRange.baseArrayLayer = 0;
+        barrier.subresourceRange.layerCount = 1;
+        // External memory acquire: no prior Vulkan access to flush
+        barrier.srcAccessMask = 0;
+        barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+
+        barriers.append(barrier);
+    }
+
+    vkCmdPipelineBarrier(commandBuffer,
+                         VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                         VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
+                         0,
+                         0, nullptr,
+                         0, nullptr,
+                         barriers.size(), barriers.data());
+
+    m_pendingDmaBufBarriers.clear();
+}
+
 void VulkanContext::queueSamplerForDestruction(VkSampler sampler)
 {
     if (sampler == VK_NULL_HANDLE) {
