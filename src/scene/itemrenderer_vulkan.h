@@ -107,6 +107,15 @@ public:
         return m_context;
     }
 
+    /**
+     * Returns the current Vulkan command buffer being used for rendering.
+     * This is valid only during a frame (between beginFrame and endFrame).
+     */
+    VkCommandBuffer currentCommandBuffer() const
+    {
+        return m_currentCommandBuffer;
+    }
+
 private:
     QVector4D modulate(float opacity, float brightness) const;
     void createRenderNode(Item *item, RenderContext *context);
