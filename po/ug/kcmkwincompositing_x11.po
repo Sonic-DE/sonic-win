@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: kcmkwincompositing\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2011-05-09 19:00+0900\n"
-"Last-Translator: Sahran <sahran@live.com>\n"
+"PO-Revision-Date: 2026-02-17 23:26-0500\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.8\n"
 
 #. i18n: ectx: property (text), widget (KMessageWidget, glCrashedWarning)
 #: compositing.ui:31
@@ -27,6 +28,12 @@ msgid ""
 "you can reset this protection but be aware that this might result in an "
 "immediate crash!"
 msgstr ""
+"OpenGL شەكىللەندۈرۈش ھالىتى (كۆڭۈلدىكى تەڭشەك) KWin نىڭ يىمىرىلىشىنى "
+"كەلتۈرۈپ چىقارغان.\n"
+"بۇ ئادەتتە ئىلگىرىكى قوزغاتقۇ كەمتۈكلۈك سەۋەبىدىندۇر.\n"
+"ئەگەر قوزغاتقۇ مۇقىم نەشرىگە ئۆرلىتىلسە،\n"
+"بۇ قوغداشنى ئەسلىگە قايتۇرغىلى بولىدۇ ئەمما\n"
+"بۇنىڭ دەرھال يىمىرىلىشنى كەلتۈرۈپ چىقىرىدىغانلىقىنى ئۇنتۇماڭ!"
 
 #. i18n: ectx: property (text), widget (KMessageWidget, windowThumbnailWarning)
 #: compositing.ui:47
@@ -35,19 +42,21 @@ msgid ""
 "Keeping the window thumbnail always interferes with the minimized state of "
 "windows. This can result in windows not suspending their work when minimized."
 msgstr ""
+"كۆزنەك كىچىك كۆرۈنۈش ئىقتىدارىنى قوزغىتىش كۆزنەكنىڭ ئەڭ كىچىك ھالىتىگە تەسىر "
+"كۆرسىتىدۇ. بەلكىم كىچىكلىتىلگەن كۆزنەكنىڭ ۋاقتىنچە ئىشلىمەسلىكىنى كەلتۈرۈپ "
+"چىقىرىشى مۇمكىن."
 
 #. i18n: ectx: property (text), widget (QLabel, compositingLabel)
 #: compositing.ui:62
-#, fuzzy, kde-format
-#| msgid "kcmkwincompositing"
+#, kde-format
 msgid "Compositing:"
-msgstr "kcmkwincompositing"
+msgstr "كىرىشتۈرۈش:"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_Enabled)
 #: compositing.ui:69
 #, kde-format
 msgid "Enable on startup"
-msgstr ""
+msgstr "قوزغالغاندا قوزغىتىدۇ"
 
 #. i18n: ectx: property (toolTip), widget (QCheckBox, kcfg_WindowsBlockCompositing)
 #: compositing.ui:78
@@ -57,24 +66,25 @@ msgid ""
 " This brings performance improvements for e.g. games.\n"
 " The setting can be overruled by window-specific rules."
 msgstr ""
+"پىروگرامما كۆزنەك ئېچىلغاندا ئەسكەرتىش تەڭشەپ بىرىكتۈرۈشنى توسالايدۇ.\n"
+"بۇ تەڭشەك ئويۇن قاتارلىق پىروگراممىلارنىڭ ئۈنۈمىنى ياخشىلايدۇ.\n"
+"بۇ تەڭشەكنى كۆزنەكنىڭ مۇئەييەن قائىدىسى قاپلىۋېتەلەيدۇ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_WindowsBlockCompositing)
 #: compositing.ui:81
 #, kde-format
 msgid "Allow applications to block compositing"
-msgstr ""
+msgstr "پىروگراممىنىڭ بىرىكتۈرۈشنى توسۇشىغا يول قويىدۇ"
 
 #. i18n: ectx: property (text), widget (QLabel, animationSpeedLabel)
 #: compositing.ui:88
-#, fuzzy, kde-format
-#| msgid "Animation speed:"
+#, kde-format
 msgid "Animation speed:"
 msgstr "جانلاندۇرۇم تېزلىكى:"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: compositing.ui:125
-#, fuzzy, kde-format
-#| msgid "Very Slow"
+#, kde-format
 msgid "Very slow"
 msgstr "بەك ئاستا"
 
@@ -88,15 +98,11 @@ msgstr "ھازىر ئىزدە"
 #: compositing.ui:157
 #, kde-format
 msgid "Keep window thumbnails:"
-msgstr ""
+msgstr "كۆزنەك كىچىك سۈرىتىنى ساقلاپ قالىدۇ:"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HiddenPreviews)
 #: compositing.ui:165
-#, fuzzy, kde-format
-#| msgctxt ""
-#| "Windows are unmapped as they are requested. This can lead to not having "
-#| "updated thumbnials for windows on other desktops."
-#| msgid "Never"
+#, kde-format
 msgid "Never"
 msgstr "ھەرگىز"
 
@@ -104,20 +110,19 @@ msgstr "ھەرگىز"
 #: compositing.ui:170
 #, kde-format
 msgid "Only for Shown Windows"
-msgstr ""
+msgstr "كۆرۈنگەن كۆزنەككىلا"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_HiddenPreviews)
 #: compositing.ui:175
 #, kde-format
 msgid "Always"
-msgstr ""
+msgstr "ھەمىشە"
 
 #: main.cpp:77
 #, kde-format
 msgid "Re-enable OpenGL detection"
-msgstr ""
+msgstr "OpenGL بايقاشنى قايتا قوزغىتىدۇ"
 
-#, fuzzy
 #~| msgid "Various animations"
 #~ msgid "Force smoothest animations"
 #~ msgstr "ھەرخىل جانلاندۇرۇملار"
@@ -125,12 +130,10 @@ msgstr ""
 #~ msgid "Smooth"
 #~ msgstr "سىلىق"
 
-#, fuzzy
 #~| msgid "OpenGL"
 #~ msgid "OpenGL 3.1"
 #~ msgstr "OpenGL"
 
-#, fuzzy
 #~| msgid "OpenGL"
 #~ msgid "OpenGL 2.0"
 #~ msgstr "OpenGL"
@@ -138,7 +141,6 @@ msgstr ""
 #~ msgid "XRender"
 #~ msgstr "XRender"
 
-#, fuzzy
 #~| msgid "No Effect"
 #~ msgid "Get New Desktop Effects..."
 #~ msgstr "ئۈنۈم يوق"
@@ -151,37 +153,31 @@ msgstr ""
 #~ msgid "Your emails"
 #~ msgstr "sahran.ug@gmail.com,  gheyret@gmail.com"
 
-#, fuzzy
 #~| msgid "Accessibility"
 #~ msgctxt "Category of Desktop Effects, used as section header"
 #~ msgid "Accessibility"
 #~ msgstr "قوشۇمچە ئىقتىدار"
 
-#, fuzzy
 #~| msgid "Appearance"
 #~ msgctxt "Category of Desktop Effects, used as section header"
 #~ msgid "Appearance"
 #~ msgstr "كۆرۈنۈشى"
 
-#, fuzzy
 #~| msgid "Focus"
 #~ msgctxt "Category of Desktop Effects, used as section header"
 #~ msgid "Focus"
 #~ msgstr "فوكۇس"
 
-#, fuzzy
 #~| msgid "Tools"
 #~ msgctxt "Category of Desktop Effects, used as section header"
 #~ msgid "Tools"
 #~ msgstr "قوراللار"
 
-#, fuzzy
 #~| msgid "Window Management"
 #~ msgctxt "Category of Desktop Effects, used as section header"
 #~ msgid "Window Management"
 #~ msgstr "كۆزنەك باشقۇرۇش"
 
-#, fuzzy
 #~| msgid "Animation speed:"
 #~ msgid "Animation Speed:"
 #~ msgstr "جانلاندۇرۇم تېزلىكى:"
@@ -202,7 +198,6 @@ msgstr ""
 #~ msgid "Rivo Laks"
 #~ msgstr "Rivo Laks"
 
-#, fuzzy
 #~| msgid "No Effect"
 #~ msgid "No effect"
 #~ msgstr "ئۈنۈم يوق"
@@ -243,7 +238,6 @@ msgstr ""
 #~ msgid "General Options"
 #~ msgstr "ئادەتتىكى تاللانمىلار"
 
-#, fuzzy
 #~| msgid "OpenGL"
 #~ msgid "OpenGL 1.2"
 #~ msgstr "OpenGL"

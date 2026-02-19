@@ -8,28 +8,28 @@ msgstr ""
 "Project-Id-Version: kcmkwm\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2013-09-08 07:05+0900\n"
-"Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
+"PO-Revision-Date: 2026-02-17 23:26-0500\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.8\n"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_1)
 #: actions.ui:20
-#, fuzzy, kde-format
-#| msgid "Inactive Inner Window"
+#, kde-format
 msgid "Inactive Inner Window Actions"
-msgstr "پاسسىپ ئىچكى كۆزنەك"
+msgstr "پاسسىپ ئىچكى كۆزنەك مەشغۇلاتى"
 
 #. i18n: ectx: property (text), widget (QLabel, label_1)
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: actions.ui:29 mouse.ui:183
 #, kde-format
 msgid "&Left click:"
-msgstr ""
+msgstr "سول چېكىش(&L):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindow1)
 #: actions.ui:44
@@ -39,33 +39,30 @@ msgid ""
 "inactive inner window ('inner' means: not titlebar, not frame)."
 msgstr ""
 "بۇ يەردە، پاسسىپ ئىچكى كۆزنەك ئۈستىدە چاشقىنەكنىڭ سول توپچىسىنى چەككەندىكى "
-"ئىش-ھەرىكەتلەرنى ئۆزلەشتۈرگىلى بولىدۇ(«ئىچكى» دېگىنىمىز، ماۋزۇ بالدىقى ۋە "
-"كاندۇكى يوق دېگەن مەنىدە)."
+"قىلمىشىنى ئۆزلەشتۈرگىلى بولىدۇ(«ئىچكى» دېگىنىمىز، ماۋزۇ بالدىقى ۋە كاندۇكى "
+"يوق دېگەن مەنىدە)."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
 #: actions.ui:48
-#, fuzzy, kde-format
-#| msgid "Activate & Raise"
+#, kde-format
 msgid "Activate, pass click and raise on release"
-msgstr "ئاكتىپلا ۋە ئۆرلەت"
+msgstr "ئاكتىپلاپ، چېكىلىشنى يەتكۈزۈپ ۋە قويۇپ بەرگەندە ئۈستىگە ئۆرلىتىدۇ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow3)
 #: actions.ui:53 actions.ui:102 actions.ui:142
-#, fuzzy, kde-format
-#| msgid "Activate, Raise & Scroll"
+#, kde-format
 msgid "Activate, raise and pass click"
-msgstr "ئاكتىپلا، ئۆرلەت ۋە چۆرگىلەت"
+msgstr "ئاكتىپلاپ، ئۆرلىتىپ، چېكىلىشنى يەتكۈزىدۇ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow3)
 #: actions.ui:58 actions.ui:107 actions.ui:147
-#, fuzzy, kde-format
-#| msgid "Activate & Raise"
+#, kde-format
 msgid "Activate and pass click"
-msgstr "ئاكتىپلا ۋە ئۆرلەت"
+msgstr "ئاكتىپلاپ ۋە چېكىلىشنى يەتكۈزىدۇ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
@@ -87,8 +84,7 @@ msgstr "ئاكتىپلا"
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:68 actions.ui:117 actions.ui:157 mouse.ui:289 mouse.ui:404
 #: mouse.ui:519
-#, fuzzy, kde-format
-#| msgid "Activate & Raise"
+#, kde-format
 msgid "Activate and raise"
 msgstr "ئاكتىپلا ۋە ئۆرلەت"
 
@@ -99,13 +95,16 @@ msgid ""
 "Note that \"Activate, pass click and raise on release\" doesn't work on X11, "
 "and falls back to \"Activate, raise and pass click\" instead"
 msgstr ""
+"دىققەت «ئاكتىپلاپ، چېكىلىشنى يەتكۈزۈپ ۋە قويۇپ بەرگەندە ئۈستىگە ئۆرلىتىدۇ» "
+"X11 دا ئىشلىمەيدۇ ۋە ئۇنىڭ ئورنىغا «ئاكتىپلاپ، ئۆرلىتىپ، چېكىلىشنى "
+"يەتكۈزىدۇ» غا قايتىدۇ"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: actions.ui:85 mouse.ui:206
 #, kde-format
 msgid "&Middle click:"
-msgstr ""
+msgstr "ئوتتۇرا چېكىش(&M):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindow2)
 #: actions.ui:98
@@ -115,15 +114,15 @@ msgid ""
 "inactive inner window ('inner' means: not titlebar, not frame)."
 msgstr ""
 "بۇ يەردە، پاسسىپ ئىچكى كۆزنەك ئۈستىدە چاشقىنەكنىڭ ئوتتۇرا توپچىسىنى "
-"چەككەندىكى ئىش-ھەرىكەتلەرنى ئۆزلەشتۈرگىلى بولىدۇ(«ئىچكى» دېگىنىمىز، ماۋزۇ "
-"بالدىقى ۋە كاندۇكى يوق دېگەن مەنىدە)."
+"چەككەندىكى قىلمىشىنى ئۆزلەشتۈرگىلى بولىدۇ(«ئىچكى» دېگىنىمىز، ماۋزۇ بالدىقى "
+"ۋە كاندۇكى يوق دېگەن مەنىدە)."
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #: actions.ui:125 mouse.ui:219
 #, kde-format
 msgid "&Right click:"
-msgstr ""
+msgstr "ئوڭنى چېكىش(&R):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindow3)
 #: actions.ui:138
@@ -133,15 +132,15 @@ msgid ""
 "inactive inner window ('inner' means: not titlebar, not frame)."
 msgstr ""
 "بۇ يەردە، پاسسىپ ئىچكى كۆزنەك ئۈستىدە چاشقىنەكنىڭ ئوڭ توپچىسىنى چەككەندىكى "
-"ئىش-ھەرىكەتلەرنى ئۆزلەشتۈرگىلى بولىدۇ(«ئىچكى» دېگىنىمىز، ماۋزۇ بالدىقى ۋە "
-"كاندۇكى يوق دېگەن مەنىدە)."
+"قىلمىشىنى ئۆزلەشتۈرگىلى بولىدۇ(«ئىچكى» دېگىنىمىز، ماۋزۇ بالدىقى ۋە كاندۇكى "
+"يوق دېگەن مەنىدە)."
 
 #. i18n: ectx: property (text), widget (QLabel, label_4)
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #: actions.ui:165 mouse.ui:91
 #, kde-format
 msgid "Mouse &wheel:"
-msgstr ""
+msgstr "چاشقىنەك غالتىكى(&W):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:178
@@ -150,41 +149,39 @@ msgid ""
 "In this row you can customize behavior when scrolling into an inactive inner "
 "window ('inner' means: not titlebar, not frame)."
 msgstr ""
-"بۇ يەردە، پاسسىپ ئىچكى كۆزنەك ئۈستىدە چاشقىنەكنىڭ غالتىكىنى چۆرگىلەت ئىش-"
-"ھەرىكەتلەرنى ئۆزلەشتۈرگىلى بولىدۇ(«ئىچكى» دېگىنىمىز، ماۋزۇ بالدىقى ۋە "
-"كاندۇكى يوق دېگەن مەنىدە)."
+"بۇ يەردە، پاسسىپ ئىچكى كۆزنەك ئۈستىدە چاشقىنەكنىڭ غالتىكىنى چۆرگىلەت "
+"قىلمىشىنى ئۆزلەشتۈرگىلى بولىدۇ(«ئىچكى» دېگىنىمىز، ماۋزۇ بالدىقى ۋە كاندۇكى "
+"يوق دېگەن مەنىدە)."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:182
 #, kde-format
 msgid "Scroll"
-msgstr "چۆرگىلەت"
+msgstr "سىيرى"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:187
-#, fuzzy, kde-format
-#| msgid "Activate & Scroll"
+#, kde-format
 msgid "Activate and scroll"
-msgstr "ئاكتىپلا ۋە چۆرگىلەت"
+msgstr "ئاكتىپلاپ ۋە سىيرىيدۇ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:192
-#, fuzzy, kde-format
-#| msgid "Activate, Raise & Scroll"
+#, kde-format
 msgid "Activate, raise and scroll"
-msgstr "ئاكتىپلا، ئۆرلەت ۋە چۆرگىلەت"
+msgstr "ئاكتىپلاپ، ئۆرلىتىپ ۋە سىيرىيدۇ"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: actions.ui:206
 #, kde-format
 msgid "Inner Window, Titlebar and Frame Actions"
-msgstr ""
+msgstr "ئىچكى كۆزنەك، ماۋزۇ بالداق ۋە كاندۇك ھەرىكىتى"
 
 #. i18n: ectx: property (text), widget (QLabel, label_5)
 #: actions.ui:217
 #, kde-format
 msgid "Mo&difier key:"
-msgstr ""
+msgstr "بىرىكمە كۇنۇپكا(&D):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAllKey)
 #: actions.ui:227
@@ -210,17 +207,16 @@ msgstr "Alt"
 
 #. i18n: ectx: property (text), widget (QLabel, label_6)
 #: actions.ui:258
-#, fuzzy, kde-format
-#| msgid "   + "
+#, kde-format
 msgid "  + "
-msgstr "   + "
+msgstr "  + "
 
 #. i18n: ectx: property (text), widget (QLabel, label_7)
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: actions.ui:270 mouse.ui:617
 #, kde-format
 msgid "L&eft click:"
-msgstr ""
+msgstr "سولنى چېكىش(&E):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAll1)
 #: actions.ui:283
@@ -230,7 +226,7 @@ msgid ""
 "titlebar or the frame."
 msgstr ""
 "كۆزنەكنىڭ ماۋزۇ بالدىقى ياكى كاندۇكى ئۈستىدە چاشقىنەكنىڭ سول توپچىسىنى "
-"چەككەندىكى ئىش-ھەرىكەتلەرنى ئۆزلەشتۈرگىلى بولىدۇ."
+"چەككەندىكى قىلمىشىنى ئۆزلەشتۈرگىلى بولىدۇ."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
@@ -244,10 +240,9 @@ msgstr "يۆتكە"
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:292 actions.ui:362 actions.ui:432
-#, fuzzy, kde-format
-#| msgid "Activate, Raise & Scroll"
+#, kde-format
 msgid "Activate, raise and move"
-msgstr "ئاكتىپلا، ئۆرلەت ۋە چۆرگىلەت"
+msgstr "ئاكتىپلاپ، ئۆرلىتىپ ۋە يۆتكەيدۇ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
@@ -260,10 +255,9 @@ msgstr "ئاكتىپلا، ئۆرلەت ۋە چۆرگىلەت"
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:297 actions.ui:367 actions.ui:437 mouse.ui:252 mouse.ui:314
 #: mouse.ui:367 mouse.ui:429 mouse.ui:482 mouse.ui:544
-#, fuzzy, kde-format
-#| msgid "Toggle Raise & Lower"
+#, kde-format
 msgid "Toggle raise and lower"
-msgstr "ئۆرلىتىش ۋە تۆۋەنلىتىشنى ئالماشتۇر"
+msgstr "ئۆرلىتىش ۋە تۆۋەنلىتىشنى ئالماشتۇرىدۇ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
@@ -303,7 +297,7 @@ msgstr "ئۆرلەت"
 #: mouse.ui:309 mouse.ui:362 mouse.ui:424 mouse.ui:477 mouse.ui:539
 #, kde-format
 msgid "Lower"
-msgstr "تۆۋەنرەك"
+msgstr "تۆۋەنلەت"
 
 #. i18n: @item:inlistbox behavior on double click
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
@@ -326,19 +320,17 @@ msgstr "كىچىكلەت"
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:322 actions.ui:392 actions.ui:462
-#, fuzzy, kde-format
-#| msgid "Change Opacity"
+#, kde-format
 msgid "Decrease opacity"
-msgstr "غۇۋالىقىنى ئۆزگەرت"
+msgstr "تۇتۇقلۇقىنى تۆۋەنلىتىدۇ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:327 actions.ui:397 actions.ui:467
-#, fuzzy, kde-format
-#| msgid "Change Opacity"
+#, kde-format
 msgid "Increase opacity"
-msgstr "غۇۋالىقىنى ئۆزگەرت"
+msgstr "تۇتۇقلۇقىنى ئۆرلىتىدۇ"
 
 #. i18n: @item:inlistbox behavior on double click
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
@@ -357,16 +349,15 @@ msgstr "غۇۋالىقىنى ئۆزگەرت"
 #: actions.ui:332 actions.ui:402 actions.ui:472 actions.ui:527 advanced.ui:154
 #: mouse.ui:83 mouse.ui:135 mouse.ui:277 mouse.ui:339 mouse.ui:392 mouse.ui:454
 #: mouse.ui:507 mouse.ui:569
-#, fuzzy, kde-format
-#| msgid "Nothing"
+#, kde-format
 msgid "Do nothing"
-msgstr "يوق"
+msgstr "ھېچقانداق قىلما"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: actions.ui:340
 #, kde-format
 msgid "Middle &click:"
-msgstr ""
+msgstr "ئوتتۇرا چېكىش(&C):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAll2)
 #: actions.ui:353
@@ -376,14 +367,14 @@ msgid ""
 "titlebar or the frame."
 msgstr ""
 "كۆزنەكنىڭ ماۋزۇ بالدىقى ياكى كاندۇكى ئۈستىدە چاشقىنەكنىڭ ئوتتۇرا توپچىسىنى "
-"چەككەندىكى ئىش-ھەرىكەتلەرنى ئۆزلەشتۈرگىلى بولىدۇ."
+"چەككەندىكى قىلمىشىنى ئۆزلەشتۈرگىلى بولىدۇ."
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #. i18n: ectx: property (text), widget (QLabel, label_10)
 #: actions.ui:410 mouse.ui:687
 #, kde-format
 msgid "Right clic&k:"
-msgstr ""
+msgstr "ئوڭنى چېكىش(&K):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:423
@@ -393,13 +384,13 @@ msgid ""
 "titlebar or the frame."
 msgstr ""
 "كۆزنەكنىڭ ماۋزۇ بالدىقى ياكى كاندۇكى ئۈستىدە چاشقىنەكنىڭ ئوڭ توپچىسىنى "
-"چەككەندىكى ئىش-ھەرىكەتلەرنى ئۆزلەشتۈرگىلى بولىدۇ."
+"چەككەندىكى قىلمىشىنى ئۆزلەشتۈرگىلى بولىدۇ."
 
 #. i18n: ectx: property (text), widget (QLabel, label_10)
 #: actions.ui:480
 #, kde-format
 msgid "Mo&use wheel:"
-msgstr ""
+msgstr "چاشقىنەك غالتىكى(&U):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAllWheel)
 #: actions.ui:493
@@ -409,62 +400,55 @@ msgid ""
 "a window while pressing the modifier key."
 msgstr ""
 "بۇ يەردە، كۆزنەك ئىچىدە سۈپەتلىگۈچى كۇنۇپكىنى بېسىپ تۇرۇپ چاشقىنەكنىڭ "
-"غالتىكىنى چۆرگىلەتكەندىكى KDE نىڭ ئىش-ھەرىكەتلەرنى ئۆزلەشتۈرگىلى بولىدۇ."
+"غالتىكىنى چۆرگىلەتكەندىكى KDE نىڭ قىلمىشىنى ئۆزلەشتۈرگىلى بولىدۇ."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:497 mouse.ui:105
-#, fuzzy, kde-format
-#| msgid "Raise/Lower"
+#, kde-format
 msgid "Raise/lower"
 msgstr "ئۆرلەت/تۆۋەنلەت"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:502 mouse.ui:110
-#, fuzzy, kde-format
-#| msgid "Shade/Unshade"
+#, kde-format
 msgid "Shade/unshade"
-msgstr "سايىلىق/سايىسىز"
+msgstr "يىغ/ياي"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:507 mouse.ui:115
-#, fuzzy, kde-format
-#| msgid "Maximize/Restore"
+#, kde-format
 msgid "Maximize/restore"
 msgstr "چوڭايت/ئەسلىگە كەلتۈر"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:512 mouse.ui:120
-#, fuzzy, kde-format
-#| msgid "Keep Above/Below"
+#, kde-format
 msgid "Keep above/below"
 msgstr "ئەڭ ئۈستىدە/ئەڭ ئاستىدا"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:517 mouse.ui:125
-#, fuzzy, kde-format
-#| msgid "Move to Previous/Next Desktop"
+#, kde-format
 msgid "Move to previous/next desktop"
 msgstr "ئالدىنقى/كېيىنكى ئۈستەلئۈستىگە يۆتكە"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:522 mouse.ui:130
-#, fuzzy, kde-format
-#| msgid "Change Opacity"
+#, kde-format
 msgid "Change opacity"
-msgstr "غۇۋالىقىنى ئۆزگەرت"
+msgstr "تۇتۇقلۇقىنى ئۆزگەرت"
 
 #. i18n: ectx: property (text), widget (QLabel, shadeHoverLabel)
 #: advanced.ui:20
-#, fuzzy, kde-format
-#| msgid "Window Actio&ns"
+#, kde-format
 msgid "Window &unshading:"
-msgstr "كۆزنەك مەشغۇلاتلىرى(&N)"
+msgstr "كۆزنەكنى يېيىش(&U):"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_ShadeHover)
 #: advanced.ui:32
@@ -474,12 +458,15 @@ msgid ""
 "unshade automatically when the mouse pointer has been over the titlebar for "
 "some time.</p></body></html>"
 msgstr ""
+"<html dir = \"RTL\"><head/><body><p>ئەگەر بۇ تاللانما قوزغىتىلغان بولسا، "
+"چاشقىنەك نىشانلىغۇچ ماۋزۇ بالداقنىڭ ئۈستىدە ئازراق ۋاقىت تۇرغاندا يىغىلغان "
+"كۆزنەك ئۆزلۈكىدىن يېيىلىدۇ.</p></body></html>"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ShadeHover)
 #: advanced.ui:35
 #, kde-format
 msgid "On titlebar hover after:"
-msgstr ""
+msgstr "ماۋزۇ بالداقتا لەيلىتىلگەندىن كېيىن:"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_ShadeHoverInterval)
 #: advanced.ui:42
@@ -488,6 +475,8 @@ msgid ""
 "Sets the time in milliseconds before the window unshades when the mouse "
 "pointer goes over the shaded window."
 msgstr ""
+"چاشقىنەك نىشانلىغۇچ يىغىلغان كۆزنەكتە قانچە مىللىسېكۇنت لەيلەپ تۇرغاندىن "
+"كېيىن كۆزنەكنى يېيىشنى تەڭشەيدۇ ."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_DelayFocusInterval)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_AutoRaiseInterval)
@@ -499,10 +488,9 @@ msgstr " ms"
 
 #. i18n: ectx: property (text), widget (QLabel, windowPlacementLabel)
 #: advanced.ui:66
-#, fuzzy, kde-format
-#| msgid "&Placement:"
+#, kde-format
 msgid "Window &placement:"
-msgstr "ئورۇنلاشتۇرۇش(&P):"
+msgstr "كۆزنەك ۋە ئورۇنلاشتۇرۇش(&P):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_Placement)
 #: advanced.ui:76
@@ -532,19 +520,51 @@ msgid ""
 "\"><span style=\" font-style:italic;\">Under mouse</span> will place the "
 "window under the pointer</li></ul></body></html>"
 msgstr ""
+"<html dir = \"RTL\">\n"
+"<head/>\n"
+"<body>\n"
+"<p>كۆزنەك جايلاشتۇرۇش تەدبىرى بىر كۆزنەكنىڭ ئېكراننىڭ قەيەرىدە كۆرۈنۈشىنى "
+"بەلگىلەيدۇ.</p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-"
+"right: 0px; -qt-list-indent: 1;\">\n"
+"<li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">ئىدراكلىق</span> كۆزنەكنىڭ ئۆز ئارا دەستىلىنىشىنى ئەڭ تۆۋەن چەككە "
+"چۈشۈرىدۇ</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">ئەڭ چوڭ</span> بارلىق ئېكراننى ئەڭ چوڭ قىلىپ پۈتكۈل ئېكراننى "
+"تولدۇرۇشنى سىنايدۇ. سىز مۇئەييەن كۆزنەك تەڭشىكى ئارقىلىق تاللاپ تۇرۇپ بەزى "
+"كۆزنەكنىڭ جايلاشتۇرۇش ئۇسۇلىغا تەسىر كۆرسىتەلەيسىز.</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">تاسادىپىي</span> كۆزنەكنى تاسادىپىي ئورۇنغا جايلاشتۇرىدۇ</li><li "
+"style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">ئوتتۇرىدا</span> كۆزنەكنى ئېكراننىڭ ئوتتۇرىسىغا جايلاشتۇرىدۇ</"
+"li><li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">سول ئۈستى بۇلۇڭ</span> كۆزنەكنى سول ئۈستى بۇلۇڭغا جايلاشتۇرىدۇ</"
+"li>\n"
+"<li style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">چاشقىنەك ئاستى</span> كۆزنەكنى چاشقىنەك نۇر بەلگىسىنىڭ ئاستىغا "
+"جايلاشتۇرىدۇ</li>\n"
+"</ul>\n"
+"</body>\n"
+"</html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:80
 #, kde-format
 msgid "Minimal Overlapping"
-msgstr ""
+msgstr "ئەڭ كىچىك دەستىلەش"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:85
-#, fuzzy, kde-format
-#| msgid "Maximize"
+#, kde-format
 msgid "Maximized"
-msgstr "چوڭايت"
+msgstr "چوڭايتىلغان"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:90
@@ -562,12 +582,11 @@ msgstr "ئوتتۇرىدا"
 #: advanced.ui:100
 #, kde-format
 msgid "In Top-Left Corner"
-msgstr ""
+msgstr "سول ئۈستى بۇلۇڭ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:105
-#, fuzzy, kde-format
-#| msgid "Under Mouse"
+#, kde-format
 msgid "Under mouse"
 msgstr "چاشقىنەك ئاستىدا"
 
@@ -579,6 +598,9 @@ msgid ""
 "windows are allowed to do so. This will override the window placement mode "
 "defined above."
 msgstr ""
+"ئېچىلغاندا، قوللاش كۆزنىكىنىڭ ئورنىنى ئەستە تۇتىدىغان پىروگراممىنىڭ ئۇنىڭ "
+"كۆزنەك ئورنىنى ئەستە تۇتۇشىغا يول قويىدۇ. بۇ يۇقىرىدا بەلگىلەنگەن كۆزنەك "
+"جايلاشتۇرۇش ھالىتىنى قاپلىۋېتىدۇ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AllowKDEAppsToRememberWindowPositions)
 #: advanced.ui:116
@@ -586,18 +608,20 @@ msgstr ""
 msgid ""
 "Allow apps to remember the positions of their own windows, if they support it"
 msgstr ""
+"پىروگراممىنىڭ كۆزنەك ئورنىنى ئەستە تۇتۇشىغا يول قويىدۇ. ئەگەر پىروگرامما "
+"قوللىسا"
 
 #. i18n: ectx: property (text), widget (QLabel, activationDesktopPolicyLabel)
 #: advanced.ui:123
 #, kde-format
 msgid "Virtual Desktop behavior:"
-msgstr ""
+msgstr "مەۋھۇم ئۈستەلئۈستى قىلمىشى:"
 
 #. i18n: ectx: property (text), widget (QLabel, activationDesktopPolicyDescriptionLabel)
 #: advanced.ui:133
 #, kde-format
 msgid "When activating a window on a different Virtual Desktop:"
-msgstr ""
+msgstr "كۆزنەك پەرقلىق مەۋھۇم ئۈستەلئۈستىدىن ئاكتىپلانغاندا:"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_ActivationDesktopPolicy)
 #: advanced.ui:140
@@ -611,35 +635,54 @@ msgid ""
 "Virtual Desktop</span> will cause the window to jump to the active Virtual "
 "Desktop. </p></body></html>"
 msgstr ""
+"<html dir = \"RTL\">\n"
+"<head/>\n"
+"<body>\n"
+"<p>\n"
+"بۇ تەڭشەك نۆۋەتتىكى مەۋھۇم ئۈستەلئۈستى بولمىغان ئۈستەلئۈستىدە ئېچىلغان "
+"كۆزنەكنى ئاكتىپلاش قىلمىشىنى تىزگىنلەيدۇ. \n"
+"</p>\n"
+"<p>\n"
+"<span style=\" font-style:italic;\">شۇ مەۋھۇم ئۈستەلئۈستىگە ئالمىشىدۇ</span> "
+"نۆۋەتتە كۆزنەك مەۋجۇت بولغان مەۋھۇم ئۈستەلئۈستىگە ئالماشتۇرىدۇ. \n"
+"</p>\n"
+"<p>\n"
+"<span style=\" font-style:italic;\">كۆزنەكنى نۆۋەتتىكى مەۋھۇم ئۈتەلئۈستىگە "
+"يۆتكەيدۇ</span> نۆۋەتتىكى كۆزنەكنى ئاكتىپ ھالەتتىكى مەۋھۇم ئۈستەلئۈستىگە "
+"ئالماشتۇرىدۇ. \n"
+"</p>\n"
+"</body>\n"
+"</html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActivationDesktopPolicy)
 #: advanced.ui:144
 #, kde-format
 msgid "Switch to that Virtual Desktop"
-msgstr ""
+msgstr "شۇ مەۋھۇم ئۈستەلئۈستىگە ئالماشتۇر"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActivationDesktopPolicy)
 #: advanced.ui:149
 #, kde-format
 msgid "Bring window to current Virtual Desktop"
-msgstr ""
+msgstr "كۆزنەكنى نۆۋەتتىكى ئۈستەلئۈستىگە ئېلىپ كېلىدۇ"
 
 #. i18n: ectx: property (text), widget (QLabel, windowFocusPolicyLabel)
 #: focus.ui:22
 #, kde-format
 msgid "Window &activation policy:"
-msgstr ""
+msgstr "كۆزنەك ئاكتىپلاش تۈزۈمى:"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, windowFocusPolicy)
 #: focus.ui:32
 #, kde-format
 msgid "With this option you can specify how and when windows will be focused."
 msgstr ""
+"بۇ تاللانما ئارقىلىق كۆزنەكنىڭ فوكۇسقا قانداق ۋە قاچان ئېرىشىدىغانلىقىنى "
+"بەلگىلىيەلەيسىز."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, windowFocusPolicy)
 #: focus.ui:36
-#, fuzzy, kde-format
-#| msgid "Click to Focus"
+#, kde-format
 msgctxt "sassa asas"
 msgid "Click to focus"
 msgstr "چەكسە فوكۇسلىنىدۇ"
@@ -648,40 +691,37 @@ msgstr "چەكسە فوكۇسلىنىدۇ"
 #: focus.ui:41
 #, kde-format
 msgid "Click to focus (mouse precedence)"
-msgstr ""
+msgstr "چەكسە فوكۇسلىنىدۇ (چاشقىنەك ئالدىن)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, windowFocusPolicy)
 #: focus.ui:46
-#, fuzzy, kde-format
-#| msgid "Focus Follows Mouse"
+#, kde-format
 msgid "Focus follows mouse"
-msgstr "فوكۇس چاشقىنەككە ئەگەشسۇن"
+msgstr "فوكۇس چاشقىنەككە ئەگىشىدۇ"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, windowFocusPolicy)
 #: focus.ui:51
 #, kde-format
 msgid "Focus follows mouse (mouse precedence)"
-msgstr ""
+msgstr "فوكۇس چاشقىنەككە ئەگىشىدۇ (چاشقىنەك ئالدىن)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, windowFocusPolicy)
 #: focus.ui:56
-#, fuzzy, kde-format
-#| msgid "Focus Under Mouse"
+#, kde-format
 msgid "Focus under mouse"
-msgstr "فوكۇس چاشقىنەككە ئەگەشسۇن"
+msgstr "فوكۇس چاشقىنەكنىڭ ئاستىدا"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, windowFocusPolicy)
 #: focus.ui:61
-#, fuzzy, kde-format
-#| msgid "Focus Under Mouse"
+#, kde-format
 msgid "Focus strictly under mouse"
-msgstr "فوكۇس چاشقىنەككە ئەگەشسۇن"
+msgstr "فوكۇس كەسكىن ھالدا چاشقىنەكنىڭ ئاستىدا"
 
 #. i18n: ectx: property (text), widget (QLabel, delayFocusOnLabel)
 #: focus.ui:69
 #, kde-format
 msgid "&Delay focus by:"
-msgstr ""
+msgstr "فوكۇسنىڭ كېچىكىش ۋاقتى(&D):"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_DelayFocusInterval)
 #: focus.ui:82
@@ -690,12 +730,14 @@ msgid ""
 "This is the delay after which the window the mouse pointer is over will "
 "automatically receive focus."
 msgstr ""
+"چاشقىنەك نىشانلىغۇچىنى كۆزنەك ئۈستىگە يۆتكىگەندىن كېيىن، بەلگىلىك ۋاقىت "
+"ئۆتكۈزگەندىن كېيىن، كۆزنەك ئۆزلۈكىدىن فوكۇسلىنىدۇ."
 
 #. i18n: ectx: property (text), widget (QLabel, focusStealingLabel)
 #: focus.ui:101
 #, kde-format
 msgid "Focus &stealing prevention:"
-msgstr ""
+msgstr "فوكۇس تالىشىشتىن ساقلىنىش(&S):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:114
@@ -732,6 +774,55 @@ msgid ""
 "by default means their taskbar entry will be highlighted. This can be "
 "changed in the Notifications control module.</p></body></html>"
 msgstr ""
+"<html dir = \"RTL\">\n"
+"<head/>\n"
+"<body>\n"
+"<p>\n"
+"بۇ تاللانما تاسادىپىي ھالدا يېڭى كۆزنەك ئاكتىپلانغاندا KWin نىڭ كۈتۈلمىگەن "
+"ھالدا فوكۇسلاشنى تالىشىشنىڭ ئالدىنى ئېلىشنى بەلگىلەشكە ئىشلىتىلىدۇ. "
+"(ئەسكەرتىش: بۇ ئىقتىدار <span style=\" font-style:italic;\">فوكۇس "
+"چاشقىنەكنىڭ ئاستىدا</span> ياكى <span style=\" font-style:italic;\">فوكۇس "
+"كەسكىن ھالدا چاشقىنەكنىڭ ئاستىدا</span> غا ماس كەلمەيدۇ)\n"
+"</p>\n"
+"<ul style=\"margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-"
+"right: 0px; -qt-list-indent: 1;\"><li style=\" margin-top:12px; margin-"
+"bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-"
+"indent:0px;\"><span style=\" font-style:italic;\">يوق:</span> فوكۇس "
+"تالىشىشتىن ساقلىنىش مېخانىزمىنى تاقاپ، يېڭى كۆزنەكنى ھەمىشە ئاكتىپلايدۇ.\n"
+"</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">تۆۋەن:</span> فوكۇس تالىشىشتىن ساقلىنىش مېخانىزمىنى قوزغىتىدۇ؛ "
+"مەلۇم بىر كۆزنەك مەزكۇر مىخانىزنى قوللىمىسا ھەمدە شۇ كۆزنەكنىڭ ئاكتىپلانغان "
+"ياكى ئاكتىپلانمىغانلىقىنى ئېنىق بىلگىلى بولمىسا، ئۇ قوزغىتىلىدۇ. "
+"پىروگراممىنىڭ ئەمەلىي ئەھۋالى بۇ تاللانمىنىڭ ئىجرا قىلىنىشىغا تەسىر "
+"كۆرسىتىدۇ، بەلكىم ئوتتۇرا دەرىجىدىكى تاللانمىنىڭ ئۈنۈمىدىن ياخشىراق ياكى "
+"يامانراق بولۇشى مۇمكىن.\n"
+"</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">ئوتتۇراھال:</span> فوكۇس تالىشىشتىن ساقلىنىش مېخانىزمىنى "
+"قوزغىتىدۇ.\n"
+"</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">يۇقىرى:</span> پەقەت نۆۋەتتە ئاكتىپ كۆزەك بولمىغاندا ياكى يېڭى "
+"كۆزنەك نۆۋەتتىكى ئاكتىپ پىروگراممىغا تەۋە بولغاندا ئاندىن يېڭى كۆزنەكنى "
+"قوزغىتىدۇ. بۇ تاللانما چاشقىنەك فوكۇس تۈزۈمىنى ئىشلەتمىگەندە ئادەتتىكىدەك "
+"ئىشلىمەسلىكى مۇمكىن.\n"
+"</li>\n"
+"<li style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">پەۋقۇلئاددە يۇقىرى:</span> بارلىق كۆزنەكنى چوقۇم ئىشلەتكۈچى "
+"جەزملەپ قوزغىتىدۇ.\n"
+"</li>\n"
+"</ul>\n"
+"<p>فوكۇس تالىشىشتىن ساقلىنىش قوزغىتىلغان كۆزنەككە دىققەت قىلىشقا تېگىشلىك "
+"بەلگىسى سېلىنىپ، كۆڭۈلدىكى قىلمىشى ئۇنىڭ ۋەزىپە بالدىقىنى يورۇتۇپ "
+"كۆرسىتىشتۇر. بۇنى ئۇقتۇرۇش تىزگىن بۆلىكىدە تەڭشىگىلى بولىدۇ.\n"
+"</p>\n"
+"</body>\n"
+"</html>"
 
 #. i18n: Focus Stealing Prevention Level
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_BorderSnapZone)
@@ -769,13 +860,13 @@ msgstr "يۇقىرى"
 #: focus.ui:138
 #, kde-format
 msgid "Extreme"
-msgstr "ئىنتايىن يۇقىرى"
+msgstr "پەۋقۇلئاددە يۇقىرى"
 
 #. i18n: ectx: property (text), widget (QLabel, raisingWindowsLabel)
 #: focus.ui:146
 #, kde-format
 msgid "Raising windows:"
-msgstr ""
+msgstr "كۆزنەكنى ئۆرلەت:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_ClickRaise)
 #: focus.ui:153
@@ -785,13 +876,15 @@ msgid ""
 "when you click somewhere into the window contents. To change it for inactive "
 "windows, you need to change the settings in the Actions tab."
 msgstr ""
+"بۇ تاللانما قوزغىتىلغاندا، ئاكتىپلانغان كۆزنەكتىكى مەزمۇن چېكىلسە، شۇ كۆزنەك "
+"ئەڭ ئۈستىگە ئۆرلەيدۇ. پاسسىپ كۆزنەكنىڭ مۇناسىپ ئورنىنى ئۆزگەرتىشتە، مەشغۇلات "
+"بەتكۈچتە تەڭشىكىنى ئۆزگەرتىشىڭىز كېرەك."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ClickRaise)
 #: focus.ui:156
-#, fuzzy, kde-format
-#| msgid "C&lick raises active window"
+#, kde-format
 msgid "&Click raises active window"
-msgstr "چېكىپ ئاكتىپ كۆزنەكنى ئۆرلەت(&L)"
+msgstr "چېكىلسە ئاكتىپ كۆزنەك ئۆرلەيدۇ(&C)"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_AutoRaise)
 #: focus.ui:165
@@ -800,12 +893,15 @@ msgid ""
 "When this option is enabled, a window in the background will automatically "
 "come to the front when the mouse pointer has been over it for some time."
 msgstr ""
+"بۇ تاللانما قوزغىتىلغاندا، چاشقىنەك نىشانلىغۇچىنى ئارقا سۇپىدىكى كۆزنەك "
+"ئۈستىگە يۆتكەپ بەلگىلىك ۋاقىت ئۆتكەندىن كېيىن، كۆزنەك ئۆزلۈكىدىن ئەڭ ئالدىغا "
+"ئۆتىدۇ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AutoRaise)
 #: focus.ui:168
 #, kde-format
 msgid "&Raise on hover, delayed by:"
-msgstr ""
+msgstr "نىشانلاپ تۇرغاندا ئۈستىگە ئۆرلىتىشنىڭ كېچىكىش ۋاقتى(&R):"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_AutoRaiseInterval)
 #: focus.ui:178
@@ -814,12 +910,14 @@ msgid ""
 "This is the delay after which the window that the mouse pointer is over will "
 "automatically come to the front."
 msgstr ""
+"چاشقىنەك نىشانلىغۇچنى كۆزنەك ئۈستىگە يۆتكىگەندىن كېيىن، بەلگىلىك ۋاقىت "
+"ئۆتكۈزۈۋەتكەندە كۆزنەك ئۆزلۈكىدىن ئەڭ ئالدى تەرەپتە نامايان بولىدۇ."
 
 #. i18n: ectx: property (text), widget (QLabel, multiscreenBehaviorLabel)
 #: focus.ui:199
 #, kde-format
 msgid "Multiscreen behavior:"
-msgstr ""
+msgstr "كۆپ ئېكران قىلمىشى:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_SeparateScreenFocus)
 #: focus.ui:206
@@ -828,18 +926,20 @@ msgid ""
 "When this option is enabled, focus operations are limited only to the active "
 "screen"
 msgstr ""
+"بۇ تاللانما قوزغىتىلغاندا، فوكۇسلاش مەشغۇلاتى پەقەت ئاكتىپ ئېكران بىلەن "
+"چەكلىنىدۇ"
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SeparateScreenFocus)
 #: focus.ui:209
 #, kde-format
 msgid "&Separate screen focus"
-msgstr ""
+msgstr "ئېكران فوكۇسىنى ئايرىيدۇ(&S)"
 
 #. i18n: ectx: property (text), widget (QLabel, windowFocusPolicyDescriptionLabel)
 #: focus.ui:222
 #, kde-format
 msgid "Window activation policy description"
-msgstr ""
+msgstr "كۆزنەك ئاكتىپلاش تۈزۈمىنىڭ چۈشەندۈرۈشى"
 
 #: main.cpp:81
 #, kde-format
@@ -847,57 +947,52 @@ msgid "&Focus"
 msgstr "فوكۇس(&F)"
 
 #: main.cpp:86
-#, fuzzy, kde-format
-#| msgid "&Titlebar Actions"
+#, kde-format
 msgid "Titlebar A&ctions"
-msgstr "ماۋزۇ بالدىقى مەشغۇلاتلىرى(&T)"
+msgstr "ماۋزۇ بالداق مەشغۇلاتى(&C)"
 
 #: main.cpp:91
-#, fuzzy, kde-format
-#| msgid "Window Actio&ns"
+#, kde-format
 msgid "W&indow Actions"
-msgstr "كۆزنەك مەشغۇلاتلىرى(&N)"
+msgstr "كۆزنەك مەشغۇلاتى(&I)"
 
 #: main.cpp:96
-#, fuzzy, kde-format
-#| msgid "&Placement:"
+#, kde-format
 msgid "Mo&vement"
-msgstr "ئورۇنلاشتۇرۇش(&P):"
+msgstr "يۆتكە(&V)"
 
 #: main.cpp:101
-#, fuzzy, kde-format
-#| msgid "Ad&vanced"
+#, kde-format
 msgid "Adva&nced"
-msgstr "ئالىي(&V)"
+msgstr "ئالىي(&N)"
 
 #: main.cpp:180
 #, kde-format
 msgid "&Titlebar Actions"
-msgstr "ماۋزۇ بالدىقى مەشغۇلاتلىرى(&T)"
+msgstr "ماۋزۇ بالداق مەشغۇلاتى(&T)"
 
 #: main.cpp:190
 #, kde-format
 msgid "Window Actio&ns"
-msgstr "كۆزنەك مەشغۇلاتلىرى(&N)"
+msgstr "كۆزنەك مەشغۇلاتى(&N)"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_1)
 #: mouse.ui:17
-#, fuzzy, kde-format
-#| msgid "&Titlebar Actions"
+#, kde-format
 msgid "Titlebar Actions"
-msgstr "ماۋزۇ بالدىقى مەشغۇلاتلىرى(&T)"
+msgstr "ماۋزۇ بالداق مەشغۇلاتى"
 
 #. i18n: ectx: property (text), widget (QLabel, label_1)
 #: mouse.ui:29
 #, kde-format
 msgid "&Double-click:"
-msgstr ""
+msgstr "قوش چېكىش(&D):"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
 #: mouse.ui:39
 #, kde-format
 msgid "Behavior on <em>double</em> click into the titlebar."
-msgstr "ماۋزۇ بالدىقى ئۇستىدىكى <em>قوش چېكىش</em> مەشغۇلاتى."
+msgstr "ماۋزۇ بالداق ئۈستىدىكى <em>قوش چېكىش</em> مەشغۇلاتى."
 
 #. i18n: @item:inlistbox behavior on double click
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
@@ -917,7 +1012,7 @@ msgstr "چوڭايت"
 #: mouse.ui:48 mouse.ui:636 mouse.ui:671 mouse.ui:706
 #, kde-format
 msgid "Vertically maximize"
-msgstr ""
+msgstr "بويىغا چوڭايت"
 
 #. i18n: @item:inlistbox behavior on double click
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
@@ -927,7 +1022,7 @@ msgstr ""
 #: mouse.ui:53 mouse.ui:641 mouse.ui:676 mouse.ui:711
 #, kde-format
 msgid "Horizontally maximize"
-msgstr ""
+msgstr "توغرىسىغا چوڭايت"
 
 #. i18n: @item:inlistbox behavior on double click
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
@@ -941,7 +1036,7 @@ msgstr ""
 #: mouse.ui:554
 #, kde-format
 msgid "Shade"
-msgstr "تۈرۈش"
+msgstr "يىغ"
 
 #. i18n: @item:inlistbox behavior on double click
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
@@ -960,24 +1055,21 @@ msgstr "ياپ"
 #. i18n: @item:inlistbox behavior on double click
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
 #: mouse.ui:78
-#, fuzzy, kde-format
-#| msgid "On All Desktops"
+#, kde-format
 msgid "Show on all desktops"
-msgstr "بارلىق ئۈستەلئۈستىلىرىدە"
+msgstr "بارلىق ئۈستەلئۈستىىدە كۆرسىتىدۇ"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: mouse.ui:101
-#, fuzzy, kde-format
-#| msgid "Behavior on <em>double</em> click into the titlebar."
+#, kde-format
 msgid "Behavior on <em>mouse wheel</em> scroll over the titlebar."
-msgstr "ماۋزۇ بالدىقى ئۇستىدىكى <em>قوش چېكىش</em> مەشغۇلاتى."
+msgstr "<em>چاشقىنەك غالتىكى</em> ماۋزۇ بالداق ئۈستىدە دومىلىغاندىكى مەشغۇلات."
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_2)
 #: mouse.ui:146
-#, fuzzy, kde-format
-#| msgid "&Titlebar Actions"
+#, kde-format
 msgid "Titlebar and Frame Actions"
-msgstr "ماۋزۇ بالدىقى مەشغۇلاتلىرى(&T)"
+msgstr "ماۋزۇ بالداق ۋە كاندۇك مەشغۇلاتى"
 
 #. i18n: ectx: property (text), widget (QLabel, label_3)
 #: mouse.ui:173
@@ -989,7 +1081,7 @@ msgstr "ئاكتىپ"
 #: mouse.ui:196
 #, kde-format
 msgid "Inactive"
-msgstr "ئاكتىپسىز"
+msgstr "پاسسىپ"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandActiveTitlebar1)
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandActiveTitlebar2)
@@ -1001,7 +1093,7 @@ msgid ""
 "em> window."
 msgstr ""
 "<em>ئاكتىپ كۆزنەك</em>نىڭ ماۋزۇ بالدىقى ياكى كاندۇكى ئۈستىدە چاشقىنەكنىڭ "
-"<em>سول</em> توپچىسىنى چەككەندىكى ئىش-ھەرىكەت."
+"<em>سول</em> توپچىسىنى چەككەندىكى  مەشغۇلات."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
@@ -1011,10 +1103,9 @@ msgstr ""
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:272 mouse.ui:334 mouse.ui:387 mouse.ui:449 mouse.ui:502
 #: mouse.ui:564
-#, fuzzy, kde-format
-#| msgid "Operations Menu"
+#, kde-format
 msgid "Show actions menu"
-msgstr "مەشغۇلات تىزىملىكى"
+msgstr "مەشغۇلات تىزىملىكىنى كۆرسىتىدۇ"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandInactiveTitlebar1)
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandInactiveTitlebar2)
@@ -1026,14 +1117,13 @@ msgid ""
 "<em>inactive</em> window."
 msgstr ""
 "<em>پاسسىپ كۆزنەك</em>نىڭ ماۋزۇ بالدىقى ياكى كاندۇكى ئۈستىدە چاشقىنەكنىڭ "
-"<em>سول</em> توپچىسىنى چەككەندىكى ئىش-ھەرىكەت."
+"<em>سول</em> توپچىسىنى چەككەندىكى مەشغۇلات."
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:294 mouse.ui:409 mouse.ui:524
-#, fuzzy, kde-format
-#| msgid "Activate & Lower"
+#, kde-format
 msgid "Activate and lower"
 msgstr "ئاكتىپلا ۋە تۆۋەنلەت"
 
@@ -1041,14 +1131,13 @@ msgstr "ئاكتىپلا ۋە تۆۋەنلەت"
 #: mouse.ui:577
 #, kde-format
 msgid "Maximize window by double clicking its frame"
-msgstr ""
+msgstr "كۆزنەكنىڭ كاندۇكى قوش چېكىلسە ئۇنى چوڭايتىدۇ"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: mouse.ui:602
-#, fuzzy, kde-format
-#| msgid "Maximize Button"
+#, kde-format
 msgid "Maximize Button Actions"
-msgstr "ئەڭ چوڭ قىلىش توپچىسى"
+msgstr "توپچە مەشغۇلاتىنى چوڭايتىدۇ"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, label_8)
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MaximizeButtonLeftClickCommand)
@@ -1057,7 +1146,7 @@ msgstr "ئەڭ چوڭ قىلىش توپچىسى"
 msgid "Behavior on <em>left</em> click onto the maximize button."
 msgstr ""
 "ئەڭ چوڭ قىلىش توپچىسى ئۈستىدە چاشقىنەكنىڭ <em>سول</em>توپچىسىنى چەككەندىكى "
-"ئىش-ھەرىكەت."
+"مەشغۇلات."
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, label_9)
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MaximizeButtonMiddleClickCommand)
@@ -1066,13 +1155,13 @@ msgstr ""
 msgid "Behavior on <em>middle</em> click onto the maximize button."
 msgstr ""
 "ئەڭ چوڭ قىلىش توپچىسى ئۈستىدە چاشقىنەكنىڭ <em>ئوتتۇرا</em>توپچىسىنى "
-"چەككەندىكى ئىش-ھەرىكەت."
+"چەككەندىكى مەشغۇلات."
 
 #. i18n: ectx: property (text), widget (QLabel, label_9)
 #: mouse.ui:652
 #, kde-format
 msgid "Middle c&lick:"
-msgstr ""
+msgstr "ئوتتۇرا چېكىش(&L):"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, label_10)
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MaximizeButtonRightClickCommand)
@@ -1081,13 +1170,13 @@ msgstr ""
 msgid "Behavior on <em>right</em> click onto the maximize button."
 msgstr ""
 "ئەڭ چوڭ قىلىش توپچىسى ئۈستىدە چاشقىنەكنىڭ <em>ئوڭ</em>توپچىسىنى چەككەندىكى "
-"ئىش-ھەرىكەت."
+"مەشغۇلات."
 
 #. i18n: ectx: property (text), widget (QLabel, borderSnapLabel)
 #: moving.ui:20
 #, kde-format
 msgid "Screen &edge snap zone:"
-msgstr ""
+msgstr "ئېكران گىرۋىكى تارتىشىش رايونى(&E):"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_BorderSnapZone)
 #: moving.ui:30
@@ -1096,21 +1185,23 @@ msgid ""
 "Here you can set the snap zone for screen edges, i.e. the 'strength' of the "
 "magnetic field which will make windows snap to the border when moved near it."
 msgstr ""
+"سىز كۆزنەك گىرۋىكىنىڭ تارتىشىش رايونىنى بەلگىلىسىڭىز بولىدۇ، بۇ ماگنىتلىق "
+"«تارتىشىش كۈچى» نىڭ ئىپادىسىگە ئوخشاش بولۇپ كۆزنەكنى يەنە بىر كۆزنەككە "
+"يېقىنلاشتۇرغاندا ئۇلار ئۆزئارا تارتىشىپ چاپلىشىدۇ."
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_BorderSnapZone)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_WindowSnapZone)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_CenterSnapZone)
 #: moving.ui:36 moving.ui:68 moving.ui:100
-#, fuzzy, kde-format
-#| msgid " pixel"
+#, kde-format
 msgid " px"
-msgstr " پىكسېللار"
+msgstr " px"
 
 #. i18n: ectx: property (text), widget (QLabel, windowSnapLabel)
 #: moving.ui:52
 #, kde-format
 msgid "&Window snap zone:"
-msgstr ""
+msgstr "كۆزنەك تارتىشىش رايونى(&W):"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_WindowSnapZone)
 #: moving.ui:62
@@ -1120,12 +1211,15 @@ msgid ""
 "magnetic field which will make windows snap to each other when they are "
 "moved near another window."
 msgstr ""
+"سىز كۆزنەكنىڭ تارتىشىش رايونىنى بەلگىلىسىڭىز بولىدۇ، بۇ ماگنىتلىق «تارتىشىش "
+"كۈچى» نىڭ ئىپادىسىگە ئوخشاش بولۇپ كۆزنەكنى يەنە بىر كۆزنەككە "
+"يېقىنلاشتۇرغاندا ئۇلار ئۆزئارا تارتىشىپ چاپلىشىدۇ."
 
 #. i18n: ectx: property (text), widget (QLabel, centerSnaplabel)
 #: moving.ui:84
 #, kde-format
 msgid "&Center snap zone:"
-msgstr ""
+msgstr "مەركىزى تارتىشىش رايونى(&C):"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_CenterSnapZone)
 #: moving.ui:94
@@ -1135,12 +1229,15 @@ msgid ""
 "the magnetic field which will make windows snap to the center of the screen "
 "when moved near it."
 msgstr ""
+"سىز كۆزنەكنىڭ مەركىزى تارتىشىش رايونىنى بەلگىلىسىڭىز بولىدۇ، بۇ ماگنىتلىق "
+"«تارتىشىش كۈچى» نىڭ ئىپادىسىگە ئوخشاش بولۇپ كۆزنەكنى يەنە بىر كۆزنەككە "
+"يېقىنلاشتۇرغاندا ئۇلار ئۆزئارا تارتىشىپ چاپلىشىدۇ."
 
 #. i18n: ectx: property (text), widget (QLabel, OverlapSnapLabel)
 #: moving.ui:113
 #, kde-format
 msgid "&Snap windows:"
-msgstr ""
+msgstr "كۆزنەك تارتىشىشى(&S):"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_SnapOnlyWhenOverlapping)
 #: moving.ui:123
@@ -1150,12 +1247,15 @@ msgid ""
 "them, i.e. they will not be snapped if the windows comes only near another "
 "window or border."
 msgstr ""
+"بۇ يەردە كۆزنەكنىڭ گىرۋەكلىرى ئۈستمۇ ئۈست چۈشكەندىلا ئۆزئارا تارتىشىپ "
+"چاپلىشىشنى بەلگىلىيەلەيسىز. ئەگەر كۆزنەك گەۋدىسى ياكى گىرۋىكى بىر بىرىگە "
+"يېقىن كەلگەندە ئۆزئارا تارتىشىپ چاپلاشمايدۇ."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SnapOnlyWhenOverlapping)
 #: moving.ui:126
 #, kde-format
 msgid "Only when overlapping"
-msgstr ""
+msgstr "پەقەت ئۈستمۇ ئۈست چۈشكەندە تارتىشىپ چاپلىشىدۇ"
 
 #: windows.cpp:92
 #, kde-format
@@ -1163,6 +1263,9 @@ msgid ""
 "<em>Click to focus:</em> A window becomes active when you click into it. "
 "This behavior is common on other operating systems and likely what you want."
 msgstr ""
+"<em>چېكىلسە فوكۇسلىنىدۇ:</em> كۆزنەك چېكىلگەندە فوكۇسلىنىدۇ. بۇ ھالەت باشقا "
+"مەشغۇلات سىستېمىلىرىدا كەڭرى قوللىنىلىدۇ ۋە بەلكىم سىزگە لازىملىق مەشغۇلات "
+"بولۇشى مۇمكىن."
 
 #: windows.cpp:95
 #, kde-format
@@ -1173,6 +1276,12 @@ msgid ""
 "preferred candidate. Unusual, but possible variant of <em>Click to focus</"
 "em>."
 msgstr ""
+"<em>چېكىلسە فوكۇسلىنىدۇ(چاشقىنەك ئالدىن ئويلىشىلىدۇ):</em> ئالاھازەل  "
+"<em>چېكىلسە فوكۇسلىنىدۇ</em> بىلەن ئوخشاش. ئەگەر ئاكتىپ كۆزنەكنى چوقۇم "
+"سىستېما تاللايدىغان بولسا (مەسىلەن، نۆۋەتتىكى ئاكتىپ كۆزنەك يېپىلغان بولسا)، "
+"چاشقىنەك نىشانلىغۇچنىڭ ئاستىدىكى كۆزنەك ئالدىن ئويلىشىلىدىغان نامزات بولىدۇ. "
+"ئۇ <em>چېكىلسە فوكۇسلىنىدۇ</em> ھالىتىنىڭ ئانچە كۆپ ئۇچرىمايدىغان ئەمما "
+"مەۋجۇت بولغان شالغۇت نەشرى."
 
 #: windows.cpp:98
 #, kde-format
@@ -1182,6 +1291,11 @@ msgid ""
 "<em>Focus stealing prevention</em> takes place as usual. Think as <em>Click "
 "to focus</em> just without having to actually click."
 msgstr ""
+"<em>فوكۇس چاشقىنەككە ئەگىشىدۇ:</em> چاشقىنەك نىشانلىغۇچنى كۆزنەكنىڭ ئۈستىگە "
+"يۆتكىگەندە شۇ كۆزنەكنى ئاكتىپلايدۇ. تاسادىپىي چاشقىنەك نىشانلىغۇچنىڭ ئاستىدا "
+"كۆرۈنگەن كۆزنەك فوكۇسلانمايدۇ. <em>فوكۇس تالىشىشتىن ساقلىنىش</em> "
+"ئادەتتىكىدەك كۈچكە ئىگە. بۇ ھالەتنى ئەمەلىيەتتە چېكىلمىسىمۇ <em>چېكىلسە "
+"فوكۇسلىنىدۇ</em> نىڭ شالغۇت نەشرى دەپ قارايدۇ."
 
 #: windows.cpp:101
 #, kde-format
@@ -1191,6 +1305,11 @@ msgid ""
 "closed) the window under the mouse is the preferred candidate. Choose this, "
 "if you want a hover controlled focus."
 msgstr ""
+"ئالاھازەل <em>فوكۇس چاشقىنەككە ئەگىشىدۇ</em> بىلەن ئوخشاش. ئەگەر ئاكتىپ "
+"كۆزنەكنى چوقۇم سىستېما تاللايدىغان بولسا (مەسىلەن، نۆۋەتتىكى ئاكتىپ كۆزنەك "
+"يېپىلغان بولسا)، چاشقىنەك نىشانلىغۇچنىڭ ئاستىدىكى كۆزنەك ئالدىن "
+"ئويلىشىلىدىغان نامزات بولىدۇ. ئەگەر چاشقىنەك نىشانلىغۇچنى توغرىلاپ تۇرغاندا "
+"فوكۇسلىنىدىغان قىلماقچى بولسىڭىز بۇ تاللانمىنى تاللاڭ."
 
 #: windows.cpp:104
 #, kde-format
@@ -1201,6 +1320,12 @@ msgid ""
 "not work. You very likely want to use <em>Focus follows mouse (mouse "
 "precedence)</em> instead!"
 msgstr ""
+"<em>فوكۇس چاشقىنەك ئاستىدا:</em> فوكۇس ھەمىشە چاشقىنەك نىشانلىغۇچنىڭ "
+"ئاستىدىكى كۆزنەكتە بولىدۇ.<br/><strong>ئاگاھلاندۇرۇش:</strong>  <em>فوكۇس "
+"تالىشىشتىن ساقلىنىش</em> بىلەن <em>ۋەزىپە ئالماشتۇرغۇچ (Alt+Tab)</em> بۇ "
+"تۈزۈم بىلەن توقۇنۇشسا، ئۇلار ئىشلىمەيدۇ. ئۇنىڭ ئورنىغا <em>فوكۇس چاشقىنەككە "
+"ئەگىشىدۇ (چاشقىنەك ئالدىن ئويلىشىلىدۇ)</em> نى ئىشلىتىشىڭىز ئېھتىمالغا بەك "
+"يېقىن!"
 
 #: windows.cpp:107
 #, kde-format
@@ -1212,6 +1337,13 @@ msgid ""
 "activation policy and will not work. You very likely want to use <em>Focus "
 "follows mouse (mouse precedence)</em> instead!"
 msgstr ""
+"<em>فوكۇس قەتئىي چاشقىنەك ئاستىدا:</em> فوكۇس ھەمىشە چاشقىنەك نىشانلىغۇچنىڭ "
+"ئاستىدىكى كۆزنەكتە بولىدۇ (چاشقىنەك نىشانلىغۇچ كۆزنەكتىن ئايرىلغاندا "
+"فوكۇسلاش قېلىپ قالمايدۇ) بۇ ئىلگىرىكىkwin باشقۇرالمايدىغان X11 مۇھىتىغا "
+"ئوخشايدۇ.<br/><strong>ئاگاھلاندۇرۇش:</strong>  <em>فوكۇس تالىشىشتىن "
+"ساقلىنىش</em> بىلەن <em>ۋەزىپە ئالماشتۇرغۇچ (Alt+Tab)</em> بۇ تۈزۈم بىلەن "
+"توقۇنۇشسا، ئۇلار ئىشلىمەيدۇ. ئۇنىڭ ئورنىغا <em>فوكۇس چاشقىنەككە ئەگىشىدۇ "
+"(چاشقىنەك ئالدىن ئويلىشىلىدۇ)</em> نى ئىشلىتىشىڭىز ئېھتىمالغا بەك يېقىن!"
 
 #~ msgctxt "NAME OF TRANSLATORS"
 #~ msgid "Your names"
@@ -1254,12 +1386,10 @@ msgstr ""
 #~ msgid "Matthias Hoelzer-Kluepfel"
 #~ msgstr "Matthias Hoelzer-Kluepfel"
 
-#, fuzzy
 #~| msgid "Cascade"
 #~ msgid "Cascaded"
 #~ msgstr "دەستىلە"
 
-#, fuzzy
 #~| msgid "Display content in &resizing windows"
 #~ msgid "Display when moving or resizing"
 #~ msgstr "چوڭلۇقى ئۆزگەرتىلىۋاتقان كۆزنەكلەردىكى مەزمۇننى كۆرسەت(&S)"
@@ -1276,7 +1406,6 @@ msgstr ""
 #~ msgid "Maximizing"
 #~ msgstr "چوڭايتىۋاتىدۇ"
 
-#, fuzzy
 #~| msgid "Window Actio&ns"
 #~ msgid "Window tabbing:"
 #~ msgstr "كۆزنەك مەشغۇلاتلىرى(&N)"
@@ -1288,7 +1417,6 @@ msgstr ""
 #~ "ئىناۋەتلىك بولغاندا، گۇرۇپپىغا يېڭىدىن ئاپتوماتىك قوشۇلغان كۆزنەك "
 #~ "بەتكۈچىگە ئالماشتۇرىدۇ."
 
-#, fuzzy
 #~| msgid "Switch to automatically grouped windows immediately"
 #~ msgid "&Switch to automatically grouped windows immediately"
 #~ msgstr "ئاپتوماتىك گۇرۇپپىلانغان كۆزنەكلەرگە ئالماشتۇر"
@@ -1297,7 +1425,6 @@ msgstr ""
 #~ msgstr ""
 #~ "ئىناۋەتلىك بولغاندا، ۋەزىپە بالدىقىدىكى پاسسىپ كۆزنەك بەتكۈچىنى يوشۇرىدۇ."
 
-#, fuzzy
 #~| msgid "Hide inactive window tabs from the taskbar"
 #~ msgid "&Hide inactive window tabs from the taskbar"
 #~ msgstr "ۋەزىپە بالدىقىدىكى پاسسىپ كۆزنەك بەتكۈچىنى يوشۇر"
