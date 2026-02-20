@@ -42,11 +42,9 @@ msgid "System Settings"
 msgstr ""
 
 #: layoutpreview.cpp:131
-#, fuzzy, kde-format
-#| msgctxt "An example Desktop Name"
-#| msgid "Desktop 1"
+#, kde-format
 msgid "Show Desktop"
-msgstr "Deasc 1"
+msgstr ""
 
 #: layoutpreview.cpp:161
 #, kde-format
@@ -83,10 +81,9 @@ msgstr "Ábhar"
 
 #. i18n: ectx: property (text), widget (QCheckBox, showDesktop)
 #: main.ui:41
-#, fuzzy, kde-format
-#| msgid "Include \"Show Desktop\" icon"
+#, kde-format
 msgid "Include \"Show Desktop\" entry"
-msgstr "Cuir deilbhín \"Taispeáin an Deasc\" san áireamh"
+msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, switchingModeCombo)
 #: main.ui:55
@@ -277,28 +274,24 @@ msgid "Walk Through Windows (Reverse)"
 msgstr "Céimnigh trí na Fuinneoga (ag cúlú)"
 
 #: shortcutsettings.cpp:133
-#, fuzzy, kde-format
-#| msgid "Walk Through Windows"
+#, kde-format
 msgid "Walk Through Windows of Current Application"
-msgstr "Céimnigh trí na Fuinneoga"
+msgstr ""
 
 #: shortcutsettings.cpp:134
-#, fuzzy, kde-format
-#| msgid "Walk Through Windows (Reverse)"
+#, kde-format
 msgid "Walk Through Windows of Current Application (Reverse)"
-msgstr "Céimnigh trí na Fuinneoga (ag cúlú)"
+msgstr ""
 
 #: shortcutsettings.cpp:136
-#, fuzzy, kde-format
-#| msgid "Walk Through Windows (Reverse)"
+#, kde-format
 msgid "Walk Through Windows Alternative"
-msgstr "Céimnigh trí na Fuinneoga (ag cúlú)"
+msgstr ""
 
 #: shortcutsettings.cpp:137
-#, fuzzy, kde-format
-#| msgid "Walk Through Windows (Reverse)"
+#, kde-format
 msgid "Walk Through Windows Alternative (Reverse)"
-msgstr "Céimnigh trí na Fuinneoga (ag cúlú)"
+msgstr ""
 
 #: shortcutsettings.cpp:138
 #, kde-format
@@ -306,119 +299,6 @@ msgid "Walk Through Windows of Current Application Alternative"
 msgstr ""
 
 #: shortcutsettings.cpp:139
-#, fuzzy, kde-format
-#| msgid "Walk Through Windows (Reverse)"
+#, kde-format
 msgid "Walk Through Windows of Current Application Alternative (Reverse)"
-msgstr "Céimnigh trí na Fuinneoga (ag cúlú)"
-
-#~ msgid "Outline selected window"
-#~ msgstr "Aibhsigh an fhuinneog roghnaithe"
-
-#~ msgid "Configure Layout"
-#~ msgstr "Cumraigh Leagan Amach"
-
-#~ msgctxt "NAME OF TRANSLATORS"
-#~ msgid "Your names"
-#~ msgstr "Kevin Scannell"
-
-#~ msgctxt "EMAIL OF TRANSLATORS"
-#~ msgid "Your emails"
-#~ msgstr "kscanne@gmail.com"
-
-#~ msgid "These settings are used by the \"Walk Through Windows\" actions."
-#~ msgstr ""
-#~ "Is iad na gníomhartha \"Céimigh trí na Fuinneoga\" a úsáideann na "
-#~ "socruithe seo."
-
-#~ msgid "Highlight selected window"
-#~ msgstr "Aibhsigh an fhuinneog roghnaithe"
-
-#~ msgid "Effect:"
-#~ msgstr "Maisíocht:"
-
-#~ msgid "Display list while switching"
-#~ msgstr "Taispeáin an liosta agus an fhuinneog á malairt"
-
-#~ msgctxt "Name for a window switcher layout showing live window thumbnails"
-#~ msgid "Thumbnails"
-#~ msgstr "Mionsamhlacha"
-
-#~ msgctxt "Name for a window switcher layout showing icon, name and desktop"
-#~ msgid "Informative"
-#~ msgstr "Faisnéiseach"
-
-#~ msgctxt "Name for a window switcher layout showing only icon and name"
-#~ msgid "Compact"
-#~ msgstr "Dlúth"
-
-#~ msgctxt "Name for a window switcher layout showing only the name"
-#~ msgid "Text"
-#~ msgstr "Téacs"
-
-#~ msgctxt "Name for a window switcher layout showing large icons"
-#~ msgid "Large Icons"
-#~ msgstr "Deilbhíní Móra"
-
-#~ msgctxt "Name for a window switcher layout showing small icons"
-#~ msgid "Small Icons"
-#~ msgstr "Deilbhíní Beaga"
-
-#~ msgid "No Effect"
-#~ msgstr "Gan Mhaisíocht"
-
-#~ msgid "Configure Layout..."
-#~ msgstr "Cumraigh Leagan Amach..."
-
-#~ msgid "Item Layout"
-#~ msgstr "Leagan Amach Míreanna"
-
-#~ msgid "Item layout:"
-#~ msgstr "Leagan amach míreanna:"
-
-#~ msgid "Layout:"
-#~ msgstr "Leagan Amach:"
-
-#~ msgid "Vertical"
-#~ msgstr "Ingearach"
-
-#~ msgid "Horizontal"
-#~ msgstr "Cothrománach"
-
-#~ msgid "Tabular"
-#~ msgstr "Táblach"
-
-#~ msgid "Width:"
-#~ msgstr "Leithead:"
-
-#~ msgid "Minimum width, as a percentage of screen width."
-#~ msgstr "Íosleithead, mar chéatadán de leithead an scáileáin."
-
-#~ msgid " %"
-#~ msgstr " %"
-
-#~ msgid "Height:"
-#~ msgstr "Airde:"
-
-#~ msgid "Minimum height, as a percentage of screen height."
-#~ msgstr "Íosairde, mar chéatadán d'airde an scáileáin."
-
-#~ msgid "Show Selected Item"
-#~ msgstr "Taispeáin an Mhír Roghnaithe"
-
-#~ msgid "Top"
-#~ msgstr "Barr"
-
-#~ msgid "Bottom"
-#~ msgstr "Bun"
-
-#~ msgid "Left"
-#~ msgstr "Ar Chlé"
-
-#~ msgid "Right"
-#~ msgstr "Ar Dheis"
-
-#~ msgid "Selected item layout:"
-#~ msgstr "Leagan amach na míre roghnaithe:"
-
-#~ msgid "General"
-#~ msgstr "Ginearálta"
+msgstr ""
