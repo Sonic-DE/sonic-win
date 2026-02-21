@@ -550,9 +550,8 @@ void X11Compositor::inhibit(Window *window)
     if (!(m_suspended & BlockRuleSuspend)) {
         QMetaObject::invokeMethod(
             this, [this]() {
-                suspend(BlockRuleSuspend);
-            },
-            Qt::QueuedConnection);
+            suspend(BlockRuleSuspend);
+        }, Qt::QueuedConnection);
     }
 }
 
@@ -566,9 +565,8 @@ void X11Compositor::uninhibit(Window *window)
             // Do NOT attempt to call suspend(false) from within the eventchain!
             QMetaObject::invokeMethod(
                 this, [this]() {
-                    resume(BlockRuleSuspend);
-                },
-                Qt::QueuedConnection);
+                resume(BlockRuleSuspend);
+            }, Qt::QueuedConnection);
         }
     }
 }
@@ -665,12 +663,12 @@ void X11Compositor::createOpenGLSafePoint(OpenGLSafePoint safePoint)
             connect(
                 m_openGLFreezeProtection.get(), &QTimer::timeout, m_openGLFreezeProtection.get(),
                 [configName] {
-                    auto group = KConfigGroup(KSharedConfig::openConfig(configName), QStringLiteral("Compositing"));
-                    group.writeEntry(QLatin1String("LastFailureTimestamp"), QDateTime::currentSecsSinceEpoch());
-                    group.sync();
-                    KCrash::setDrKonqiEnabled(false);
-                    qFatal("Freeze in OpenGL initialization detected");
-                },
+                auto group = KConfigGroup(KSharedConfig::openConfig(configName), QStringLiteral("Compositing"));
+                group.writeEntry(QLatin1String("LastFailureTimestamp"), QDateTime::currentSecsSinceEpoch());
+                group.sync();
+                KCrash::setDrKonqiEnabled(false);
+                qFatal("Freeze in OpenGL initialization detected");
+            },
                 Qt::DirectConnection);
         } else {
             Q_ASSERT(m_openGLFreezeProtection);
