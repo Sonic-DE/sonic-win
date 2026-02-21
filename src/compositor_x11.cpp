@@ -219,7 +219,7 @@ bool X11Compositor::attemptOpenGLCompositing()
 
     const QByteArray forceEnv = qgetenv("KWIN_COMPOSE");
     if (!forceEnv.isEmpty()) {
-        if (qstrcmp(forceEnv, "O2") == 0 || qstrcmp(forceEnv, "O2ES") == 0) {
+        if (qstrcmp(forceEnv, "O2") == 0 || qstrcmp(forceEnv, "O2ES") == 0 || qstrcmp(forceEnv, "O") == 0) {
             qCDebug(KWIN_CORE) << "OpenGL 2 compositing enforced by environment variable";
         } else {
             // OpenGL 2 disabled by environment variable
