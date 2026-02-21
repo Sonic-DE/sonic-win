@@ -148,6 +148,14 @@ GlxBackend::GlxBackend(::Display *display, X11StandaloneBackend *backend)
 
 GlxBackend::~GlxBackend()
 {
+    // Make context current before destroying OpenGL resources
+    if (m_context) {
+        makeCurrent();
+    }
+
+    // Reset m_fbo explicitly while context is current (if available)
+    m_fbo.reset();
+
     m_vsyncMonitor.reset();
 
     m_query.reset();

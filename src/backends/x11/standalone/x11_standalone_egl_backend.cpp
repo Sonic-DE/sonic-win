@@ -78,6 +78,14 @@ EglBackend::EglBackend(::Display *display, X11StandaloneBackend *backend)
 
 EglBackend::~EglBackend()
 {
+    // Make context current before destroying OpenGL resources
+    if (m_context && m_surface != EGL_NO_SURFACE) {
+        makeCurrent();
+    }
+
+    // Reset m_fbo explicitly while context is current (if available)
+    m_fbo.reset();
+
     m_query.reset();
 
     if (isFailed() && m_overlayWindow) {
