@@ -34,6 +34,7 @@ enum class VulkanShaderTrait {
     RoundedCorners = 1 << 5, ///< Apply rounded corner clipping
     Border = 1 << 6, ///< Render border
     YUV = 1 << 7, ///< YUV to RGB conversion (for multi-plane textures)
+    Invert = 1 << 8, ///< Invert colors
 };
 
 Q_DECLARE_FLAGS(VulkanShaderTraits, VulkanShaderTrait)

@@ -17,6 +17,7 @@ layout(constant_id = 4) const bool TRAIT_TRANSFORM_COLORSPACE = false;
 layout(constant_id = 5) const bool TRAIT_ROUNDED_CORNERS = false;
 layout(constant_id = 6) const bool TRAIT_BORDER = false;
 layout(constant_id = 7) const bool TRAIT_YUV = false;
+layout(constant_id = 8) const bool TRAIT_INVERT = false;
 
 // Input from vertex shader
 layout(location = 0) in vec2 fragTexCoord;
@@ -279,6 +280,11 @@ void main() {
         color.rgb = doTonemapping(color.rgb);
         color = nitsToEncoding(color, ubo.destTransferFunction,
                                ubo.destTransferParams.x, ubo.destTransferParams.y);
+    }
+
+    // Apply invert effect
+    if (TRAIT_INVERT) {
+        color.rgb = vec3(1.0) - color.rgb;
     }
 
     // Apply rounded corners
