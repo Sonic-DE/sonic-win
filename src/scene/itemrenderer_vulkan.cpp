@@ -985,32 +985,11 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
 
             vkCmdDraw(cmd, node.vertexCount, 1, node.firstVertex, 0);
 
-            // Log ALL large texture draws (backgrounds)
+            // Log draw calls for debugging
             if (!node.textures.isEmpty()) {
                 QSize texSize = node.textures[0]->size();
-                static int largeDrawCount = 0;
-                static int smallDrawCount = 0;
-
-                if (texSize.height() >= 1000) {
-                    // This is a background - log every time to track
-                    if (largeDrawCount < 30) {
-                        qWarning() << "VULKAN: DRAW LARGE (background?)" << node.vertexCount << "verts"
-                                   << "texSize=" << texSize
-                                   << "opacity=" << node.opacity
-                                   << "firstVert=" << node.firstVertex;
-                        // Log first few vertex positions
-                        if (!node.geometry.isEmpty()) {
-                            qWarning() << "  v0 pos=" << node.geometry[0].position << "tex=" << node.geometry[0].texcoord;
-                            if (node.geometry.size() > 1)
-                                qWarning() << "  v1 pos=" << node.geometry[1].position << "tex=" << node.geometry[1].texcoord;
-                        }
-                        largeDrawCount++;
-                    }
-                } else if (smallDrawCount < 10) {
-                    qWarning() << "VULKAN: DRAW SMALL" << node.vertexCount << "verts at offset" << node.firstVertex
-                               << "texSize=" << texSize << "opacity=" << node.opacity;
-                    smallDrawCount++;
-                }
+                qWarning() << "VULKAN: DRAW" << node.vertexCount << "verts at offset" << node.firstVertex
+                           << "texSize=" << texSize << "opacity=" << node.opacity;
             }
         }
     }
