@@ -71,6 +71,28 @@ public:
      */
     bool hasSyncInfo() const;
 
+    /**
+     * @brief Set the command buffer to use for rendering.
+     *
+     * When set, the renderer should use this command buffer instead of
+     * the default one. This is needed for offscreen rendering where
+     * a separate command buffer is used.
+     */
+    void setCommandBuffer(VkCommandBuffer cmd)
+    {
+        m_commandBuffer = cmd;
+    }
+
+    /**
+     * @brief Get the command buffer to use for rendering.
+     *
+     * Returns VK_NULL_HANDLE if no override is set.
+     */
+    VkCommandBuffer commandBuffer() const
+    {
+        return m_commandBuffer;
+    }
+
 private:
     QImage *m_image = nullptr;
     VulkanFramebuffer *m_framebuffer = nullptr;
@@ -78,6 +100,7 @@ private:
     const OutputTransform m_transform;
     const ColorDescription m_colorDescription;
     VulkanSyncInfo m_syncInfo;
+    VkCommandBuffer m_commandBuffer = VK_NULL_HANDLE;
 };
 
 } // namespace KWin

@@ -1006,7 +1006,14 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
 
 void ItemRendererVulkan::renderItem(const RenderTarget &renderTarget, const RenderViewport &viewport, Item *item, int mask, const QRegion &region, const WindowPaintData &data)
 {
-    if (m_currentCommandBuffer == VK_NULL_HANDLE) {
+    // Get the command buffer to use - prefer the one from the renderTarget if available
+    VkCommandBuffer cmd = m_currentCommandBuffer;
+    const auto vulkanRenderTarget = renderTarget.vulkanTarget();
+    if (vulkanRenderTarget && vulkanRenderTarget->commandBuffer() != VK_NULL_HANDLE) {
+        cmd = vulkanRenderTarget->commandBuffer();
+    }
+
+    if (cmd == VK_NULL_HANDLE) {
         qCWarning(KWIN_CORE) << "No active command buffer for rendering";
         return;
     }
@@ -1014,8 +1021,8 @@ void ItemRendererVulkan::renderItem(const RenderTarget &renderTarget, const Rend
     // Hardware clipping is needed when the region is clipped AND the window is transformed
     bool hardwareClipping = region != infiniteRegion() && (static_cast<bool>(mask & Effect::PAINT_WINDOW_TRANSFORMED) || static_cast<bool>(mask & Effect::PAINT_SCREEN_TRANSFORMED));
 
-    // Build render context using constructor
-    RenderContext context(m_currentProjection, data.toMatrix(viewport.scale()), region, hardwareClipping, viewport.scale(), &viewport);
+    // Build render context using the viewport's projection matrix
+    RenderContext context(viewport.projectionMatrix(), data.toMatrix(viewport.scale()), region, hardwareClipping, viewport.scale(), &viewport);
 
     // Initialize stacks (matching OpenGL approach)
     // Push identity - rootTransform is applied in createRenderNode when stack size is 1
@@ -1025,8 +1032,8 @@ void ItemRendererVulkan::renderItem(const RenderTarget &renderTarget, const Rend
     // Build render nodes from item tree
     createRenderNode(item, &context);
 
-    // Render all nodes
-    renderNodes(context, m_currentCommandBuffer);
+    // Render all nodes using the appropriate command buffer
+    renderNodes(context, cmd);
 
     qCDebug(KWIN_CORE) << "ItemRendererVulkan::renderItem() - rendered" << context.renderNodes.size() << "nodes for item:" << item;
 }
