@@ -447,19 +447,6 @@ void VulkanSurfaceTextureX11::update(const QRegion &region)
                          << "pixmap size:" << m_pixmap->size();
 
     if (m_useDmaBuf) {
-        // Queue external memory acquire barriers for batched submission at frame start
-        for (int planeIdx = 0; planeIdx < m_texture.planes.size(); planeIdx++) {
-            VulkanTexture *plane = m_texture.planes[planeIdx].get();
-            VkImageLayout oldLayout = plane->currentLayout();
-            VkImageLayout newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
-
-            // Only queue barrier if layout transition is needed
-            if (oldLayout != newLayout) {
-                m_context->queueDmaBufBarrier(plane->image(), oldLayout, newLayout);
-                plane->setCurrentLayout(newLayout);
-            }
-        }
-
         return;
     }
 

@@ -845,6 +845,56 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufAsTexture(const DmaBuf
     texture->m_currentLayout = VK_IMAGE_LAYOUT_UNDEFINED;
     texture->m_ownsImage = true;
 
+    // Transition image layout from UNDEFINED to SHADER_READ_ONLY_OPTIMAL
+    VkCommandBuffer cmd = allocateCommandBuffer();
+    if (cmd != VK_NULL_HANDLE) {
+        VkCommandBufferBeginInfo beginInfo{};
+        beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+        beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+        if (vkBeginCommandBuffer(cmd, &beginInfo) == VK_SUCCESS) {
+            VkImageMemoryBarrier barrier{};
+            barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+            barrier.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+            barrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+            barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+            barrier.image = image;
+            barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+            barrier.subresourceRange.baseMipLevel = 0;
+            barrier.subresourceRange.levelCount = 1;
+            barrier.subresourceRange.baseArrayLayer = 0;
+            barrier.subresourceRange.layerCount = 1;
+            // External memory acquire: no prior Vulkan access to flush
+            barrier.srcAccessMask = 0;
+            barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+
+            vkCmdPipelineBarrier(cmd,
+                                 VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                 VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
+                                 0,
+                                 0, nullptr,
+                                 0, nullptr,
+                                 1, &barrier);
+
+            vkEndCommandBuffer(cmd);
+
+            // Submit and wait for completion
+            VkSubmitInfo submitInfo{};
+            submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+            submitInfo.commandBufferCount = 1;
+            submitInfo.pCommandBuffers = &cmd;
+
+            VkFence fence = getOrCreateFence();
+            vkResetFences(m_backend->device(), 1, &fence);
+            vkQueueSubmit(m_backend->graphicsQueue(), 1, &submitInfo, fence);
+            vkWaitForFences(m_backend->device(), 1, &fence, VK_TRUE, UINT64_MAX);
+        }
+        vkFreeCommandBuffers(m_backend->device(), m_commandPool, 1, &cmd);
+    }
+
+    texture->m_currentLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+
     return texture;
 }
 
@@ -1042,6 +1092,54 @@ std::unique_ptr<VulkanTexture> VulkanContext::importDmaBufPlaneAsTexture(const D
     texture->m_size = size;
     texture->m_currentLayout = VK_IMAGE_LAYOUT_UNDEFINED;
     texture->m_ownsImage = true;
+
+    // Transition image layout from UNDEFINED to SHADER_READ_ONLY_OPTIMAL
+    VkCommandBuffer cmd = allocateCommandBuffer();
+    if (cmd != VK_NULL_HANDLE) {
+        VkCommandBufferBeginInfo beginInfo{};
+        beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+        beginInfo.flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
+
+        if (vkBeginCommandBuffer(cmd, &beginInfo) == VK_SUCCESS) {
+            VkImageMemoryBarrier barrier{};
+            barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+            barrier.oldLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+            barrier.newLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+            barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+            barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+            barrier.image = image;
+            barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+            barrier.subresourceRange.baseMipLevel = 0;
+            barrier.subresourceRange.levelCount = 1;
+            barrier.subresourceRange.baseArrayLayer = 0;
+            barrier.subresourceRange.layerCount = 1;
+            barrier.srcAccessMask = 0;
+            barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+
+            vkCmdPipelineBarrier(cmd,
+                                 VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                 VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
+                                 0,
+                                 0, nullptr,
+                                 0, nullptr,
+                                 1, &barrier);
+
+            vkEndCommandBuffer(cmd);
+
+            VkSubmitInfo submitInfo{};
+            submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+            submitInfo.commandBufferCount = 1;
+            submitInfo.pCommandBuffers = &cmd;
+
+            VkFence fence = getOrCreateFence();
+            vkResetFences(m_backend->device(), 1, &fence);
+            vkQueueSubmit(m_backend->graphicsQueue(), 1, &submitInfo, fence);
+            vkWaitForFences(m_backend->device(), 1, &fence, VK_TRUE, UINT64_MAX);
+        }
+        vkFreeCommandBuffers(m_backend->device(), m_commandPool, 1, &cmd);
+    }
+
+    texture->m_currentLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
 
     qCDebug(KWIN_VULKAN) << "Successfully imported DMA-BUF plane" << planeIndex << "as Vulkan texture size" << size;
 
