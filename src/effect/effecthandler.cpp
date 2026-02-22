@@ -259,6 +259,11 @@ bool EffectsHandler::isOpenGLCompositing() const
     return compositing_type & OpenGLCompositing;
 }
 
+bool EffectsHandler::isVulkanCompositing() const
+{
+    return compositing_type == VulkanCompositing;
+}
+
 OpenGlContext *EffectsHandler::openglContext() const
 {
     return m_scene->openglContext();

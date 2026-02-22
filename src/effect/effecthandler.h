@@ -470,6 +470,12 @@ public:
      * @return bool @c true in case of OpenGL based Compositor, @c false otherwise
      */
     bool isOpenGLCompositing() const;
+    /**
+     * @brief Whether the Compositor is Vulkan based.
+     *
+     * @return bool @c true in case of Vulkan based Compositor, @c false otherwise
+     */
+    bool isVulkanCompositing() const;
     OpenGlContext *openglContext() const;
     /**
      * @brief Provides access to the QPainter which is rendering to the back buffer.
