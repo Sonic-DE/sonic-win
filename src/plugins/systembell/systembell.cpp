@@ -9,9 +9,14 @@
 
 #include "systembell.h"
 
+#include "compositor.h"
 #include "effect/effecthandler.h"
 #include "opengl/glshader.h"
 #include "opengl/glshadermanager.h"
+#include "platformsupport/scenes/vulkan/vulkancontext.h"
+#include "platformsupport/scenes/vulkan/vulkanpipeline.h"
+#include "platformsupport/scenes/vulkan/vulkanpipelinemanager.h"
+#include "scene/workspacescene_vulkan.h"
 #include "window.h"
 
 #include <QDBusConnection>
@@ -94,7 +99,8 @@ void SystemBellEffect::reconfigure(ReconfigureFlags flags)
 
 bool SystemBellEffect::supported()
 {
-    return effects->compositingType() == OpenGLCompositing;
+    // Support both OpenGL and Vulkan for offscreen rendering
+    return effects->isOpenGLCompositing() || effects->isVulkanCompositing();
 }
 
 void SystemBellEffect::flash(EffectWindow *window)
@@ -103,8 +109,13 @@ void SystemBellEffect::flash(EffectWindow *window)
         m_valid = loadData();
     }
 
-    redirect(window);
-    setShader(window, m_shader.get());
+    if (effects->isOpenGLCompositing() && m_shader) {
+        redirect(window);
+        setShader(window, m_shader.get());
+    } else if (effects->isVulkanCompositing() && m_pipeline) {
+        redirect(window);
+        setPipeline(window, m_pipeline);
+    }
 }
 
 void SystemBellEffect::unflash(EffectWindow *window)
@@ -117,7 +128,8 @@ bool SystemBellEffect::loadData()
     ensureResources();
     m_inited = true;
 
-    if (m_visibleBell) {
+    // Create shaders for OpenGL
+    if (m_visibleBell && effects->isOpenGLCompositing()) {
         if (m_mode == Invert) {
             m_shader = GLShaderManager::instance()->generateShaderFromFile(GLShaderTrait::MapTexture, QString(), QStringLiteral(":/effects/systembell/shaders/invert.frag"));
         } else {
@@ -130,6 +142,47 @@ bool SystemBellEffect::loadData()
             qCCritical(KWIN_SYSTEMBELL) << "The shader failed to load!";
             return false;
         }
+    } else if (m_visibleBell && effects->isVulkanCompositing()) {
+        // For Vulkan, get the pipeline from the pipeline manager
+        auto *scene = dynamic_cast<WorkspaceSceneVulkan *>(Compositor::self()->scene());
+        if (!scene) {
+            qCWarning(KWIN_SYSTEMBELL) << "Failed to get Vulkan scene for system bell";
+            return false;
+        }
+
+        auto *context = scene->backend()->vulkanContext();
+        if (!context) {
+            qCWarning(KWIN_SYSTEMBELL) << "Failed to get Vulkan context for system bell";
+            return false;
+        }
+
+        auto *pipelineManager = context->pipelineManager();
+        if (!pipelineManager) {
+            qCWarning(KWIN_SYSTEMBELL) << "Failed to get Vulkan pipeline manager for system bell";
+            return false;
+        }
+
+        // Create pipeline with appropriate traits
+        VulkanShaderTraits traits = VulkanShaderTrait::MapTexture
+            | VulkanShaderTrait::Modulate
+            | VulkanShaderTrait::AdjustSaturation
+            | VulkanShaderTrait::TransformColorspace;
+
+        if (m_mode == Invert) {
+            traits |= VulkanShaderTrait::Invert;
+        }
+
+        m_pipeline = pipelineManager->pipeline(traits);
+        if (!m_pipeline) {
+            qCWarning(KWIN_SYSTEMBELL) << "Failed to create Vulkan pipeline for system bell";
+            return false;
+        }
+
+        qCInfo(KWIN_SYSTEMBELL) << "Created Vulkan pipeline for visible bell with traits:" << static_cast<int>(traits);
+    } else if (m_visibleBell) {
+        // Visible bell not supported
+        qCWarning(KWIN_SYSTEMBELL) << "Visible bell not supported, falling back to audio-only";
+        m_visibleBell = false;
     }
 
     return true;

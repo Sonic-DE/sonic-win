@@ -13,6 +13,7 @@ namespace KWin
 {
 
 class GLShader;
+class VulkanPipeline;
 class OffscreenEffectPrivate;
 class CrossFadeEffectPrivate;
 class ShaderEffectPrivate;
@@ -64,6 +65,20 @@ protected:
      * Can only be called once the window is redirected.
      **/
     void setShader(EffectWindow *window, GLShader *shader);
+
+    /**
+     * Allows to specify a Vulkan pipeline for @p window.
+     * Can only be called once the window is redirected.
+     **/
+    void setPipeline(EffectWindow *window, VulkanPipeline *pipeline);
+
+    /**
+     * Allows to specify a Vulkan pipeline with custom uniform values for @p window.
+     * Can only be called once the window is redirected.
+     * @param brightness set to -1.0 for invert effect, 1.0 for normal
+     * @param saturation set to 0.0 for grayscale, 1.0 for normal
+     **/
+    void setPipeline(EffectWindow *window, VulkanPipeline *pipeline, float brightness, float saturation);
 
     /**
      * Set what mode to use to snap the vertices of this effect.
@@ -122,6 +137,12 @@ public:
      * @since 5.25
      **/
     void setShader(EffectWindow *window, GLShader *shader);
+
+    /**
+     * Allows to specify a Vulkan pipeline to draw the redirected texture for @p window.
+     * Can only be called once the window is redirected.
+     **/
+    void setPipeline(EffectWindow *window, VulkanPipeline *pipeline);
 
     bool blocksDirectScanout() const override;
 

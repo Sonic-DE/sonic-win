@@ -926,9 +926,20 @@ void ItemRendererVulkan::renderNodes(const RenderContext &context, VkCommandBuff
                 imageInfos[slot].sampler = tex->sampler();
                 imageInfos[slot].imageView = tex->imageView();
                 imageInfos[slot].imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL;
+                // Log texture details for debugging
+                qWarning() << "VULKAN: Binding texture slot" << slot
+                           << "size=" << tex->size()
+                           << "layout=" << tex->currentLayout()
+                           << "imageView=" << tex->imageView();
                 slot++;
+            } else if (tex) {
+                qWarning() << "VULKAN: SKIPPING invalid texture slot" << slot
+                           << "valid=" << tex->isValid()
+                           << "imageView=" << tex->imageView();
             }
         }
+
+        qWarning() << "VULKAN: Bound" << slot << "textures from node, filling rest with default";
 
         // Fill remaining slots with default texture
         for (; slot < 4; slot++) {
@@ -1010,11 +1021,17 @@ void ItemRendererVulkan::renderItem(const RenderTarget &renderTarget, const Rend
     VkCommandBuffer cmd = m_currentCommandBuffer;
     const auto vulkanRenderTarget = renderTarget.vulkanTarget();
     if (vulkanRenderTarget && vulkanRenderTarget->commandBuffer() != VK_NULL_HANDLE) {
+        qCDebug(KWIN_VULKAN) << "VULKAN: Using renderTarget command buffer:" << vulkanRenderTarget->commandBuffer()
+                             << "instead of m_currentCommandBuffer:" << m_currentCommandBuffer;
         cmd = vulkanRenderTarget->commandBuffer();
+    } else {
+        qCDebug(KWIN_VULKAN) << "VULKAN: Using m_currentCommandBuffer:" << m_currentCommandBuffer
+                             << "vulkanTarget=" << vulkanRenderTarget
+                             << "cmdBuffer=" << (vulkanRenderTarget ? vulkanRenderTarget->commandBuffer() : VK_NULL_HANDLE);
     }
 
     if (cmd == VK_NULL_HANDLE) {
-        qCWarning(KWIN_CORE) << "No active command buffer for rendering";
+        qCWarning(KWIN_VULKAN) << "No active command buffer for rendering";
         return;
     }
 
