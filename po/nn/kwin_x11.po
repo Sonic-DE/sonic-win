@@ -10,14 +10,14 @@ msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2024-09-22 16:22+0200\n"
+"PO-Revision-Date: 2026-03-01 19:44+0100\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@lister.huftis.org>\n"
 "Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 24.11.70\n"
+"X-Generator: Lokalize 26.03.70\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Environment: kde\n"
 "X-Accelerator-Marker: &\n"
@@ -72,17 +72,17 @@ msgstr "GLX/OpenGL er ikkje tilgjengeleg."
 #: core/iccprofile.cpp:252
 #, kde-format
 msgid "Failed to open ICC profile \"%1\""
-msgstr ""
+msgstr "Klarte ikkje opna ICC-profilen «%1»"
 
 #: core/iccprofile.cpp:254
 #, kde-format
 msgid "ICC profile \"%1\" doesn't exist"
-msgstr ""
+msgstr "ICC-profilen «%1» finst ikkje"
 
 #: core/iccprofile.cpp:258
 #, kde-format
 msgid "ICC profile \"%1\" is not usable for displays"
-msgstr ""
+msgstr "ICC-profilen «%1» kan ikkje brukast på skjermar"
 
 #: core/iccprofile.cpp:261
 #, kde-format
@@ -410,12 +410,12 @@ msgid "Delta"
 msgstr "Delta"
 
 #: debug_console.cpp:244
-#, fuzzy, kde-format
+#, kde-format
 msgctxt ""
 "The normalized V120 angle delta of a pointer axis event. V120 is a technical "
 "term and shouldn't be changed."
 msgid "Delta (V120)"
-msgstr "Delta x"
+msgstr "Delta (V120)"
 
 #: debug_console.cpp:259
 #, kde-format
@@ -670,24 +670,24 @@ msgid "State"
 msgstr "Tilstand"
 
 #: debug_console.cpp:495
-#, fuzzy, kde-format
+#, kde-format
 msgid "Tablet Tool Proximity"
-msgstr "Teikneplate-verktøy"
+msgstr "Teikneplateverktøy-nærleik"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Proximity"
-msgstr ""
+msgstr "Nærleik"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "In"
-msgstr ""
+msgstr "Inn"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Out"
-msgstr ""
+msgstr "Ut"
 
 #: debug_console.cpp:497 debug_console.cpp:511 debug_console.cpp:528
 #: debug_console.cpp:572 debug_console.cpp:586
@@ -706,9 +706,9 @@ msgid "Rotation"
 msgstr "Dreiing"
 
 #: debug_console.cpp:510
-#, fuzzy, kde-format
+#, kde-format
 msgid "Tablet Tool Axis"
-msgstr "Teikneplate-verktøy"
+msgstr "Akse for teikneplateverktøy"
 
 #: debug_console.cpp:516 debug_console.cpp:533
 #, kde-format
@@ -731,14 +731,14 @@ msgid "Tip"
 msgstr "Oppe"
 
 #: debug_console.cpp:527
-#, fuzzy, kde-format
+#, kde-format
 msgid "Down"
-msgstr "Gå ned"
+msgstr "Ned"
 
 #: debug_console.cpp:527
 #, kde-format
 msgid "Up"
-msgstr ""
+msgstr "Opp"
 
 #: debug_console.cpp:543
 #, kde-format
@@ -3396,10 +3396,9 @@ msgid "<b>%1</b> is used by %2 in %3"
 msgstr "<b>%1</b> er brukt av %2 i %3"
 
 #: useractions.cpp:912
-#, fuzzy, kde-format
-#| msgid "Window role"
+#, kde-format
 msgid "Window Menu"
-msgstr "Vindaugsrolle"
+msgstr "Vindaugsmeny"
 
 #: useractions.cpp:914
 #, kde-format
