@@ -1,0 +1,179 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+    <interface name="org.kde.KWin.InputDevice">
+        <property name="keyboard" type="b" access="read" />
+        <property name="alphaNumericKeyboard" type="b" access="read" />
+        <property name="pointer" type="b" access="read" />
+        <property name="touchpad" type="b" access="read" />
+        <property name="touch" type="b" access="read" />
+        <property name="tabletTool" type="b" access="read" />
+        <property name="tabletPad" type="b" access="read" />
+        <property name="gestureSupport" type="b" access="read" />
+        <property name="name" type="s" access="read" />
+        <property name="sysName" type="s" access="read" />
+        <property name="outputName" type="s" access="readwrite" />
+        <property name="size" type="(dd)" access="read">
+            <annotation name="org.qtproject.QtDBus.QtTypeName" value="QSizeF" />
+        </property>
+        <property name="product" type="u" access="read" />
+        <property name="vendor" type="u" access="read" />
+        <property name="supportsDisableEvents" type="b" access="read" />
+        <property name="enabled" type="b" access="readwrite" />
+        <property name="enabledByDefault" type="b" access="read" />
+        <property name="supportedButtons" type="i" access="read" />
+        <property name="supportsCalibrationMatrix" type="b" access="read" />
+        <property name="defaultCalibrationMatrix" type="s" access="read" />
+        <property name="calibrationMatrix" type="s" access="readwrite" />
+        <property name="orientationDBus" type="i" access="readwrite" />
+        <property name="supportsLeftHanded" type="b" access="read" />
+        <property name="leftHandedEnabledByDefault" type="b" access="read" />
+        <property name="leftHanded" type="b" access="readwrite" />
+        <property name="supportsDisableEventsOnExternalMouse" type="b" access="read" />
+        <property name="disableEventsOnExternalMouseEnabledByDefault" type="b" access="read" />
+        <property name="disableEventsOnExternalMouse" type="b" access="readwrite" />
+        <property name="supportsDisableWhileTyping" type="b" access="read" />
+        <property name="disableWhileTypingEnabledByDefault" type="b" access="read" />
+        <property name="disableWhileTyping" type="b" access="readwrite" />
+        <property name="supportsPointerAcceleration" type="b" access="read" />
+        <property name="defaultPointerAcceleration" type="d" access="read" />
+        <property name="pointerAcceleration" type="d" access="readwrite" />
+        <property name="supportsPointerAccelerationProfileFlat" type="b" access="read" />
+        <property name="defaultPointerAccelerationProfileFlat" type="b" access="read" />
+        <property name="pointerAccelerationProfileFlat" type="b" access="readwrite" />
+        <property name="supportsPointerAccelerationProfileAdaptive" type="b" access="read" />
+        <property name="defaultPointerAccelerationProfileAdaptive" type="b" access="read" />
+        <property name="pointerAccelerationProfileAdaptive" type="b" access="readwrite" />
+        <property name="tapFingerCount" type="i" access="read" />
+        <property name="tapToClickEnabledByDefault" type="b" access="read" />
+        <property name="tapToClick" type="b" access="readwrite" />
+        <property name="supportsLmrTapButtonMap" type="b" access="read" />
+        <property name="lmrTapButtonMapEnabledByDefault" type="b" access="read" />
+        <property name="lmrTapButtonMap" type="b" access="readwrite" />
+        <property name="tapAndDragEnabledByDefault" type="b" access="read" />
+        <property name="tapAndDrag" type="b" access="readwrite" />
+        <property name="tapDragLockEnabledByDefault" type="b" access="read" />
+        <property name="tapDragLock" type="b" access="readwrite" />
+        <property name="supportsMiddleEmulation" type="b" access="read" />
+        <property name="middleEmulationEnabledByDefault" type="b" access="read" />
+        <property name="middleEmulation" type="b" access="readwrite" />
+        <property name="supportsNaturalScroll" type="b" access="read" />
+        <property name="naturalScrollEnabledByDefault" type="b" access="read" />
+        <property name="naturalScroll" type="b" access="readwrite" />
+        <property name="supportsScrollTwoFinger" type="b" access="read" />
+        <property name="scrollTwoFingerEnabledByDefault" type="b" access="read" />
+        <property name="scrollTwoFinger" type="b" access="readwrite" />
+        <property name="supportsScrollEdge" type="b" access="read" />
+        <property name="scrollEdgeEnabledByDefault" type="b" access="read" />
+        <property name="scrollEdge" type="b" access="readwrite" />
+        <property name="supportsScrollOnButtonDown" type="b" access="read" />
+        <property name="scrollOnButtonDownEnabledByDefault" type="b" access="read" />
+        <property name="defaultScrollButton" type="u" access="read" />
+        <property name="scrollOnButtonDown" type="b" access="readwrite" />
+        <property name="scrollButton" type="u" access="readwrite" />
+        <property name="scrollFactor" type="d" access="readwrite" />
+        <property name="switchDevice" type="b" access="read" />
+        <property name="lidSwitch" type="b" access="read" />
+        <property name="tabletModeSwitch" type="b" access="read" />
+        <property name="supportsClickMethodAreas" type="b" access="read" />
+        <property name="defaultClickMethodAreas" type="b" access="read" />
+        <property name="clickMethodAreas" type="b" access="readwrite" />
+        <property name="supportsClickMethodClickfinger" type="b" access="read" />
+        <property name="defaultClickMethodClickfinger" type="b" access="read" />
+        <property name="clickMethodClickfinger" type="b" access="readwrite" />
+        <property name="supportsOutputArea" type="b" access="read" />
+        <property name="defaultOutputArea" type="(dddd)" access="read">
+            <annotation name="org.qtproject.QtDBus.QtTypeName" value="QRectF" />
+        </property>
+        <property name="outputArea" type="(dddd)" access="readwrite">
+            <annotation name="org.qtproject.QtDBus.QtTypeName" value="QRectF" />
+        </property>
+        <property name="defaultMapToWorkspace" type="b" access="read" />
+        <property name="mapToWorkspace" type="b" access="readwrite" />
+        <property name="deviceGroupId" type="s" access="read" />
+        <property name="defaultPressureCurve" type="s" access="read" />
+        <property name="pressureCurve" type="s" access="readwrite" />
+        <property name="tabletPadButtonCount" type="u" access="read" />
+        <property name="tabletPadDialCount" type="u" access="read" />
+        <property name="tabletPadRingCount" type="u" access="read" />
+        <property name="tabletPadStripCount" type="u" access="read" />
+        <property name="supportsInputArea" type="b" access="read" />
+        <property name="defaultInputArea" type="(dddd)" access="read">
+            <annotation name="org.qtproject.QtDBus.QtTypeName" value="QRectF" />
+        </property>
+        <property name="inputArea" type="(dddd)" access="readwrite">
+            <annotation name="org.qtproject.QtDBus.QtTypeName" value="QRectF" />
+        </property>
+        <property name="numModes" type="au" access="read">
+            <annotation name="org.qtproject.QtDBus.QtTypeName" value="QList&lt;uint&gt;" />
+        </property>
+        <property name="currentModes" type="au" access="read">
+            <annotation name="org.qtproject.QtDBus.QtTypeName" value="QList&lt;uint&gt;" />
+        </property>
+        <property name="supportsPressureRange" type="b" access="read" />
+        <property name="pressureRangeMin" type="d" access="readwrite" />
+        <property name="pressureRangeMax" type="d" access="readwrite" />
+        <property name="defaultPressureRangeMin" type="d" access="read" />
+        <property name="defaultPressureRangeMax" type="d" access="read" />
+        <property name="tabletToolIsRelative" type="b" access="readwrite" />
+        <property name="supportsRotation" type="b" access="read" />
+        <property name="isVirtual" type="b" access="read" />
+        <signal name="tapButtonMapChanged">
+        </signal>
+        <signal name="calibrationMatrixChanged">
+        </signal>
+        <signal name="orientationChanged">
+        </signal>
+        <signal name="outputNameChanged">
+        </signal>
+        <signal name="leftHandedChanged">
+        </signal>
+        <signal name="disableWhileTypingChanged">
+        </signal>
+        <signal name="pointerAccelerationChanged">
+        </signal>
+        <signal name="pointerAccelerationProfileChanged">
+        </signal>
+        <signal name="enabledChanged">
+        </signal>
+        <signal name="disableEventsOnExternalMouseChanged">
+        </signal>
+        <signal name="tapToClickChanged">
+        </signal>
+        <signal name="tapAndDragChanged">
+        </signal>
+        <signal name="tapDragLockChanged">
+        </signal>
+        <signal name="middleEmulationChanged">
+        </signal>
+        <signal name="naturalScrollChanged">
+        </signal>
+        <signal name="scrollMethodChanged">
+        </signal>
+        <signal name="scrollButtonChanged">
+        </signal>
+        <signal name="scrollFactorChanged">
+        </signal>
+        <signal name="clickMethodChanged">
+        </signal>
+        <signal name="outputAreaChanged">
+        </signal>
+        <signal name="mapToWorkspaceChanged">
+        </signal>
+        <signal name="pressureCurveChanged">
+        </signal>
+        <signal name="supportsPressureRangeChanged">
+        </signal>
+        <signal name="pressureRangeMinChanged">
+        </signal>
+        <signal name="pressureRangeMaxChanged">
+        </signal>
+        <signal name="inputAreaChanged">
+        </signal>
+        <signal name="tabletToolRelativeChanged">
+        </signal>
+        <signal name="rotationChanged">
+        </signal>
+        <signal name="currentModesChanged">
+        </signal>
+    </interface>
+</node>

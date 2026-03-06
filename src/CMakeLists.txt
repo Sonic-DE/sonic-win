@@ -403,6 +403,7 @@ export_dbus_interface(org.kde.kwin.Effects.xml org.kde.kwin.Effects.xml)
 export_dbus_interface(org.kde.KWin.Plugins.xml org.kde.KWin.Plugins.xml)
 export_dbus_interface(org.kde.kwin.VirtualKeyboard.xml ${CMAKE_CURRENT_BINARY_DIR}/org.kde.kwin.VirtualKeyboard.xml)
 export_dbus_interface(org.kde.KWin.TabletModeManager.xml ${CMAKE_CURRENT_BINARY_DIR}/org.kde.KWin.TabletModeManager.xml)
+export_dbus_interface(org.kde.kwin.InputDevice.xml org.kde.kwin.InputDevice.xml)
 
 install(EXPORT KWinX11Targets DESTINATION "${KDE_INSTALL_CMAKEPACKAGEDIR}/KWinX11" FILE KWinX11Targets.cmake NAMESPACE KWinX11:: )
 
