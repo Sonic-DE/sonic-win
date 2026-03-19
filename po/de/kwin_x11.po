@@ -1,13 +1,14 @@
-# SPDX-FileCopyrightText: 2024 Flori G <Renner03@protonmail.com>
-# SPDX-FileCopyrightText: 2002, 2003, 2004 Thomas Diehl <thd@kde.org>
+# SPDX-FileCopyrightText: 2002-2004 Thomas Diehl <thd@kde.org>
 # SPDX-FileCopyrightText: 2005, 2006 Stephan Johach <hunsum@gmx.de>
-# SPDX-FileCopyrightText: 2005, 2006, 2007, 2008, 2009, 2010 Thomas Reitelbach <tr@erdfunkstelle.de>
+# SPDX-FileCopyrightText: 2005-2010 Thomas Reitelbach <tr@erdfunkstelle.de>
 # SPDX-FileCopyrightText: 2010 Johannes Obermayr <johannesobermayr@gmx.de>
-# SPDX-FileCopyrightText: 2010, 2011, 2012, 2013, 2015, 2016, 2018, 2020, 2021, 2022, 2023 Frederik Schwarzer <schwarzer@kde.org>
-# SPDX-FileCopyrightText: 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2010-2013, 2015, 2016, 2018, 2020-2023 Frederik Schwarzer <schwarzer@kde.org>
+# SPDX-FileCopyrightText: 2010, 2012-2021 Burkhard Lück <lueck@hube-lueck.de>
 # SPDX-FileCopyrightText: 2012, 2024 Frank Steinmetzger <Warp_7@gmx.de>
 # SPDX-FileCopyrightText: 2023 Jannick Kuhr <opensource@kuhr.org>
+# SPDX-FileCopyrightText: 2024 Flori G <Renner03@protonmail.com>
 # SPDX-FileCopyrightText: 2025 Alois Spitzbart <spitz234@hotmail.com>
+# SPDX-FileCopyrightText: 2026 Alexander Becker <alex-at-kde-l10n-de@freenet.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
@@ -21,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.12.2\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -73,77 +74,83 @@ msgstr "GLX/OpenGL ist nicht verfügbar."
 #: core/iccprofile.cpp:252
 #, kde-format
 msgid "Failed to open ICC profile \"%1\""
-msgstr ""
+msgstr "ICC-Profil „%1“ kann nicht geöffnet werden"
 
 #: core/iccprofile.cpp:254
-#, fuzzy, kde-format
-#| msgctxt "Required file does not exist"
-#| msgid "%1 does not exist"
+#, kde-format
 msgid "ICC profile \"%1\" doesn't exist"
-msgstr "%1 existiert nicht"
+msgstr "ICC-Profil „%1“ existiert nicht"
 
 #: core/iccprofile.cpp:258
 #, kde-format
 msgid "ICC profile \"%1\" is not usable for displays"
-msgstr ""
+msgstr "ICC-Profil „%1“ kann nicht für Bildschirme genutzt werden"
 
 #: core/iccprofile.cpp:261
 #, kde-format
 msgid ""
 "ICC profile \"%1\" has unsupported connection space, only XYZ is supported"
 msgstr ""
+"ICC-Profil „%1“ hat einen nicht unterstützten Verbindungsraum, nur XYZ wird "
+"unterstützt"
 
 #: core/iccprofile.cpp:264
 #, kde-format
 msgid "ICC profile \"%1\" is broken, input/output color space isn't RGB"
-msgstr ""
+msgstr "ICC-Profil „%1“ ist beschädigt, Ein-/Ausgabefarbraum ist nicht RGB"
 
 #: core/iccprofile.cpp:283
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no whitepoint"
-msgstr ""
+msgstr "ICC-Profil „%1“ ist beschädigt, es hat keinen Weißpunkt"
 
 #: core/iccprofile.cpp:286
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its whitepoint is invalid"
-msgstr ""
+msgstr "ICC-Profil „%1“ ist beschädigt, der Weißpunkt ist ungültig"
 
 #: core/iccprofile.cpp:299
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, parsing chromatic adaptation matrix failed"
 msgstr ""
+"ICC-Profil „%1“ ist beschädigt, das Auslesen der chromatischen "
+"Adaptationsmatrix ist fehlgeschlagen"
 
 #: core/iccprofile.cpp:304
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, inverting chromatic adaptation matrix failed"
 msgstr ""
+"ICC-Profil „%1“ ist beschädigt, das Invertieren der chromatischen "
+"Adaptationsmatrix ist fehlgeschlagen"
 
 #: core/iccprofile.cpp:317
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no primaries"
-msgstr ""
+msgstr "ICC-Profil „%1“ ist beschädigt, es hat keine Primärfarben"
 
 #: core/iccprofile.cpp:332
 #, kde-format
 msgid "ICC profile \"%1\" is broken, couldn't calculate its primaries"
 msgstr ""
+"ICC-Profil „%1“ ist beschädigt, die Primärfarben können nicht berechnet "
+"werden"
 
 #: core/iccprofile.cpp:341
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its primaries are invalid"
-msgstr ""
+msgstr "ICC-Profil „%1“ ist beschädigt, die Primärfarben sind ungültig"
 
 #: core/iccprofile.cpp:357
 #, kde-format
 msgid "ICC profile \"%1\" with only BToD tags isn't supported"
-msgstr ""
+msgstr "ICC-Profil „%1“ mit ausschließlich BToD-Tags wird nicht unterstützt"
 
 #: core/iccprofile.cpp:396
 #, kde-format
 msgid "Color profile is missing TRC tags"
-msgstr ""
+msgstr "Dem Farbprofil fehlen TRC-Tags"
 
 #: debug_console.cpp:79
 #, kde-format
@@ -414,14 +421,12 @@ msgid "Delta"
 msgstr "Delta"
 
 #: debug_console.cpp:244
-#, fuzzy, kde-format
-#| msgctxt "Current delta in pinch gesture"
-#| msgid "Delta x"
+#, kde-format
 msgctxt ""
 "The normalized V120 angle delta of a pointer axis event. V120 is a technical "
 "term and shouldn't be changed."
 msgid "Delta (V120)"
-msgstr "Delta x"
+msgstr "Delta (V120)"
 
 #: debug_console.cpp:259
 #, kde-format
@@ -480,12 +485,10 @@ msgstr "Wiederholen"
 
 # Ich weiß leider nicht, um welche Funktion es hier geht. Ist das der numerische Wert oder der Qt-Konstantenbezeichner? Z.B. Key_Up
 #: debug_console.cpp:301
-#, fuzzy, kde-format
-#| msgctxt "Key according to Qt"
-#| msgid "Qt::Key code"
+#, kde-format
 msgctxt "The code reported by the kernel"
 msgid "Keycode"
-msgstr "Qt::Key-Code"
+msgstr "Tastencode"
 
 # Ich weiß leider nicht, um welche Funktion es hier geht. Ist das der numerische Wert oder der Qt-Konstantenbezeichner? Z.B. Key_Up
 #: debug_console.cpp:302
@@ -684,25 +687,24 @@ msgid "State"
 msgstr "Status"
 
 #: debug_console.cpp:495
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Proximity"
-msgstr "Tablet-Werkzeug"
+msgstr "Tablet-Werkzeug Annäherung"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Proximity"
-msgstr ""
+msgstr "Annäherung"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "In"
-msgstr ""
+msgstr "Rein"
 
 #: debug_console.cpp:496
 #, kde-format
 msgid "Out"
-msgstr ""
+msgstr "Raus"
 
 #: debug_console.cpp:497 debug_console.cpp:511 debug_console.cpp:528
 #: debug_console.cpp:572 debug_console.cpp:586
@@ -721,10 +723,9 @@ msgid "Rotation"
 msgstr "Drehung"
 
 #: debug_console.cpp:510
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Axis"
-msgstr "Tablet-Werkzeug"
+msgstr "Tablet-Werkzeug Achse"
 
 #: debug_console.cpp:516 debug_console.cpp:533
 #, kde-format
@@ -737,32 +738,29 @@ msgid "Buttons"
 msgstr "Knöpfe"
 
 #: debug_console.cpp:526
-#, fuzzy, kde-format
-#| msgid "Tablet Tool"
+#, kde-format
 msgid "Tablet Tool Tip"
-msgstr "Tablet-Werkzeug"
+msgstr "Tablet-Werkzeug Tipp"
 
 #: debug_console.cpp:527
-#, fuzzy, kde-format
-#| msgid "Top"
+#, kde-format
 msgid "Tip"
-msgstr "Oben"
+msgstr "Tipp"
 
 #: debug_console.cpp:527
-#, fuzzy, kde-format
-#| msgid "Move Down"
+#, kde-format
 msgid "Down"
 msgstr "Nach unten"
 
 #: debug_console.cpp:527
 #, kde-format
 msgid "Up"
-msgstr ""
+msgstr "Nach oben"
 
 #: debug_console.cpp:543
 #, kde-format
 msgid "Tablet Tool Button"
-msgstr "Tabletwerkzeug-Knopf"
+msgstr "Tablet-Werkzeug-Knopf"
 
 #: debug_console.cpp:544 debug_console.cpp:558
 #, kde-format
@@ -783,12 +781,12 @@ msgstr "Tablet"
 #: debug_console.cpp:557
 #, kde-format
 msgid "Tablet Pad Button"
-msgstr ""
+msgstr "Tablet-Pad-Knopf"
 
 #: debug_console.cpp:570
 #, kde-format
 msgid "Tablet Pad Strip"
-msgstr ""
+msgstr "Tablet-Pad-Streifen"
 
 #: debug_console.cpp:571 debug_console.cpp:585
 #, kde-format
@@ -798,12 +796,12 @@ msgstr "Zahl"
 #: debug_console.cpp:573 debug_console.cpp:587
 #, kde-format
 msgid "isFinger"
-msgstr ""
+msgstr "isFinger"
 
 #: debug_console.cpp:584
 #, kde-format
 msgid "Tablet Pad Ring"
-msgstr ""
+msgstr "Tablet-Pad-Ring"
 
 #: debug_console.cpp:651
 #, kde-format
@@ -1030,10 +1028,9 @@ msgstr "Laden"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, DebugConsole)
 #: debug_console.ui:14
-#, fuzzy, kde-format
-#| msgid "Quit Debug Console"
+#, kde-format
 msgid "Debug Console"
-msgstr "Debug-Konsole beenden"
+msgstr "Debug-Konsole"
 
 #. i18n: ectx: property (text), widget (QPushButton, quitButton)
 #: debug_console.ui:38
@@ -1362,7 +1359,7 @@ msgstr "Die KDE-Fensterverwaltung"
 #: main.cpp:189
 #, kde-format
 msgid "(c) 1999-2019, The KDE Developers"
-msgstr "Copyright 1999–2019, die KDE-Entwickler"
+msgstr "© 1999–2019 Die KDE-Entwickler"
 
 #: main.cpp:191
 #, kde-format
@@ -1998,10 +1995,9 @@ msgstr "Meta"
 
 #. i18n: ectx: property (text), widget (QLabel, label_ArrowdrawModifierKeys)
 #: plugins/mousemark/mousemark_config.ui:157
-#, fuzzy, kde-format
-#| msgid "Modifier keys:"
+#, kde-format
 msgid "Arrow draw modifier keys:"
-msgstr "Sondertasten:"
+msgstr "Sondertasten für Zeichnen mit Pfeiltasten:"
 
 #: plugins/nightlight/nightlightmanager.cpp:55
 #, kde-format
@@ -2119,7 +2115,7 @@ msgstr "Virtuelle Arbeitsfläche hinzufügen"
 #, kde-format
 msgctxt "@action:button"
 msgid "Configure Virtual Desktops…"
-msgstr "Virtuelle Arbeitsflächen einrichten …"
+msgstr "Virtuelle Arbeitsflächen einrichten …"
 
 #: plugins/overview/qml/main.qml:742
 #, kde-format
@@ -2177,19 +2173,16 @@ msgid "This effect is not a benchmark"
 msgstr "Dieser Effekt ist kein Benchmark"
 
 #: plugins/showfps/qml/main.qml:110
-#, fuzzy, kde-format
-#| msgctxt "A mouse pointer motion event"
-#| msgid "Pointer Motion"
+#, kde-format
 msgctxt "@label"
 msgid "Paint Duration"
-msgstr "Zeigerbewegung"
+msgstr "Zeichnungsdauer"
 
 #: plugins/showfps/qml/main.qml:162
-#, fuzzy, kde-format
-#| msgid "Ring Count:"
+#, kde-format
 msgctxt "@label"
 msgid "Paint Amount"
-msgstr "Ringanzahl:"
+msgstr "Zeichnungsmenge"
 
 #: plugins/showfps/qml/main.qml:175
 #, kde-format
@@ -2279,7 +2272,7 @@ msgstr "Zwischenraum:"
 #: plugins/tileseditor/qml/main.qml:161
 #, kde-format
 msgid "Load Layout…"
-msgstr "Layout laden …"
+msgstr "Layout laden …"
 
 #: plugins/tileseditor/qml/main.qml:271
 #, kde-format
@@ -2500,7 +2493,7 @@ msgstr "Keine Fenster"
 #: plugins/windowview/qml/main.qml:122
 #, kde-format
 msgid "Filter windows…"
-msgstr "Fenster filtern …"
+msgstr "Fenster filtern …"
 
 #. i18n: ectx: property (title), widget (QGroupBox, advancedGroup)
 #: plugins/wobblywindows/wobblywindows_config.ui:20
@@ -2624,10 +2617,9 @@ msgstr "Diese Regel löschen (bei Importen)"
 
 #. i18n: ectx: label, entry (enabled), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:20
-#, fuzzy, kde-format
-#| msgid "Tiling Enabled"
+#, kde-format
 msgid "This rule is enabled"
-msgstr "Kacheln aktiviert"
+msgstr "Diese Regel ist aktiviert"
 
 #. i18n: ectx: label, entry (wmclass), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:24
@@ -3114,14 +3106,13 @@ msgstr "Regelart für Arbeitsflächen-Dateiname"
 #: rulesettings.kcfg:429
 #, kde-format
 msgid "Layer"
-msgstr ""
+msgstr "Ebene"
 
 #. i18n: ectx: label, entry (layerrule), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:445
-#, fuzzy, kde-format
-#| msgid "Shaded rule type"
+#, kde-format
 msgid "Layer rule type"
-msgstr "Regelart für Eingefahren"
+msgstr "Regelart für Ebene"
 
 #. i18n: ectx: label, entry (adaptivesync), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:450
@@ -3157,7 +3148,7 @@ msgstr "Dialog"
 #: shortcutdialog.ui:25
 #, kde-format
 msgid "..."
-msgstr "..."
+msgstr "…"
 
 #: sm.cpp:431
 #, kde-format
@@ -3172,17 +3163,15 @@ msgid "Log Out Anyway"
 msgstr "Trotzdem abmelden"
 
 #: sm.cpp:478
-#, fuzzy, kde-format
-#| msgid ""
-#| "The following applications did not close:\n"
-#| "%1"
+#, kde-format
 msgid ""
 "The following applications did not close:\n"
 "%1\n"
 "Logging out anyway in 2 minutes."
 msgstr ""
-"Die folgenden Anwendungen haben sich nicht beendet:\n"
-"%1"
+"Die folgenden Anwendungen wurden nicht beendet:\n"
+"%1\n"
+"Die Abmeldung wird trotzdem in 2 Minuten durchgeführt."
 
 #: tabbox/clientmodel.cpp:58
 #, kde-format
@@ -3243,19 +3232,17 @@ msgstr ""
 #: tablet_input.cpp:104
 #, kde-format
 msgid "Move the tablet to the next output"
-msgstr ""
+msgstr "Tablet zur nächsten Ausgabe verschieben"
 
 #: tablet_input.cpp:177
-#, fuzzy, kde-format
-#| msgctxt "Name of a hardware switch"
-#| msgid "Tablet mode"
+#, kde-format
 msgid "Tablet moved to %1"
-msgstr "Tablet-Modus"
+msgstr "Tablet nach %1 verschoben"
 
 #: tablet_input.cpp:177
 #, kde-format
 msgid "Tablets switched outputs"
-msgstr ""
+msgstr "Tablets haben die Ausgaben gewechselt"
 
 #: useractions.cpp:162
 #, kde-format
@@ -3324,17 +3311,17 @@ msgstr "Ohne &Titelleiste und Rahmen"
 #: useractions.cpp:258
 #, kde-format
 msgid "Set Window Short&cut…"
-msgstr "&Kurzbefehl für Fenster festlegen …"
+msgstr "&Kurzbefehl für Fenster festlegen …"
 
 #: useractions.cpp:264
 #, kde-format
 msgid "Configure Special &Window Settings…"
-msgstr "Spezielle Einstellungen für dieses &Fenster einrichten …"
+msgstr "Spezielle Einstellungen für dieses &Fenster einrichten …"
 
 #: useractions.cpp:269
 #, kde-format
 msgid "Configure S&pecial Application Settings…"
-msgstr "Spezielle Einstellungen für diese &Anwendung einrichten …"
+msgstr "Spezielle Einstellungen für diese &Anwendung einrichten …"
 
 #: useractions.cpp:275
 #, kde-format
@@ -3440,10 +3427,9 @@ msgid "<b>%1</b> is used by %2 in %3"
 msgstr "<b>%1</b> wird bereits als %2 in %3 verwendet"
 
 #: useractions.cpp:912
-#, fuzzy, kde-format
-#| msgid "Window role"
+#, kde-format
 msgid "Window Menu"
-msgstr "Rolle des Fensters"
+msgstr "Fenstermenü"
 
 #: useractions.cpp:914
 #, kde-format
@@ -3651,28 +3637,24 @@ msgid "Keep Window on All Desktops"
 msgstr "Fenster auf allen Arbeitsflächen anzeigen"
 
 #: useractions.cpp:998
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Left"
+#, kde-format
 msgid "Custom Quick Tile Window to the Left"
-msgstr "Fenster am linken Bildschirmrand anordnen"
+msgstr "Fenster im benutzerdefinierten Raster nach links anordnen"
 
 #: useractions.cpp:1000
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Right"
+#, kde-format
 msgid "Custom Quick Tile Window to the Right"
-msgstr "Fenster am rechten Bildschirmrand anordnen"
+msgstr "Fenster im benutzerdefinierten Raster nach rechts anordnen"
 
 #: useractions.cpp:1002
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Top"
+#, kde-format
 msgid "Custom Quick Tile Window to the Top"
-msgstr "Fenster am oberen Bildschirmrand anordnen"
+msgstr "Fenster im benutzerdefinierten Raster nach oben anordnen"
 
 #: useractions.cpp:1004
-#, fuzzy, kde-format
-#| msgid "Quick Tile Window to the Bottom"
+#, kde-format
 msgid "Custom Quick Tile Window to the Bottom"
-msgstr "Fenster am unteren Bildschirmrand anordnen"
+msgstr "Fenster im benutzerdefinierten Raster nach unten anordnen"
 
 #: useractions.cpp:1015
 #, kde-format
@@ -3842,27 +3824,29 @@ msgstr "Auf Arbeitsfläche %1 umschalten"
 #: wayland/outputmanagement_v2.cpp:433
 #, kde-format
 msgid "One of the relevant outputs is no longer available"
-msgstr ""
+msgstr "Eines der relevanten Ausgabegeräte ist nicht mehr verfügbar"
 
 #: wayland/outputmanagement_v2.cpp:451
 #, kde-format
 msgid "Disabling all outputs through configuration changes is not allowed"
 msgstr ""
+"Alle Ausgabegeräte über Änderung der Einrichtung zu deaktivieren ist nicht "
+"zulässig"
 
 #: wayland/outputmanagement_v2.cpp:461
 #, kde-format
 msgid "The provided output order doesn't contain all outputs"
-msgstr ""
+msgstr "Die angegebene Reihenfolge enthält nicht alle Ausgabegeräte"
 
 #: wayland/outputmanagement_v2.cpp:479
 #, kde-format
 msgid "The provided output order is invalid"
-msgstr ""
+msgstr "Die angegebene Reihenfolge der Ausgabegeräte ist ungültig"
 
 #: wayland/outputmanagement_v2.cpp:497
 #, kde-format
 msgid "The driver rejected the output configuration"
-msgstr ""
+msgstr "Der Treiber hat die Ausgabeeinrichtung zurückgewiesen"
 
 #: window.cpp:3303
 #, kde-format
