@@ -103,7 +103,7 @@ msgstr "Virtuelle Arbeitsfläche umschalten:"
 #, kde-format
 msgctxt "@info:tooltip"
 msgid "Configure…"
-msgstr "Einrichten …"
+msgstr "Einrichten …"
 
 #: ui/main.qml:157
 #, kde-format
