@@ -4,7 +4,7 @@
 # SPDX-FileCopyrightText: 2010 Johannes Obermayr <johannesobermayr@gmx.de>
 # SPDX-FileCopyrightText: 2010-2013, 2015, 2016, 2018, 2020-2023 Frederik Schwarzer <schwarzer@kde.org>
 # SPDX-FileCopyrightText: 2010, 2012-2021 Burkhard Lück <lueck@hube-lueck.de>
-# SPDX-FileCopyrightText: 2012, 2024 Frank Steinmetzger <Warp_7@gmx.de>
+# SPDX-FileCopyrightText: 2012, 2024, 2026 Frank Steinmetzger <Warp_7@gmx.de>
 # SPDX-FileCopyrightText: 2023 Jannick Kuhr <opensource@kuhr.org>
 # SPDX-FileCopyrightText: 2024 Flori G <Renner03@protonmail.com>
 # SPDX-FileCopyrightText: 2025 Alois Spitzbart <spitz234@hotmail.com>
@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2026-03-15 23:00+0100\n"
-"Last-Translator: Alexander Becker <alex-at-kde-l10n-de@freenet.de>\n"
+"PO-Revision-Date: 2026-03-21 20:58+0100\n"
+"Last-Translator: Frank Steinmetzger <dev-kde@felsenfleischer.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -740,12 +740,12 @@ msgstr "Knöpfe"
 #: debug_console.cpp:526
 #, kde-format
 msgid "Tablet Tool Tip"
-msgstr "Tablet-Werkzeug Tipp"
+msgstr "Tablet-Werkzeug Spitze"
 
 #: debug_console.cpp:527
 #, kde-format
 msgid "Tip"
-msgstr "Tipp"
+msgstr "Spitze"
 
 #: debug_console.cpp:527
 #, kde-format
@@ -760,7 +760,7 @@ msgstr "Nach oben"
 #: debug_console.cpp:543
 #, kde-format
 msgid "Tablet Tool Button"
-msgstr "Tablet-Werkzeug-Knopf"
+msgstr "Tablet-Werkzeug Knopf"
 
 #: debug_console.cpp:544 debug_console.cpp:558
 #, kde-format
