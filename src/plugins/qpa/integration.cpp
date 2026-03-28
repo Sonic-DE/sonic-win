@@ -93,7 +93,6 @@ bool Integration::hasCapability(Capability cap) const
         return true;
     case ThreadedOpenGL:
     case BufferQueueingOpenGL:
-    case RasterGLSurface:
         return false;
     default:
         return QPlatformIntegration::hasCapability(cap);
