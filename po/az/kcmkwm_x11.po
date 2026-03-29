@@ -1,13 +1,14 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2026 This file is copyright:
 # This file is distributed under the same license as the kwin package.
 #
-# Xəyyam Qocayev <xxmn77@gmail.com>, 2020, 2021, 2022.
+# SPDX-FileCopyrightText: 2026 X əyyam
+# SPDX-FileCopyrightText: 2026 Kheyyam <xxmn77@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2022-10-18 00:03+0400\n"
+"PO-Revision-Date: 2026-03-29 02:42+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
 "Language: az\n"
@@ -15,13 +16,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.08.2\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_1)
 #: actions.ui:20
 #, kde-format
 msgid "Inactive Inner Window Actions"
-msgstr "Qeyri-altiv pəncərənin daxili"
+msgstr "Qeyri-aktiv pəncərə daxilində"
 
 #. i18n: ectx: property (text), widget (QLabel, label_1)
 #. i18n: ectx: property (text), widget (QLabel, label_5)
@@ -43,10 +44,9 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
 #: actions.ui:48
-#, fuzzy, kde-format
-#| msgid "Activate and raise"
+#, kde-format
 msgid "Activate, pass click and raise on release"
-msgstr "Aktivləşdirmək və üstə çıxarmaq"
+msgstr "Aktiv etmək, klikləmək və buraxdıqda önə çıxmaq"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
@@ -95,6 +95,9 @@ msgid ""
 "Note that \"Activate, pass click and raise on release\" doesn't work on X11, "
 "and falls back to \"Activate, raise and pass click\" instead"
 msgstr ""
+"Nəzərə alın ki, \"Aktiv etmək, klikləmək və buraxdıqda önə çıxmaq\" X11 "
+"qrafik serverində işləmir. Əvəzinə \"Aktivləşdirmək, önə çıxartmaq və "
+"klikləmək\" istifadə olunacaq"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
@@ -238,7 +241,7 @@ msgstr "Köçürmək"
 #: actions.ui:292 actions.ui:362 actions.ui:432
 #, kde-format
 msgid "Activate, raise and move"
-msgstr "Aktivləşdirmək, yüksəltmək və köçürmək"
+msgstr "Aktivləşdirmək, önə çıxartmaq və köçürmək"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
@@ -253,7 +256,7 @@ msgstr "Aktivləşdirmək, yüksəltmək və köçürmək"
 #: mouse.ui:367 mouse.ui:429 mouse.ui:482 mouse.ui:544
 #, kde-format
 msgid "Toggle raise and lower"
-msgstr "Yüksəltmə və Alçaltma keçisi"
+msgstr "Önə çıxartmaq/aşağı salmaq"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
@@ -276,7 +279,7 @@ msgstr "Ölçüsünü dəyişmək"
 #: mouse.ui:357 mouse.ui:419 mouse.ui:472 mouse.ui:534
 #, kde-format
 msgid "Raise"
-msgstr "Yüksəltmək"
+msgstr "Önə çıxartmaq"
 
 #. i18n: @item:inlistbox behavior on double click
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
@@ -347,7 +350,7 @@ msgstr "Şəffaflığı artırmaq"
 #: mouse.ui:507 mouse.ui:569
 #, kde-format
 msgid "Do nothing"
-msgstr "Heç biri"
+msgstr "Heç nə etməmək"
 
 #. i18n: ectx: property (text), widget (QLabel, label_8)
 #: actions.ui:340
@@ -403,7 +406,7 @@ msgstr ""
 #: actions.ui:497 mouse.ui:105
 #, kde-format
 msgid "Raise/lower"
-msgstr "Yüksəltmək/Alçaltmaq"
+msgstr "Önə çıxartmaq/aşağı salmaq"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
@@ -479,7 +482,7 @@ msgstr ""
 #: advanced.ui:45 focus.ui:85 focus.ui:181
 #, kde-format
 msgid " ms"
-msgstr " ms"
+msgstr " msan"
 
 #. i18n: ectx: property (text), widget (QLabel, windowPlacementLabel)
 #: advanced.ui:66
@@ -489,35 +492,7 @@ msgstr "Yeni &pəncərənin yerləşdirilməsi:"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_Placement)
 #: advanced.ui:76
-#, fuzzy, kde-format
-#| msgid ""
-#| "<html><head/><body><p>The placement policy determines where a new window "
-#| "will appear on the desktop.</p><ul style=\"margin-top: 0px; margin-"
-#| "bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"
-#| "\"><li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; "
-#| "margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
-#| "font-style:italic;\">Smart</span> will try to achieve a minimum overlap "
-#| "of windows</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
-#| "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
-#| "style=\" font-style:italic;\">Maximizing</span> will try to maximize "
-#| "every window to fill the whole screen. It might be useful to selectively "
-#| "affect placement of some windows using the window-specific settings.</"
-#| "li><li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
-#| "margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
-#| "font-style:italic;\">Cascade</span> will cascade the windows</li><li "
-#| "style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "style:italic;\">Random</span> will use a random position</li><li style=\" "
-#| "margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-"
-#| "block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;"
-#| "\">Centered</span> will place the window centered</li><li style=\" margin-"
-#| "top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-"
-#| "indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">Zero-"
-#| "cornered</span> will place the window in the top-left corner</li><li "
-#| "style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-"
-#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-#| "style:italic;\">Under mouse</span> will place the window under the "
-#| "pointer</li></ul></body></html>"
+#, kde-format
 msgid ""
 "<html><head/><body><p>The placement policy determines where a new window "
 "will appear on the desktop.</p><ul style=\"margin-top: 0px; margin-bottom: "
@@ -544,32 +519,29 @@ msgid ""
 "window under the pointer</li></ul></body></html>"
 msgstr ""
 "<html><head/><body><p>Bu parametr yeni pəncərənin iş masasında yerləşdirilmə "
-"qaydasnı təyin etməyə imkan verir.</p><ul style=\"margin-top: 0px; margin-"
+"qaydasını təyin etməyə imkan verir.</p><ul style=\"margin-top: 0px; margin-"
 "bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li "
 "style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
-"italic;\">Ən az üst-üstə düşmə</span> pəncərələrin minimum üst-üstə "
-"düşməsinə nail olmağa çalışacaq</li><li style=\" margin-top:0px; margin-"
-"bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-"
-"indent:0px;\"><span style=\" font-style:italic;\">Tam açılan</span>bütün "
-"ekranı doldurmaq üçün hər pəncərəni böyütməyə çalışacaqdır. Pəncərənin "
-"xüsusi parametrlərini istifadə edərək bəzi pəncərələrin yerləşdirilməsinə "
-"seçici şəkildə təsir etmək faydalı ola bilər.</li><li style=\" margin-"
-"top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-"
-"indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">Ardıcıl</"
-"span>Pəncərələr ardıcıl düzüləcək</li><li style=\" margin-top:0px; margin-"
-"bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-"
-"indent:0px;\"><span style=\" font-style:italic;\">Təsadüfi</span>Pəncərələr "
-"ixtiyari düzüləcək</li><li style=\" margin-top:0px; margin-bottom:0px; "
+"italic;\">Ağıllı</span> pəncərələrin minimum üst-üstə düşməsinə nail olmağa "
+"çalışacaq</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
+"left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
+"style=\" font-style:italic;\">Tam açılan</span> bütün ekranı doldurmaq üçün "
+"hər pəncərəni böyütməyə çalışacaq. Pəncərənin xüsusi parametrlərini istifadə "
+"edərək bəzi pəncərələrin yerləşdirilməsinə seçici şəkildə təsir etmək "
+"faydalı ola bilər.</li><li style=\" margin-top:0px; margin-bottom:0px; "
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-"\"><span style=\" font-style:italic;\">Mərkəzdə</span> Pəncərələr ekranın "
-"mərkəszində yerləşəcək</li><li style=\" margin-top:0px; margin-bottom:0px; "
-"margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-"\"><span style=\" font-style:italic;\">Yuxarı sol küncdə</span> Pəncərələr "
-"yuxarı sol küncdə yerləşəcək</li><li style=\" margin-top:0px; margin-"
-"bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-"
-"indent:0px;\"><span style=\" font-style:italic;\">Kursorun altında</span> "
-"Pəncərələr kursorun altında yerləşəcək</li></ul></body></html>"
+"\"><span style=\" font-style:italic;\">Təsadüfi</span> Təsadüfi "
+"yerləşdirmədən istifadə edəcək</li><li style=\" margin-top:0px; margin-"
+"bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-"
+"indent:0px;\"><span style=\" font-style:italic;\">Mərkəzləşmiş</span> "
+"pəncərəni mərkəzdə yerləşdirəcək</li><li style=\" margin-top:0px; margin-"
+"bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-"
+"indent:0px;\"><span style=\" font-style:italic;\">Yuxarı sol künc</span> "
+"Pəncərəni yuxarı sol küncdə yerləşdirəcək</li><li style=\" margin-top:0px; "
+"margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; "
+"text-indent:0px;\"><span style=\" font-style:italic;\">Kursor altında</span> "
+"pəncərəni göstərici kursor altında yerləşdirəcək</li></ul></body></html>"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:80
@@ -663,13 +635,13 @@ msgstr ""
 #: advanced.ui:144
 #, kde-format
 msgid "Switch to that Virtual Desktop"
-msgstr "Bu virtual iş masasına keçid"
+msgstr "Bu virtual iş masasına keçir"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActivationDesktopPolicy)
 #: advanced.ui:149
 #, kde-format
 msgid "Bring window to current Virtual Desktop"
-msgstr "Pəncərəni bu virtual iş masasına köçür"
+msgstr "Pəncərəni bu virtual iş masasına köçürür"
 
 #. i18n: ectx: property (text), widget (QLabel, windowFocusPolicyLabel)
 #: focus.ui:22
@@ -688,13 +660,13 @@ msgstr "Pəncərələrin aktişləşdirilməsi qaydaları."
 #, kde-format
 msgctxt "sassa asas"
 msgid "Click to focus"
-msgstr "Fokuslamaq üçün vurun"
+msgstr "Vurmaqla fokus"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, windowFocusPolicy)
 #: focus.ui:41
 #, kde-format
 msgid "Click to focus (mouse precedence)"
-msgstr "Fokuslamaq üçün vurun (siçanın üstünlüyü)"
+msgstr "Vurmaqla fokus (siçanın üstünlüyü)"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, windowFocusPolicy)
 #: focus.ui:46
@@ -712,13 +684,13 @@ msgstr "Kursor ilə fokuslamaq (siçanın üstünlüyü)"
 #: focus.ui:56
 #, kde-format
 msgid "Focus under mouse"
-msgstr "Kursorun altından fokuslamaq"
+msgstr "Fokus kursor altında"
 
 #. i18n: ectx: property (text), item, widget (QComboBox, windowFocusPolicy)
 #: focus.ui:61
 #, kde-format
 msgid "Focus strictly under mouse"
-msgstr "Kursorun tam altından fokuslamaq"
+msgstr "Fokus yalnız kursor altında"
 
 #. i18n: ectx: property (text), widget (QLabel, delayFocusOnLabel)
 #: focus.ui:69
@@ -740,7 +712,7 @@ msgstr ""
 #: focus.ui:101
 #, kde-format
 msgid "Focus &stealing prevention:"
-msgstr "Fokusun dəyişdirilməsinin qarşısının alınması &səviyyəsi:"
+msgstr "Fokusun &dəyişiminin əngəllənməsi:"
 
 #. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:114
@@ -779,36 +751,36 @@ msgid ""
 msgstr ""
 "<html><head/><body><p>Bu seçim, yeni pəncərələrin gözlənilmədən "
 "aktivləşdirilməsi nəticəsində yaranan arzuolunmaz fokus dəyişməsinin "
-"qarşısını almağa KWin-in nə iş görəcəyini göstərir. (Qeyd: Bu, <span style="
+"qarşısını almağa KWin-nə nə iş görəcəyini göstərir. (Qeyd: Bu, <span style="
 "\" font-style:italic;\">Kursorun altından fokuslama</span> və ya <span style="
 "\" font-style:italic;\">Kursorun tam altından fokuslama</span> fokuslama "
 "qaydaları ilə işləməyəcək.) </p><ul style=\"margin-top: 0px; margin-bottom: "
 "0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;\"><li style=\" "
 "margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-"
 "block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">Qeyd:"
-"</span> Qarşılıqlı təsir söndürülüb və yeni pəncərə həmişə aktivdir.</li><li "
-"style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"</span> Qarşısının alınması söndürülür və yeni pəncərələr həmişə aktiv olur."
+"</li><li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
 "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
-"italic;\">Aşağı:</span> Qarşılıqlı təsir aktivləşdirilib; bəzi pəncərədə "
-"əsas mexanizm üçün dəstək olmadıqda və KWin, pəncərəni aktiv etmək və ya "
-"etməmək barədə etibarlı qərar verə bilməyəndə aktivləşdiriləcəkdir. Bu "
-"parametr tətbiqlərdən asılı olaraq orta səviyyədən daha pis və daha yaxşı "
-"nəticələrə səbəb ola bilər.</li><li style=\" margin-top:0px; margin-"
-"bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-"
-"indent:0px;\"><span style=\" font-style:italic;\">Orta:</span> Qarşılıqlı "
-"təsir sktivdir.</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
+"italic;\">Aşağı:</span> Qarşısının alınması aktivdir; bəzi pəncərədə əsas "
+"mexanizm üçün dəstək olmadıqda və KWin, pəncərəni aktiv etmək və ya etməmək "
+"barədə etibarlı qərar verə bilməyəndə aktivləşdiriləcəkdir. Bu parametr "
+"tətbiqlərdən asılı olaraq orta səviyyədən daha pis və daha yaxşı nəticələrə "
+"səbəb ola bilər.</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
 "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
-"style=\" font-style:italic;\">Yüksək:</span> Yeni pəncərələr, yalnız heç bir "
-"pəncərə aktiv deyilsə və ya hazırda aktiv tətbiqə aiddirsə, aktiv olur. "
-"Siçan fokus rejimini istifadə etmədikdə bu parametr, o qədər də yararlı "
-"deyil.</li><li style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; "
-"margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
-"style:italic;\">Çox yüksək:</span> Bütün pəncərələr istifadəçi tərəfindən "
-"açıq şəkildə  aktivləşdirilməlidir.</li></ul><p>Fokus dəyişməsinin qarşısı "
-"alınan pəncərə diqqət tələb edilən kimi qeyd olunacaq. Məsələn tapşırıq "
-"panelindəki həmin pəncərəyə aid element işıqlanacaq. Bunu \"Sistem ayarları"
-"\" menyusundakı bildirişlərin ayarlanması bölümündə dəyişmək olar.</p></"
-"body></html>"
+"style=\" font-style:italic;\">Orta:</span> Qarşısının alınması aktivdir.</"
+"li><li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">Yüksək:</span> Yeni pəncərələr, yalnız heç bir pəncərə aktiv "
+"deyilsə və ya hazırda aktiv tətbiqə aiddirsə, aktiv olur. Siçan fokus "
+"rejimini istifadə etmədikdə bu parametr, o qədər də yararlı deyil.</li><li "
+"style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-"
+"right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-style:"
+"italic;\">Çox yüksək:</span> Bütün pəncərələr istifadəçi tərəfindən açıq "
+"şəkildə  aktivləşdirilməlidir.</li></ul><p>Fokus dəyişməsinin qarşısı alınan "
+"pəncərə diqqət tələb edilən kimi qeyd olunacaq. Məsələn tapşırıq panelindəki "
+"həmin pəncərəyə aid element işıqlanacaq. Bunu \"Sistem ayarları\" "
+"menyusundakı bildirişlərin ayarlanması bölümündə dəyişmək olar.</p></body></"
+"html>"
 
 #. i18n: Focus Stealing Prevention Level
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_BorderSnapZone)
@@ -818,7 +790,7 @@ msgstr ""
 #: focus.ui:118 moving.ui:33 moving.ui:65 moving.ui:97
 #, kde-format
 msgid "None"
-msgstr "Heç biri"
+msgstr "Heç nə"
 
 #. i18n: Focus Stealing Prevention Level
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
@@ -852,7 +824,7 @@ msgstr "Çox yüksək"
 #: focus.ui:146
 #, kde-format
 msgid "Raising windows:"
-msgstr "Pəncərələri önə çıxarmaq:"
+msgstr "Pəncərələri önə çıxartmaq:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_ClickRaise)
 #: focus.ui:153
@@ -885,7 +857,7 @@ msgstr ""
 #: focus.ui:168
 #, kde-format
 msgid "&Raise on hover, delayed by:"
-msgstr "Üzə&rində saxlamaqla önə çıxma müddəti:"
+msgstr "Üzə&rində olduqda önə çıxma müddəti:"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_AutoRaiseInterval)
 #: focus.ui:178
@@ -1116,7 +1088,7 @@ msgstr "Fokuslamaq və arxa plana keşirmək"
 #: mouse.ui:577
 #, kde-format
 msgid "Maximize window by double clicking its frame"
-msgstr ""
+msgstr "Çərçivəsinə iki dəfə vurmaqla pəncərəni tam açmaq"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: mouse.ui:602
@@ -1242,9 +1214,8 @@ msgid ""
 "<em>Click to focus:</em> A window becomes active when you click into it. "
 "This behavior is common on other operating systems and likely what you want."
 msgstr ""
-"<em>Fokus üçün klik:</em>Pəncərə daxilinə və ya başlığına klikləndikdə "
-"aktivləşir. Siz ola bilsin ki, bununla başqa əməliyyat sistemlərindən "
-"tanışsını."
+"<em>Fokus üçün klik:</em> Pəncərə daxilinə vurduqda aktivləşir. Bu başqa "
+"əməliyyat sistemlərində də belədir və güman ki, buna artıq vərdiş etmisiniz."
 
 #: windows.cpp:95
 #, kde-format

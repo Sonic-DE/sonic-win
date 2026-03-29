@@ -1,13 +1,14 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2026 This file is copyright:
 # This file is distributed under the same license as the kwin package.
 #
-# Xəyyam Qocayev <xxmn77@gmail.com>, 2020, 2021, 2022.
+# SPDX-FileCopyrightText: 2026 X əyyam
+# SPDX-FileCopyrightText: 2026 Kheyyam <xxmn77@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2022-07-03 14:23+0400\n"
+"PO-Revision-Date: 2026-03-29 02:47+0400\n"
 "Last-Translator: Kheyyam <xxmn77@gmail.com>\n"
 "Language-Team: Azerbaijani <kde-i18n-doc@kde.org>\n"
 "Language: az\n"
@@ -15,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.04.2\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #: layoutpreview.cpp:113
 #, kde-format
@@ -63,10 +64,9 @@ msgid "Alternative"
 msgstr "Alternativ"
 
 #: main.cpp:77
-#, fuzzy, kde-format
-#| msgid "Get New Task Switchers..."
+#, kde-format
 msgid "Get New Task Switcher Styles…"
-msgstr "Yeni Vizual Pəncərə Dəyişdiricilərini Almaq..."
+msgstr "Yeni tapşırıq dəyişdirici almaq..."
 
 #: main.cpp:95
 #, kde-format
