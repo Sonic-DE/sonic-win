@@ -205,14 +205,18 @@ var translucencyEffect = {
         }
     },
     manage: function (window) {
-        window.windowDesktopsChanged.connect(translucencyEffect.cancelAnimations);
-        window.windowDesktopsChanged.connect(translucencyEffect.startAnimation);
+        window.windowDesktopsChanged.connect(() => {
+            translucencyEffect.cancelAnimations(window);
+        });
+        window.windowDesktopsChanged.connect(() => {
+            translucencyEffect.startAnimation(window);
+        });
         window.windowStartUserMovedResized.connect(translucencyEffect.moveResize.start);
         window.windowFinishUserMovedResized.connect(translucencyEffect.moveResize.finish);
 
         window.minimizedChanged.connect(() => {
             if (window.minimized) {
-                translucencyEffect.cancelAnimations();
+                translucencyEffect.cancelAnimations(window);
             } else {
                 translucencyEffect.startAnimation(window);
                 translucencyEffect.inactive.animate(window);
@@ -223,7 +227,9 @@ var translucencyEffect = {
         effect.configChanged.connect(translucencyEffect.loadConfig);
         effects.windowAdded.connect(translucencyEffect.manage);
         effects.windowAdded.connect(translucencyEffect.startAnimation);
-        effects.windowClosed.connect(translucencyEffect.cancelAnimations);
+        effects.windowClosed.connect((window) => {
+            translucencyEffect.cancelAnimations(window);
+        });
         effects.windowActivated.connect(translucencyEffect.inactive.activated);
         effects.desktopChanged.connect(translucencyEffect.desktopChanged);
 
