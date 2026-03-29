@@ -27,7 +27,3 @@ CMakeLists.txt.user*
 /cmake-build*
 .cache
 .directory
-.trunk
-/.ccls-cache
-/.ccls
-/.claude
