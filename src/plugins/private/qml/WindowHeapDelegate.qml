@@ -31,6 +31,7 @@ ExpoCell {
     // no desktops is a special value which means "All Desktops"
     readonly property bool presentOnCurrentDesktop: !window.desktops.length || window.desktops.indexOf(KWinComponents.Workspace.currentDesktop) !== -1
     readonly property bool initialHidden: window.minimized || !presentOnCurrentDesktop
+    property real gridVal: 0
     readonly property bool activeHidden: {
         if (window.skipSwitcher) {
             return true;
@@ -112,7 +113,7 @@ ExpoCell {
         id: mainContent
         parent: contentItemParent
         visible: opacity > 0 && (!activeHidden || !initialHidden)
-        opacity: (1 - downGestureProgress) * (initialHidden ? partialActivationFactor : 1)
+        opacity: (1 - downGestureProgress) * (initialHidden ? Math.max(partialActivationFactor, gridVal > 0 ? 1 : 0) : 1)
         z: (activeDragHandler.active || returnAnimation.running) ? 1000
             : thumb.window.stackingOrder * (presentOnCurrentDesktop ? 1 : 0.001)
 
