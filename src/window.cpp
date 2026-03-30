@@ -798,8 +798,8 @@ QStringList Window::desktopIds() const
     std::transform(desks.constBegin(), desks.constEnd(),
                    std::back_inserter(ids),
                    [](const VirtualDesktop *vd) {
-                       return vd->id();
-                   });
+        return vd->id();
+    });
     return ids;
 }
 
@@ -2141,8 +2141,26 @@ bool Window::hasTransientPlacementHint() const
 
 QRectF Window::transientPlacement() const
 {
-    Q_UNREACHABLE();
-    return QRectF();
+    // For transient windows, place them centered on their parent
+    const Window *parent = transientFor();
+    if (!parent) {
+        // Fallback: if no parent, use the active output
+        return QRectF();
+    }
+
+    const QSizeF size = frameGeometry().size();
+    if (size.isEmpty()) {
+        return QRectF();
+    }
+
+    // Get the parent's geometry
+    const QRectF parentGeom = parent->frameGeometry();
+
+    // Center the transient window on the parent
+    const qreal x = parentGeom.x() + (parentGeom.width() - size.width()) / 2;
+    const qreal y = parentGeom.y() + (parentGeom.height() - size.height()) / 2;
+
+    return QRectF(x, y, size.width(), size.height());
 }
 
 bool Window::hasTransient(const Window *c, bool indirect) const

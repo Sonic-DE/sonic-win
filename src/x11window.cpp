@@ -820,14 +820,28 @@ bool X11Window::manage(xcb_window_t w, bool isMapped)
         area = workspace()->clientArea(FullArea, this, geom.center());
         checkOffscreenPosition(&geom, area);
     } else {
-        Output *output = nullptr;
-        if (asn_data.xinerama() != -1) {
-            output = workspace()->xineramaIndexToOutput(asn_data.xinerama());
-        }
+        // Use the active output to determine the initial output
+        Output *output = workspace()->activeOutput();
+
         if (!output) {
-            output = workspace()->activeOutput();
+            // If there was no active output, try the window's requested position
+            output = workspace()->outputAt(geom.center());
+
+            if (!output) {
+                if (asn_data.xinerama() != -1) {
+                    // Try xinerama if available
+                    output = workspace()->xineramaIndexToOutput(asn_data.xinerama());
+                } else {
+                    // Fall back to mouse position
+                    output = workspace()->outputAt(Cursors::self()->mouse()->pos());
+                }
+            }
         }
+
         output = rules()->checkOutput(output, !isMapped);
+
+        setOutput(output);
+        setMoveResizeOutput(output);
         area = workspace()->clientArea(PlacementArea, this, output->geometry().center());
     }
 
@@ -844,21 +858,8 @@ bool X11Window::manage(xcb_window_t w, bool isMapped)
     } else if (isTransient() && !hasNETSupport()) {
         usePosition = true;
     } else if (isDialog() && hasNETSupport()) {
-        // If the dialog is actually non-NETWM transient window, don't try to apply placement to it,
-        // it breaks with too many things (xmms, display)
-        if (mainWindows().count() >= 1) {
-#if 1
-            // #78082 - Ok, it seems there are after all some cases when an application has a good
-            // reason to specify a position for its dialog. Too bad other WMs have never bothered
-            // with placement for dialogs, so apps always specify positions for their dialogs,
-            // including such silly positions like always centered on the screen or under mouse.
-            // Using ignoring requested position in window-specific settings helps, and now
-            // there's also _NET_WM_FULL_PLACEMENT.
-            usePosition = true;
-#else
-            ; // Force using placement policy
-#endif
-        } else {
+        // For transient dialogs without a parent or non-transient dialogs, use the application's requested position
+        if (!isTransient() || !transientFor()) {
             usePosition = true;
         }
     } else if (isSplash()) {
@@ -867,7 +868,7 @@ bool X11Window::manage(xcb_window_t w, bool isMapped)
         usePosition = true;
     }
     if (!rules()->checkIgnoreGeometry(!usePosition, true)) {
-        if (m_geometryHints.hasPosition()) {
+        if (m_geometryHints.hasPosition() && usePosition) {
             placementDone = true;
             // Disobey xinerama placement option for now (#70943)
             area = workspace()->clientArea(PlacementArea, this, geom.center());
@@ -909,8 +910,10 @@ bool X11Window::manage(xcb_window_t w, bool isMapped)
     }
     if (!placementDone) {
         // Placement needs to be after setting size
+        qCDebug(KWIN_CORE) << "  Before placement - window pos:" << pos() << "frameGeometry:" << frameGeometry();
         workspace()->placement()->place(this, area);
         // The client may have been moved to another screen, update placement area.
+        qCDebug(KWIN_CORE) << "  After placement - window pos:" << pos() << "frameGeometry:" << frameGeometry() << "output:" << output();
         area = workspace()->clientArea(PlacementArea, this, moveResizeOutput());
         dontKeepInArea = true;
         placementDone = true;

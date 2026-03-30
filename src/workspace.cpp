@@ -1179,7 +1179,13 @@ void Workspace::updateOutputs(const std::optional<QList<Output *>> &outputOrder)
     }
 
     if (!m_activeOutput || !m_outputs.contains(m_activeOutput)) {
-        setActiveOutput(m_outputs[0]);
+        if (kwinApp()->x11Connection()) {
+            // Use cursor position to determine the current screen
+            setActiveOutput(outputAt(Cursors::self()->mouse()->pos()));
+        } else {
+            // No X11 connection, fallback to first output
+            setActiveOutput(m_outputs[0]);
+        }
     }
 
     if (outputOrder) {
