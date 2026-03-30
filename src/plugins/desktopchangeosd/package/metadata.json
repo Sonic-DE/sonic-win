@@ -54,6 +54,7 @@
         ],
         "Description": "An on screen display indicating the desktop change",
         "Description[ar]": "عرض تنبيه على الشاشة يشير إلى تغيير سطح المكتب",
+        "Description[az]": "Ekranda iş masasının dəyişdirilməsi bildirişi",
         "Description[be]": "На экране паказваецца змена працоўнага стала",
         "Description[bg]": "Екранен надпис, показващ промяната на работния плот",
         "Description[ca@valencia]": "Un missatge a la pantalla indicant el canvi d'escriptori",
