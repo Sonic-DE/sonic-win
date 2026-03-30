@@ -820,13 +820,18 @@ bool X11Window::manage(xcb_window_t w, bool isMapped)
         area = workspace()->clientArea(FullArea, this, geom.center());
         checkOffscreenPosition(&geom, area);
     } else {
-        // Use the active output to determine the initial output
-        Output *output = workspace()->activeOutput();
+        Output *output = nullptr;
+        // Use the application requested position if the application explicitly specified it
+        // (via WM_NORMAL_HINTS with USPosition or PPosition flags)
+        if (m_geometryHints.hasPosition()) {
+            output = workspace()->outputAt(geom.center());
+        }
 
         if (!output) {
-            // If there was no active output, try the window's requested position
-            output = workspace()->outputAt(geom.center());
+            // If there was no requested position output, use the active output
+            output = workspace()->activeOutput();
 
+            // Fallbacks if there is no active output
             if (!output) {
                 if (asn_data.xinerama() != -1) {
                     // Try xinerama if available
