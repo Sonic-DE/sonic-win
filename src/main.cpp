@@ -664,28 +664,6 @@ static PlatformCursorImage grabCursorOpenGL()
     return PlatformCursorImage(image, cursor->hotspot());
 }
 
-static PlatformCursorImage grabCursorSoftware()
-{
-    CursorScene *scene = Compositor::self()->cursorScene();
-    if (!scene) {
-        return PlatformCursorImage();
-    }
-
-    Cursor *cursor = Cursors::self()->currentCursor();
-    Output *output = workspace()->outputAt(cursor->pos());
-
-    QImage image((cursor->geometry().size() * output->scale()).toSize(), QImage::Format_ARGB32_Premultiplied);
-    RenderTarget renderTarget(&image);
-
-    SceneDelegate delegate(scene, output);
-    scene->prePaint(&delegate);
-    scene->paint(renderTarget, infiniteRegion());
-    scene->postPaint();
-
-    image.setDevicePixelRatio(output->scale());
-    return PlatformCursorImage(image, cursor->hotspot());
-}
-
 PlatformCursorImage Application::cursorImage() const
 {
     Cursor *cursor = Cursors::self()->currentCursor();
