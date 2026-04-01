@@ -83,12 +83,6 @@ static void convertFromGLImage(QImage &img, int w, int h, const OutputTransform 
     img = img.transformed(matrix.toTransform());
 }
 
-static QRectF roundedRect(const QRect &rect, qreal scale)
-{
-    const QRect scaled = snapToPixelGrid(scaledRect(rect, scale));
-    return scaledRect(scaled, 1.0 / scale);
-}
-
 bool ScreenShotEffect::supported()
 {
     return effects->isOpenGLCompositing();
