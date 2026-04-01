@@ -492,18 +492,6 @@ bool Application::dispatchEvent(xcb_generic_event_t *event)
     return false;
 }
 
-static quint32 monotonicTime()
-{
-    timespec ts;
-
-    const int result = clock_gettime(CLOCK_MONOTONIC, &ts);
-    if (result) {
-        qCWarning(KWIN_CORE, "Failed to query monotonic time: %s", strerror(errno));
-    }
-
-    return ts.tv_sec * 1000 + ts.tv_nsec / 1000000L;
-}
-
 void Application::updateXTime()
 {
     setX11Time(QX11Info::getTimestamp(), TimestampUpdate::Always);
