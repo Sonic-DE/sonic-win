@@ -9,6 +9,11 @@
 #cmakedefine01 KWIN_BUILD_SCREENLOCKER
 #cmakedefine01 KWIN_BUILD_TABBOX
 #cmakedefine01 KWIN_BUILD_ACTIVITIES
+
+// Required for compatibility with KDE child dependencies
+#define KWIN_BUILD_X11 1
+#define KWIN_BUILD_WAYLAND 0
+
 constexpr QLatin1String KWIN_DATADIR("${KWIN_DATADIR}");
 constexpr QLatin1String KWIN_PLUGINDIR("${KWIN_PLUGINDIR}");
 constexpr QLatin1String KWIN_CONFIG("kwinrc");
