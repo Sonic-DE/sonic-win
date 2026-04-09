@@ -18,8 +18,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 21.12.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_1)
 #: actions.ui:20
@@ -46,8 +46,7 @@ msgstr ""
 
 #. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
 #: actions.ui:48
-#, fuzzy, kde-format
-#| msgid "Activate and raise"
+#, kde-format
 msgid "Activate, pass click and raise on release"
 msgstr "Aktivovať a presunúť dopredu"
 
@@ -98,6 +97,8 @@ msgid ""
 "Note that \"Activate, pass click and raise on release\" doesn't work on X11, "
 "and falls back to \"Activate, raise and pass click\" instead"
 msgstr ""
+"Všimnite si, že \"Activate, pass click and raise on release\" doesn't work "
+"on X11, and falls back to \"Activate, raise and pass click\" instead"
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
@@ -1075,7 +1076,7 @@ msgstr "Aktivovať a presunúť dozadu"
 #: mouse.ui:577
 #, kde-format
 msgid "Maximize window by double clicking its frame"
-msgstr ""
+msgstr "Maximalizovať okno dvojitým kliknutím na jeho rám"
 
 #. i18n: ectx: property (title), widget (QGroupBox, groupBox_3)
 #: mouse.ui:602
@@ -1408,7 +1409,6 @@ msgstr ""
 #~ "automaticky pridaná do aktuálnej skupiny."
 
 #, fuzzy
-#~| msgid "Switch to automatically grouped windows immediately"
 #~ msgid "&Switch to automatically grouped windows immediately"
 #~ msgstr "Okamžite prepínať na automaticky zoskupené okná"
 
@@ -1418,7 +1418,6 @@ msgstr ""
 #~ "skryté."
 
 #, fuzzy
-#~| msgid "Hide inactive window tabs from the taskbar"
 #~ msgid "&Hide inactive window tabs from the taskbar"
 #~ msgstr "Skryť neaktívne karty okna z panelu úloh"
 
@@ -1433,7 +1432,6 @@ msgstr ""
 #~ msgstr "Automaticky zoskupovať podobné okná"
 
 #, fuzzy
-#~| msgid "Start Window Tab Drag"
 #~ msgid "Start window tab drag"
 #~ msgstr "Spustiť ťahanie okna na kartu"
 
