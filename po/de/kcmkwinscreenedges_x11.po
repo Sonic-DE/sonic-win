@@ -1,6 +1,6 @@
-# SPDX-FileCopyrightText: 2009, 2010, 2023 Johannes Obermayr <johannesobermayr@gmx.de>
-# SPDX-FileCopyrightText: 2009, 2013-2015, 2017-2021 Burkhard Lück <lueck@hube-lueck.de>
 # SPDX-FileCopyrightText: 2009 Thomas Reitelbach <tr@erdfunkstelle.de>
+# SPDX-FileCopyrightText: 2009, 2013-2015, 2017-2021 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2009-2010, 2023 Johannes Obermayr <johannesobermayr@gmx.de>
 # SPDX-FileCopyrightText: 2012, 2016, 2020, 2022 Frederik Schwarzer <schwarzer@kde.org>
 # SPDX-FileCopyrightText: 2022 Frank Steinmetzger <dev-kde@felsenfleischer.de>
 # SPDX-FileCopyrightText: 2023 Jannick Kuhr <opensource@kuhr.org>
@@ -59,17 +59,17 @@ msgstr "Fenster zeigen"
 #: main.cpp:162 touch.cpp:128
 #, kde-format
 msgid "%1 - All Desktops"
-msgstr "%1 - Alle Arbeitsflächen"
+msgstr "%1 – Alle Arbeitsflächen"
 
 #: main.cpp:163 touch.cpp:129
 #, kde-format
 msgid "%1 - Current Desktop"
-msgstr "%1 - Aktuelle Arbeitsfläche"
+msgstr "%1 – Aktuelle Arbeitsfläche"
 
 #: main.cpp:164 touch.cpp:130
 #, kde-format
 msgid "%1 - Current Application"
-msgstr "%1 - Aktuelle Anwendung"
+msgstr "%1 – Aktuelle Anwendung"
 
 #: main.cpp:166 touch.cpp:132
 #, kde-format
