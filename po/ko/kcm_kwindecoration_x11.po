@@ -1,14 +1,14 @@
 # Translation of kcmkwindecoration to Korean.
 # Copyright (C) 2001, 2007 Free Software Foundation, Inc.
 # KIM KyungHeon <tody@teoal.net>, 2001.
-# SPDX-FileCopyrightText: 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2018, 2019, 2020, 2021, 2023, 2024 Shinjo Park <kde@peremen.name>
+# SPDX-FileCopyrightText: 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015, 2018, 2019, 2020, 2021, 2023, 2024, 2026 Shinjo Park <kde@peremen.name>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwindecoration\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 14:41+0000\n"
-"PO-Revision-Date: 2024-12-10 01:14+0100\n"
+"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"PO-Revision-Date: 2026-04-26 22:18+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #: declarative-plugin/buttonsmodel.cpp:56
 #, kde-format
@@ -220,47 +220,47 @@ msgstr "%1 테마 편집…"
 #: utils.cpp:25
 #, kde-format
 msgid "No window borders"
-msgstr "창 경계선 없음"
+msgstr "창 테두리 없음"
 
 #: utils.cpp:26
 #, kde-format
 msgid "No side window borders"
-msgstr "창 옆쪽 경계선 없음"
+msgstr "창 옆쪽 테두리 없음"
 
 #: utils.cpp:27
 #, kde-format
 msgid "Tiny window borders"
-msgstr "작은 창 경계선"
+msgstr "작은 창 테두리"
 
 #: utils.cpp:28
 #, kde-format
 msgid "Normal window borders"
-msgstr "일반적인 창 경계선"
+msgstr "일반적인 창 테두리"
 
 #: utils.cpp:29
 #, kde-format
 msgid "Large window borders"
-msgstr "큰 창 경계선"
+msgstr "큰 창 테두리"
 
 #: utils.cpp:30
 #, kde-format
 msgid "Very large window borders"
-msgstr "매우 큰 창 경계선"
+msgstr "매우 큰 창 테두리"
 
 #: utils.cpp:31
 #, kde-format
 msgid "Huge window borders"
-msgstr "매우 매우 큰 창 경계선"
+msgstr "매우 매우 큰 창 테두리"
 
 #: utils.cpp:32
 #, kde-format
 msgid "Very huge window borders"
-msgstr "매우 매우 매우 큰 창 경계선"
+msgstr "매우 매우 매우 큰 창 테두리"
 
 #: utils.cpp:33
 #, kde-format
 msgid "Oversized window borders"
-msgstr "과다하게 큰 창 경계선"
+msgstr "과다하게 큰 창 테두리"
 
 #, fuzzy
 #~| msgctxt "button text"
