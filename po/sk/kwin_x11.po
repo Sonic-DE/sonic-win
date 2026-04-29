@@ -60,7 +60,7 @@ msgstr ""
 "<b>Kompozícia OpenGL (predvolené) zhodila KWin niekedy v minulosti.</"
 "b><br>Je to pravdepodobne kvôli chybe ovládača.<p>Ak si myslíte, že ste "
 "medzitým prešli na stabilný ovládač,<br>môžete vynulovať túto ochranu, ale "
-"<b>môže to spôsobiť okamžitý pád!</b></p>"
+"<b>majte na pamäti, že to môže spôsobiť okamžitý pád!</b></p>"
 
 #: compositor_x11.cpp:576
 #, kde-format

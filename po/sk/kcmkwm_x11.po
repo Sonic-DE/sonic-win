@@ -97,8 +97,9 @@ msgid ""
 "Note that \"Activate, pass click and raise on release\" doesn't work on X11, "
 "and falls back to \"Activate, raise and pass click\" instead"
 msgstr ""
-"Všimnite si, že \"Activate, pass click and raise on release\" doesn't work "
-"on X11, and falls back to \"Activate, raise and pass click\" instead"
+"Upozorňujeme, že \"Aktivovať, odovzdať kliknutie a vyzdvihnúť po uvoľnení\" "
+"nefunguje na X11 a namiesto toho sa použije \"Aktivovať, vyzdvihnúť a "
+"odovzdať kliknutie\""
 
 #. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: ectx: property (text), widget (QLabel, label_6)
@@ -586,8 +587,8 @@ msgid ""
 "windows are allowed to do so. This will override the window placement mode "
 "defined above."
 msgstr ""
-"Keď je to povolené, aplikácie ktoré si dokážu pamätať umiestnenie svojich "
-"okien to môžu robiť. Toto prepíše režim umiestňovania okien definovaný "
+"Keď je to povolené, aplikácie, ktoré si dokážu pamätať umiestnenie svojich "
+"okien, to môžu robiť. Toto prepíše režim umiestňovania okien definovaný "
 "vyššie."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AllowKDEAppsToRememberWindowPositions)
