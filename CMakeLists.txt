@@ -46,7 +46,6 @@ include(ECMQtDeclareLoggingCategory)
 include(ECMSetupQtPluginMacroNames)
 include(ECMSetupVersion)
 include(ECMQmlModule)
-include(ECMGenerateQmlTypes)
 include(ECMDeprecationSettings)
 
 option(KWIN_BUILD_DECORATIONS "Enable building of KWin decorations." ON)
