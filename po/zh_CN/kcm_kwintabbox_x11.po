@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kwin-x11/kcm_kwintabbox_x11.pot\n"
-"X-Crowdin-File-ID: 57286\n"
+"X-Crowdin-File: /kf6-stable/messages/kwin-x11/kcm_kwintabbox_x11.pot\n"
+"X-Crowdin-File-ID: 57574\n"
 
 #: layoutpreview.cpp:113
 #, kde-format
