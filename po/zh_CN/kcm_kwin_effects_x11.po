@@ -14,8 +14,8 @@ msgstr ""
 "X-Crowdin-Project: kdeorg\n"
 "X-Crowdin-Project-ID: 269464\n"
 "X-Crowdin-Language: zh-CN\n"
-"X-Crowdin-File: /kf6-trunk/messages/kwin-x11/kcm_kwin_effects_x11.pot\n"
-"X-Crowdin-File-ID: 57242\n"
+"X-Crowdin-File: /kf6-stable/messages/kwin-x11/kcm_kwin_effects_x11.pot\n"
+"X-Crowdin-File-ID: 57540\n"
 
 #: ui/Effect.qml:98
 #, kde-format
