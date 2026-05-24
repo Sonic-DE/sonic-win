@@ -733,6 +733,9 @@ static bool areKeySymXsDepressed(const uint keySyms[], int nKeySyms)
 static bool areModKeysDepressedX11(const QList<QKeySequence> &shortcuts)
 {
     for (const QKeySequence &seq : shortcuts) {
+        if (seq.isEmpty()) {
+            continue;
+        }
         uint rgKeySyms[10];
         int nKeySyms = 0;
         Qt::KeyboardModifiers mod = seq[seq.count() - 1].keyboardModifiers();
