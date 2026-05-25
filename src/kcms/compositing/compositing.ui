@@ -151,6 +151,35 @@ you can reset this protection but be aware that this might result in an immediat
      </layout>
     </widget>
    </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_CompositorRefreshRate">
+     <property name="text">
+      <string>Refresh rate on mixed displays:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QComboBox" name="kcfg_CompositorRefreshRate">
+     <property name="toolTip">
+      <string>Selects which output's refresh rate drives the X11 compositor.
+On a mixed-refresh-rate setup (e.g. a 60 Hz laptop panel and a 144 Hz external monitor),
+&quot;Highest&quot; lets high-refresh displays run at their native rate at the cost of
+possible tearing or skipped frames on slower outputs.
+&quot;Lowest&quot; is the safe default (no tearing anywhere, but capped at the slowest display).
+Override per-session with the KWIN_X11_REFRESH_RATE environment variable.</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Lowest (safe default)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Highest (may cause tearing or dropped frames on slower displays)</string>
+      </property>
+     </item>
+    </widget>
+   </item>
    <item row="13" column="0">
     <widget class="QLabel" name="label_HiddenPreviews">
      <property name="text">

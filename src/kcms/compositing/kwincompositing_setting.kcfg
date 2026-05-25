@@ -33,5 +33,13 @@
        <entry name="WindowsBlockCompositing" type="Bool">
            <default>true</default>
        </entry>
+
+       <entry name="CompositorRefreshRate" type="Enum">
+           <default>Lowest</default>
+           <choices>
+               <choice name="Lowest" value="0"/>
+               <choice name="Highest" value="1"/>
+           </choices>
+       </entry>
     </group>
 </kcfg>

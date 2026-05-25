@@ -506,7 +506,13 @@ static int currentRefreshRate()
         }
     }
 
-    auto syncIt = std::min_element(outputs.begin(), outputs.end(), refreshRate_compare);
+    // kwinrc [Compositing]CompositorRefreshRate: 0 = Lowest (default), 1 = Highest.
+    // Exposed in the Compositor KCM as "Refresh rate on mixed displays".
+    const KConfigGroup compositingGroup = kwinApp()->config()->group(QStringLiteral("Compositing"));
+    const int policy = compositingGroup.readEntry("CompositorRefreshRate", 0);
+    auto syncIt = (policy == 1)
+        ? std::max_element(outputs.begin(), outputs.end(), refreshRate_compare)
+        : std::min_element(outputs.begin(), outputs.end(), refreshRate_compare);
     return (*syncIt)->refreshRate();
 }
 
@@ -517,6 +523,13 @@ void X11StandaloneBackend::updateRefreshRate()
         qCWarning(KWIN_X11STANDALONE) << "Bogus refresh rate" << refreshRate;
         refreshRate = 60000;
     }
+
+    const int policy = kwinApp()->config()->group(QStringLiteral("Compositing")).readEntry("CompositorRefreshRate", 0);
+    const QList<Output *> outputs = kwinApp()->outputBackend()->outputs();
+    qCWarning(KWIN_X11STANDALONE).nospace()
+        << "Compositor refresh rate set to " << refreshRate / 1000.0 << " Hz"
+        << " (policy: " << (policy == 1 ? "Highest" : "Lowest")
+        << ", outputs: " << outputs.size() << ")";
 
     m_renderLoop->setRefreshRate(refreshRate);
 }
