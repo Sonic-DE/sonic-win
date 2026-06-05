@@ -103,7 +103,7 @@ msgstr "Nastavit…"
 msgctxt ""
 "@option:check %1 is the name of an animation, e.g. 'Login' or 'Logout'"
 msgid "%1:"
-msgstr ""
+msgstr "%1:"
 
 #: ui/main.qml:225
 #, kde-format
