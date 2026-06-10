@@ -370,8 +370,12 @@ void ApplicationX11::crashHandler(int signal)
 
     fprintf(stderr, "Application::crashHandler() called with signal %d; recent crashes: %d\n", signal, crashes);
     char cmd[1024];
-    sprintf(cmd, "%s --crashes %d &",
+    const int written = snprintf(cmd, sizeof(cmd), "%s --crashes %d &",
             QFile::encodeName(QCoreApplication::applicationFilePath()).constData(), crashes);
+    if (written < 0 || static_cast<size_t>(written) >= sizeof(cmd)) {
+        fprintf(stderr, "Application::crashHandler() restart command is too long, not restarting\n");
+        return;
+    }
 
     sleep(1);
     system(cmd);
