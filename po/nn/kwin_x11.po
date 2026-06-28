@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 11:53+0000\n"
-"PO-Revision-Date: 2026-06-24 20:40+0200\n"
+"PO-Revision-Date: 2026-06-27 11:39+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
 "Language: nn\n"
@@ -89,58 +89,64 @@ msgstr "ICC-profilen «%1» kan ikkje brukast på skjermar"
 msgid ""
 "ICC profile \"%1\" has unsupported connection space, only XYZ is supported"
 msgstr ""
+"ICC-profilen «%1» har eit ikkje-støtta samankoplingsrom – berre XYZ er støtta"
 
 #: core/iccprofile.cpp:264
 #, kde-format
 msgid "ICC profile \"%1\" is broken, input/output color space isn't RGB"
-msgstr ""
+msgstr "ICC-profilen «%1» er øydelagd – inn- eller utfargerommet er ikkje RGB"
 
 #: core/iccprofile.cpp:283
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no whitepoint"
-msgstr ""
+msgstr "ICC-profilen «%1» er øydelagd – han manglar kvitpunkt"
 
 #: core/iccprofile.cpp:286
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its whitepoint is invalid"
-msgstr ""
+msgstr "ICC-profilen «%1» er øydelagd – kvitpunktet er ugyldig"
 
 #: core/iccprofile.cpp:299
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, parsing chromatic adaptation matrix failed"
 msgstr ""
+"ICC-profilen «%1» er øydelagd – klarte ikkje tolka matrisa for kromatisk "
+"tilpassing"
 
 #: core/iccprofile.cpp:304
 #, kde-format
 msgid ""
 "ICC profile \"%1\" is broken, inverting chromatic adaptation matrix failed"
 msgstr ""
+"ICC-profilen «%1» er øydelagd – klarte ikkje invertera matrisa for kromatisk "
+"tilpassing"
 
 #: core/iccprofile.cpp:317
 #, kde-format
 msgid "ICC profile \"%1\" is broken, it has no primaries"
-msgstr ""
+msgstr "ICC-profilen «%1» er øydelagd – han manglar primærfargar"
 
 #: core/iccprofile.cpp:332
 #, kde-format
 msgid "ICC profile \"%1\" is broken, couldn't calculate its primaries"
 msgstr ""
+"ICC-profilen «%1» er øydelagd – kan ikkje rekna ut primærfargane i profilen"
 
 #: core/iccprofile.cpp:341
 #, kde-format
 msgid "ICC profile \"%1\" is broken, its primaries are invalid"
-msgstr ""
+msgstr "ICC-profilen «%1» er øydelagd – primærfargane er ugyldige"
 
 #: core/iccprofile.cpp:357
 #, kde-format
 msgid "ICC profile \"%1\" with only BToD tags isn't supported"
-msgstr ""
+msgstr "ICC-profilen «%1» med berre BToD-merkelappar er ikkje støtta"
 
 #: core/iccprofile.cpp:396
 #, kde-format
 msgid "Color profile is missing TRC tags"
-msgstr ""
+msgstr "Fargeprofilen manglar TRC-merkelappar"
 
 #: debug_console.cpp:79
 #, kde-format
@@ -721,14 +727,14 @@ msgid "Buttons"
 msgstr "Knappar"
 
 #: debug_console.cpp:526
-#, fuzzy, kde-format
+#, kde-format
 msgid "Tablet Tool Tip"
-msgstr "Teikneplate-verktøy"
+msgstr "Teikneplate-pennespiss"
 
 #: debug_console.cpp:527
-#, fuzzy, kde-format
+#, kde-format
 msgid "Tip"
-msgstr "Oppe"
+msgstr "Pennespiss"
 
 #: debug_console.cpp:527
 #, kde-format
@@ -1011,9 +1017,9 @@ msgstr "Last inn"
 
 #. i18n: ectx: property (windowTitle), widget (QWidget, DebugConsole)
 #: debug_console.ui:14
-#, fuzzy, kde-format
+#, kde-format
 msgid "Debug Console"
-msgstr "Avslutt feilsøkingskonsoll"
+msgstr "Feilsøkingskonsoll"
 
 #. i18n: ectx: property (text), widget (QPushButton, quitButton)
 #: debug_console.ui:38
@@ -2596,7 +2602,7 @@ msgstr "Slett regelen (for bruk i importar)"
 #: rulesettings.kcfg:20
 #, kde-format
 msgid "This rule is enabled"
-msgstr ""
+msgstr "Regelen er verksam"
 
 #. i18n: ectx: label, entry (wmclass), group ($(ruleDescriptionOrNumber))
 #: rulesettings.kcfg:24
@@ -3607,24 +3613,24 @@ msgid "Keep Window on All Desktops"
 msgstr "Vis vindauget på alle skriveborda"
 
 #: useractions.cpp:998
-#, fuzzy, kde-format
+#, kde-format
 msgid "Custom Quick Tile Window to the Left"
-msgstr "Legg vindauget kjapt til venstre"
+msgstr "Legg vindauget kjapt til venstre (tilpassa)"
 
 #: useractions.cpp:1000
-#, fuzzy, kde-format
+#, kde-format
 msgid "Custom Quick Tile Window to the Right"
-msgstr "Legg vindauget kjapt til høgre"
+msgstr "Legg vindauget kjapt til høgre (tilpassa)"
 
 #: useractions.cpp:1002
-#, fuzzy, kde-format
+#, kde-format
 msgid "Custom Quick Tile Window to the Top"
-msgstr "Legg vindauget kjapt til oppe"
+msgstr "Legg vindauget kjapt til oppe (tilpassa)"
 
 #: useractions.cpp:1004
-#, fuzzy, kde-format
+#, kde-format
 msgid "Custom Quick Tile Window to the Bottom"
-msgstr "Legg vindauget kjapt til nede"
+msgstr "Legg vindauget kjapt til nede (tilpassa)"
 
 #: useractions.cpp:1015
 #, kde-format
@@ -3794,33 +3800,34 @@ msgstr "Byt til skrivebord %1"
 #: wayland/outputmanagement_v2.cpp:433
 #, kde-format
 msgid "One of the relevant outputs is no longer available"
-msgstr ""
+msgstr "Ein av dei relevante uteiningane er ikkje lenger tilgjengeleg"
 
 #: wayland/outputmanagement_v2.cpp:451
 #, kde-format
 msgid "Disabling all outputs through configuration changes is not allowed"
-msgstr ""
+msgstr "Det er ikkje mogleg å slå av alle uteiningane via oppsettendringar"
 
 #: wayland/outputmanagement_v2.cpp:461
 #, kde-format
 msgid "The provided output order doesn't contain all outputs"
 msgstr ""
+"Den oppgjevne rekkjefølgja på uteiningar inneheld ikkje alle uteiningane"
 
 #: wayland/outputmanagement_v2.cpp:479
 #, kde-format
 msgid "The provided output order is invalid"
-msgstr ""
+msgstr "Den oppgjevne rekkjefølgja på uteiningar er ugyldig"
 
 #: wayland/outputmanagement_v2.cpp:497
 #, kde-format
 msgid "The driver rejected the output configuration"
-msgstr ""
+msgstr "Drivaren avviste uteiningsoppsettet"
 
 #: window.cpp:3303
 #, kde-format
 msgctxt "Application is not responding, appended to window title"
 msgid "(Not Responding)"
-msgstr "(Svarar ikkje)"
+msgstr "(svarar ikkje)"
 
 #: workspace.cpp:1631
 #, kde-format
