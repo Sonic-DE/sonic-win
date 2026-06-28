@@ -154,12 +154,12 @@ msgstr "Falten les etiquetes TRC del perfil de color"
 #: debug_console.cpp:79
 #, kde-format
 msgid "Timestamp"
-msgstr "Marca horària"
+msgstr "Marca de temps"
 
 #: debug_console.cpp:84
 #, kde-format
 msgid "Timestamp (µsec)"
-msgstr "Marca horària (µseg)"
+msgstr "Marca de temps (µseg)"
 
 #: debug_console.cpp:91
 #, kde-format
