@@ -772,20 +772,6 @@ CursorImage::CursorImage(PointerInputRedirection *parent)
 
     m_fallbackCursor->setShape(Qt::ArrowCursor);
 
-    m_effectsCursor->setTheme(m_waylandImage.theme());
-    m_fallbackCursor->setTheme(m_waylandImage.theme());
-    m_moveResizeCursor->setTheme(m_waylandImage.theme());
-    m_windowSelectionCursor->setTheme(m_waylandImage.theme());
-    m_decoration.cursor->setTheme(m_waylandImage.theme());
-
-    connect(&m_waylandImage, &WaylandCursorImage::themeChanged, this, [this] {
-        m_effectsCursor->setTheme(m_waylandImage.theme());
-        m_fallbackCursor->setTheme(m_waylandImage.theme());
-        m_moveResizeCursor->setTheme(m_waylandImage.theme());
-        m_windowSelectionCursor->setTheme(m_waylandImage.theme());
-        m_decoration.cursor->setTheme(m_waylandImage.theme());
-    });
-
     reevaluteSource();
 }
 
@@ -852,51 +838,6 @@ void CursorImage::removeWindowSelectionCursor()
     reevaluteSource();
 }
 
-WaylandCursorImage::WaylandCursorImage(QObject *parent)
-    : QObject(parent)
-{
-    Cursor *pointerCursor = Cursors::self()->mouse();
-    updateCursorTheme();
-
-    connect(pointerCursor, &Cursor::themeChanged, this, &WaylandCursorImage::updateCursorTheme);
-    connect(workspace(), &Workspace::outputsChanged, this, &WaylandCursorImage::updateCursorTheme);
-}
-
-CursorTheme WaylandCursorImage::theme() const
-{
-    return m_cursorTheme;
-}
-
-void WaylandCursorImage::updateCursorTheme()
-{
-    const Cursor *pointerCursor = Cursors::self()->mouse();
-    qreal targetDevicePixelRatio = 1;
-
-    const auto outputs = workspace()->outputs();
-    for (const Output *output : outputs) {
-        if (output->scale() > targetDevicePixelRatio) {
-            targetDevicePixelRatio = output->scale();
-        }
-    }
-
-    m_cursorTheme = CursorTheme(pointerCursor->themeName(), pointerCursor->themeSize(), targetDevicePixelRatio);
-    if (m_cursorTheme.isEmpty()) {
-        qCWarning(KWIN_CORE) << "Failed to load cursor theme" << pointerCursor->themeName();
-        m_cursorTheme = CursorTheme(Cursor::defaultThemeName(), Cursor::defaultThemeSize(), targetDevicePixelRatio);
-
-        if (m_cursorTheme.isEmpty()) {
-            qCWarning(KWIN_CORE) << "Failed to load cursor theme" << Cursor::defaultThemeName();
-            m_cursorTheme = CursorTheme(Cursor::fallbackThemeName(), Cursor::defaultThemeSize(), targetDevicePixelRatio);
-        }
-    }
-
-    if (m_cursorTheme.isEmpty()) {
-        qCWarning(KWIN_CORE) << "Unable to load any cursor theme";
-    }
-
-    Q_EMIT themeChanged();
-}
-
 void CursorImage::reevaluteSource()
 {
     if (input()->isSelectingWindow()) {
@@ -934,7 +875,7 @@ void CursorImage::setSource(CursorSource *source)
 
 CursorTheme CursorImage::theme() const
 {
-    return m_waylandImage.theme();
+    return CursorTheme();
 }
 
 InputRedirectionCursor::InputRedirectionCursor()

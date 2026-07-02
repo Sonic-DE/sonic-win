@@ -197,23 +197,6 @@ private:
     EdgeBarrierType m_lastEdgeBarrierType = EdgeBarrierType::NormalBarrier;
 };
 
-class WaylandCursorImage : public QObject
-{
-    Q_OBJECT
-public:
-    explicit WaylandCursorImage(QObject *parent = nullptr);
-
-    CursorTheme theme() const;
-
-Q_SIGNALS:
-    void themeChanged();
-
-private:
-    void updateCursorTheme();
-
-    CursorTheme m_cursorTheme;
-};
-
 class CursorImage : public QObject
 {
     Q_OBJECT
@@ -246,7 +229,6 @@ private:
 
     PointerInputRedirection *m_pointer;
     CursorSource *m_currentSource = nullptr;
-    WaylandCursorImage m_waylandImage;
 
     std::unique_ptr<ShapeCursorSource> m_effectsCursor;
     std::unique_ptr<ShapeCursorSource> m_fallbackCursor;
