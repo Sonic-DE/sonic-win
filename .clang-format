@@ -59,7 +59,7 @@ AllowShortFunctionsOnASingleLine: None
 BreakBeforeBinaryOperators: NonAssignment
 
 # format C++11 braced lists like function calls
-Cpp11BracedListStyle: true
+Cpp11BracedListStyle: FunctionCall
 
 # do not put a space before C++11 braced lists
 SpaceBeforeCpp11BracedList: false
@@ -84,3 +84,5 @@ AllowAllArgumentsOnNextLine: false
 
 # Indent lambdas to the start of the line, not to the start of the lambda
 LambdaBodyIndentation: OuterScope
+IndentWidth: 4
+UseTab: Never
