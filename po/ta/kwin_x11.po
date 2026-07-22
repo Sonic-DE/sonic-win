@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2026-07-22 02:44+0000\n"
 "PO-Revision-Date: 2026-01-04 17:13+0530\n"
 "Last-Translator: Kishore G <kishore96@gmail.com>\n"
 "Language-Team: Tamil <kde-l10n-ta@kde.org>\n"
@@ -1433,12 +1433,12 @@ msgid "kwin: another window manager is running (try using --replace)\n"
 msgstr ""
 "கேவின்: இன்னொரு சாளர மேலாளர் இயங்குகிறது(--replace என்பதை பயன்படுத்தி பாருங்கள்)\n"
 
-#: main_x11.cpp:431
+#: main_x11.cpp:435
 #, kde-format
 msgid "Replace already-running ICCCM2.0-compliant window manager"
 msgstr "ஏற்கனவே ஓடிக்கொண்டிருக்கும் ICCCM2.0 சாளர மேலாளருக்கு பதிலாக இயங்கும்"
 
-#: main_x11.cpp:438
+#: main_x11.cpp:442
 #, kde-format
 msgid "Disable KActivities integration."
 msgstr "KActivities ஒருங்கிணைப்பை முடக்கு."

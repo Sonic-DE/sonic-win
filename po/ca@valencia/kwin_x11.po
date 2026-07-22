@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin-x11\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2026-07-22 02:44+0000\n"
 "PO-Revision-Date: 2025-07-29 09:29+0200\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -1436,13 +1436,13 @@ msgstr ""
 "kwin: hi ha un altre gestor de finestres executant-se (proveu l'ús de --"
 "replace)\n"
 
-#: main_x11.cpp:431
+#: main_x11.cpp:435
 #, kde-format
 msgid "Replace already-running ICCCM2.0-compliant window manager"
 msgstr ""
 "Substituïx el gestor de finestres conforme amb ICCCM2.0 que ja s'executa"
 
-#: main_x11.cpp:438
+#: main_x11.cpp:442
 #, kde-format
 msgid "Disable KActivities integration."
 msgstr "Desactiva la integració de les «KActivities»."

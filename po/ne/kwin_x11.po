@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2026-07-22 02:44+0000\n"
 "PO-Revision-Date: 2007-11-01 14:27+0545\n"
 "Last-Translator: Shyam Krishna Bal <shyamkrishna_bal@yahoo.com>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
@@ -1436,12 +1436,12 @@ msgstr ""
 "केडीई विन: प्रबन्धक चयन अनुरोध गर्दा अक्षम, अर्को डब्लु एम चालु छ ? (--'बदल्नुहोस्' प्रयोग "
 "गर्न प्रयास गर्नुहोस्)\n"
 
-#: main_x11.cpp:431
+#: main_x11.cpp:435
 #, kde-format
 msgid "Replace already-running ICCCM2.0-compliant window manager"
 msgstr "चालु ICCCM२.०-कम्प्लेन्ट सञ्झ्याल प्रबन्धक प्रतिस्थापन गर्नुहोस्"
 
-#: main_x11.cpp:438
+#: main_x11.cpp:442
 #, kde-format
 msgid "Disable KActivities integration."
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2026-07-22 02:44+0000\n"
 "PO-Revision-Date: 2025-03-02 14:47+0530\n"
 "Last-Translator: Shreekant Kalwar <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -1416,12 +1416,12 @@ msgid "kwin: another window manager is running (try using --replace)\n"
 msgstr ""
 "kwin: अन्यः विण्डो प्रबन्धकः चालितः अस्ति ( --replace इत्यस्य उपयोगेन प्रयतस्व)\n"
 
-#: main_x11.cpp:431
+#: main_x11.cpp:435
 #, kde-format
 msgid "Replace already-running ICCCM2.0-compliant window manager"
 msgstr "पूर्वमेव चालितं ICCCM2.0-अनुरूपं विण्डो प्रबन्धकं प्रतिस्थापयन्तु"
 
-#: main_x11.cpp:438
+#: main_x11.cpp:442
 #, kde-format
 msgid "Disable KActivities integration."
 msgstr "KActivities एकीकरण अक्षम करें।"

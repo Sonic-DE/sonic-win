@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fc57ad16a28d02dea100ceb1c60de14e\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2026-07-22 02:44+0000\n"
 "PO-Revision-Date: 2024-11-11 19:00\n"
 "Last-Translator: Darafei Praliaskouski <komzpa@licei2.com>\n"
 "Language-Team: Belarusian\n"
@@ -1432,12 +1432,12 @@ msgstr ""
 msgid "kwin: another window manager is running (try using --replace)\n"
 msgstr "kwin: запушчаны іншы кіраўнік акон (паспрабуйце --replace)\n"
 
-#: main_x11.cpp:431
+#: main_x11.cpp:435
 #, kde-format
 msgid "Replace already-running ICCCM2.0-compliant window manager"
 msgstr "Замяніць ужо запушчаны кіраўнік акон, сумяшчальны з ICCCM2.0"
 
-#: main_x11.cpp:438
+#: main_x11.cpp:442
 #, kde-format
 msgid "Disable KActivities integration."
 msgstr "Адключыць інтэграцыю KActivities."

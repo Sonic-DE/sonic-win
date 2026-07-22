@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2026-07-22 02:44+0000\n"
 "PO-Revision-Date: 2011-07-11 12:17+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <kde-l10n-kn@kde.org>\n"
@@ -1430,12 +1430,12 @@ msgstr ""
 "kwin:ವ್ಯವಸ್ಥಾಪಕ ಆಯ್ಕೆಸಾಧಿಸಲಾಗಲಿಲ್ಲ. ಬೇರೆ wm ಚಾಲನೆಯಲ್ಲಿದೆಯೆ? ('ಬದಲಿಸು'--ಅನ್ನು "
 "ಪ್ರಯತ್ನಿಸಿ) \n"
 
-#: main_x11.cpp:431
+#: main_x11.cpp:435
 #, kde-format
 msgid "Replace already-running ICCCM2.0-compliant window manager"
 msgstr "ಚಾಲನೆಯಲ್ಲಿರುವ  ICCCM2.0-ಅನುವರ್ತಿತ ಕಿಟಕಿ ವ್ಯವಸ್ಥಾಪಕವನ್ನು ಬದಲಾಯಿಸು "
 
-#: main_x11.cpp:438
+#: main_x11.cpp:442
 #, kde-format
 msgid "Disable KActivities integration."
 msgstr ""
