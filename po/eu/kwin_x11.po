@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2026-07-22 02:44+0000\n"
 "PO-Revision-Date: 2025-07-29 10:40+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -1436,13 +1436,13 @@ msgid "kwin: another window manager is running (try using --replace)\n"
 msgstr ""
 "kwin: beste leiho-kudeatzaile bat martxan dago (saiatu --replace erabiliz)\n"
 
-#: main_x11.cpp:431
+#: main_x11.cpp:435
 #, kde-format
 msgid "Replace already-running ICCCM2.0-compliant window manager"
 msgstr ""
 "Ordeztu ICCCM2.0arekin bateragarri den eta martxan dagoen leiho-kudeatzailea."
 
-#: main_x11.cpp:438
+#: main_x11.cpp:442
 #, kde-format
 msgid "Disable KActivities integration."
 msgstr "Desgaitu KActivities bateratzea."

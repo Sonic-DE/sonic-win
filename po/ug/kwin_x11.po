@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:53+0000\n"
+"POT-Creation-Date: 2026-07-22 02:44+0000\n"
 "PO-Revision-Date: 2026-02-17 23:27-0500\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -1428,13 +1428,13 @@ msgid "kwin: another window manager is running (try using --replace)\n"
 msgstr ""
 "kwin: باشقا كۆزنەك باشقۇرغۇچ ئىجرا قىلىنىۋاتىدۇ(--replace ئىشلىتىپ سىنايدۇ)\n"
 
-#: main_x11.cpp:431
+#: main_x11.cpp:435
 #, kde-format
 msgid "Replace already-running ICCCM2.0-compliant window manager"
 msgstr ""
 "ئىجرا بولۇۋاتقان ICCCM2.0 گە ماس كېلىدىغان كۆزنەك باشقۇرغۇچنى ئالماشتۇرۇڭ"
 
-#: main_x11.cpp:438
+#: main_x11.cpp:442
 #, kde-format
 msgid "Disable KActivities integration."
 msgstr "KActivities توپلاشتۇرۇشنى چەكلەيدۇ."
