@@ -251,7 +251,7 @@ msgstr ""
 "Hier können Sie die virtuelle Eckenbarriere zwischen Bildschirmen aktivieren "
 "oder deaktivieren. Die Barriere verhindert, dass sich der Cursor zu einem "
 "anderen Bildschirm bewegt, wenn er bereits eine Bildschirmecke berührt. Dies "
-"erleichtert das Auslösen von Elementen der Benutzeroberfläche, wie z. B. die "
+"erleichtert das Auslösen von Elementen der Benutzeroberfläche, wie z. B. die "
 "Schaltflächen zum Schließen maximierter Fenster, wenn mehrere Bildschirme "
 "verwendet werden."
 
@@ -282,7 +282,7 @@ msgstr ""
 "Bildschirmen einstellen. Die Barriere fügt eine zusätzliche Distanz hinzu, "
 "die Sie mit Ihrem Mauszeiger zurücklegen müssen, bevor er die Kante zum "
 "anderen Bildschirm überquert. Dies erleichtert den Zugriff auf Elemente der "
-"Benutzeroberfläche wie z. B. Plasma-Kontrolleisten, die sich an einer Kante "
+"Benutzeroberfläche wie z. B. Plasma-Kontrolleisten, die sich an einer Kante "
 "zwischen Bildschirmen befinden."
 
 #. i18n: ectx: property (toolTip), widget (QSpinBox, kcfg_EdgeBarrier)
