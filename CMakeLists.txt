@@ -162,21 +162,21 @@ set_package_properties(Plasma PROPERTIES
 
 find_package(KDecoration3 ${PROJECT_DEP_VERSION} CONFIG REQUIRED)
 
-find_package(Breeze ${PROJECT_DEP_VERSION} CONFIG)
-set_package_properties(Breeze PROPERTIES
+find_package(SonicSilver ${PROJECT_DEP_VERSION} CONFIG)
+set_package_properties(SonicSilver PROPERTIES
     TYPE OPTIONAL
     PURPOSE "For setting the default window decoration plugin"
 )
-if (Breeze_FOUND)
-    if (BREEZE_WITH_KDECORATION)
-        set(HAVE_BREEZE_DECO true)
+if (SonicSilver_FOUND)
+    if (SILVER_WITH_KDECORATION)
+        set(HAVE_SILVER_DECO true)
     else()
-        set(HAVE_BREEZE_DECO FALSE)
+        set(HAVE_SILVER_DECO FALSE)
     endif()
 else()
-    set(HAVE_BREEZE_DECO FALSE)
+    set(HAVE_SILVER_DECO FALSE)
 endif()
-add_feature_info("Breeze-Decoration" HAVE_BREEZE_DECO "Default decoration plugin Breeze")
+add_feature_info("Silver-Decoration" HAVE_SILVER_DECO "Default decoration plugin Silver")
 
 find_package(Aurorae ${PROJECT_DEP_VERSION} CONFIG)
 set_package_properties(Aurorae PROPERTIES
@@ -482,5 +482,4 @@ ecm_install_configured_files(INPUT plasma-kwin_x11.service.in @ONLY
             DESTINATION ${KDE_INSTALL_SYSTEMDUSERUNITDIR})
 
 ki18n_install(po)
-
 

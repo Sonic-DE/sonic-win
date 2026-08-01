@@ -284,7 +284,7 @@ int Cursor::defaultThemeSize()
 
 QString Cursor::fallbackThemeName()
 {
-    return QStringLiteral("breeze_cursors");
+    return QStringLiteral("silver_cursors_light");
 }
 
 QList<QByteArray> CursorShape::alternatives(const QByteArray &name)
