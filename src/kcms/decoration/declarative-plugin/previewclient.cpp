@@ -20,7 +20,7 @@ namespace Preview
 PreviewClient::PreviewClient(DecoratedWindow *c, Decoration *decoration)
     : QObject(decoration)
     , DecoratedWindowPrivateV3(c, decoration)
-    , m_icon(QIcon::fromTheme(QStringLiteral("start-here-kde")))
+    , m_icon(QIcon::fromTheme(QStringLiteral("start-here-sonicde")))
     , m_iconName(m_icon.name())
     , m_palette(QStringLiteral("kdeglobals"))
     , m_active(true)
