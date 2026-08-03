@@ -5,6 +5,7 @@
 # Sven Harald Klein Bakke <sirius@nonline.org>, 2005, 2008.
 # Eirik U. Birkeland <eirbir@gmail.com>, 2008, 2009, 2010.
 # Olav Selseng Vestreim <o.vest@operamail.com>, 2015.
+# Karl Ove Hufthammer <karl@huftis.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"

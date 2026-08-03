@@ -1,6 +1,7 @@
 # Translation of kcm_kwintabbox_x11 to Norwegian Nynorsk
 #
 # Øystein Steffensen-Alværvik <oysteins.omsetting@protonmail.com>, 2018.
+# Karl Ove Hufthammer <karl@huftis.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"

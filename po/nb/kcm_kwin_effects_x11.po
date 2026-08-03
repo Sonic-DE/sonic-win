@@ -1,5 +1,6 @@
 # Translation of kcm_kwin_effects_x11 to Norwegian Bokmål
 #
+# Martin Hansen <mh306602@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin-x11\n"
