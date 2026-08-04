@@ -26,7 +26,7 @@ Rectangle {
 
     KDecoration.Bridge {
         id: bridgeItem
-        plugin: "org.kde.breeze"
+        plugin: "org.kde.silver"
     }
     KDecoration.Settings {
         id: settingsItem
