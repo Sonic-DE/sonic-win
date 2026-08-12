@@ -75,7 +75,7 @@ public:
         addWM(QStringLiteral("metacity"));
         addWM(QStringLiteral("openbox"));
         addWM(QStringLiteral("fvwm2"));
-        addWM(QStringLiteral("kwin_x11"));
+        addWM(QStringLiteral("sonic-win"));
 
         QVBoxLayout *mainLayout = new QVBoxLayout(this);
         mainLayout->addWidget(mainWidget);
@@ -333,7 +333,7 @@ void ApplicationX11::crashChecking()
     if (crashes >= 4) {
         // Something has gone seriously wrong
         AlternativeWMDialog dialog;
-        QString cmd = QStringLiteral("kwin_x11");
+        QString cmd = QStringLiteral("sonic-win");
         if (dialog.exec() == QDialog::Accepted) {
             cmd = dialog.selectedWM();
         } else {

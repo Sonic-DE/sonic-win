@@ -367,17 +367,17 @@ qt_generate_dbus_interface(tabletmodemanager.h org.kde.KWin.TabletModeManager.xm
 
 generate_export_header(kwin EXPORT_FILE_NAME kwin_export.h)
 
-add_executable(kwin_x11 main_x11.cpp)
-target_link_libraries(kwin_x11
+add_executable(sonic-win main_x11.cpp)
+target_link_libraries(sonic-win
     KWinX11Platform
     kwin
     KF6::GlobalAccel
 )
-target_compile_definitions(kwin_x11 PRIVATE
+target_compile_definitions(sonic-win PRIVATE
     "TRANSLATION_DOMAIN=\"kwin_x11\""
 )
-kcoreaddons_target_static_plugins(kwin_x11 NAMESPACE "${KWIN_PLUGINDIR}/effects/plugins")
-install(TARGETS kwin_x11 ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
+kcoreaddons_target_static_plugins(sonic-win NAMESPACE "${KWIN_PLUGINDIR}/effects/plugins")
+install(TARGETS sonic-win ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 
 install(TARGETS kwin EXPORT KWinX11Targets ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 

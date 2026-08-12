@@ -4,7 +4,7 @@ After=plasma-kcminit.service
 PartOf=graphical-session.target
 
 [Service]
-ExecStart=@CMAKE_INSTALL_FULL_BINDIR@/kwin_x11 --replace
+ExecStart=@CMAKE_INSTALL_FULL_BINDIR@/sonic-win --replace
 BusName=org.kde.KWin
 Slice=session.slice
 Restart=on-failure
