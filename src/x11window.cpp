@@ -863,8 +863,15 @@ bool X11Window::manage(xcb_window_t w, bool isMapped)
     } else if (isTransient() && !hasNETSupport()) {
         usePosition = true;
     } else if (isDialog() && hasNETSupport()) {
-        // For transient dialogs without a parent or non-transient dialogs, use the application's requested position
+        // Use the application's requested position for:
+        //  - non-transient dialogs, or transient dialogs without a parent, or
+        //  - transient dialogs with a parent that explicitly requested a position
+        //    (WM_NORMAL_HINTS PPosition/USPosition) located inside the parent's
+        //    frame geometry.
         if (!isTransient() || !transientFor()) {
+            usePosition = true;
+        } else if (m_geometryHints.hasPosition()
+                   && transientFor()->frameGeometry().contains(geom.topLeft())) {
             usePosition = true;
         }
     } else if (isSplash()) {
