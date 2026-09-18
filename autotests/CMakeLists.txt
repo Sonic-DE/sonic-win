@@ -150,6 +150,14 @@ add_test(NAME kwin-testX11TimestampUpdate COMMAND testX11TimestampUpdate)
 ecm_mark_as_test(testX11TimestampUpdate)
 
 ########################################################
+# Test X11 refresh rate calculation
+########################################################
+add_executable(testX11RefreshRate test_x11_refresh_rate.cpp)
+target_link_libraries(testX11RefreshRate Qt::Test)
+add_test(NAME kwin-testX11RefreshRate COMMAND testX11RefreshRate)
+ecm_mark_as_test(testX11RefreshRate)
+
+########################################################
 # Test OnScreenNotification
 ########################################################
 set(testOnScreenNotification_SRCS

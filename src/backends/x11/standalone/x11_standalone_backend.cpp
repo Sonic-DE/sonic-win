@@ -7,6 +7,7 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "x11_standalone_backend.h"
+#include "x11_standalone_refresh_rate.h"
 
 #include "config-kwin.h"
 
@@ -305,21 +306,16 @@ void X11StandaloneBackend::doUpdateOutputs()
                     continue;
                 }
 
-                float refreshRate = -1.0f;
+                uint32_t refreshRate = 0;
 
                 for (auto mode : std::span(resources.modes(), resources->num_modes)) {
                     if (info->mode == mode.id) {
                         if (mode.htotal != 0 && mode.vtotal != 0) { // BUG 313996
-                            // refresh rate calculation - WTF was wikipedia 1998 when I needed it?
-                            uint64_t dotclock = mode.dot_clock,
-                                     vtotal = mode.vtotal;
-                            if (mode.mode_flags & XCB_RANDR_MODE_FLAG_INTERLACE) {
-                                dotclock *= 2;
-                            }
-                            if (mode.mode_flags & XCB_RANDR_MODE_FLAG_DOUBLE_SCAN) {
-                                vtotal *= 2;
-                            }
-                            refreshRate = dotclock / float(mode.htotal * vtotal);
+                            refreshRate = x11RefreshRateMillihertz(mode.dot_clock,
+                                                                   mode.htotal,
+                                                                   mode.vtotal,
+                                                                   mode.mode_flags & XCB_RANDR_MODE_FLAG_INTERLACE,
+                                                                   mode.mode_flags & XCB_RANDR_MODE_FLAG_DOUBLE_SCAN);
                         }
                         break; // found mode
                     }
@@ -391,7 +387,7 @@ void X11StandaloneBackend::doUpdateOutputs()
                         }
                     }
 
-                    auto mode = std::make_shared<OutputMode>(geometry.size(), refreshRate * 1000);
+                    auto mode = std::make_shared<OutputMode>(geometry.size(), refreshRate);
 
                     X11Output::State state = output->m_state;
                     state.modes = {mode};
