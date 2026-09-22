@@ -17,3 +17,8 @@ install(
     FILES 10-sonicde-disable-vrr.rc
     DESTINATION /etc/nvidia/nvidia-application-profiles-rc.d
 )
+
+install(
+    FILES 10-sonicde-disable-adaptive-sync.conf
+    DESTINATION ${KDE_INSTALL_DATADIR}/drirc.d
+)
