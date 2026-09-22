@@ -143,8 +143,10 @@ void RenderLoopPrivate::notifyFrameDropped()
 
 void RenderLoopPrivate::notifyFrameCompleted(std::chrono::nanoseconds timestamp, std::optional<RenderTimeSpan> renderTime, PresentationMode mode, OutputFrame *frame)
 {
-    if (output && s_printDebugInfo && !m_debugOutput) {
-        m_debugOutput = std::fstream(qPrintable("kwin perf statistics " + output->name() + ".csv"), std::ios::out);
+    if (s_printDebugInfo && !m_debugOutput) {
+        // X11 has one shared render loop, without an associated output.
+        const QString outputName = output ? output->name() : QStringLiteral("x11");
+        m_debugOutput = std::fstream(qPrintable("kwin perf statistics " + outputName + ".csv"), std::ios::out);
         *m_debugOutput << "target pageflip timestamp,pageflip timestamp,render start,render end,safety margin,refresh duration,vrr,tearing,predicted render time\n";
     }
     if (m_debugOutput) {
