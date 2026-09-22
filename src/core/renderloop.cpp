@@ -33,7 +33,7 @@ RenderLoopPrivate::RenderLoopPrivate(RenderLoop *q, Output *output)
     compositeTimer.setSingleShot(true);
     compositeTimer.setTimerType(Qt::PreciseTimer);
 
-    QObject::connect(&compositeTimer, &QTimer::timeout, q, [this]() {
+    QObject::connect(&compositeTimer, &QChronoTimer::timeout, q, [this]() {
         dispatch();
     });
 
@@ -122,7 +122,8 @@ void RenderLoopPrivate::scheduleRepaint(std::chrono::nanoseconds lastTargetTimes
     }
 
     const std::chrono::nanoseconds nextRenderTimestamp = nextPresentationTimestamp - expectedCompositingTime;
-    compositeTimer.start(std::max(0ms, std::chrono::duration_cast<std::chrono::milliseconds>(nextRenderTimestamp - currentTime)));
+    compositeTimer.setInterval(std::max(0ns, nextRenderTimestamp - currentTime));
+    compositeTimer.start();
 }
 
 void RenderLoopPrivate::delayScheduleRepaint()

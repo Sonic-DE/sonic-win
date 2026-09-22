@@ -10,6 +10,7 @@
 #include "renderjournal.h"
 #include "renderloop.h"
 
+#include <QChronoTimer>
 #include <QTimer>
 
 #include <fstream>
@@ -44,7 +45,7 @@ public:
     std::chrono::nanoseconds nextPresentationTimestamp = std::chrono::nanoseconds::zero();
     bool wasTripleBuffering = false;
     int doubleBufferingCounter = 0;
-    QTimer compositeTimer;
+    QChronoTimer compositeTimer;
     RenderJournal renderJournal;
     int refreshRate = 60000;
     int pendingFrameCount = 0;
