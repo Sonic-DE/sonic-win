@@ -12,3 +12,8 @@ install(TARGETS kwin5_update_default_rules_x11 DESTINATION ${KDE_INSTALL_LIBDIR}
 ########### install files ###############
 
 install(FILES org_kde_kwin.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR} RENAME org_kde_kwin_x11.categories)
+
+install(
+    FILES 10-sonicde-disable-vrr.rc
+    DESTINATION /etc/nvidia/nvidia-application-profiles-rc.d
+)
