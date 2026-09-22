@@ -1,0 +1,34 @@
+{
+    "profiles" : [
+        {
+            "name" : "No VRR/OSD",
+            "settings" : [
+                {
+                    "key"   : "GLVRRAllowed",
+                    "value" : false
+                },
+                {
+                    "key"   : "VKDirectGSYNCAllowed",
+                    "value" : false
+                },
+                {
+                    "key"   : "VKDirectGSYNCCompatibleAllowed",
+                    "value" : 0
+                },
+                {
+                    "key"   : "GLShowGraphicsOSD",
+                    "value" : false
+                }
+            ]
+        }
+    ],
+    "rules": [
+        {
+            "pattern" : {
+                "feature" : "procname",
+                "matches" : "sonic-win"
+            },
+            "profile" : "No VRR/OSD"
+        }
+    ]
+}
