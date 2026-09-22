@@ -2,6 +2,14 @@ add_definitions(-DKWIN_UNIT_TEST)
 remove_definitions(-DQT_USE_QSTRINGBUILDER)
 add_subdirectory(effect)
 
+add_executable(testRenderLoop test_renderloop.cpp)
+target_link_libraries(testRenderLoop kwin Qt::Widgets Qt::Test)
+add_test(NAME kwin-testRenderLoop COMMAND testRenderLoop)
+set_tests_properties(kwin-testRenderLoop PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen;KWIN_LOG_PERFORMANCE_DATA=1")
+add_test(NAME kwin-testRenderLoop-noLogging COMMAND testRenderLoop testSharedLoopLogging)
+set_tests_properties(kwin-testRenderLoop-noLogging PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen;KWIN_LOG_PERFORMANCE_DATA=0")
+ecm_mark_as_test(testRenderLoop)
+
 ########################################################
 # Test WindowPaintData
 ########################################################
