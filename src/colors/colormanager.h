@@ -8,7 +8,9 @@
 
 #include "effect/globals.h"
 
+#include <KSharedConfig>
 #include <QObject>
+#include <QVariantMap>
 #include <memory>
 
 namespace KWin
@@ -24,9 +26,11 @@ class ColorManagerPrivate;
 class KWIN_EXPORT ColorManager : public QObject
 {
     Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.sonicde.SoftwareBrightness")
 
 public:
     ColorManager();
+    ColorManager(const QList<Output *> &outputs, const KSharedConfigPtr &config);
     ~ColorManager() override;
 
     /**
@@ -40,7 +44,15 @@ public:
      */
     QList<ColorDevice *> devices() const;
 
+public Q_SLOTS:
+    // Session-bus API consumed by PowerDevil. Brightness uses [100, 10000];
+    // dimming is a separate, temporary multiplier and is never persisted.
+    Q_SCRIPTABLE QVariantMap Displays() const;
+    Q_SCRIPTABLE bool SetBrightness(const QString &outputName, int brightness, double dimming);
+
 Q_SIGNALS:
+    Q_SCRIPTABLE void DisplaysChanged();
+    Q_SCRIPTABLE void BrightnessChanged(const QString &outputName, int brightness);
     /**
      * This signal is emitted when a new color device @a device has been added.
      */

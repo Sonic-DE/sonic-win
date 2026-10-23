@@ -43,6 +43,11 @@ public:
      */
     void setTemperature(uint temperature);
 
+    double brightness() const;
+    void setBrightness(double brightness);
+    double dimming() const;
+    void setDimming(double dimming);
+
 public Q_SLOTS:
     void update();
     void scheduleUpdate();

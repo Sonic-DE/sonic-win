@@ -14,6 +14,9 @@
 
 #include <QTimer>
 
+#include <algorithm>
+#include <cmath>
+
 #include <lcms2.h>
 
 namespace KWin
@@ -27,6 +30,8 @@ public:
     Output *output;
     QTimer *updateTimer;
     uint temperature = 6500;
+    double brightness = 1.0;
+    double dimming = 1.0;
 
     QVector3D temperatureFactors = QVector3D(1, 1, 1);
 };
@@ -99,10 +104,52 @@ void ColorDevice::setTemperature(uint temperature)
     Q_EMIT temperatureChanged();
 }
 
+double ColorDevice::brightness() const
+{
+    return d->brightness;
+}
+
+void ColorDevice::setBrightness(double brightness)
+{
+    if (!std::isfinite(brightness)) {
+        return;
+    }
+    // Do not let an ordinary brightness slider make the screen completely black.
+    brightness = std::clamp(brightness, 0.01, 1.0);
+    if (d->brightness == brightness) {
+        return;
+    }
+    d->brightness = brightness;
+    scheduleUpdate();
+    Q_EMIT brightnessChanged();
+}
+
+double ColorDevice::dimming() const
+{
+    return d->dimming;
+}
+
+void ColorDevice::setDimming(double dimming)
+{
+    if (!std::isfinite(dimming)) {
+        return;
+    }
+    dimming = std::clamp(dimming, 0.0, 1.0);
+    if (d->dimming == dimming) {
+        return;
+    }
+    d->dimming = dimming;
+    scheduleUpdate();
+}
+
 void ColorDevice::update()
 {
     d->recalculateFactors();
-    d->output->setChannelFactors(d->temperatureFactors);
+    // X11Output applies these factors in linear light, then encodes gamma 2.2.
+    // Convert the requested encoded-output multiplier so the visible result is
+    // equivalent to xrandr --brightness, composed with (not replacing) Night Light.
+    const float multiplier = std::pow(d->brightness * d->dimming, 2.2);
+    d->output->setChannelFactors(d->temperatureFactors * multiplier);
 }
 
 void ColorDevice::scheduleUpdate()
