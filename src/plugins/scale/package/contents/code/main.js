@@ -17,7 +17,8 @@ const blacklist = [
     // KDE Plasma splash screen has to be animated only by the login effect.
     "ksplashqml ksplashqml",
 
-    // Spectacle needs to be blacklisted in order to stay out of its own screenshots.
+    // Screenshot tools must not animate into their own screenshots.
+    "sonic-screenies screenies", // x11
     "spectacle spectacle", // x11
     "spectacle org.kde.spectacle", // wayland
 ];
