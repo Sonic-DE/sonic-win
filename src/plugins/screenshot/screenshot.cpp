@@ -273,7 +273,7 @@ void ScreenShotEffect::takeScreenShot(ScreenShotWindowData *screenshot)
             effects->drawWindow(renderTarget, viewport, window, mask, infiniteRegion(), d);
 
             // copy content from framebuffer into image
-            img = QImage(offscreenTexture->size(), QImage::Format_ARGB32);
+            img = QImage(offscreenTexture->size(), QImage::Format_ARGB32_Premultiplied);
             img.setDevicePixelRatio(devicePixelRatio);
             context->glReadnPixels(0, 0, img.width(), img.height(), GL_RGBA, GL_UNSIGNED_BYTE, img.sizeInBytes(), static_cast<GLvoid *>(img.bits()));
             GLFramebuffer::popFramebuffer();
