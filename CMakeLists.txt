@@ -47,6 +47,7 @@ include(ECMSetupQtPluginMacroNames)
 include(ECMSetupVersion)
 include(ECMQmlModule)
 include(ECMDeprecationSettings)
+include(ECMMarkAsTest)
 
 option(KWIN_BUILD_DECORATIONS "Enable building of KWin decorations." ON)
 option(KWIN_BUILD_KCMS "Enable building of KWin configuration modules." ON)
@@ -481,4 +482,3 @@ ecm_install_configured_files(INPUT sonic-win.service.in @ONLY
             DESTINATION ${KDE_INSTALL_SYSTEMDUSERUNITDIR})
 
 ki18n_install(po)
-

@@ -43,13 +43,15 @@ void X11Output::setXineramaNumber(int number)
 
 bool X11Output::setChannelFactors(const QVector3D &rgb)
 {
-    if (m_crtc == XCB_NONE) {
-        return true;
+    if (m_crtc == XCB_NONE || m_gammaRampSize < 2) {
+        return false;
     }
     ColorPipeline pipeline;
-    pipeline.addTransferFunction(TransferFunction(TransferFunction::gamma22));
+    // Gamma ramps contain normalized encoded values, not absolute luminance.
+    // A non-zero black level here would clip/shrink software brightness factors.
+    pipeline.addTransferFunction(TransferFunction(TransferFunction::gamma22, 0, 1));
     pipeline.addMultiplier(rgb);
-    pipeline.addInverseTransferFunction(TransferFunction(TransferFunction::gamma22));
+    pipeline.addInverseTransferFunction(TransferFunction(TransferFunction::gamma22, 0, 1));
     std::vector<uint16_t> red(m_gammaRampSize);
     std::vector<uint16_t> green(m_gammaRampSize);
     std::vector<uint16_t> blue(m_gammaRampSize);
@@ -61,6 +63,9 @@ bool X11Output::setChannelFactors(const QVector3D &rgb)
         blue[i] = std::round(std::clamp(output.z(), 0.0f, 1.0f) * std::numeric_limits<uint16_t>::max());
     }
     xcb_randr_set_crtc_gamma(kwinApp()->x11Connection(), m_crtc, m_gammaRampSize, red.data(), green.data(), blue.data());
+    // With compositing disabled there may be no frame/event to flush this
+    // connection. Brightness and Night Light must still take effect immediately.
+    xcb_flush(kwinApp()->x11Connection());
     return true;
 }
 

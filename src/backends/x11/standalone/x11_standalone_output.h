@@ -48,7 +48,7 @@ private:
     X11StandaloneBackend *m_backend;
     RenderLoop *m_loop = nullptr;
     xcb_randr_crtc_t m_crtc = XCB_NONE;
-    int m_gammaRampSize;
+    int m_gammaRampSize = 0;
     int m_xineramaNumber = 0;
 
     friend class X11StandaloneBackend;

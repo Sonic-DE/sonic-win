@@ -1,4 +1,21 @@
 add_definitions(-DKWIN_UNIT_TEST)
+add_executable(testSoftwareBrightness test_softwarebrightness.cpp)
+target_link_libraries(testSoftwareBrightness kwin Qt::Test Qt::DBus KF6::ConfigCore)
+find_program(DBUS_RUN_SESSION_EXECUTABLE dbus-run-session REQUIRED)
+add_test(NAME kwin-testSoftwareBrightness COMMAND ${DBUS_RUN_SESSION_EXECUTABLE} -- $<TARGET_FILE:testSoftwareBrightness>)
+ecm_mark_as_test(testSoftwareBrightness)
+find_program(XVFB_RUN_EXECUTABLE xvfb-run)
+find_program(GDBUS_EXECUTABLE gdbus)
+if(XVFB_RUN_EXECUTABLE AND GDBUS_EXECUTABLE AND KWIN_BUILD_NIGHTLIGHT)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    add_test(NAME kwin-softwarebrightness-x11
+        COMMAND ${XVFB_RUN_EXECUTABLE} -a ${DBUS_RUN_SESSION_EXECUTABLE}
+            --config-file=${CMAKE_CURRENT_SOURCE_DIR}/softwarebrightness_test_dbus.conf --
+            ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/softwarebrightness_x11_test.py
+            $<TARGET_FILE:sonic-win> ${GDBUS_EXECUTABLE})
+    set_tests_properties(kwin-softwarebrightness-x11 PROPERTIES TIMEOUT 90)
+endif()
+
 remove_definitions(-DQT_USE_QSTRINGBUILDER)
 add_subdirectory(effect)
 

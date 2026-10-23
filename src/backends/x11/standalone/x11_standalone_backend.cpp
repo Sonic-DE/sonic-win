@@ -370,7 +370,9 @@ void X11StandaloneBackend::doUpdateOutputs()
                         .eisaId = QString(),
                         .physicalSize = physicalSize,
                         .edid = Edid(),
-                        .capabilities = Output::Capabilities(),
+                        .capabilities = !gamma.isNull() && gamma->size > 1 ? Output::Capability::BrightnessControl : Output::Capabilities(),
+                        .internal = outputInfo.name().startsWith(QLatin1String("eDP")) || outputInfo.name().startsWith(QLatin1String("LVDS"))
+                            || outputInfo.name().startsWith(QLatin1String("DSI")),
                         .mstPath = QByteArray(),
                         .maxPeakBrightness = std::nullopt,
                         .maxAverageBrightness = std::nullopt,
