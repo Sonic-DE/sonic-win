@@ -32,7 +32,7 @@ OverviewEffectConfig::OverviewEffectConfig(QObject *parent, const KPluginMetaDat
 
     auto actionCollection = new KActionCollection(this, QStringLiteral("kwin"));
 
-    actionCollection->setComponentDisplayName(i18n("KWin"));
+    actionCollection->setComponentDisplayName(i18n("SonicWin"));
     actionCollection->setConfigGroup(QStringLiteral("Overview"));
     actionCollection->setConfigGlobal(true);
 

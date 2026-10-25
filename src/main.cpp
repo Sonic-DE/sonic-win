@@ -165,9 +165,9 @@ bool Application::wasCrash()
 void Application::createAboutData()
 {
     KAboutData aboutData(QStringLiteral("kwin"), // The program name used internally
-                         i18n("KWin"), // A displayable program name string
+                         i18n("SonicWin"), // A displayable program name string
                          KWIN_VERSION_STRING, // The program version string
-                         i18n("KDE window manager"), // Short description of what the app does
+                         i18n("SonicDE window manager"), // Short description of what the app does
                          KAboutLicense::GPL, // The license this code is released under
                          i18n("(c) 1999-2019, The KDE Developers")); // Copyright Statement
 
@@ -189,9 +189,9 @@ static const QString s_crashesOption = QStringLiteral("crashes");
 void Application::setupCommandLine(QCommandLineParser *parser)
 {
     QCommandLineOption lockOption(s_lockOption, i18n("Disable configuration options"));
-    QCommandLineOption crashesOption(s_crashesOption, i18n("Indicate that KWin has recently crashed n times"), QStringLiteral("n"));
+    QCommandLineOption crashesOption(s_crashesOption, i18n("Indicate that SonicWin has recently crashed n times"), QStringLiteral("n"));
 
-    parser->setApplicationDescription(i18n("KDE window manager"));
+    parser->setApplicationDescription(i18n("SonicDE window manager"));
     parser->addOption(lockOption);
     parser->addOption(crashesOption);
     KAboutData::applicationData().setupCommandLine(parser);

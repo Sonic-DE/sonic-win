@@ -42,7 +42,7 @@ ThumbnailAsideEffectConfig::ThumbnailAsideEffectConfig(QObject *parent, const KP
     // Shortcut config. The shortcut belongs to the component "kwin"!
     m_actionCollection = new KActionCollection(this, QStringLiteral("kwin"));
 
-    m_actionCollection->setComponentDisplayName(i18n("KWin"));
+    m_actionCollection->setComponentDisplayName(i18n("SonicWin"));
     m_actionCollection->setConfigGroup(QStringLiteral("ThumbnailAside"));
     m_actionCollection->setConfigGlobal(true);
 

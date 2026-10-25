@@ -56,9 +56,9 @@ NightLightManager::NightLightManager()
             : i18nc("Night Light was reenabled from temporary suspension", "Night Light Resumed");
 
         QDBusMessage message = QDBusMessage::createMethodCall(
-            QStringLiteral("org.kde.plasmashell"),
-            QStringLiteral("/org/kde/osdService"),
-            QStringLiteral("org.kde.osdService"),
+            QStringLiteral("org.sonicde.sonicshell"),
+            QStringLiteral("/org/sonicde/osdService"),
+            QStringLiteral("org.sonicde.osdService"),
             QStringLiteral("showText"));
         message.setArguments({iconName, text});
 
@@ -384,9 +384,9 @@ void NightLightManager::preview(uint previewTemp)
     m_previewTimer->start(15000);
 
     QDBusMessage message = QDBusMessage::createMethodCall(
-        QStringLiteral("org.kde.plasmashell"),
-        QStringLiteral("/org/kde/osdService"),
-        QStringLiteral("org.kde.osdService"),
+        QStringLiteral("org.sonicde.sonicshell"),
+        QStringLiteral("/org/sonicde/osdService"),
+        QStringLiteral("org.sonicde.osdService"),
         QStringLiteral("showText"));
     message.setArguments(
         {QStringLiteral("redshift-status-on"),

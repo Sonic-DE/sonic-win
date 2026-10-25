@@ -27,7 +27,8 @@
 
 static bool isRunningPlasma()
 {
-    return qgetenv("XDG_CURRENT_DESKTOP") == "KDE";
+    const auto desktops = qgetenv("XDG_CURRENT_DESKTOP").split(':');
+    return desktops.contains("SonicDE") || desktops.contains("KDE");
 }
 
 class KWinCompositingKCM : public KCModule

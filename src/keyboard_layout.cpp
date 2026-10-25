@@ -173,9 +173,9 @@ void KeyboardLayout::notifyLayoutChange()
 {
     // notify OSD service about the new layout
     QDBusMessage msg = QDBusMessage::createMethodCall(
-        QStringLiteral("org.kde.plasmashell"),
-        QStringLiteral("/org/kde/osdService"),
-        QStringLiteral("org.kde.osdService"),
+        QStringLiteral("org.sonicde.sonicshell"),
+        QStringLiteral("/org/sonicde/osdService"),
+        QStringLiteral("org.sonicde.osdService"),
         QStringLiteral("kbdLayoutChanged"));
 
     msg << translatedLayout(m_xkb->layoutName());

@@ -33,7 +33,7 @@ WindowViewEffectConfig::WindowViewEffectConfig(QObject *parent, const KPluginMet
 
     auto actionCollection = new KActionCollection(widget(), QStringLiteral("kwin"));
 
-    actionCollection->setComponentDisplayName(i18n("KWin"));
+    actionCollection->setComponentDisplayName(i18n("SonicWin"));
     actionCollection->setConfigGroup(QStringLiteral("windowview"));
     actionCollection->setConfigGlobal(true);
 

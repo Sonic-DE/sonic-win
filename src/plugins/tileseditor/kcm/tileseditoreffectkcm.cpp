@@ -28,7 +28,7 @@ TilesEditorEffectConfig::TilesEditorEffectConfig(QObject *parent, const KPluginM
 
     auto actionCollection = new KActionCollection(this, QStringLiteral("kwin"));
 
-    actionCollection->setComponentDisplayName(i18n("KWin"));
+    actionCollection->setComponentDisplayName(i18n("SonicWin"));
     actionCollection->setConfigGroup(QStringLiteral("tileseditor"));
     actionCollection->setConfigGlobal(true);
 

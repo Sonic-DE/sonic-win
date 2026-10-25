@@ -437,17 +437,17 @@ bool Edge::handleAction(ElectricBorderAction action)
     }
     case ElectricActionActivityManager: { // open activity manager
         QDBusConnection::sessionBus().asyncCall(
-            QDBusMessage::createMethodCall(QStringLiteral("org.kde.plasmashell"),
-                                           QStringLiteral("/PlasmaShell"),
-                                           QStringLiteral("org.kde.PlasmaShell"),
+            QDBusMessage::createMethodCall(QStringLiteral("org.sonicde.sonicshell"),
+                                           QStringLiteral("/SonicShell"),
+                                           QStringLiteral("org.sonicde.SonicShell"),
                                            QStringLiteral("toggleActivityManager")));
         return true;
     }
     case ElectricActionApplicationLauncher: {
         QDBusConnection::sessionBus().asyncCall(
-            QDBusMessage::createMethodCall(QStringLiteral("org.kde.plasmashell"),
-                                           QStringLiteral("/PlasmaShell"),
-                                           QStringLiteral("org.kde.PlasmaShell"),
+            QDBusMessage::createMethodCall(QStringLiteral("org.sonicde.sonicshell"),
+                                           QStringLiteral("/SonicShell"),
+                                           QStringLiteral("org.sonicde.SonicShell"),
                                            QStringLiteral("activateLauncherMenu")));
         return true;
     }
