@@ -15,7 +15,7 @@ install(FILES org_kde_kwin.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIE
 
 install(
     FILES 10-sonicde-disable-vrr.rc
-    DESTINATION /etc/nvidia/nvidia-application-profiles-rc.d
+    DESTINATION ${KDE_INSTALL_FULL_SYSCONFDIR}/nvidia/nvidia-application-profiles-rc.d
 )
 
 install(
