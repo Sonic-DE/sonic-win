@@ -1,0 +1,6 @@
+File=toolsareasettings.kcfg
+ClassName=ToolsAreaSettings
+Mutators=true
+DefaultValueGetters=true
+GenerateProperties=true
+ParentInConstructor=true

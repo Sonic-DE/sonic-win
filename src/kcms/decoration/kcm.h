@@ -29,12 +29,18 @@ class DecorationsModel;
 }
 
 class KWinDecorationSettings;
+class ToolsAreaSettings;
+class ToolsAreaExceptionsModel;
 class KWinDecorationData;
 
 class KCMKWinDecoration : public KQuickManagedConfigModule
 {
     Q_OBJECT
     Q_PROPERTY(KWinDecorationSettings *settings READ settings CONSTANT)
+    // The theme-independent title bar and tools area settings ([ToolsArea] in kdeglobals).
+    Q_PROPERTY(ToolsAreaSettings *toolsArea READ toolsArea CONSTANT)
+    // Per-application exceptions to those transparency settings.
+    Q_PROPERTY(QAbstractListModel *toolsAreaExceptions READ toolsAreaExceptions CONSTANT)
     Q_PROPERTY(QSortFilterProxyModel *themesModel READ themesModel CONSTANT)
     Q_PROPERTY(QStringList borderSizesModel READ borderSizesModel NOTIFY themeChanged)
     Q_PROPERTY(int borderIndex READ borderIndex WRITE setBorderIndex NOTIFY borderIndexChanged)
@@ -49,6 +55,8 @@ public:
     KCMKWinDecoration(QObject *parent, const KPluginMetaData &metaData);
 
     KWinDecorationSettings *settings() const;
+    ToolsAreaSettings *toolsArea() const;
+    QAbstractListModel *toolsAreaExceptions() const;
     QSortFilterProxyModel *themesModel() const;
     QAbstractListModel *leftButtonsModel();
     QAbstractListModel *rightButtonsModel();
@@ -94,4 +102,5 @@ private:
 
     int m_borderSizeIndex = -1;
     KWinDecorationData *m_data;
+    ToolsAreaExceptionsModel *m_toolsAreaExceptions;
 };

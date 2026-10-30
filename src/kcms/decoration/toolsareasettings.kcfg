@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The theme-independent title bar and tools area settings every theme and Qt Quick
+     application shares (sonic-qt-theme-bridge, Kirigami, Silver). -->
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name="kdeglobals" />
+  <group name="ToolsArea">
+    <entry name="enabled" key="Enabled" type="Bool">
+      <label>Draw the title bar and the toolbars under it as one surface</label>
+      <default>false</default>
+    </entry>
+    <entry name="activeOpacity" key="ActiveOpacity" type="Int">
+      <label>Title bar opacity in the active window</label>
+      <default>100</default>
+      <min>0</min>
+      <max>100</max>
+    </entry>
+    <entry name="inactiveOpacity" key="InactiveOpacity" type="Int">
+      <label>Title bar opacity in inactive windows</label>
+      <default>100</default>
+      <min>0</min>
+      <max>100</max>
+    </entry>
+    <entry name="applyOpacityToHeader" key="ApplyOpacityToHeader" type="Bool">
+      <label>Apply the opacity to toolbars and menu bars under the title bar</label>
+      <default>true</default>
+    </entry>
+    <entry name="matchApplicationColor" key="MatchApplicationColor" type="Bool">
+      <label>Match the title bar to the application colour</label>
+      <default>false</default>
+    </entry>
+    <entry name="blurBehind" key="BlurBehind" type="Bool">
+      <label>Blur behind transparent title bars</label>
+      <default>true</default>
+    </entry>
+    <entry name="opaqueWhenMaximized" key="OpaqueWhenMaximized" type="Bool">
+      <label>Opaque title bars in maximized windows</label>
+      <default>true</default>
+    </entry>
+  </group>
+</kcfg>

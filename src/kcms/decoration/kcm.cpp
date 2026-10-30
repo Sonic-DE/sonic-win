@@ -24,6 +24,8 @@
 
 #include "kwindecorationdata.h"
 #include "kwindecorationsettings.h"
+#include "toolsareaexceptionsmodel.h"
+#include "toolsareasettings.h"
 #include "utils.h"
 
 K_PLUGIN_FACTORY_WITH_JSON(KCMKWinDecorationFactory, "kcm_kwindecoration_x11.json", registerPlugin<KCMKWinDecoration>(); registerPlugin<KWinDecorationData>();)
@@ -43,11 +45,14 @@ KCMKWinDecoration::KCMKWinDecoration(QObject *parent, const KPluginMetaData &met
     , m_rightButtonsModel(new KDecoration3::Preview::ButtonsModel(DecorationButtonsList(), this))
     , m_availableButtonsModel(new KDecoration3::Preview::ButtonsModel(this))
     , m_data(new KWinDecorationData(this))
+    , m_toolsAreaExceptions(new ToolsAreaExceptionsModel(KSharedConfig::openConfig(QStringLiteral("kdeglobals")), this))
 {
     setButtons(Apply | Default | Help);
+    connect(m_toolsAreaExceptions, &ToolsAreaExceptionsModel::changedChanged, this, &KCMKWinDecoration::settingsChanged);
     qmlRegisterAnonymousType<QAbstractListModel>("org.kde.kwin.KWinDecoration", 1);
     qmlRegisterAnonymousType<QSortFilterProxyModel>("org.kde.kwin.KWinDecoration", 1);
     qmlRegisterAnonymousType<KWinDecorationSettings>("org.kde.kwin.KWinDecoration", 1);
+    qmlRegisterAnonymousType<ToolsAreaSettings>("org.kde.kwin.KWinDecoration", 1);
     m_proxyThemesModel->setSourceModel(m_themesModel);
     m_proxyThemesModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
     m_proxyThemesModel->setSortCaseSensitivity(Qt::CaseInsensitive);
@@ -57,15 +62,15 @@ KCMKWinDecoration::KCMKWinDecoration(QObject *parent, const KPluginMetaData &met
     connect(m_proxyThemesModel, &QSortFilterProxyModel::rowsRemoved, this, &KCMKWinDecoration::themeChanged);
     connect(m_proxyThemesModel, &QSortFilterProxyModel::modelReset, this, &KCMKWinDecoration::themeChanged);
 
-    connect(m_data->settings(), &KWinDecorationSettings::themeChanged, this, &KCMKWinDecoration::themeChanged);
-    connect(m_data->settings(), &KWinDecorationSettings::borderSizeChanged, this, &KCMKWinDecoration::borderSizeChanged);
+    connect(settings(), &KWinDecorationSettings::themeChanged, this, &KCMKWinDecoration::themeChanged);
+    connect(settings(), &KWinDecorationSettings::borderSizeChanged, this, &KCMKWinDecoration::borderSizeChanged);
 
-    connect(m_data->settings(), &KWinDecorationSettings::borderSizeAutoChanged, this, &KCMKWinDecoration::borderIndexChanged);
+    connect(settings(), &KWinDecorationSettings::borderSizeAutoChanged, this, &KCMKWinDecoration::borderIndexChanged);
     connect(this, &KCMKWinDecoration::borderSizeChanged, this, &KCMKWinDecoration::borderIndexChanged);
     connect(this, &KCMKWinDecoration::themeChanged, this, &KCMKWinDecoration::borderIndexChanged);
 
     connect(this, &KCMKWinDecoration::themeChanged, this, [this]() {
-        if (m_data->settings()->borderSizeAuto()) {
+        if (settings()->borderSizeAuto()) {
             setBorderSize(recommendedBorderSize());
         }
     });
@@ -92,7 +97,17 @@ KCMKWinDecoration::KCMKWinDecoration(QObject *parent, const KPluginMetaData &met
 
 KWinDecorationSettings *KCMKWinDecoration::settings() const
 {
-    return m_data->settings();
+    return m_data->kWinDecorationSettings();
+}
+
+ToolsAreaSettings *KCMKWinDecoration::toolsArea() const
+{
+    return m_data->toolsAreaSettings();
+}
+
+QAbstractListModel *KCMKWinDecoration::toolsAreaExceptions() const
+{
+    return m_toolsAreaExceptions;
 }
 
 void KCMKWinDecoration::reloadKWinSettings()
@@ -103,6 +118,7 @@ void KCMKWinDecoration::reloadKWinSettings()
 void KCMKWinDecoration::load()
 {
     KQuickManagedConfigModule::load();
+    m_toolsAreaExceptions->load();
 
     m_leftButtonsModel->replace(Utils::buttonsFromString(settings()->buttonsOnLeft()));
     m_rightButtonsModel->replace(Utils::buttonsFromString(settings()->buttonsOnRight()));
@@ -120,13 +136,32 @@ void KCMKWinDecoration::save()
         settings()->setBorderSize(settings()->defaultBorderSizeValue());
     }
 
+    // Choosing title bar transparency here turns the shared tools area on.
+    const bool exceptionsChanged = m_toolsAreaExceptions->isChanged();
+    const bool toolsAreaChanged = toolsArea()->isSaveNeeded() || exceptionsChanged;
+    if (toolsArea()->isSaveNeeded()) {
+        toolsArea()->setEnabled(true);
+    }
+
     KQuickManagedConfigModule::save();
+    if (exceptionsChanged) {
+        m_toolsAreaExceptions->save();
+    }
 
     // Send a signal to all kwin instances
     QDBusMessage message = QDBusMessage::createSignal(QStringLiteral("/KWin"),
                                                       QStringLiteral("org.kde.KWin"),
                                                       QStringLiteral("reloadConfig"));
     QDBusConnection::sessionBus().send(message);
+
+    // Every application, the decoration and the styles follow [ToolsArea] live.
+    if (toolsAreaChanged) {
+        QDBusMessage notify = QDBusMessage::createSignal(QStringLiteral("/KGlobalSettings"),
+                                                         QStringLiteral("org.kde.KGlobalSettings"),
+                                                         QStringLiteral("notifyChange"));
+        notify << 0 << 0;
+        QDBusConnection::sessionBus().send(notify);
+    }
 }
 
 void KCMKWinDecoration::defaults()
@@ -239,7 +274,8 @@ void KCMKWinDecoration::setTheme(int index)
 
 bool KCMKWinDecoration::isSaveNeeded() const
 {
-    return !settings()->borderSizeAuto() && borderSizeIndexFromString(settings()->borderSize()) != m_borderSizeIndex;
+    return (!settings()->borderSizeAuto() && borderSizeIndexFromString(settings()->borderSize()) != m_borderSizeIndex)
+        || m_toolsAreaExceptions->isChanged();
 }
 
 int KCMKWinDecoration::borderSizeIndexFromString(const QString &size) const

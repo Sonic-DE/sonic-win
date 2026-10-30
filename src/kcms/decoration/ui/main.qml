@@ -45,7 +45,7 @@ KCM.AbstractKCM {
         },
         Kirigami.Action {
             icon.name: "configure"
-            text: i18nc("button text", "Configure Titlebar Buttons…")
+            text: i18nc("button text", "Configure Titlebar…")
 
             onTriggered: kcm.push("ConfigureTitlebar.qml")
         },

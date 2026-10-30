@@ -67,6 +67,7 @@ BlurEffect::BlurEffect()
         m_contrastPass.mvpMatrixLocation = m_contrastPass.shader->uniformLocation("modelViewProjectionMatrix");
         m_contrastPass.offsetLocation = m_contrastPass.shader->uniformLocation("offset");
         m_contrastPass.halfpixelLocation = m_contrastPass.shader->uniformLocation("halfpixel");
+        m_contrastPass.saturationLocation = m_contrastPass.shader->uniformLocation("saturation");
     }
 
     m_roundedContrastPass.shader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture,
@@ -82,6 +83,7 @@ BlurEffect::BlurEffect()
         m_roundedContrastPass.boxLocation = m_roundedContrastPass.shader->uniformLocation("box");
         m_roundedContrastPass.cornerRadiusLocation = m_roundedContrastPass.shader->uniformLocation("cornerRadius");
         m_roundedContrastPass.opacityLocation = m_roundedContrastPass.shader->uniformLocation("opacity");
+        m_roundedContrastPass.saturationLocation = m_roundedContrastPass.shader->uniformLocation("saturation");
     }
 
     m_downsamplePass.shader = ShaderManager::instance()->generateShaderFromFile(ShaderTrait::MapTexture,
@@ -209,11 +211,30 @@ void BlurEffect::reconfigure(ReconfigureFlags flags)
 {
     BlurConfig::self()->read();
 
-    int blurStrength = BlurConfig::blurStrength() - 1;
-    m_iterationCount = blurStrengthValues[blurStrength].iteration;
-    m_offset = blurStrengthValues[blurStrength].offset;
-    m_expandSize = blurOffsets[m_iterationCount - 1].expandSize;
-    m_noiseStrength = BlurConfig::noiseStrength();
+    const auto parameters = [this](int strength, int noise, int saturation) {
+        BlurParameters result;
+        const int index = std::clamp(strength - 1, 0, int(blurStrengthValues.size()) - 1);
+        result.iterationCount = blurStrengthValues[index].iteration;
+        result.offset = blurStrengthValues[index].offset;
+        result.expandSize = blurOffsets[result.iterationCount - 1].expandSize;
+        result.noiseStrength = noise;
+        // The default (1) keeps the background's colours; each step adds a quarter.
+        result.saturation = std::max(0.0f, 1.0f + 0.25f * (saturation - 1));
+        return result;
+    };
+    m_windowParameters = parameters(BlurConfig::blurStrength(), BlurConfig::noiseStrength(), BlurConfig::saturation());
+    m_menuParameters = parameters(BlurConfig::menuBlurStrength(), BlurConfig::menuNoiseStrength(), BlurConfig::menuSaturation());
+    m_expandSize = std::max(m_windowParameters.expandSize, m_menuParameters.expandSize);
+
+    const bool blurMenus = BlurConfig::blurMenus();
+    if (blurMenus != m_blurMenus) {
+        m_blurMenus = blurMenus;
+        for (EffectWindow *window : effects->stackingOrder()) {
+            if (isMenuWindow(window)) {
+                updateBlurRegion(window);
+            }
+        }
+    }
 
     // Update all windows for the blur to take effect
     effects->addRepaintFull();
@@ -253,10 +274,18 @@ void BlurEffect::updateBlurRegion(EffectWindow *w)
         frame = decorationBlurRegion(w);
     }
 
+    // "Blur menus": a menu that didn't ask for blur is blurred as a whole while it is painted
+    // translucent (the Translucency effect's menu opacity); see blur().
+    const bool menuRule = !content.has_value() && !frame.has_value() && blursMenu(w);
+    if (menuRule) {
+        content = QRegion();
+    }
+
     if (content.has_value() || frame.has_value()) {
         BlurEffectData &data = m_windows[w];
         data.content = content;
         data.frame = frame;
+        data.menuRule = menuRule;
         data.windowEffect = ItemEffect(w->windowItem());
     } else {
         if (auto it = m_windows.find(w); it != m_windows.end()) {
@@ -264,6 +293,16 @@ void BlurEffect::updateBlurRegion(EffectWindow *w)
             m_windows.erase(it);
         }
     }
+}
+
+bool BlurEffect::isMenuWindow(const EffectWindow *w)
+{
+    return w->isMenu() || w->isDropdownMenu() || w->isPopupMenu();
+}
+
+bool BlurEffect::blursMenu(const EffectWindow *w) const
+{
+    return m_blurMenus && isMenuWindow(w);
 }
 
 void BlurEffect::slotWindowAdded(EffectWindow *w)
@@ -519,6 +558,17 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
     if (!shouldBlur(w, mask, data)) {
         return;
     }
+    // A menu blurred by the "Blur menus" option only while it is translucent.
+    if (blurInfo.menuRule && w->opacity() * data.opacity() >= 1.0) {
+        return;
+    }
+    // Menus use the menu blur's strength, noise and saturation; every other window the
+    // window blur's.
+    const BlurParameters &parameters = isMenuWindow(w) ? m_menuParameters : m_windowParameters;
+    m_iterationCount = parameters.iterationCount;
+    m_offset = parameters.offset;
+    m_noiseStrength = parameters.noiseStrength;
+    m_saturation = parameters.saturation;
 
     // Compute the effective blur shape. Note that if the window is transformed, so will be the blur shape.
     QRegion blurShape = blurRegion(w).translated(w->pos().toPoint());
@@ -539,7 +589,8 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
 
     const QRect backgroundRect = blurShape.boundingRect();
     const QRect deviceBackgroundRect = snapToPixelGrid(scaledRect(backgroundRect, viewport.scale()));
-    const auto opacity = w->opacity() * data.opacity();
+    // A "Blur menus" menu's opacity is its translucency, not a fade: blur it at full strength.
+    const auto opacity = blurInfo.menuRule ? 1.0 : w->opacity() * data.opacity();
 
     // Get the effective shape that will be actually blurred. It's possible that all of it will be clipped.
     QList<QRectF> effectiveShape;
@@ -785,6 +836,7 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
         m_roundedContrastPass.shader->setUniform(m_roundedContrastPass.boxLocation, QVector4D(nativeBox.x() + nativeBox.width() * 0.5, nativeBox.y() + nativeBox.height() * 0.5, nativeBox.width() * 0.5, nativeBox.height() * 0.5));
         m_roundedContrastPass.shader->setUniform(m_roundedContrastPass.cornerRadiusLocation, nativeCornerRadius.toVector());
         m_roundedContrastPass.shader->setUniform(m_roundedContrastPass.opacityLocation, opacity);
+        m_roundedContrastPass.shader->setUniform(m_roundedContrastPass.saturationLocation, m_saturation);
 
         read->colorAttachment()->bind();
 
@@ -811,6 +863,7 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
         m_contrastPass.shader->setUniform(m_contrastPass.mvpMatrixLocation, projectionMatrix);
         m_contrastPass.shader->setUniform(m_contrastPass.halfpixelLocation, halfpixel);
         m_contrastPass.shader->setUniform(m_contrastPass.offsetLocation, float(m_offset));
+        m_contrastPass.shader->setUniform(m_contrastPass.saturationLocation, m_saturation);
 
         read->colorAttachment()->bind();
 

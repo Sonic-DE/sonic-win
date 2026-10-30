@@ -7,6 +7,7 @@ set(kcmkwindecoration_SRCS
     declarative-plugin/buttonsmodel.cpp
     decorationmodel.cpp
     kcm.cpp
+    toolsareaexceptionsmodel.cpp
     utils.cpp
 )
 
@@ -14,16 +15,17 @@ kcmutils_generate_module_data(
     kcmkwindecoration_SRCS
     MODULE_DATA_HEADER kwindecorationdata.h
     MODULE_DATA_CLASS_NAME KWinDecorationData
-    SETTINGS_HEADERS kwindecorationsettings.h
-    SETTINGS_CLASSES KWinDecorationSettings
+    SETTINGS_HEADERS kwindecorationsettings.h toolsareasettings.h
+    SETTINGS_CLASSES KWinDecorationSettings ToolsAreaSettings
 )
 
-kconfig_add_kcfg_files(kcmkwindecoration_SRCS kwindecorationsettings.kcfgc GENERATE_MOC)
+kconfig_add_kcfg_files(kcmkwindecoration_SRCS kwindecorationsettings.kcfgc toolsareasettings.kcfgc GENERATE_MOC)
 
 kcmutils_add_qml_kcm(kcm_kwindecoration_x11 SOURCES ${kcmkwindecoration_SRCS})
 
 target_link_libraries(kcm_kwindecoration_x11 PRIVATE
     KDecoration3::KDecoration
+    KF6::ColorScheme
     KF6::I18n
     KF6::KCMUtils
     KF6::KCMUtilsQuick

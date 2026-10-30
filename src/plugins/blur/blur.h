@@ -40,6 +40,9 @@ struct BlurEffectData
     BlurRenderData render;
 
     ItemEffect windowEffect;
+
+    /// Blurred by the "Blur menus" option (only while painted translucent).
+    bool menuRule = false;
 };
 
 class BlurEffect : public KWin::Effect
@@ -83,6 +86,9 @@ private:
     bool decorationSupportsBlurBehind(const EffectWindow *w) const;
     bool shouldBlur(const EffectWindow *w, int mask, const WindowPaintData &data) const;
     void updateBlurRegion(EffectWindow *w);
+    // Whether the "Blur menus" option covers w.
+    bool blursMenu(const EffectWindow *w) const;
+    static bool isMenuWindow(const EffectWindow *w);
     void blur(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, const QRegion &region, WindowPaintData &data);
     GLTexture *ensureNoiseTexture();
 
@@ -93,6 +99,7 @@ private:
         int mvpMatrixLocation;
         int offsetLocation;
         int halfpixelLocation;
+        int saturationLocation;
     } m_contrastPass;
 
     struct
@@ -104,6 +111,7 @@ private:
         int boxLocation;
         int cornerRadiusLocation;
         int opacityLocation;
+        int saturationLocation;
     } m_roundedContrastPass;
 
     struct
@@ -139,10 +147,25 @@ private:
     QRegion m_paintedArea; // keeps track of all painted areas (from bottom to top)
     QRegion m_currentBlur; // keeps track of the currently blured area of the windows(from bottom to top)
 
+    // Blur strength, noise and saturation, set separately for windows and for menus.
+    struct BlurParameters
+    {
+        size_t iterationCount = 1;
+        int offset = 1;
+        int expandSize = 0;
+        int noiseStrength = 0;
+        float saturation = 1.0;
+    };
+    BlurParameters m_windowParameters;
+    BlurParameters m_menuParameters;
+
+    // The parameters of the window being painted (blur() loads them).
     size_t m_iterationCount; // number of times the texture will be downsized to half size
     int m_offset;
-    int m_expandSize;
+    int m_expandSize; // the larger of the two sets: repaints must cover both
     int m_noiseStrength;
+    float m_saturation = 1.0;
+    bool m_blurMenus = false;
 
     struct OffsetStruct
     {

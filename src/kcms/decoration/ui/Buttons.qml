@@ -23,6 +23,7 @@ Rectangle {
 
     color: palette.base
     radius: Kirigami.Units.cornerRadius
+    implicitHeight: buttonsLayout.implicitHeight
 
     KDecoration.Bridge {
         id: bridgeItem
@@ -34,6 +35,7 @@ Rectangle {
     }
 
     ColumnLayout {
+        id: buttonsLayout
         anchors.fill: parent
 
         // Fake titlebar
@@ -176,6 +178,8 @@ Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.minimumHeight: availableButtonsGrid.cellHeight * 2
+            // Every button visible when the page scrolls instead of giving the grid the rest.
+            Layout.preferredHeight: cellHeight * Math.ceil(count / Math.max(1, Math.floor(width / cellWidth)))
             Layout.margins: Kirigami.Units.largeSpacing
             cellWidth: Kirigami.Units.gridUnit * 6
             cellHeight: Kirigami.Units.gridUnit * 6
