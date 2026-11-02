@@ -1526,12 +1526,12 @@ QString Workspace::supportInformation() const
     const QString no = QStringLiteral("no\n");
 
     support.append(ki18nc("Introductory text shown in the support information.",
-                          "KWin Support Information:\n"
-                          "The following information should be used when requesting support on e.g. https://discuss.kde.org.\n"
+                          "SonicWin Support Information:\n"
+                          "The following information should be used when reporting an issue on https://github.com/Sonic-DE/sonic-win/issues.\n"
                           "It provides information about the currently running instance, which options are used,\n"
                           "what OpenGL driver and which effects are running.\n"
-                          "Please post the information provided underneath this introductory text to a paste bin service\n"
-                          "like https://paste.kde.org instead of pasting into support threads.\n")
+                          "Please attach the information provided underneath this introductory text to the issue as a file\n"
+                          "instead of pasting it into the issue's description.\n")
                        .toString());
     support.append(QStringLiteral("\n==========================\n\n"));
     // all following strings are intended for support. They need to be pasted to e.g forums.kde.org
@@ -1539,7 +1539,7 @@ QString Workspace::supportInformation() const
     // help understand English. Because of that all texts are not translated
     support.append(QStringLiteral("Version\n"));
     support.append(QStringLiteral("=======\n"));
-    support.append(QStringLiteral("KWin version: "));
+    support.append(QStringLiteral("SonicWin version: "));
     support.append(KWIN_VERSION_STRING);
     support.append(QStringLiteral("\n"));
     support.append(QStringLiteral("Qt Version: "));
