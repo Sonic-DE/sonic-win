@@ -33,7 +33,6 @@ namespace KWin
 {
 class IdleDetector;
 class Window;
-class GlobalShortcutsManager;
 class InputEventFilter;
 class InputEventSpy;
 class KeyboardInputRedirection;
@@ -119,10 +118,6 @@ public:
     void removeIdleInhibitor(Window *inhibitor);
 
     Window *findToplevel(const QPointF &pos);
-    GlobalShortcutsManager *shortcuts() const
-    {
-        return m_shortcuts;
-    }
 
     /**
      * Sends an event through all InputFilters.
@@ -266,8 +261,6 @@ private:
     TabletInputRedirection *m_tablet;
     TouchInputRedirection *m_touch;
     QObject *m_lastInputDevice = nullptr;
-
-    GlobalShortcutsManager *m_shortcuts;
 
     std::vector<std::unique_ptr<InputBackend>> m_inputBackends;
     QList<InputDevice *> m_inputDevices;

@@ -6,8 +6,6 @@
 
 #include "gesturehandler.h"
 #include "gestures.h"
-#include "globalshortcuts.h"
-#include "input.h"
 
 namespace KWin
 {
@@ -37,14 +35,7 @@ void SwipeGestureHandler::componentComplete()
     connect(m_gesture.get(), &SwipeGesture::cancelled, this, &SwipeGestureHandler::cancelled);
     connect(m_gesture.get(), &SwipeGesture::progress, this, &SwipeGestureHandler::setProgress);
 
-    switch (m_deviceType) {
-    case Device::Touchpad:
-        input()->shortcuts()->registerTouchpadSwipe(m_gesture.get());
-        break;
-    case Device::Touchscreen:
-        input()->shortcuts()->registerTouchscreenSwipe(m_gesture.get());
-        break;
-    }
+    // Nothing to register with: gestures aren't recognized on X11.
 }
 
 SwipeGestureHandler::Direction SwipeGestureHandler::direction() const
@@ -123,11 +114,7 @@ void PinchGestureHandler::componentComplete()
     connect(m_gesture.get(), &PinchGesture::cancelled, this, &PinchGestureHandler::cancelled);
     connect(m_gesture.get(), &PinchGesture::progress, this, &PinchGestureHandler::setProgress);
 
-    switch (m_deviceType) {
-    case Device::Touchpad:
-        input()->shortcuts()->registerTouchpadPinch(m_gesture.get());
-        break;
-    }
+    // Nothing to register with: gestures aren't recognized on X11.
 }
 
 PinchGestureHandler::Direction PinchGestureHandler::direction() const
