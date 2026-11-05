@@ -94,7 +94,6 @@ Window::Window()
     connect(Workspace::self()->applicationMenu(), &ApplicationMenu::applicationMenuEnabledChanged, this, [this] {
         Q_EMIT hasApplicationMenuChanged(hasApplicationMenu());
     });
-    connect(&m_offscreenFramecallbackTimer, &QTimer::timeout, this, &Window::maybeSendFrameCallback);
 }
 
 Window::~Window()
@@ -4396,7 +4395,6 @@ void Window::refOffscreenRendering()
 {
     m_offscreenRenderCount++;
     if (m_offscreenRenderCount == 1) {
-        m_offscreenFramecallbackTimer.start(1'000'000 / output()->refreshRate());
         Q_EMIT offscreenRenderingChanged();
     }
 }
@@ -4406,7 +4404,6 @@ void Window::unrefOffscreenRendering()
     Q_ASSERT(m_offscreenRenderCount);
     m_offscreenRenderCount--;
     if (m_offscreenRenderCount == 0) {
-        m_offscreenFramecallbackTimer.stop();
         Q_EMIT offscreenRenderingChanged();
     }
 }
@@ -4414,11 +4411,6 @@ void Window::unrefOffscreenRendering()
 bool Window::isOffscreenRendering() const
 {
     return m_offscreenRenderCount > 0;
-}
-
-void Window::maybeSendFrameCallback()
-{
-    // X11 only - no Wayland surface frame callbacks
 }
 
 qreal Window::targetScale() const

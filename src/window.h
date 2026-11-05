@@ -1780,7 +1780,6 @@ protected:
     QRectF ensureSpecialStateGeometry(const QRectF &geometry);
 
     void cleanTabBox();
-    void maybeSendFrameCallback();
 
     void updateNextTargetScale();
     void updatePreferredBufferTransform();
@@ -1906,7 +1905,6 @@ protected:
     quint32 m_lastUsageSerial = 0;
     bool m_lockScreenOverlay = false;
     uint32_t m_offscreenRenderCount = 0;
-    QTimer m_offscreenFramecallbackTimer;
 };
 
 inline QRectF Window::bufferGeometry() const
