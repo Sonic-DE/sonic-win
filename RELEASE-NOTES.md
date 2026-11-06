@@ -11,7 +11,7 @@ Sonic Win is SonicDE's window manager and compositor for X11: it places, moves a
 - The Sonic Screenies screenshot tool no longer shows up fading or zooming in its own screenshots.
 - Fixed translucent windows turning fully opaque in screenshots and screen captures.
 - Desktop and shell integration now uses SonicDE's own names throughout, so other SonicDE components recognise the window manager correctly.
-- Behind the scenes: the NVIDIA settings profile now installs relative to the build's install location, so building without administrator rights no longer fails.
+- Behind the scenes: the NVIDIA settings profile now installs relative to the build's install location, so building without administrator rights no longer fails, and the window manager uses QXLibre for X11 when it's installed, going back to Qt's own X11 support when it isn't.
 
 ## 6.8.0.2 (2026-10-24)
 

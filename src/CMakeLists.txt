@@ -372,6 +372,7 @@ target_link_libraries(sonic-win
     KWinX11Platform
     kwin
     KF6::GlobalAccel
+    Sonic::Logging
 )
 target_compile_definitions(sonic-win PRIVATE
     "TRANSLATION_DOMAIN=\"kwin_x11\""

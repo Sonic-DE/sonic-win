@@ -161,6 +161,7 @@ set_package_properties(Plasma PROPERTIES
 )
 
 find_package(KDecoration3 ${PROJECT_DEP_VERSION} CONFIG REQUIRED)
+find_package(SonicLogging ${KF6_MIN_VERSION} REQUIRED)
 
 find_package(SonicSilver ${PROJECT_DEP_VERSION} CONFIG)
 set_package_properties(SonicSilver PROPERTIES

@@ -32,6 +32,8 @@
 #include <KSelectionOwner>
 #include <KSignalHandler>
 
+#include <Sonic/Logging/Logging>
+
 #include <QAction>
 #include <QComboBox>
 #include <QCommandLineParser>
@@ -49,6 +51,8 @@
 // system
 #include <iostream>
 #include <unistd.h>
+
+SONIC_LOGGING_COMPONENT("org.sonicde.sonicwin")
 
 Q_LOGGING_CATEGORY(KWIN_CORE, "kwin_core", QtWarningMsg)
 
@@ -385,13 +389,16 @@ void ApplicationX11::crashHandler(int signal)
 
 int main(int argc, char *argv[])
 {
+    Sonic::Logging::install();
+
     KWin::Application::setupMalloc();
     KWin::Application::setupLocalizedString();
 
     signal(SIGPIPE, SIG_IGN);
 
-    // enforce xcb plugin, unfortunately command line switch has precedence
-    setenv("QT_QPA_PLATFORM", "xcb", true);
+    // enforce an X11 plugin, unfortunately command line switch has precedence
+    const QByteArray originalQpaPlatform = qgetenv("QT_QPA_PLATFORM");
+    setenv("QT_QPA_PLATFORM", "xlibre;xcb", true);
 
     // disable highdpi scaling
     setenv("QT_ENABLE_HIGHDPI_SCALING", "0", true);
@@ -418,8 +425,12 @@ int main(int argc, char *argv[])
 
     KWin::ApplicationX11 a(argc, argv);
 
-    // reset QT_QPA_PLATFORM so we don't propagate it to our children (e.g. apps launched from the overview effect)
-    qunsetenv("QT_QPA_PLATFORM");
+    // restore QT_QPA_PLATFORM so our children (e.g. apps launched from the overview effect) get the session's value
+    if (originalQpaPlatform.isEmpty()) {
+        qunsetenv("QT_QPA_PLATFORM");
+    } else {
+        qputenv("QT_QPA_PLATFORM", originalQpaPlatform);
+    }
     qunsetenv("QT_ENABLE_HIGHDPI_SCALING");
 
     a.setProcessStartupEnvironment(QProcessEnvironment(QProcessEnvironment::InheritFromParent));
