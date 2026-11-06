@@ -199,7 +199,7 @@ std::unique_ptr<Cursor> X11StandaloneBackend::createPlatformCursor()
 
 std::unique_ptr<InputBackend> X11StandaloneBackend::createInputBackend()
 {
-    return std::make_unique<X11InputBackend>(this);
+    return std::make_unique<X11InputBackend>();
 }
 
 bool X11StandaloneBackend::hasGlx()
