@@ -53,7 +53,7 @@ void KillPrompt::start(quint32 timestamp)
     QString platform;
 
     if (auto *x11Window = qobject_cast<X11Window *>(m_window)) {
-        platform = QStringLiteral("xcb");
+        platform = QStringLiteral("xlibre;xcb");
         wid = QString::number(x11Window->window());
         timestampString = QString::number(timestamp);
         if (!x11Window->clientMachine()->isLocal()) {
