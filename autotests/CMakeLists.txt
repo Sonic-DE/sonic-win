@@ -15,6 +15,15 @@ if(XVFB_RUN_EXECUTABLE AND GDBUS_EXECUTABLE AND KWIN_BUILD_NIGHTLIGHT)
             $<TARGET_FILE:sonic-win> ${GDBUS_EXECUTABLE})
     set_tests_properties(kwin-softwarebrightness-x11 PROPERTIES TIMEOUT 90)
 endif()
+if(XVFB_RUN_EXECUTABLE AND GDBUS_EXECUTABLE)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    add_test(NAME kwin-compositor-redirect-x11
+        COMMAND ${XVFB_RUN_EXECUTABLE} -a ${DBUS_RUN_SESSION_EXECUTABLE}
+            --config-file=${CMAKE_CURRENT_SOURCE_DIR}/softwarebrightness_test_dbus.conf --
+            ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/compositor_redirect_x11_test.py
+            $<TARGET_FILE:sonic-win> ${GDBUS_EXECUTABLE})
+    set_tests_properties(kwin-compositor-redirect-x11 PROPERTIES TIMEOUT 60)
+endif()
 
 remove_definitions(-DQT_USE_QSTRINGBUILDER)
 add_subdirectory(effect)

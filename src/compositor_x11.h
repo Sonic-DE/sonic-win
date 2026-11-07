@@ -129,6 +129,7 @@ private:
     SuspendReasons m_suspended;
     QSet<Window *> m_inhibitors;
     int m_framesToTestForSafety = 3;
+    int m_redirectRetries = 0;
 };
 
 } // namespace KWin

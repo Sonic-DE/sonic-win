@@ -12,6 +12,7 @@ Sonic Win is SonicDE's window manager and compositor for X11: it places, moves a
 - Fixed translucent windows turning fully opaque in screenshots and screen captures.
 - Desktop and shell integration now uses SonicDE's own names throughout, so other SonicDE components recognise the window manager correctly.
 - Desktop effects use a little less processor time while something is animating, because windows that haven't changed are no longer refreshed from the X server each time they're drawn. Total processor use with an animated 800x600 Qt Quick window went from 17.9% to 17.5% of one core when drawn by the graphics card (-1.6%), and from 19.9% to 18.9% when drawn in software (-4.8%). Measured on a 60 Hz desktop with an AMD Radeon RX 9060 XT and XLibre 25.1.9, over 6 rounds each way.
+- Fixed windows going blank or freezing when the window manager takes over from a previous one that's crashing. It now waits for the old one to finish before starting desktop effects.
 - Behind the scenes: the NVIDIA settings profile now installs relative to the build's install location, so building without administrator rights no longer fails, and the window manager uses QXLibre for X11 when it's installed, going back to Qt's own X11 support when it isn't.
 
 ## 6.8.0.2 (2026-10-24)

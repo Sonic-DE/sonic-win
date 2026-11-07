@@ -69,6 +69,9 @@ private:
     bool m_owning;
 };
 
+static constexpr std::chrono::milliseconds RedirectRetryInterval(250);
+static constexpr int MaxRedirectRetries = 120;
+
 X11Compositor *X11Compositor::create(QObject *parent)
 {
     Q_ASSERT(!s_compositor);
@@ -286,9 +289,29 @@ void X11Compositor::start()
         m_selectionOwner->setOwning(true);
     }
 
-    xcb_composite_redirect_subwindows(kwinApp()->x11Connection(),
-                                      kwinApp()->x11RootWindow(),
-                                      XCB_COMPOSITE_REDIRECT_MANUAL);
+    // Only one client can redirect, and an outgoing window manager does until it disconnects.
+    const UniqueCPtr<xcb_generic_error_t> redirectError(xcb_request_check(
+        kwinApp()->x11Connection(),
+        xcb_composite_redirect_subwindows_checked(kwinApp()->x11Connection(),
+                                                  kwinApp()->x11RootWindow(),
+                                                  XCB_COMPOSITE_REDIRECT_MANUAL)));
+    if (redirectError) {
+        m_state = State::Off;
+        if (m_redirectRetries == 0) {
+            qCWarning(KWIN_CORE) << "Another client is redirecting the windows, waiting for it to finish";
+        }
+        if (m_redirectRetries < MaxRedirectRetries) {
+            ++m_redirectRetries;
+            QTimer::singleShot(RedirectRetryInterval, this, &Compositor::start);
+            return;
+        }
+        qCWarning(KWIN_CORE) << "Compositing is off because another client is still redirecting the windows";
+        m_redirectRetries = 0;
+        m_selectionOwner->setOwning(false);
+        m_selectionOwner->release();
+        return;
+    }
+    m_redirectRetries = 0;
 
     // Decide what compositing types can be used.
     QList<CompositingType> candidateCompositors = kwinApp()->outputBackend()->supportedCompositors();
