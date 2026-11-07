@@ -221,6 +221,7 @@ void GLPlatformTest::testLooseBindingOnGlx_data()
 
     const QByteArray mesa = "4.6 (Compatibility Profile) Mesa 26.2.5";
     QTest::newRow("radeonsi gfx1200") << QByteArray("AMD Radeon RX 9060 XT (radeonsi, gfx1200, ACO, DRM 3.64, 7.2.13)") << mesa << true;
+    QTest::newRow("radeonsi gfx1201") << QByteArray("AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.13)") << mesa << true;
     QTest::newRow("radeonsi gfx1103") << QByteArray("AMD Radeon 780M (radeonsi, gfx1103_r1, ACO, DRM 3.64, 7.2.13)") << mesa << false;
     QTest::newRow("gfx1200 without Mesa") << QByteArray("AMD Radeon RX 9060 XT (radeonsi, gfx1200)") << QByteArray("4.6.0") << false;
 }
