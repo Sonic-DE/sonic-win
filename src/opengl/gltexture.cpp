@@ -217,6 +217,7 @@ void GLTexture::bind()
 
     if (d->m_markedDirty) {
         onDamage();
+        d->m_markedDirty = false;
     }
     if (d->m_filterChanged) {
         GLenum minFilter = GL_NEAREST;
