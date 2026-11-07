@@ -205,6 +205,7 @@ public:
     intptr_t bufferEnd;
     size_t mappedSize;
     size_t frameSize;
+    size_t bytesSinceFence = 0;
     intptr_t nextOffset;
     intptr_t baseAddress;
     uint8_t *map;
@@ -265,6 +266,7 @@ void GLVertexBufferPrivate::reallocatePersistentBuffer(size_t size)
 
     nextOffset = 0;
     bufferEnd = bufferSize;
+    bytesSinceFence = 0;
 }
 
 bool GLVertexBufferPrivate::awaitFence(intptr_t end)
@@ -319,6 +321,7 @@ GLvoid *GLVertexBufferPrivate::getIdleRange(size_t size)
             fences.push_back(BufferFence{
                 .sync = sync,
                 .nextEnd = intptr_t(bufferSize)});
+            bytesSinceFence = 0;
         }
     }
 
@@ -537,9 +540,10 @@ void GLVertexBuffer::endOfFrame()
         return;
     }
 
-    // Emit a fence if we have uploaded data
+    // Emit a fence if we have uploaded enough data
     if (d->frameSize > 0) {
         d->frameSizes.push(d->frameSize);
+        d->bytesSinceFence += d->frameSize;
         d->frameSize = 0;
 
         // Force the buffer to be reallocated at the beginning of the next frame
@@ -552,11 +556,13 @@ void GLVertexBuffer::endOfFrame()
             d->bufferSize = 0;
             d->nextOffset = 0;
             d->map = nullptr;
-        } else {
+        } else if (d->bytesSinceFence >= d->bufferSize / 4) {
+            // A fence flushes to the GPU, and the writer only needs a recent one to reclaim from.
             if (auto sync = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0)) {
                 d->fences.push_back(BufferFence{
                     .sync = sync,
                     .nextEnd = intptr_t(d->nextOffset + d->bufferSize)});
+                d->bytesSinceFence = 0;
             }
         }
     }
