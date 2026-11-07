@@ -961,6 +961,11 @@ GLPlatform::GLPlatform(OpenGLPlatformInterface platformInterface, QByteArrayView
         m_looseBinding = true;
     }
 
+    // Tested on an RX 9060 XT. Other radeonsi generations stay strict until they've been tested.
+    if (isMesaDriver() && renderer.contains("radeonsi") && renderer.contains("gfx1200")) {
+        m_looseBinding = true;
+    }
+
     if (m_driver == Driver_Qualcomm) {
         if (m_chipClass == Adreno1XX) {
             m_recommendedCompositor = NoCompositing;

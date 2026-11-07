@@ -27,6 +27,8 @@ private Q_SLOTS:
     void testChipClassToString();
     void testDetect_data();
     void testDetect();
+    void testLooseBindingOnGlx_data();
+    void testLooseBindingOnGlx();
 };
 
 void GLPlatformTest::testDriverToString_data()
@@ -209,6 +211,28 @@ void GLPlatformTest::testDetect()
     QCOMPARE(gl.isLooseBinding(), settingsGroup.readEntry("LooseBinding", false));
     QCOMPARE(gl.recommendedCompositor(), CompositingType(settingsGroup.readEntry("Compositor", int(NoCompositing))));
     QCOMPARE(gl.preferBufferSubData(), settingsGroup.readEntry("PreferBufferSubData", false));
+}
+
+void GLPlatformTest::testLooseBindingOnGlx_data()
+{
+    QTest::addColumn<QByteArray>("renderer");
+    QTest::addColumn<QByteArray>("version");
+    QTest::addColumn<bool>("loose");
+
+    const QByteArray mesa = "4.6 (Compatibility Profile) Mesa 26.2.5";
+    QTest::newRow("radeonsi gfx1200") << QByteArray("AMD Radeon RX 9060 XT (radeonsi, gfx1200, ACO, DRM 3.64, 7.2.13)") << mesa << true;
+    QTest::newRow("radeonsi gfx1103") << QByteArray("AMD Radeon 780M (radeonsi, gfx1103_r1, ACO, DRM 3.64, 7.2.13)") << mesa << false;
+    QTest::newRow("gfx1200 without Mesa") << QByteArray("AMD Radeon RX 9060 XT (radeonsi, gfx1200)") << QByteArray("4.6.0") << false;
+}
+
+void GLPlatformTest::testLooseBindingOnGlx()
+{
+    QFETCH(QByteArray, renderer);
+    QFETCH(QByteArray, version);
+    QFETCH(bool, loose);
+
+    GLPlatform gl(GlxPlatformInterface, version, "4.60", renderer, "AMD");
+    QCOMPARE(gl.isLooseBinding(), loose);
 }
 
 QTEST_GUILESS_MAIN(GLPlatformTest)
