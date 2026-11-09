@@ -81,6 +81,7 @@ class TileManager;
 class OutputConfigurationStore;
 class LidSwitchTracker;
 class DpmsInputEventFilter;
+class DwellClicker;
 class OrientationSensor;
 class BrightnessDevice;
 
@@ -443,6 +444,7 @@ public:
     Placement *placement() const;
     RuleBook *rulebook() const;
     ScreenEdges *screenEdges() const;
+    DwellClicker *dwellClicker() const;
 #if KWIN_BUILD_TABBOX
     TabBox::TabBox *tabbox() const;
 #endif
@@ -740,6 +742,7 @@ private:
     std::unique_ptr<OutputConfigurationStore> m_outputConfigStore;
     std::unique_ptr<LidSwitchTracker> m_lidSwitchTracker;
     std::unique_ptr<OrientationSensor> m_orientationSensor;
+    std::unique_ptr<DwellClicker> m_dwellClicker;
     std::unique_ptr<DpmsInputEventFilter> m_dpmsFilter;
 
 private:

@@ -27,6 +27,7 @@
 
 #include "core/output.h"
 #include "cursor.h"
+#include "dwellclicker.h"
 #include "input.h"
 #include "options.h"
 #include "scripting/scripting.h"
@@ -1051,6 +1052,8 @@ void Workspace::initShortcuts()
                  Qt::META | Qt::Key_D, &Workspace::slotToggleShowDesktop, false);
 
     initShortcut("Kill Window", i18n("Kill Window"), Qt::META | Qt::CTRL | Qt::Key_Escape, &Workspace::slotKillWindow, true);
+
+    initShortcut("Toggle Dwell Clicking", i18n("Toggle Dwell Clicking"), QKeySequence(), m_dwellClicker.get(), &DwellClicker::toggle, false);
 
 #if KWIN_BUILD_TABBOX
     m_tabbox->initShortcuts();

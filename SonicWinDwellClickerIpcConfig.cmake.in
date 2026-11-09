@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: 2026 Joseph Crowell <joseph.w.crowell@gmail.com>
+# SPDX-License-Identifier: BSD-3-Clause
+
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(SonicIpc)
+
+# Header-only: the protocol between sonic-win's dwell clicker and its panel applet.
+if(NOT TARGET SonicWin::DwellClickerIpc)
+    add_library(SonicWin::DwellClickerIpc INTERFACE IMPORTED)
+    set_target_properties(SonicWin::DwellClickerIpc PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "@PACKAGE_KDE_INSTALL_INCLUDEDIR@/SonicWin"
+        INTERFACE_LINK_LIBRARIES Sonic::Ipc
+    )
+endif()

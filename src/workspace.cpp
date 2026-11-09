@@ -46,6 +46,7 @@
 #include "core/brightnessdevice.h"
 #include "decorations/decorationbridge.h"
 #include "dpmsinputeventfilter.h"
+#include "dwellclicker.h"
 #include "group.h"
 #include "lidswitchtracker.h"
 #include "main.h"
@@ -161,6 +162,10 @@ Workspace::Workspace()
 
     new DBusInterface(this);
     m_outline = std::make_unique<Outline>();
+
+    m_dwellClicker = std::make_unique<DwellClicker>();
+    m_dwellClicker->attach();
+    connect(this, &Workspace::configChanged, m_dwellClicker.get(), &DwellClicker::reconfigure);
 
     initShortcuts();
 
@@ -428,6 +433,9 @@ void Workspace::cleanupX11()
 
 Workspace::~Workspace()
 {
+    // Ends a running drag while the X connection is still up.
+    m_dwellClicker.reset();
+
     blockStackingUpdates(true);
 
     cleanupX11();
@@ -2922,6 +2930,11 @@ RuleBook *Workspace::rulebook() const
 ScreenEdges *Workspace::screenEdges() const
 {
     return m_screenEdges.get();
+}
+
+DwellClicker *Workspace::dwellClicker() const
+{
+    return m_dwellClicker.get();
 }
 
 TileManager *Workspace::tileManager(Output *output)

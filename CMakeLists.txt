@@ -162,6 +162,7 @@ set_package_properties(Plasma PROPERTIES
 
 find_package(KDecoration3 ${PROJECT_DEP_VERSION} CONFIG REQUIRED)
 find_package(SonicLogging ${KF6_MIN_VERSION} REQUIRED)
+find_package(SonicIpc ${KF6_MIN_VERSION} REQUIRED)
 
 find_package(SonicSilver ${PROJECT_DEP_VERSION} CONFIG)
 set_package_properties(SonicSilver PROPERTIES
@@ -245,6 +246,7 @@ find_package(XCB 1.10 REQUIRED COMPONENTS
     XKB
     XINERAMA
     XINPUT
+    XTEST
 )
 set_package_properties(XCB PROPERTIES TYPE REQUIRED)
 
@@ -478,6 +480,15 @@ configure_package_config_file(KWinX11DBusInterfaceConfig.cmake.in
     INSTALL_DESTINATION ${CMAKECONFIG_INSTALL_DIR})
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/KWinX11DBusInterfaceConfig.cmake
     DESTINATION ${CMAKECONFIG_INSTALL_DIR})
+
+set(DWELLCLICKER_CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/SonicWinDwellClickerIpc")
+configure_package_config_file(SonicWinDwellClickerIpcConfig.cmake.in
+    "${CMAKE_CURRENT_BINARY_DIR}/SonicWinDwellClickerIpcConfig.cmake"
+    PATH_VARS KDE_INSTALL_INCLUDEDIR
+    INSTALL_DESTINATION ${DWELLCLICKER_CMAKECONFIG_INSTALL_DIR})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/SonicWinDwellClickerIpcConfig.cmake
+    DESTINATION ${DWELLCLICKER_CMAKECONFIG_INSTALL_DIR})
+install(FILES src/DwellClickerIpc.h DESTINATION ${KDE_INSTALL_INCLUDEDIR}/SonicWin COMPONENT Devel)
 
 ecm_install_configured_files(INPUT sonic-win.service.in @ONLY
             DESTINATION ${KDE_INSTALL_SYSTEMDUSERUNITDIR})

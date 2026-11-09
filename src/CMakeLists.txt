@@ -91,6 +91,7 @@ target_sources(kwin PRIVATE
     decorations/decorations_logging.cpp
     decorations/settings.cpp
     dpmsinputeventfilter.cpp
+    dwellclicker.cpp
     effect/anidata.cpp
     effect/animationeffect.cpp
     effect/effect.cpp
@@ -296,6 +297,9 @@ target_link_libraries(kwin
         XCB::XCB
         XCB::XFIXES
         XCB::XINERAMA
+        XCB::XTEST
+        Sonic::Ipc
+        Sonic::Logging
 )
 
 if (KWIN_BUILD_NOTIFICATIONS)

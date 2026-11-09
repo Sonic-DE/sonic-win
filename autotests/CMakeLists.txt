@@ -4,6 +4,10 @@ target_link_libraries(testSoftwareBrightness kwin Qt::Test Qt::DBus KF6::ConfigC
 find_program(DBUS_RUN_SESSION_EXECUTABLE dbus-run-session REQUIRED)
 add_test(NAME kwin-testSoftwareBrightness COMMAND ${DBUS_RUN_SESSION_EXECUTABLE} -- $<TARGET_FILE:testSoftwareBrightness>)
 ecm_mark_as_test(testSoftwareBrightness)
+add_executable(testDwellClicker test_dwellclicker.cpp)
+target_link_libraries(testDwellClicker kwin Qt::Test KF6::ConfigCore)
+add_test(NAME kwin-testDwellClicker COMMAND testDwellClicker)
+ecm_mark_as_test(testDwellClicker)
 find_program(XVFB_RUN_EXECUTABLE xvfb-run)
 find_program(GDBUS_EXECUTABLE gdbus)
 if(XVFB_RUN_EXECUTABLE AND GDBUS_EXECUTABLE AND KWIN_BUILD_NIGHTLIGHT)
@@ -23,6 +27,21 @@ if(XVFB_RUN_EXECUTABLE AND GDBUS_EXECUTABLE)
             ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/compositor_redirect_x11_test.py
             $<TARGET_FILE:sonic-win> ${GDBUS_EXECUTABLE})
     set_tests_properties(kwin-compositor-redirect-x11 PROPERTIES TIMEOUT 60)
+endif()
+if(XVFB_RUN_EXECUTABLE AND GDBUS_EXECUTABLE)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    add_test(NAME kwin-dwellclicker-x11
+        COMMAND ${XVFB_RUN_EXECUTABLE} -a ${DBUS_RUN_SESSION_EXECUTABLE}
+            --config-file=${CMAKE_CURRENT_SOURCE_DIR}/softwarebrightness_test_dbus.conf --
+            ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/dwellclicker_x11_test.py
+            $<TARGET_FILE:sonic-win> ${GDBUS_EXECUTABLE})
+    set_tests_properties(kwin-dwellclicker-x11 PROPERTIES TIMEOUT 90)
+    add_test(NAME kwin-inputdevice-hierarchy-x11
+        COMMAND ${XVFB_RUN_EXECUTABLE} -a ${DBUS_RUN_SESSION_EXECUTABLE}
+            --config-file=${CMAKE_CURRENT_SOURCE_DIR}/softwarebrightness_test_dbus.conf --
+            ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/inputdevice_hierarchy_x11_test.py
+            $<TARGET_FILE:sonic-win> ${GDBUS_EXECUTABLE})
+    set_tests_properties(kwin-inputdevice-hierarchy-x11 PROPERTIES TIMEOUT 60)
 endif()
 
 remove_definitions(-DQT_USE_QSTRINGBUILDER)

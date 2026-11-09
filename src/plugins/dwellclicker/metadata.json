@@ -1,0 +1,12 @@
+{
+    "KPlugin": {
+        "Category": "Accessibility",
+        "Name": "Dwell Clicker",
+        "Description": "Shows the progress ring while the dwell clicker waits to click",
+        "License": "GPL",
+        "EnabledByDefault": false
+    },
+    "org.kde.kwin.effect": {
+        "internal": true
+    }
+}
