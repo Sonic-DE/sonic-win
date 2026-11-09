@@ -52,6 +52,7 @@
 // Qt
 #include <QAction>
 #include <QKeyEvent>
+#include <QPointer>
 #include <QThread>
 #include <qpa/qwindowsysteminterface.h>
 
@@ -877,15 +878,35 @@ public:
     InternalWindowEventFilter()
         : InputEventFilter(InputFilterOrder::InternalWindow)
     {
-        m_touchDevice = std::make_unique<QPointingDevice>(QLatin1String("some touchscreen"), 0, QInputDevice::DeviceType::TouchScreen,
-                                                          QPointingDevice::PointerType::Finger, QInputDevice::Capability::Position,
-                                                          10, 0, kwinApp()->session()->seat(), QPointingDeviceUniqueId());
-        QWindowSystemInterface::registerInputDevice(m_touchDevice.get());
-
-        m_tabletDevice = std::make_unique<QPointingDevice>(QLatin1String("some tablet"), 0, QInputDevice::DeviceType::Stylus,
-                                                           QPointingDevice::PointerType::Pen, QInputDevice::Capability::Position | QInputDevice::Capability::ZPosition | QInputDevice::Capability::Pressure,
-                                                           10, 0, kwinApp()->session()->seat(), QPointingDeviceUniqueId());
-        QWindowSystemInterface::registerInputDevice(m_tabletDevice.get());
+        touchDevice();
+        tabletDevice();
+    }
+    ~InternalWindowEventFilter() override
+    {
+        delete m_touchDevice.data();
+        delete m_tabletDevice.data();
+    }
+    // On an XInput hierarchy change, Qt's xcb platform deletes every registered device it
+    // doesn't find in X, ours included; so these are recreated when that has happened.
+    QPointingDevice *touchDevice()
+    {
+        if (!m_touchDevice) {
+            m_touchDevice = new QPointingDevice(QLatin1String("some touchscreen"), 0, QInputDevice::DeviceType::TouchScreen,
+                                                QPointingDevice::PointerType::Finger, QInputDevice::Capability::Position,
+                                                10, 0, kwinApp()->session()->seat(), QPointingDeviceUniqueId());
+            QWindowSystemInterface::registerInputDevice(m_touchDevice);
+        }
+        return m_touchDevice;
+    }
+    QPointingDevice *tabletDevice()
+    {
+        if (!m_tabletDevice) {
+            m_tabletDevice = new QPointingDevice(QLatin1String("some tablet"), 0, QInputDevice::DeviceType::Stylus,
+                                                 QPointingDevice::PointerType::Pen, QInputDevice::Capability::Position | QInputDevice::Capability::ZPosition | QInputDevice::Capability::Pressure,
+                                                 10, 0, kwinApp()->session()->seat(), QPointingDeviceUniqueId());
+            QWindowSystemInterface::registerInputDevice(m_tabletDevice);
+        }
+        return m_tabletDevice;
     }
     bool pointerMotion(PointerMotionEvent *event) override
     {
@@ -965,7 +986,7 @@ public:
         touchPoint.pressure = 1;
 
         QWindow *internal = static_cast<InternalWindow *>(input()->touch()->focus())->handle();
-        QWindowSystemInterface::handleTouchEvent(internal, m_touchDevice.get(), m_touchPoints, input()->keyboardModifiers());
+        QWindowSystemInterface::handleTouchEvent(internal, touchDevice(), m_touchPoints, input()->keyboardModifiers());
 
         touchPoint.state = QEventPoint::State::Stationary;
         return true;
@@ -984,7 +1005,7 @@ public:
         it->state = QEventPoint::State::Updated;
 
         if (auto internalWindow = qobject_cast<InternalWindow *>(input()->touch()->focus())) {
-            QWindowSystemInterface::handleTouchEvent(internalWindow->handle(), m_touchDevice.get(), m_touchPoints, input()->keyboardModifiers());
+            QWindowSystemInterface::handleTouchEvent(internalWindow->handle(), touchDevice(), m_touchPoints, input()->keyboardModifiers());
         }
 
         it->state = QEventPoint::State::Stationary;
@@ -1003,7 +1024,7 @@ public:
         it->state = QEventPoint::State::Released;
 
         if (auto internalWindow = qobject_cast<InternalWindow *>(input()->touch()->focus())) {
-            QWindowSystemInterface::handleTouchEvent(internalWindow->handle(), m_touchDevice.get(), m_touchPoints, input()->keyboardModifiers());
+            QWindowSystemInterface::handleTouchEvent(internalWindow->handle(), touchDevice(), m_touchPoints, input()->keyboardModifiers());
         }
 
         m_touchPoints.erase(it);
@@ -1013,7 +1034,7 @@ public:
     {
         if (!m_touchPoints.isEmpty()) {
             m_touchPoints.clear();
-            QWindowSystemInterface::handleTouchCancelEvent(nullptr, m_touchDevice.get());
+            QWindowSystemInterface::handleTouchCancelEvent(nullptr, touchDevice());
         }
         return false;
     }
@@ -1026,7 +1047,7 @@ public:
 
         // handleTabletEnterLeaveProximityEvent has lots of parameters, most of which are ignored, so don't bother with them
         QWindowSystemInterface::handleTabletEnterLeaveProximityEvent(nullptr,
-                                                                     m_tabletDevice.get(), event->type == TabletToolProximityEvent::EnterProximity);
+                                                                     tabletDevice(), event->type == TabletToolProximityEvent::EnterProximity);
 
         return true;
     }
@@ -1041,7 +1062,7 @@ public:
         const QPointF globalPos = event->position;
         const QPointF localPos = globalPos - internal->position();
 
-        QWindowSystemInterface::handleTabletEvent(internal, std::chrono::duration_cast<std::chrono::milliseconds>(event->timestamp).count(), m_tabletDevice.get(), localPos, globalPos, event->buttons, event->pressure, event->xTilt, event->yTilt, event->sliderPosition, event->rotation, event->distance, input()->keyboardModifiers());
+        QWindowSystemInterface::handleTabletEvent(internal, std::chrono::duration_cast<std::chrono::milliseconds>(event->timestamp).count(), tabletDevice(), localPos, globalPos, event->buttons, event->pressure, event->xTilt, event->yTilt, event->sliderPosition, event->rotation, event->distance, input()->keyboardModifiers());
 
         return true;
     }
@@ -1056,14 +1077,14 @@ public:
         const QPointF globalPos = event->position;
         const QPointF localPos = globalPos - internal->position();
 
-        QWindowSystemInterface::handleTabletEvent(internal, std::chrono::duration_cast<std::chrono::milliseconds>(event->timestamp).count(), m_tabletDevice.get(), localPos, globalPos, event->buttons, event->pressure, event->xTilt, event->yTilt, event->sliderPosition, event->rotation, event->distance, input()->keyboardModifiers());
+        QWindowSystemInterface::handleTabletEvent(internal, std::chrono::duration_cast<std::chrono::milliseconds>(event->timestamp).count(), tabletDevice(), localPos, globalPos, event->buttons, event->pressure, event->xTilt, event->yTilt, event->sliderPosition, event->rotation, event->distance, input()->keyboardModifiers());
 
         return true;
     }
 
 private:
-    std::unique_ptr<QPointingDevice> m_touchDevice;
-    std::unique_ptr<QPointingDevice> m_tabletDevice;
+    QPointer<QPointingDevice> m_touchDevice;
+    QPointer<QPointingDevice> m_tabletDevice;
     QList<QWindowSystemInterface::TouchPoint> m_touchPoints;
 };
 

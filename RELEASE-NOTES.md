@@ -4,6 +4,7 @@ Sonic Win is SonicDE's window manager and compositor for X11: it places, moves a
 
 ## Unreleased
 
+- Fixed the window manager crashing when it quits or is restarted after an input device, such as a mouse, tablet or virtual machine pointer, was added or removed.
 - Window Decorations' "Configure Titlebar…" page now also sets the titlebar's transparency: opacity for active and inactive windows, blur, opaque when maximized, matching the app colour, and whether toolbars and menu bars under the titlebar share it. These settings now work with any theme and apply straight away, in modern apps too. Its new Exceptions section changes these transparency settings for chosen applications.
 - The Blur desktop effect can now also blur behind menus made see-through by the Translucency effect, with its own blur, noise and saturation strength. The existing settings are now grouped as "Blur windows".
 - Fixed the Blur effect's saturation setting having no effect.
