@@ -2,24 +2,23 @@
 
 Sonic Win is SonicDE's window manager and compositor for X11: it places, moves and decorates your windows and draws the smooth effects you see on screen.
 
-## Unreleased
+## 6.8.2 (2026-11-10)
 
 - Fixed the window manager crashing when it quits or is restarted after an input device, such as a mouse, tablet or virtual machine pointer, was added or removed.
 - Dwell clicking: if pressing mouse buttons is hard, you can click by holding the pointer still, choosing left, right, middle, double click or drag for the next click. A ring around the pointer shows when the click will happen, and clicking keeps working with desktop effects off. You can give it a keyboard shortcut to turn it on and off, and an on-screen message confirms each change.
 - Window Decorations' "Configure Titlebar…" page now also sets the titlebar's transparency: opacity for active and inactive windows, blur, opaque when maximized, matching the app colour, and whether toolbars and menu bars under the titlebar share it. These settings now work with any theme and apply straight away, in modern apps too. Its new Exceptions section changes these transparency settings for chosen applications.
 - The Blur desktop effect can now also blur behind menus made see-through by the Translucency effect, with its own blur, noise and saturation strength. The existing settings are now grouped as "Blur windows".
 - Fixed the Blur effect's saturation setting having no effect.
-- Screen brightness can now be adjusted in software on any X11 display, works together with Night Light, and is remembered between sessions.
-- The Sonic Screenies screenshot tool no longer shows up fading or zooming in its own screenshots.
-- Fixed translucent windows turning fully opaque in screenshots and screen captures.
-- Desktop and shell integration now uses SonicDE's own names throughout, so other SonicDE components recognise the window manager correctly.
+- Desktop and shell integration now uses SonicDE's own names throughout, so other SonicDE components recognise the window manager correctly, and its support information now calls it SonicWin.
 - Desktop effects use a little less processor time while something is animating, because windows that haven't changed are no longer refreshed from the X server each time they're drawn. Total processor use with an animated 800x600 Qt Quick window went from 17.9% to 17.5% of one core when drawn by the graphics card (-1.6%), and from 19.9% to 18.9% when drawn in software (-4.8%). Measured on a 60 Hz desktop with an AMD Radeon RX 9060 XT and XLibre 25.1.9, over 6 rounds each way.
 - On AMD Radeon RX 9060 XT and RX 9070 XT cards, and others that report `gfx1200` or `gfx1201` as their graphics chip, desktop effects use less processor time, because window contents are no longer fetched again each time they change. Total processor use with an animated 800x600 Qt Quick window went from 17.5% to 16.3% of one core when drawn by the graphics card (-7%), and from 18.9% to 17.7% when drawn in software (-6%). Measured on a 60 Hz desktop with an RX 9060 XT and XLibre 25.1.9, over 6 rounds each way. If you notice windows not updating, you can go back by setting `GLStrictBinding=true` in the `[Compositing]` section of `kwinrc`.
 - Desktop effects use less processor time while something is animating, because the window manager no longer makes an extra submission to the graphics card every frame. Its own processor use fell by 12-16%. Total processor use with an animated 800x600 Qt Quick window went from 16.5% to 15.4% of one core when drawn by the graphics card (-5%), and from 18.8% to 17.1% when drawn in software (-8%). Measured on a 60 Hz desktop with an AMD Radeon RX 9060 XT and XLibre 25.1.9, over 6 rounds each way.
 - Taken together on an AMD Radeon RX 9060 XT, these changes took the window manager's own processor use with an animated 800x600 Qt Quick window from 8.8% to 6.4% of one core when drawn by the graphics card, and from 9.0% to 6.8% when drawn in software. The total for the application, X server and window manager went from 17.9% to 14.8%, and from 19.9% to 16.9%. Measured over 5 to 6 rounds each, in separate runs.
 - Fixed the window manager crashing when effects that show the desktop background are used after starting it with `--no-kactivities`.
 - Fixed windows going blank or freezing when the window manager takes over from a previous one that's crashing. It now waits for the old one to finish before starting desktop effects.
-- Behind the scenes: the NVIDIA settings profile now installs relative to the build's install location, so building without administrator rights no longer fails, and the window manager uses QXLibre for X11 when it's installed, going back to Qt's own X11 support when it isn't.
+- Fixed the window manager crashing when a desktop effect uses pinch or swipe gestures, and when a window is drawn off-screen on a display that reports no refresh rate.
+- Fixed the window manager crashing when it shuts down.
+- Behind the scenes: the NVIDIA settings profile now installs relative to the build's install location, so building without administrator rights no longer fails, the window manager uses QXLibre for X11 when it's installed, going back to Qt's own X11 support when it isn't, and it logs through SonicDE's logging system.
 
 ## 6.8.0.2 (2026-10-24)
 
