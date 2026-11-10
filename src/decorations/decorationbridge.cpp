@@ -25,8 +25,12 @@
 // Frameworks
 #include <KPluginFactory>
 #include <KPluginMetaData>
+#include <KSharedConfig>
+#include <KToolsArea>
 
 // Qt
+#include <QDBusConnection>
+#include <QDBusMessage>
 #include <QMetaProperty>
 #include <QPainter>
 
@@ -195,6 +199,17 @@ void DecorationBridge::loadMetaData(const QJsonObject &object)
     m_recommendedBorderSize = QString();
     m_theme = QString();
     m_defaultTheme = QString();
+
+    // The shared see-through tools area only shows with a decoration that draws it.
+    KSharedConfigPtr kdeglobals = KSharedConfig::openConfig(QStringLiteral("kdeglobals"));
+    kdeglobals->reparseConfiguration();
+    if (KToolsArea::followDecoration(kdeglobals, object.value(QStringLiteral("X-SonicDE-ToolsArea")).toBool())) {
+        QDBusMessage notify = QDBusMessage::createSignal(QStringLiteral("/KGlobalSettings"),
+                                                         QStringLiteral("org.kde.KGlobalSettings"),
+                                                         QStringLiteral("notifyChange"));
+        notify << 0 << 0;
+        QDBusConnection::sessionBus().send(notify);
+    }
 
     // load the settings
     const QJsonValue decoSettings = object.value(s_pluginName);

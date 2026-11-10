@@ -2,6 +2,10 @@
 
 Sonic Win is SonicDE's window manager and compositor for X11: it places, moves and decorates your windows and draws the smooth effects you see on screen.
 
+## Unreleased
+
+- Switching to a window decoration without see-through titlebars, such as Breeze, now also turns off see-through toolbars and menu bars, so they no longer show through under a solid titlebar. Switching back to Silver turns them on again, as you left them.
+
 ## 6.8.2 (2026-11-10)
 
 - Fixed the window manager crashing when it quits or is restarted after an input device, such as a mouse, tablet or virtual machine pointer, was added or removed.
