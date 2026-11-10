@@ -274,11 +274,17 @@ void BlurEffect::updateBlurRegion(EffectWindow *w)
         frame = decorationBlurRegion(w);
     }
 
-    // "Blur menus": a menu that didn't ask for blur is blurred as a whole while it is painted
-    // translucent (the Translucency effect's menu opacity); see blur().
-    const bool menuRule = !content.has_value() && !frame.has_value() && blursMenu(w);
-    if (menuRule) {
-        content = QRegion();
+    // "Blur menus" decides for every menu, also one that asks for blur itself. A menu that didn't
+    // ask is blurred as a whole while painted translucent (Translucency effect); see blur().
+    bool menuRule = false;
+    if (isMenuWindow(w)) {
+        if (!m_blurMenus) {
+            content.reset();
+            frame.reset();
+        } else if (!content.has_value() && !frame.has_value()) {
+            menuRule = true;
+            content = QRegion();
+        }
     }
 
     if (content.has_value() || frame.has_value()) {
@@ -300,10 +306,6 @@ bool BlurEffect::isMenuWindow(const EffectWindow *w)
     return w->isMenu() || w->isDropdownMenu() || w->isPopupMenu();
 }
 
-bool BlurEffect::blursMenu(const EffectWindow *w) const
-{
-    return m_blurMenus && isMenuWindow(w);
-}
 
 void BlurEffect::slotWindowAdded(EffectWindow *w)
 {

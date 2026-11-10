@@ -167,7 +167,7 @@
       <string>Blur menus</string>
      </property>
      <property name="toolTip">
-      <string>Blur behind menus made see-through by the Translucency effect. Menus that ask for blur themselves use these values too.</string>
+      <string>Blur behind see-through menus, including menus made see-through by the Translucency effect. When this is off, no menu is blurred.</string>
      </property>
      <property name="checkable">
       <bool>true</bool>

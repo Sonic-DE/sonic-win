@@ -5,6 +5,7 @@ Sonic Win is SonicDE's window manager and compositor for X11: it places, moves a
 ## Unreleased
 
 - Switching to a window decoration without see-through titlebars, such as Breeze, now also turns off see-through toolbars and menu bars, so they no longer show through under a solid titlebar. Switching back to Silver turns them on again, as you left them.
+- The Blur effect's "Blur menus" setting now applies to every see-through menu, including Silver's, and takes effect straight away: turned off, no menu is blurred.
 
 ## 6.8.2 (2026-11-10)
 
