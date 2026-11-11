@@ -8,6 +8,7 @@ Sonic Win is SonicDE's window manager and compositor for X11: it places, moves a
 - The Blur effect's "Blur menus" setting now applies to every see-through menu, including Silver's, and takes effect straight away: turned off, no menu is blurred.
 - Window Decorations' "Configure Titlebar…" page has a new "Application menu button style": keep the single menu button, show the application's menus in the titlebar all the time, or show them when you point at the titlebar. A new checkbox adds a search button that finds any menu item by name. Both work with decoration styles that support them, such as Silver.
 - Menus opened from a titlebar button now appear in the right place in right-to-left languages.
+- The titlebar buttons section of "Configure Titlebar…" now takes only the room its buttons need, without the large empty space under them.
 - Behind the scenes: a test for the decoration settings' theme list.
 
 ## 6.8.2 (2026-11-10)

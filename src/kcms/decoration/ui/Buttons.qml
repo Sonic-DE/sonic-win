@@ -182,13 +182,19 @@ Rectangle {
             Layout.preferredHeight: cellHeight * Math.ceil(count / Math.max(1, Math.floor(width / cellWidth)))
             Layout.margins: Kirigami.Units.largeSpacing
             cellWidth: Kirigami.Units.gridUnit * 6
-            cellHeight: Kirigami.Units.gridUnit * 6
+            // The button, then a label of up to two lines.
+            cellHeight: baseLayout.buttonIconSize + Kirigami.Units.largeSpacing * 2 + Kirigami.Units.smallSpacing + Math.ceil(labelMetrics.lineSpacing * 2)
             model: kcm.availableButtonsModel
             interactive: false
+
+            FontMetrics {
+                id: labelMetrics
+            }
 
             delegate: ColumnLayout {
                 width: availableButtonsGrid.cellWidth - Kirigami.Units.largeSpacing
                 height: availableButtonsGrid.cellHeight - Kirigami.Units.largeSpacing
+                spacing: Kirigami.Units.smallSpacing
                 opacity: baseLayout.draggingTitlebarButtons ? 0.15 : 1.0
 
                 Rectangle {
@@ -260,7 +266,8 @@ Rectangle {
             color: palette.windowText
             opacity: baseLayout.hideDragHint ? 0.0 : dragHintOpacitiy
             Layout.fillWidth: true
-            Layout.margins: Kirigami.Units.gridUnit * 3
+            Layout.margins: Kirigami.Units.largeSpacing
+            Layout.topMargin: 0
             horizontalAlignment: Text.AlignHCenter
             text: i18n("Drag buttons between here and the titlebar")
         }
