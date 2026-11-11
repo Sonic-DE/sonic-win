@@ -507,3 +507,31 @@ msgstr "Gluggarammar í yfirstærð"
 #~ "Engin forsýn til.\n"
 #~ "Líklega kom upp\n"
 #~ "vandamál við að ræsa íforrit."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stíll forritavalmyndarhnapps:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Stakur valmyndarhnappur"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Alltaf birt"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Birt þegar bendill er yfir"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Sýna leitarhnapp með forritavalmyndinni"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Valinn gluggaskreytingastíll sýnir forritavalmyndina sem stakan hnapp."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Bættu forritavalmyndarhnappnum við titilröndina til að nota þessa valkosti."

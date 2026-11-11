@@ -520,3 +520,31 @@ msgstr "Надмірні рамки вікон"
 
 #~ msgid "Inactive Window"
 #~ msgstr "Неактивне вікно"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Стиль кнопки меню програм:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Одна кнопка меню"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Показано завжди"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Показано при наведенні"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Показувати кнопку пошуку поряд із меню програм"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Вибраний стиль обрамлення вікон показує меню програм як одну кнопку."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Додайте кнопку меню програм на смужку заголовка, щоб скористатися цими параметрами."

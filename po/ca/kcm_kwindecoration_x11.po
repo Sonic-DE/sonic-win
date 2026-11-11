@@ -276,3 +276,31 @@ msgstr "Vores molt enormes de finestres"
 #, kde-format
 msgid "Oversized window borders"
 msgstr "Vores fora de mida de finestres"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Estil del botó del menú d'aplicacions:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Un sol botó de menú"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Mostrat sempre"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Mostrat en passar-hi per sobre"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Mostra un botó de cerca amb el menú d'aplicacions"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "L'estil de decoració de finestres seleccionat mostra el menú d'aplicacions com un sol botó."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Afegiu el botó del menú d'aplicacions a la barra de títol per a usar aquestes opcions."

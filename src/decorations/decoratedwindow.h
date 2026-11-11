@@ -23,7 +23,7 @@ class Window;
 namespace Decoration
 {
 
-class DecoratedWindowImpl : public QObject, public KDecoration3::DecoratedWindowPrivateV3
+class DecoratedWindowImpl : public QObject, public KDecoration3::DecoratedWindowPrivateV5
 {
     Q_OBJECT
 public:
@@ -79,6 +79,16 @@ public:
     void showApplicationMenu(int actionId) override;
 
     void popup(const KDecoration3::Positioner &positioner, QMenu *menu) override;
+
+    // No capture exclusion on X11: the values KDecoration3 used before this class implemented V4.
+    bool isExcludedFromCapture() const override
+    {
+        return false;
+    }
+    void requestToggleExcludeFromCapture() override
+    {
+    }
+    QPointF position() const override;
 
     Window *window()
     {

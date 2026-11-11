@@ -252,3 +252,31 @@ msgstr ""
 #, kde-format
 msgid "Oversized window borders"
 msgstr ""
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "ପ୍ରୟୋଗ ମେନୁ ବଟନର ଶୈଳୀ:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "ଗୋଟିଏ ମେନୁ ବଟନ"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "ସର୍ବଦା ଦର୍ଶାଯାଇଥିବା"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "ଉପରେ ରଖିଲେ ଦର୍ଶାଯାଇଥିବା"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "ପ୍ରୟୋଗ ମେନୁ ସହିତ ଏକ ସନ୍ଧାନ ବଟନ ଦର୍ଶାନ୍ତୁ"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "ବଚ୍ଛିତ ୱିଣ୍ଡୋ ସଜ୍ଜା ଶୈଳୀ ପ୍ରୟୋଗ ମେନୁକୁ ଗୋଟିଏ ବଟନ ଭାବରେ ଦର୍ଶାଏ।"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "ଏହି ବିକଳ୍ପଗୁଡ଼ିକୁ ବ୍ୟବହାର କରିବା ପାଇଁ ଶୀର୍ଷକ ପଟିରେ ପ୍ରୟୋଗ ମେନୁ ବଟନ ଯୋଗ କରନ୍ତୁ।"

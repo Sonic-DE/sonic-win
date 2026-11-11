@@ -26,7 +26,7 @@ namespace Decoration
 {
 SettingsImpl::SettingsImpl(KDecoration3::DecorationSettings *parent)
     : QObject()
-    , DecorationSettingsPrivate(parent)
+    , DecorationSettingsPrivateV3(parent)
     , m_borderSize(KDecoration3::BorderSize::Normal)
 {
     readSettings();
@@ -137,6 +137,16 @@ static KDecoration3::BorderSize stringToSize(const QString &name)
     return it.value();
 }
 
+static KDecoration3::ApplicationMenuStyle stringToApplicationMenuStyle(const QString &name)
+{
+    static const QMap<QString, KDecoration3::ApplicationMenuStyle> s_styles({
+        {QStringLiteral("SingleButton"), KDecoration3::ApplicationMenuStyle::SingleButton},
+        {QStringLiteral("AlwaysShown"), KDecoration3::ApplicationMenuStyle::AlwaysShown},
+        {QStringLiteral("ShownOnHover"), KDecoration3::ApplicationMenuStyle::ShownOnHover},
+    });
+    return s_styles.value(name, KDecoration3::ApplicationMenuStyle::SingleButton);
+}
+
 void SettingsImpl::readSettings()
 {
     KConfigGroup config = kwinApp()->config()->group(QStringLiteral("org.kde.kdecoration2"));
@@ -155,6 +165,16 @@ void SettingsImpl::readSettings()
     if (close != m_closeDoubleClickMenu) {
         m_closeDoubleClickMenu = close;
         Q_EMIT decorationSettings()->closeOnDoubleClickOnMenuChanged(m_closeDoubleClickMenu);
+    }
+    const auto menuStyle = stringToApplicationMenuStyle(config.readEntry("ApplicationMenuStyle", QString()));
+    if (menuStyle != m_applicationMenuStyle) {
+        m_applicationMenuStyle = menuStyle;
+        Q_EMIT decorationSettings()->applicationMenuStyleChanged(m_applicationMenuStyle);
+    }
+    const bool menuSearch = config.readEntry("ApplicationMenuSearch", true);
+    if (menuSearch != m_applicationMenuSearch) {
+        m_applicationMenuSearch = menuSearch;
+        Q_EMIT decorationSettings()->applicationMenuSearchEnabledChanged(m_applicationMenuSearch);
     }
     m_autoBorderSize = config.readEntry("BorderSizeAuto", true);
 

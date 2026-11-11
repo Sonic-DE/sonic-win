@@ -462,3 +462,31 @@ msgstr "വക്കിന്റെ വലുപ്പം:"
 #~ "തിരനോട്ടം ലഭ്യമല്ല\n"
 #~ "സംയോജകം ലഭ്യമാക്കുന്നതില്‍ എന്തോ\n"
 #~ "പിശകു പറ്റി എന്നു തോന്നുന്നു."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "പ്രയോഗ മെനു ബട്ടണിന്റെ ശൈലി:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "ഒറ്റ മെനു ബട്ടണ്‍"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "എപ്പോഴും കാണിക്കുന്നു"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "മുകളില്‍ വരുമ്പോള്‍ കാണിക്കുന്നു"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "പ്രയോഗ മെനുവിനൊപ്പം ഒരു തിരയല്‍ ബട്ടണ്‍ കാണിക്കുക"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "തിരഞ്ഞെടുത്ത ജാലക അലങ്കാര ശൈലി പ്രയോഗ മെനു ഒറ്റ ബട്ടണായി കാണിക്കുന്നു."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "ഈ ഐച്ഛികങ്ങള്‍ ഉപയോഗിക്കാന്‍ തലക്കെട്ട് പട്ടയില്‍ പ്രയോഗ മെനു ബട്ടണ്‍ ചേര്‍ക്കുക."

@@ -547,3 +547,31 @@ msgstr "Túlméretezett ablakszegélyek"
 
 #~ msgid "Ozone"
 #~ msgstr "Ozone"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Az alkalmazásmenü gomb stílusa:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Egyetlen menügomb"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Mindig látható"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Rámutatáskor látható"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Keresés gomb megjelenítése az alkalmazásmenü mellett"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "A kiválasztott ablakdekoráció-stílus az alkalmazásmenüt egyetlen gombként jeleníti meg."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Adja hozzá az Alkalmazásmenü gombot a címsorhoz a beállítások használatához."

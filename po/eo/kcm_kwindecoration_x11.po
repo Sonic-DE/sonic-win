@@ -270,3 +270,31 @@ msgstr "Enormegaj fenestroborderoj"
 #, kde-format
 msgid "Oversized window borders"
 msgstr "Troigite grandaj fenestroborderoj"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stilo de la butono de aplika menuo:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Unuopa menubutono"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Ĉiam montrata"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Montrata dum ŝvebado"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Montri serĉbutonon kun la aplika menuo"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "La elektita stilo de fenestra ornamaĵo montras la aplikan menuon kiel unuopan butonon."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Aldonu la butonon de aplika menuo al la titolbreto por uzi ĉi tiujn agordojn."

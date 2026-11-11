@@ -529,3 +529,31 @@ msgstr "किनारा साइज:"
 
 #~ msgid "KDE 2"
 #~ msgstr "केडीई २"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "अनुप्रयोग मेनु बटनको शैली:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "एउटा मेनु बटन"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "सधैँ देखाइएको"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "होभर गर्दा देखाइएको"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "अनुप्रयोग मेनुसँग खोज बटन देखाउनुहोस्"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "चयन गरिएको सञ्झ्याल सजावट शैलीले अनुप्रयोग मेनुलाई एउटा बटनको रूपमा देखाउँछ।"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "यी विकल्पहरू प्रयोग गर्न शीर्षक पट्टीमा अनुप्रयोग मेनु बटन थप्नुहोस्।"

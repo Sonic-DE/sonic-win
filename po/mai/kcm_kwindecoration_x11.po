@@ -478,3 +478,31 @@ msgstr "किनारक आकार:"
 #~ "कोनो पूर्वावलोकन उपलब्ध नहि.\n"
 #~ "पूरे संभावना अछि जे\n"
 #~ "प्लगइन केँ लोड करबा मे समस्या आएल."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "अनुप्रयोग मेनू बटनक शैली:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "एकटा मेनू बटन"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "सदिखन देखाओल गेल"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "होवर पर देखाओल गेल"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "अनुप्रयोग मेनूक सँग खोज बटन देखाउ"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "चुनल गेल विंडो सजावट शैली अनुप्रयोग मेनूकेँ एकटा बटनक रूपमे देखबैत अछि।"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "एहि विकल्प सभक उपयोग करबाक लेल शीर्षक पट्टीमे अनुप्रयोग मेनू बटन जोड़ू।"

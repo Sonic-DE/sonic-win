@@ -256,3 +256,31 @@ msgstr "Více než obrovské okraje oken"
 #, kde-format
 msgid "Oversized window borders"
 msgstr "Nadměrné okraje oken"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Styl tlačítka nabídky aplikací:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Jediné tlačítko nabídky"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Vždy zobrazena"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Zobrazena při najetí myší"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Zobrazit s nabídkou aplikací tlačítko hledání"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Vybraný styl dekorace oken zobrazuje nabídku aplikací jako jediné tlačítko."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Pro použití těchto voleb přidejte do titulkového pruhu tlačítko nabídky aplikací."

@@ -503,3 +503,31 @@ msgstr "ទំហំ​ស៊ុម ៖"
 #~ "គ្មាន​ការ​មើល​ជាមុន ។\n"
 #~ "ភាគ​ច្រើន​ប្រហែល​ជា​មាន​\n"
 #~ "បញ្ហា ខណៈ​ពេល​កំពុង​ផ្ទុក​កម្មវិធី​ជំនួយ​ ។"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "រចនាប័ទ្ម​ប៊ូតុង​ម៉ឺនុយ​កម្មវិធី៖"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "ប៊ូតុង​ម៉ឺនុយ​តែ​មួយ"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "បង្ហាញ​ជានិច្ច"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "បង្ហាញ​ពេល​ដាក់​ទស្សន៍ទ្រនិច​ពីលើ"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "បង្ហាញ​ប៊ូតុង​ស្វែងរក​ជាមួយ​ម៉ឺនុយ​កម្មវិធី"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "រចនាប័ទ្ម​តុបតែង​បង្អួច​ដែល​បាន​ជ្រើស​បង្ហាញ​ម៉ឺនុយ​កម្មវិធី​ជា​ប៊ូតុង​តែ​មួយ។"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "បន្ថែម​ប៊ូតុង​ម៉ឺនុយ​កម្មវិធី​ទៅ​របារ​ចំណងជើង ដើម្បី​ប្រើ​ជម្រើស​ទាំងនេះ។"

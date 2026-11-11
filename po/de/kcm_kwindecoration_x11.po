@@ -555,3 +555,31 @@ msgstr "Übergroße Fensterumrandungen"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stil des Anwendungsmenü-Knopfs:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Ein einzelner Menüknopf"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Immer angezeigt"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Beim Darüberfahren angezeigt"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Suchknopf beim Anwendungsmenü anzeigen"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Der ausgewählte Fensterdekorationsstil zeigt das Anwendungsmenü als einzelnen Knopf an."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Fügen Sie den Anwendungsmenü-Knopf zur Titelleiste hinzu, um diese Einstellungen zu verwenden."

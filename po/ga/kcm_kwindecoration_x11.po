@@ -543,3 +543,31 @@ msgstr "Méid na himlíne:"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stíl chnaipe an roghchláir feidhmchláir:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Cnaipe roghchláir aonair"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Taispeáinte i gcónaí"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Taispeáinte ar ainliú"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Taispeáin cnaipe cuardaigh leis an roghchlár feidhmchláir"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Taispeánann an stíl mhaisiúcháin fuinneog roghnaithe an roghchlár feidhmchláir mar chnaipe aonair."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Cuir cnaipe an roghchláir feidhmchláir leis an mbarra teidil chun na roghanna seo a úsáid."

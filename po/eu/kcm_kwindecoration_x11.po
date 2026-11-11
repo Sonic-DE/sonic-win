@@ -548,3 +548,31 @@ msgstr "Neurriz kanpoko leiho-ertzak"
 
 #~ msgid "&Buttons"
 #~ msgstr "&Botoiak"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Aplikazio-menuaren botoiaren estiloa:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Menu-botoi bakarra"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Beti erakutsita"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Gainetik pasatzean erakutsita"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Erakutsi bilaketa-botoi bat aplikazio-menuarekin"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Hautatutako leiho-apaindura estiloak aplikazio-menua botoi bakar gisa erakusten du."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Gehitu aplikazio-menuaren botoia titulu-barrara aukera hauek erabiltzeko."

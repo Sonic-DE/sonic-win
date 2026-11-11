@@ -525,3 +525,31 @@ msgstr "දාර ප්‍රමාණය (&o): "
 
 #~ msgid "&Buttons"
 #~ msgstr "බොත්තම් (&B)"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "යෙදුම් මෙනු බොත්තමේ විලාසය:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "තනි මෙනු බොත්තමක්"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "සැමවිට පෙන්වයි"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "උඩින් ගෙන ගිය විට පෙන්වයි"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "යෙදුම් මෙනුව සමඟ සෙවුම් බොත්තමක් පෙන්වන්න"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "තෝරාගත් කවුළු සැරසිලි විලාසය යෙදුම් මෙනුව තනි බොත්තමක් ලෙස පෙන්වයි."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "මෙම විකල්ප භාවිතා කිරීමට මාතෘකා තීරුවට යෙදුම් මෙනු බොත්තම එක් කරන්න."

@@ -524,3 +524,31 @@ msgstr "Piirde suurus:"
 
 #~ msgid "Ozone"
 #~ msgstr "Ozone"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Rakendusemenüü nupu stiil:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Üks menüünupp"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Alati näha"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Näha kursori all"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Rakendusemenüü juures näidatakse otsingunuppu"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Valitud aknadekoratsiooni stiil näitab rakendusemenüüd ühe nupuna."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Nende valikute kasutamiseks lisa rakendusemenüü nupp tiitliribale."

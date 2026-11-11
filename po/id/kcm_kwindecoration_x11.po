@@ -552,3 +552,31 @@ msgstr "Ukuran bingkai jendela:"
 #~ "Tak ada pratilik tersedia.\n"
 #~ "Kemungkinan besar terjadi\n"
 #~ "galat ketika memuat plugin."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Gaya tombol menu aplikasi:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Satu tombol menu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Selalu ditampilkan"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Ditampilkan saat diambangkan"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Tampilkan tombol cari dengan menu aplikasi"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Gaya dekorasi jendela yang dipilih menampilkan menu aplikasi sebagai satu tombol."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Tambahkan tombol menu aplikasi ke bilah judul untuk menggunakan opsi ini."

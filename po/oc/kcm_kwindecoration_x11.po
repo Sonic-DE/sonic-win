@@ -360,3 +360,31 @@ msgstr ""
 
 #~ msgid "Active Window"
 #~ msgstr "Fenèstra activa"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Estil del boton del menú d'aplicacion :"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Un sol boton de menú"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Totjorn afichat"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Afichat al susvòl"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Afichar un boton de recèrca amb lo menú d'aplicacion"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "L'estil de decoracion de fenèstras seleccionat aficha lo menú d'aplicacion coma un sol boton."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Apondètz lo boton del menú d'aplicacion a la barra de títol per utilizar aquestas opcions."

@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: 2026 Joseph Crowell <joseph.w.crowell@gmail.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+msgid ""
+msgstr ""
+"Project-Id-Version: kcm_kwindecoration_x11\n"
+"Report-Msgid-Bugs-To: https://github.com/Sonic-DE/\n"
+"POT-Creation-Date: 2026-11-11 00:00+0000\n"
+"PO-Revision-Date: 2026-11-11 00:00+0000\n"
+"Last-Translator: Joseph Crowell <joseph.w.crowell@gmail.com>\n"
+"Language-Team: bn\n"
+"Language: bn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "অ্যাপ্লিকেশন মেনু বোতামের শৈলী:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "একক মেনু বোতাম"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "সবসময় দেখানো হয়"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "হোভার করলে দেখানো হয়"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "অ্যাপ্লিকেশন মেনুর সাথে একটি অনুসন্ধান বোতাম দেখাও"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "নির্বাচিত উইন্ডো সজ্জা শৈলী অ্যাপ্লিকেশন মেনুকে একটি একক বোতাম হিসেবে দেখায়।"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "এই বিকল্পগুলি ব্যবহার করতে শিরোনাম বারে অ্যাপ্লিকেশন মেনু বোতাম যোগ করুন।"

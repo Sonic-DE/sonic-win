@@ -509,3 +509,31 @@ msgstr "حدود عملاقة للنوافذ"
 
 #~ msgid "Ozone"
 #~ msgstr "أوزن"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "نمط زر قائمة التّطبيق:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "زر قائمة واحد"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "ظاهرة دائمًا"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "تظهر عند التّحويم"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "اعرض زر بحث مع قائمة التّطبيق"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "نمط زخرفة النّوافذ المحدّد يعرض قائمة التّطبيق كزر واحد."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "أضف زر قائمة التّطبيق إلى شريط العنوان لاستخدام هذه الخيارات."

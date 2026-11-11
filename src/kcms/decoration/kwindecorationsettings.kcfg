@@ -42,6 +42,19 @@
       <label>Show titlebar button tooltips</label>
       <default>true</default>
     </entry>
+    <entry name="applicationMenuStyle" key="ApplicationMenuStyle" type="Enum">
+      <label>Application menu button style</label>
+      <choices>
+        <choice name="SingleButton"/>
+        <choice name="AlwaysShown"/>
+        <choice name="ShownOnHover"/>
+      </choices>
+      <default>SingleButton</default>
+    </entry>
+    <entry name="applicationMenuSearch" key="ApplicationMenuSearch" type="Bool">
+      <label>Show a search button with the application menu</label>
+      <default>true</default>
+    </entry>
     <entry name="buttonsOnLeft" key="ButtonsOnLeft" type="String">
       <label>Titlebar left buttons</label>
       <default>MS</default>

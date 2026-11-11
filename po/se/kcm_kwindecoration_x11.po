@@ -251,3 +251,31 @@ msgstr ""
 #, kde-format
 msgid "Oversized window borders"
 msgstr ""
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Prográmmamearkadusa boalu stiila:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Okta mearkadusboallu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Álo čájehuvvon"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Čájehuvvon go sáhpán lea badjel"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Čájet ohcanboalu prográmmamearkadusain"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Válljejuvvon lásečiŋaid stiila čájeha prográmmamearkadusa ovtta boallun."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Lasit prográmmamearkadusa boalu namahusholgii vai sáhtát geavahit dáid molssaeavttuid."

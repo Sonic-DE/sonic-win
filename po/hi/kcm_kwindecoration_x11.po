@@ -490,3 +490,31 @@ msgstr "किनारा आकार:"
 
 #~ msgid "&Buttons"
 #~ msgstr "बटन (&B)"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "अनुप्रयोग मेन्यू बटन की शैली:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "एक मेन्यू बटन"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "हमेशा दिखाया गया"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "होवर करने पर दिखाया गया"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "अनुप्रयोग मेन्यू के साथ खोज बटन दिखाएँ"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "चुनी गई विंडो सजावट शैली अनुप्रयोग मेन्यू को एक बटन के रूप में दिखाती है।"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "इन विकल्पों का उपयोग करने के लिए शीर्षक पट्टी में अनुप्रयोग मेन्यू बटन जोड़ें।"

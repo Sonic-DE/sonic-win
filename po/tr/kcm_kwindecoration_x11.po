@@ -268,3 +268,31 @@ msgstr "En büyük pencere kenarlıkları"
 #, kde-format
 msgid "Oversized window borders"
 msgstr "Devasa pencere kenarlıkları"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Uygulama menüsü düğmesi biçemi:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Tek menü düğmesi"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Her zaman gösterilir"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Üzerine gelindiğinde gösterilir"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Uygulama menüsüyle bir arama düğmesi göster"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Seçili pencere dekorasyonu biçemi, uygulama menüsünü tek bir düğme olarak gösterir."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Bu seçenekleri kullanmak için Uygulama menüsü düğmesini başlık çubuğuna ekleyin."

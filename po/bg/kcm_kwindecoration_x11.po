@@ -266,3 +266,31 @@ msgstr "Много огромни рамки на прозорци"
 #, kde-format
 msgid "Oversized window borders"
 msgstr "Извънгабаритни  рамки на прозорци"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Стил на бутона за меню на програмата:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Един бутон за меню"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Винаги видимо"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Видимо при посочване"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Показване на бутон за търсене с менюто на програмата"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Избраният стил на декорацията на прозорците показва менюто на програмата като един бутон."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Добавете бутона за меню на програмата в заглавната лента, за да използвате тези настройки."

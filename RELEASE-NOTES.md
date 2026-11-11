@@ -6,6 +6,9 @@ Sonic Win is SonicDE's window manager and compositor for X11: it places, moves a
 
 - Switching to a window decoration without see-through titlebars, such as Breeze, now also turns off see-through toolbars and menu bars, so they no longer show through under a solid titlebar. Switching back to Silver turns them on again, as you left them.
 - The Blur effect's "Blur menus" setting now applies to every see-through menu, including Silver's, and takes effect straight away: turned off, no menu is blurred.
+- Window Decorations' "Configure Titlebar…" page has a new "Application menu button style": keep the single menu button, show the application's menus in the titlebar all the time, or show them when you point at the titlebar. A new checkbox adds a search button that finds any menu item by name. Both work with decoration styles that support them, such as Silver.
+- Menus opened from a titlebar button now appear in the right place in right-to-left languages.
+- Behind the scenes: a test for the decoration settings' theme list.
 
 ## 6.8.2 (2026-11-10)
 

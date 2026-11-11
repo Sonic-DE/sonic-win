@@ -518,3 +518,31 @@ msgstr "किनार आकार :"
 
 #~ msgid "Ozone"
 #~ msgstr "ओझोन"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "अनुप्रयोग मेन्यू बटणाची शैली:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "एक मेन्यू बटण"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "नेहमी दर्शविले"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "होव्हर केल्यावर दर्शविले"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "अनुप्रयोग मेन्यूसह शोध बटण दर्शवा"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "निवडलेली चौकट सजावट शैली अनुप्रयोग मेन्यू एका बटणाच्या रूपात दर्शविते."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "हे पर्याय वापरण्यासाठी शीर्षक पट्टीत अनुप्रयोग मेन्यू बटण जोडा."

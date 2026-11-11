@@ -29,7 +29,7 @@ namespace Decoration
 
 DecoratedWindowImpl::DecoratedWindowImpl(Window *window, KDecoration3::DecoratedWindow *decoratedClient, KDecoration3::Decoration *decoration)
     : QObject()
-    , DecoratedWindowPrivateV3(decoratedClient, decoration)
+    , DecoratedWindowPrivateV5(decoratedClient, decoration)
     , m_window(window)
     , m_clientSize(window->clientSize())
 {
@@ -334,7 +334,7 @@ void DecoratedWindowImpl::popup(const KDecoration3::Positioner &positioner, QMen
 {
     const QRectF anchorRect = positioner.anchorRect().translated(m_window->pos());
     const QPointF position = qGuiApp->layoutDirection() == Qt::RightToLeft
-        ? QPointF(anchorRect.right() - menu->width(), anchorRect.bottom())
+        ? QPointF(anchorRect.right() - menu->sizeHint().width(), anchorRect.bottom())
         : QPointF(anchorRect.left(), anchorRect.bottom());
 
     if (menu->isVisible()) {
@@ -342,6 +342,11 @@ void DecoratedWindowImpl::popup(const KDecoration3::Positioner &positioner, QMen
     } else {
         menu->popup(position.toPoint());
     }
+}
+
+QPointF DecoratedWindowImpl::position() const
+{
+    return m_window->pos();
 }
 }
 }

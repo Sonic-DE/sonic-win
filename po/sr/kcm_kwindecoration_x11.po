@@ -366,3 +366,31 @@ msgstr "без бочних ивица"
 #~ msgstr ""
 #~ "Затворите двокликом.\n"
 #~ "Да отворите мени, држите дугме притиснуто док се не појави."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Стил дугмета менија програма:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Једно дугме менија"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Увек приказан"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Приказан при лебдењу"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Прикажи дугме за претрагу уз мени програма"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Изабрани стил декорације прозора приказује мени програма као једно дугме."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Додајте дугме менија програма на насловну траку да бисте користили ове опције."

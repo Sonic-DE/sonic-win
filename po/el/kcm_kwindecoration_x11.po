@@ -595,3 +595,31 @@ msgstr "Υπερμεγέθη περιγράμματα"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Στιλ κουμπιού μενού εφαρμογής:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Ένα κουμπί μενού"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Εμφανίζεται πάντα"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Εμφανίζεται κατά την αιώρηση"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Εμφάνιση κουμπιού αναζήτησης μαζί με το μενού εφαρμογής"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Το επιλεγμένο στιλ διακόσμησης παραθύρων εμφανίζει το μενού εφαρμογής ως ένα κουμπί."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Προσθέστε το κουμπί μενού εφαρμογής στη γραμμή τίτλου για να χρησιμοποιήσετε αυτές τις επιλογές."

@@ -337,3 +337,31 @@ msgstr "超級大視窗邊框"
 #~ msgctxt "checkbox label"
 #~ msgid "Use theme's default window border size"
 #~ msgstr "使用主題的預設視窗外框大小"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "應用程式選單按鈕樣式："
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "單一選單按鈕"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "永遠顯示"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "游標停留時顯示"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "在應用程式選單旁顯示搜尋按鈕"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "所選的視窗裝飾樣式將應用程式選單顯示為單一按鈕。"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "將應用程式選單按鈕加入標題列以使用這些選項。"

@@ -547,3 +547,31 @@ msgstr "Overdimensioneret vinduekanter"
 
 #~ msgid "Ozone"
 #~ msgstr "Ozone"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stil for programmenu-knappen:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Én menuknap"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Vises altid"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Vises når musen holdes over"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Vis en søgeknap ved programmenuen"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Den valgte vinduesdekorationsstil viser programmenuen som én knap."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Tilføj programmenu-knappen til titellinjen for at bruge disse indstillinger."

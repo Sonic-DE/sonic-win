@@ -441,3 +441,31 @@ msgstr "(&o) హద్దు పరిమాణము:"
 
 #~ msgid "Ozone"
 #~ msgstr "ఓజోన్"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "అనువర్తన మెనూ బొత్తం శైలి:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "ఒకే మెనూ బొత్తం"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "ఎల్లప్పుడూ చూపబడుతుంది"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "పైకి తీసుకెళ్ళినప్పుడు చూపబడుతుంది"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "అనువర్తన మెనూతో వెతుకు బొత్తాన్ని చూపు"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "ఎంచుకున్న కిటికీ అలంకరణ శైలి అనువర్తన మెనూను ఒకే బొత్తంగా చూపుతుంది."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "ఈ ఎంపికలను వాడడానికి శీర్షిక పట్టీకి అనువర్తన మెనూ బొత్తాన్ని జోడించండి."

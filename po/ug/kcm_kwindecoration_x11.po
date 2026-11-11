@@ -439,3 +439,31 @@ msgstr "ئۆتە چوڭ كۆزنەك گىرۋىكى"
 #~ msgctxt "Caption to decoration preview, %1 author name"
 #~ msgid "by %1"
 #~ msgstr "ئاپتور %1"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "پىروگرامما تىزىملىكى توپچىسىنىڭ ئۇسلۇبى:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "بىرلا تىزىملىك توپچىسى"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "ھەمىشە كۆرسىتىلىدۇ"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "ئۈستىدە توختىغاندا كۆرسىتىلىدۇ"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "پىروگرامما تىزىملىكى بىلەن ئىزدەش توپچىسىنى كۆرسەت"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "تاللانغان كۆزنەك بېزەك ئۇسلۇبى پىروگرامما تىزىملىكىنى بىرلا توپچا قىلىپ كۆرسىتىدۇ."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "بۇ تاللانمىلارنى ئىشلىتىش ئۈچۈن پىروگرامما تىزىملىكى توپچىسىنى ماۋزۇ بالدىقىغا قوشۇڭ."

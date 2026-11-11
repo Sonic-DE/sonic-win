@@ -360,3 +360,31 @@ msgstr "Bordas de janelas de tamanho extra grande "
 #~ msgctxt "checkbox label"
 #~ msgid "Use theme's default window border size"
 #~ msgstr "Usar tamanho da borda da janela padrão do tema"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Estilo do botão do menu de aplicativos:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Um único botão de menu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Sempre exibido"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Exibido ao passar o mouse"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Mostrar um botão de pesquisa com o menu de aplicativos"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "O estilo de decoração de janelas selecionado mostra o menu de aplicativos como um único botão."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Adicione o botão do menu de aplicativos à barra de título para usar estas opções."

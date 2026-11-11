@@ -273,3 +273,31 @@ msgstr "さらに大きいウィンドウの枠"
 #, kde-format
 msgid "Oversized window borders"
 msgstr "特大のウィンドウの枠"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "アプリケーションメニューボタンのスタイル:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "単一のメニューボタン"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "常に表示"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "ホバー時に表示"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "アプリケーションメニューと一緒に検索ボタンを表示"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "選択したウィンドウの飾りのスタイルはアプリケーションメニューを単一のボタンとして表示します。"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "これらのオプションを使うには、アプリケーションメニューボタンをタイトルバーに追加してください。"

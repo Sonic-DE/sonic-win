@@ -532,3 +532,31 @@ msgstr "Rant grootte:"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Styl van die toepassingkieslysknoppie:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Enkele kieslysknoppie"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Altyd gewys"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Gewys by sweef"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Wys 'n soekknoppie by die toepassingkieslys"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Die gekose vensterversieringstyl wys die toepassingkieslys as 'n enkele knoppie."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Voeg die toepassingkieslysknoppie by die titelbalk om hierdie opsies te gebruik."

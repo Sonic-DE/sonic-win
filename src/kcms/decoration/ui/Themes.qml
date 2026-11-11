@@ -47,6 +47,8 @@ KCM.GridView {
             KDecoration.Settings {
                 id: settingsItem
                 bridge: bridgeItem.bridge
+                applicationMenuStyle: kcm.settings.applicationMenuStyle
+                applicationMenuSearchEnabled: kcm.settings.applicationMenuSearch
                 Component.onCompleted: {
                     settingsItem.borderSizesIndex = kcm.borderSize;
                 }

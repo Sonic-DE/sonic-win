@@ -56,6 +56,8 @@ QVariant DecorationsModel::data(const QModelIndex &index, int role) const
         return d.configurationName();
     case RecommendedBorderSizeRole:
         return Utils::borderSizeToString(d.borderSize());
+    case TitleBarMenuRole:
+        return m_titleBarMenuPlugins.contains(d.pluginId());
     }
     return QVariant();
 }
@@ -67,6 +69,7 @@ QHash<int, QByteArray> DecorationsModel::roleNames() const
                                   {ThemeNameRole, QByteArrayLiteral("theme")},
                                   {ConfigurationRole, QByteArrayLiteral("configureable")},
                                   {KcmoduleNameRole, QByteArrayLiteral("kcmoduleName")},
+                                  {TitleBarMenuRole, QByteArrayLiteral("titleBarMenu")},
                                   {RecommendedBorderSizeRole, QByteArrayLiteral("recommendedbordersize")}});
     return roles;
 }
@@ -111,8 +114,12 @@ void DecorationsModel::init()
 {
     beginResetModel();
     m_plugins.clear();
+    m_titleBarMenuPlugins.clear();
     const auto plugins = KPluginMetaData::findPlugins(s_pluginName);
     for (const auto &info : plugins) {
+        if (info.value(QStringLiteral("X-SonicDE-TitleBarMenu"), false)) {
+            m_titleBarMenuPlugins.insert(info.pluginId());
+        }
         std::unique_ptr<KDecoration3::DecorationThemeProvider> themeFinder(
             KPluginFactory::instantiatePlugin<KDecoration3::DecorationThemeProvider>(info).plugin);
         KDecoration3::DecorationThemeMetaData data;

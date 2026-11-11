@@ -52,7 +52,7 @@ QHash<int, QByteArray> BorderSizesModel::roleNames() const
 
 PreviewSettings::PreviewSettings(DecorationSettings *parent)
     : QObject()
-    , DecorationSettingsPrivate(parent)
+    , DecorationSettingsPrivateV3(parent)
     , m_alphaChannelSupported(true)
     , m_onAllDesktopsAvailable(true)
     , m_closeOnDoubleClick(false)
@@ -195,6 +195,42 @@ BorderSize PreviewSettings::borderSize() const
     return m_borderSizes->index(m_borderSize).data(Qt::UserRole).value<BorderSize>();
 }
 
+bool PreviewSettings::isAlwaysShowExcludeFromCapture() const
+{
+    return false;
+}
+
+ApplicationMenuStyle PreviewSettings::applicationMenuStyle() const
+{
+    return m_applicationMenuStyle;
+}
+
+bool PreviewSettings::isApplicationMenuSearchEnabled() const
+{
+    return m_applicationMenuSearchEnabled;
+}
+
+void PreviewSettings::setApplicationMenuStyle(int style)
+{
+    const auto value = ApplicationMenuStyle(style);
+    if (m_applicationMenuStyle == value) {
+        return;
+    }
+    m_applicationMenuStyle = value;
+    Q_EMIT applicationMenuStyleChanged(style);
+    Q_EMIT decorationSettings()->applicationMenuStyleChanged(m_applicationMenuStyle);
+}
+
+void PreviewSettings::setApplicationMenuSearchEnabled(bool enabled)
+{
+    if (m_applicationMenuSearchEnabled == enabled) {
+        return;
+    }
+    m_applicationMenuSearchEnabled = enabled;
+    Q_EMIT applicationMenuSearchEnabledChanged(enabled);
+    Q_EMIT decorationSettings()->applicationMenuSearchEnabledChanged(enabled);
+}
+
 void PreviewSettings::setFont(const QFont &font)
 {
     if (m_font == font) {
@@ -235,6 +271,10 @@ void Settings::createSettings()
         m_previewSettings = m_bridge->lastCreatedSettings();
         m_previewSettings->setBorderSizesIndex(m_borderSize);
         connect(this, &Settings::borderSizesIndexChanged, m_previewSettings, &PreviewSettings::setBorderSizesIndex);
+        m_previewSettings->setApplicationMenuStyle(m_applicationMenuStyle);
+        m_previewSettings->setApplicationMenuSearchEnabled(m_applicationMenuSearchEnabled);
+        connect(this, &Settings::applicationMenuStyleChanged, m_previewSettings, &PreviewSettings::setApplicationMenuStyle);
+        connect(this, &Settings::applicationMenuSearchEnabledChanged, m_previewSettings, &PreviewSettings::setApplicationMenuSearchEnabled);
     }
     Q_EMIT settingsChanged();
 }
@@ -258,6 +298,23 @@ void Settings::setBorderSizesIndex(int index)
     Q_EMIT borderSizesIndexChanged(m_borderSize);
 }
 
+void Settings::setApplicationMenuStyle(int style)
+{
+    if (m_applicationMenuStyle == style) {
+        return;
+    }
+    m_applicationMenuStyle = style;
+    Q_EMIT applicationMenuStyleChanged(m_applicationMenuStyle);
+}
+
+void Settings::setApplicationMenuSearchEnabled(bool enabled)
+{
+    if (m_applicationMenuSearchEnabled == enabled) {
+        return;
+    }
+    m_applicationMenuSearchEnabled = enabled;
+    Q_EMIT applicationMenuSearchEnabledChanged(m_applicationMenuSearchEnabled);
+}
 }
 }
 

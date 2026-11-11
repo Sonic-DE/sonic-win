@@ -441,3 +441,31 @@ msgstr "Ment ar vevennig :"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Giz an nozelenn lañser arload:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Un nozelenn lañser hepken"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Diskouezet bepred"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Diskouezet pa dremen al logodenn"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Diskouez un nozelenn glask gant al lañser arload"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Ar giz kinkladur prenestroù dibabet a ziskouez al lañser arload evel un nozelenn hepken."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Ouzhpennit an nozelenn lañser arload er varrenn-ditl evit implijout an dibarzhioù-mañ."

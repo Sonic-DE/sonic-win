@@ -261,3 +261,31 @@ msgstr "अतीव विशालाः खिडकीसीमाः"
 #, kde-format
 msgid "Oversized window borders"
 msgstr "अतिप्रमाणस्य खिडकीसीमाः"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "अनुप्रयोग मेनू पिञ्जस्य शैली:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "एकं मेनू पिञ्जम्"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "सर्वदा दर्शितम्"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "उपरि स्थापने दर्शितम्"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "अनुप्रयोग मेनू सह अन्वेषण पिञ्जं दर्शयतु"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "चितं गवाक्ष-अलङ्कार-शैली अनुप्रयोग मेनू एकं पिञ्जम् इव दर्शयति।"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "एतान् विकल्पान् उपयोक्तुं शीर्षकपट्टिकायां अनुप्रयोग मेनू पिञ्जं योजयतु।"

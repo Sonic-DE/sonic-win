@@ -373,3 +373,31 @@ msgstr "גבולות חלון מנופחים"
 
 #~ msgid "Buttons"
 #~ msgstr "כפתורים"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "סגנון כפתור תפריט היישום:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "כפתור תפריט יחיד"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "מוצג תמיד"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "מוצג בריחוף"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "הצגת כפתור חיפוש עם תפריט היישום"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "סגנון עיטור החלונות הנבחר מציג את תפריט היישום ככפתור יחיד."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "יש להוסיף את כפתור תפריט היישום לשורת הכותרת כדי להשתמש באפשרויות האלו."

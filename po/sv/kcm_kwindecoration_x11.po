@@ -548,3 +548,31 @@ msgstr "Överdrivna fönsterkanter"
 
 #~ msgid "Ozone"
 #~ msgstr "Ozon"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stil för programmenyknappen:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "En enda menyknapp"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Visas alltid"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Visas när musen hålls över"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Visa en sökknapp med programmenyn"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Den valda fönsterdekorationsstilen visar programmenyn som en enda knapp."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Lägg till programmenyknappen i namnlisten för att använda de här alternativen."

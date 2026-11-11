@@ -562,3 +562,31 @@ msgstr "Колоссальные рамки"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Стиль кнопки меню приложения:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Одна кнопка меню"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Всегда показывать"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Показывать при наведении"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Показывать кнопку поиска рядом с меню приложения"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Выбранный стиль оформления окон показывает меню приложения в виде одной кнопки."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Чтобы использовать эти параметры, добавьте кнопку меню приложения в заголовок окна."

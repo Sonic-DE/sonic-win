@@ -458,3 +458,31 @@ msgstr "Che&garaning oʻlchami:"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Dastur menyusi tugmasining uslubi:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Bitta menyu tugmasi"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Doim koʻrsatiladi"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Ustiga olib borilganda koʻrsatiladi"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Dastur menyusi bilan qidirish tugmasini koʻrsatish"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Tanlangan oyna bezagi uslubi dastur menyusini bitta tugma sifatida koʻrsatadi."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Bu parametrlardan foydalanish uchun dastur menyusi tugmasini sarlavha paneliga qoʻshing."

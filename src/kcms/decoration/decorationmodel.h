@@ -7,6 +7,7 @@
 
 #include <KDecoration3/DecorationThemeProvider>
 #include <QAbstractListModel>
+#include <QSet>
 
 namespace KDecoration3
 {
@@ -24,6 +25,7 @@ public:
         ConfigurationRole,
         RecommendedBorderSizeRole,
         KcmoduleNameRole,
+        TitleBarMenuRole,
     };
 
 public:
@@ -47,6 +49,8 @@ public Q_SLOTS:
 private:
     std::vector<KDecoration3::DecorationThemeMetaData> m_plugins;
     QStringList m_knsProviders;
+    // Plugins whose metadata sets "X-SonicDE-TitleBarMenu".
+    QSet<QString> m_titleBarMenuPlugins;
 };
 
 }

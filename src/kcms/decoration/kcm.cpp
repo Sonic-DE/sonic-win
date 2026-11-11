@@ -244,6 +244,19 @@ int KCMKWinDecoration::recommendedBorderSize() const
     return Utils::getBorderSizeNames().keys().indexOf(s_defaultRecommendedBorderSize);
 }
 
+bool KCMKWinDecoration::themeSupportsTitleBarMenu() const
+{
+    const QModelIndex proxyIndex = m_proxyThemesModel->index(theme(), 0);
+    if (!proxyIndex.isValid()) {
+        return false;
+    }
+    const QModelIndex index = m_proxyThemesModel->mapToSource(proxyIndex);
+    if (!index.isValid()) {
+        return false;
+    }
+    return m_themesModel->data(index, KDecoration3::Configuration::DecorationsModel::TitleBarMenuRole).toBool();
+}
+
 int KCMKWinDecoration::theme() const
 {
     return m_proxyThemesModel->mapFromSource(m_themesModel->findDecoration(settings()->pluginName(), settings()->theme())).row();

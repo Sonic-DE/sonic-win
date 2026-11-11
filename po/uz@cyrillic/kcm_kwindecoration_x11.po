@@ -458,3 +458,31 @@ msgstr "Че&гаранинг ўлчами:"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Дастур менюси тугмасининг услуби:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Битта меню тугмаси"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Доим кўрсатилади"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Устига олиб борилганда кўрсатилади"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Дастур менюси билан қидириш тугмасини кўрсатиш"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Танланган ойна безаги услуби дастур менюсини битта тугма сифатида кўрсатади."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Бу параметрлардан фойдаланиш учун дастур менюси тугмасини сарлавҳа панелига қўшинг."

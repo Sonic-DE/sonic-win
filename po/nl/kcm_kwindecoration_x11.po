@@ -557,3 +557,31 @@ msgstr "Bovenmatig grote vensterranden"
 
 #~ msgid "Ozone"
 #~ msgstr "Ozone"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stijl van knop voor menu van toepassing:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Eén menuknop"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Altijd getoond"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Getoond bij er boven zweven"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Een zoekknop bij het menu van toepassing tonen"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "De geselecteerde stijl van vensterdecoratie toont het menu van toepassing als één knop."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Voeg de knop voor het menu van toepassing toe aan de titelbalk om deze opties te gebruiken."

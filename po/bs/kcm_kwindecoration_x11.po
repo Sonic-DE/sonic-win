@@ -509,3 +509,31 @@ msgstr "Veličina &ivica:"
 
 #~ msgid "Inactive Window"
 #~ msgstr "Neaktivan prozor"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stil dugmeta menija programa:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Jedno dugme menija"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Uvijek prikazan"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Prikazan pri prelasku mišem"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Prikaži dugme za pretragu uz meni programa"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Izabrani stil dekoracije prozora prikazuje meni programa kao jedno dugme."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Dodajte dugme menija programa na naslovnu traku da biste koristili ove opcije."

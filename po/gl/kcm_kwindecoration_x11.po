@@ -540,3 +540,31 @@ msgstr "Bordos de xanela descomunais"
 #~ "Non se dispón de vista previa.\n"
 #~ "Probabelmente aconteceu\n"
 #~ "un problema ao cargar o complemento."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Estilo do botón do menú de aplicacións:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Un único botón de menú"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Mostrado sempre"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Mostrado ao pasar o rato"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Mostrar un botón de busca co menú de aplicacións"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "O estilo de decoración de xanelas seleccionado mostra o menú de aplicacións como un único botón."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Engada o botón do menú de aplicacións á barra de título para usar estas opcións."

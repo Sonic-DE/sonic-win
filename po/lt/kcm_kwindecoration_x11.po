@@ -359,3 +359,31 @@ msgstr "Per dideli lango rėmeliai"
 #~| msgid "Search"
 #~ msgid "Search..."
 #~ msgstr "Ieškoti"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Programos meniu mygtuko stilius:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Vienas meniu mygtukas"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Visada rodomas"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Rodomas užvedus pelę"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Rodyti paieškos mygtuką kartu su programos meniu"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Pasirinktas langų dekoracijų stilius rodo programos meniu kaip vieną mygtuką."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Norėdami naudoti šias parinktis, pridėkite programos meniu mygtuką į antraštės juostą."

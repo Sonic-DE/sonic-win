@@ -42,7 +42,7 @@ private:
                                                      BorderSize::Oversized});
 };
 
-class PreviewSettings : public QObject, public DecorationSettingsPrivate
+class PreviewSettings : public QObject, public DecorationSettingsPrivateV3
 {
     Q_OBJECT
     Q_PROPERTY(bool onAllDesktopsAvailable READ isOnAllDesktopsAvailable WRITE setOnAllDesktopsAvailable NOTIFY onAllDesktopsAvailableChanged)
@@ -54,6 +54,9 @@ class PreviewSettings : public QObject, public DecorationSettingsPrivate
     Q_PROPERTY(QAbstractItemModel *borderSizesModel READ borderSizesModel CONSTANT)
     Q_PROPERTY(int borderSizesIndex READ borderSizesIndex WRITE setBorderSizesIndex NOTIFY borderSizesIndexChanged)
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
+    Q_PROPERTY(int applicationMenuStyle READ applicationMenuStyleIndex WRITE setApplicationMenuStyle NOTIFY applicationMenuStyleChanged)
+    Q_PROPERTY(bool applicationMenuSearchEnabled READ isApplicationMenuSearchEnabled WRITE setApplicationMenuSearchEnabled NOTIFY
+                   applicationMenuSearchEnabledChanged)
 public:
     explicit PreviewSettings(DecorationSettings *parent);
     ~PreviewSettings() override;
@@ -95,14 +98,28 @@ public:
     }
     void setFont(const QFont &font);
 
+    bool isAlwaysShowExcludeFromCapture() const override;
+    ApplicationMenuStyle applicationMenuStyle() const override;
+    int applicationMenuStyleIndex() const
+    {
+        return int(m_applicationMenuStyle);
+    }
+    void setApplicationMenuStyle(int style);
+    bool isApplicationMenuSearchEnabled() const override;
+    void setApplicationMenuSearchEnabled(bool enabled);
+
 Q_SIGNALS:
     void onAllDesktopsAvailableChanged(bool);
     void alphaChannelSupportedChanged(bool);
     void closeOnDoubleClickOnMenuChanged(bool);
     void borderSizesIndexChanged(int);
     void fontChanged(const QFont &);
+    void applicationMenuStyleChanged(int);
+    void applicationMenuSearchEnabledChanged(bool);
 
 private:
+    ApplicationMenuStyle m_applicationMenuStyle = ApplicationMenuStyle::SingleButton;
+    bool m_applicationMenuSearchEnabled = true;
     bool m_alphaChannelSupported;
     bool m_onAllDesktopsAvailable;
     bool m_closeOnDoubleClick;
@@ -121,6 +138,9 @@ class Settings : public QObject
     Q_PROPERTY(KDecoration3::Preview::PreviewBridge *bridge READ bridge WRITE setBridge NOTIFY bridgeChanged)
     Q_PROPERTY(KDecoration3::DecorationSettings *settings READ settingsPointer NOTIFY settingsChanged)
     Q_PROPERTY(int borderSizesIndex READ borderSizesIndex WRITE setBorderSizesIndex NOTIFY borderSizesIndexChanged)
+    Q_PROPERTY(int applicationMenuStyle READ applicationMenuStyle WRITE setApplicationMenuStyle NOTIFY applicationMenuStyleChanged)
+    Q_PROPERTY(bool applicationMenuSearchEnabled READ isApplicationMenuSearchEnabled WRITE setApplicationMenuSearchEnabled NOTIFY
+                   applicationMenuSearchEnabledChanged)
 public:
     explicit Settings(QObject *parent = nullptr);
     ~Settings() override;
@@ -135,13 +155,27 @@ public:
         return m_borderSize;
     }
     void setBorderSizesIndex(int index);
+    int applicationMenuStyle() const
+    {
+        return m_applicationMenuStyle;
+    }
+    void setApplicationMenuStyle(int style);
+    bool isApplicationMenuSearchEnabled() const
+    {
+        return m_applicationMenuSearchEnabled;
+    }
+    void setApplicationMenuSearchEnabled(bool enabled);
 
 Q_SIGNALS:
     void bridgeChanged();
     void settingsChanged();
     void borderSizesIndexChanged(int);
+    void applicationMenuStyleChanged(int);
+    void applicationMenuSearchEnabledChanged(bool);
 
 private:
+    int m_applicationMenuStyle = 0;
+    bool m_applicationMenuSearchEnabled = true;
     void createSettings();
     QPointer<PreviewBridge> m_bridge;
     std::shared_ptr<KDecoration3::DecorationSettings> m_settings;

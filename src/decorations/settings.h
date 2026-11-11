@@ -19,7 +19,7 @@ namespace KWin
 namespace Decoration
 {
 
-class SettingsImpl : public QObject, public KDecoration3::DecorationSettingsPrivate
+class SettingsImpl : public QObject, public KDecoration3::DecorationSettingsPrivateV3
 {
     Q_OBJECT
 public:
@@ -44,6 +44,18 @@ public:
     {
         return m_font;
     }
+    bool isAlwaysShowExcludeFromCapture() const override
+    {
+        return false;
+    }
+    KDecoration3::ApplicationMenuStyle applicationMenuStyle() const override
+    {
+        return m_applicationMenuStyle;
+    }
+    bool isApplicationMenuSearchEnabled() const override
+    {
+        return m_applicationMenuSearch;
+    }
 
 private:
     void readSettings();
@@ -55,6 +67,8 @@ private:
     KDecoration3::BorderSize m_borderSize;
     bool m_autoBorderSize = true;
     bool m_closeDoubleClickMenu = false;
+    KDecoration3::ApplicationMenuStyle m_applicationMenuStyle = KDecoration3::ApplicationMenuStyle::SingleButton;
+    bool m_applicationMenuSearch = true;
     QFont m_font;
 };
 } // Decoration

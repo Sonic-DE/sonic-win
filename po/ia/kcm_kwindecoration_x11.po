@@ -540,3 +540,31 @@ msgstr "Bordos de fenestra gigante"
 #~ "Nulle vista preliminar disponibile.\n"
 #~ "Plus probabilemente il ha\n"
 #~ "un problema de cargamento de plugin."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stilo del button del menu de application:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Un sol button de menu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Monstrate sempre"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Monstrate quando le mus passa supra"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Monstra un button de cerca con le menu de application"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Le stilo de decoration de fenestra seligite monstra le menu de application como un sol button."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Adde le button de menu de application al barra de titulo pro usar iste optiones."

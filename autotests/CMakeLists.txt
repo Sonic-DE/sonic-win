@@ -4,6 +4,16 @@ target_link_libraries(testSoftwareBrightness kwin Qt::Test Qt::DBus KF6::ConfigC
 find_program(DBUS_RUN_SESSION_EXECUTABLE dbus-run-session REQUIRED)
 add_test(NAME kwin-testSoftwareBrightness COMMAND ${DBUS_RUN_SESSION_EXECUTABLE} -- $<TARGET_FILE:testSoftwareBrightness>)
 ecm_mark_as_test(testSoftwareBrightness)
+add_executable(testDecorationModel
+    test_decorationmodel.cpp
+    ${CMAKE_SOURCE_DIR}/src/kcms/decoration/decorationmodel.cpp
+    ${CMAKE_SOURCE_DIR}/src/kcms/decoration/utils.cpp
+)
+target_include_directories(testDecorationModel PRIVATE ${CMAKE_SOURCE_DIR}/src/kcms/decoration)
+target_compile_definitions(testDecorationModel PRIVATE TRANSLATION_DOMAIN="kcm_kwindecoration_x11")
+target_link_libraries(testDecorationModel KDecoration3::KDecoration KF6::ConfigCore KF6::CoreAddons KF6::I18n Qt::Test)
+add_test(NAME kwin-testDecorationModel COMMAND testDecorationModel)
+ecm_mark_as_test(testDecorationModel)
 add_executable(testDwellClicker test_dwellclicker.cpp)
 target_link_libraries(testDwellClicker kwin Qt::Test KF6::ConfigCore)
 add_test(NAME kwin-testDwellClicker COMMAND testDwellClicker)

@@ -542,3 +542,31 @@ msgstr "Oversized window borders"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Application menu button style:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Single menu button"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Always shown"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Shown on hover"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Show a search button with the application menu"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "The selected window decoration style shows the application menu as a single button."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Add the Application menu button to the titlebar to use these options."

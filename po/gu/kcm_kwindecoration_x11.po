@@ -519,3 +519,31 @@ msgstr "સીમારેખાનું માપ:"
 #~ "પૂર્વદર્શન ઉપલ્બધ નથી.\n"
 #~ "મોટેભાગે કદાચ ત્યાં પ્લગઇન\n"
 #~ " ને લોડ કરવામાં સમસ્યા હતી."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "એપ્લિકેશન મેનુ બટનની શૈલી:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "એક મેનુ બટન"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "હંમેશા બતાવેલ"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "હોવર કરવા પર બતાવેલ"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "એપ્લિકેશન મેનુ સાથે શોધ બટન બતાવો"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "પસંદ કરેલ વિન્ડો સજાવટ શૈલી એપ્લિકેશન મેનુને એક બટન તરીકે બતાવે છે."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "આ વિકલ્પો વાપરવા માટે શીર્ષક પટ્ટીમાં એપ્લિકેશન મેનુ બટન ઉમેરો."

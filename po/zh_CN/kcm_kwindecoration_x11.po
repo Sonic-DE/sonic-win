@@ -257,3 +257,31 @@ msgstr "超特大窗口边框"
 #, kde-format
 msgid "Oversized window borders"
 msgstr "极大窗口边框"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "应用程序菜单按钮样式："
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "单个菜单按钮"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "始终显示"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "悬停时显示"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "在应用程序菜单旁显示搜索按钮"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "所选窗口装饰样式将应用程序菜单显示为单个按钮。"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "将应用程序菜单按钮添加到标题栏以使用这些选项。"

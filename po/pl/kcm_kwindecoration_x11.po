@@ -536,3 +536,31 @@ msgstr "Przewymiarowanie obramowanie okien"
 
 #~ msgid "&Buttons"
 #~ msgstr "&Przyciski"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Wygląd przycisku menu programów:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Jeden przycisk menu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Zawsze pokazywane"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Pokazywane po najechaniu"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Pokaż przycisk wyszukiwania przy menu programów"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Wybrany wygląd okien pokazuje menu programów jako jeden przycisk."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Dodaj przycisk menu programów do paska tytułu, aby używać tych ustawień."

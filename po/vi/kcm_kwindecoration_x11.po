@@ -353,3 +353,31 @@ msgstr "Kích thước viền cửa sổ:"
 #~| msgid "&Window Decoration"
 #~ msgid "Download New Window Decorations"
 #~ msgstr "Trang trí cửa &sổ"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Kiểu nút trình đơn ứng dụng:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Một nút trình đơn"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Luôn hiển thị"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Hiển thị khi di chuột qua"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Hiển thị nút tìm kiếm cùng trình đơn ứng dụng"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Kiểu trang trí cửa sổ đã chọn hiển thị trình đơn ứng dụng dưới dạng một nút."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Thêm nút trình đơn ứng dụng vào thanh tiêu đề để dùng các tuỳ chọn này."

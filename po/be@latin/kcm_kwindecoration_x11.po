@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: 2026 Joseph Crowell <joseph.w.crowell@gmail.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+msgid ""
+msgstr ""
+"Project-Id-Version: kcm_kwindecoration_x11\n"
+"Report-Msgid-Bugs-To: https://github.com/Sonic-DE/\n"
+"POT-Creation-Date: 2026-11-11 00:00+0000\n"
+"PO-Revision-Date: 2026-11-11 00:00+0000\n"
+"Last-Translator: Joseph Crowell <joseph.w.crowell@gmail.com>\n"
+"Language-Team: be@latin\n"
+"Language: be@latin\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Styl knopki mieniu prahramy:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Adna knopka mieniu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Pakazvajecca zaŭsiody"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Pakazvajecca pry naviadzienni"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Pakazvać knopku pošuku razam z mieniu prahramy"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Vybrany styl upryhožvannia akon pakazvaje mieniu prahramy jak adnu knopku."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Dadajcie knopku mieniu prahramy na paneĺ zahaloŭka, kab vykarystoŭvać hetyja parametry."

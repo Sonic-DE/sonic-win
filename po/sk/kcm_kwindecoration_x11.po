@@ -521,3 +521,31 @@ msgstr "Nadrozmerné okraje okien"
 
 #~ msgid "kcmkwindecoration"
 #~ msgstr "kcmkwindecoration"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Štýl tlačidla aplikačnej ponuky:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Jedno tlačidlo ponuky"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Vždy zobrazená"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Zobrazená pri prechode myšou"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Zobraziť tlačidlo hľadania s aplikačnou ponukou"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Vybraný štýl dekorácie okien zobrazuje aplikačnú ponuku ako jedno tlačidlo."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Ak chcete použiť tieto možnosti, pridajte do titulkového pruhu tlačidlo aplikačnej ponuky."

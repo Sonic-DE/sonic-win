@@ -534,3 +534,31 @@ msgstr "ಸೀಮೆಯ ಗಾತ್ರ(&o):"
 
 #~ msgid "Ozone"
 #~ msgstr "ಓಝೋನ್"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "ಅನ್ವಯ ಮೆನು ಗುಂಡಿಯ ಶೈಲಿ:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "ಒಂದು ಮೆನು ಗುಂಡಿ"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "ಯಾವಾಗಲೂ ತೋರಿಸಲಾಗುತ್ತದೆ"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "ಮೇಲೆ ಸುಳಿದಾಗ ತೋರಿಸಲಾಗುತ್ತದೆ"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "ಅನ್ವಯ ಮೆನುವಿನೊಂದಿಗೆ ಹುಡುಕು ಗುಂಡಿಯನ್ನು ತೋರಿಸು"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "ಆಯ್ಕೆ ಮಾಡಿದ ಕಿಟಕಿ ಅಲಂಕಾರ ಶೈಲಿ ಅನ್ವಯ ಮೆನುವನ್ನು ಒಂದು ಗುಂಡಿಯಾಗಿ ತೋರಿಸುತ್ತದೆ."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "ಈ ಆಯ್ಕೆಗಳನ್ನು ಬಳಸಲು ಶೀರ್ಷಿಕೆ ಪಟ್ಟಿಗೆ ಅನ್ವಯ ಮೆನು ಗುಂಡಿಯನ್ನು ಸೇರಿಸಿ."

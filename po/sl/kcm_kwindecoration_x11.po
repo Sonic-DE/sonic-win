@@ -532,3 +532,31 @@ msgstr "Prevelike okenske obrobe"
 
 #~ msgid "kcmkwindecoration"
 #~ msgstr "kcmkwindecoration"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Slog gumba menija programa:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "En sam gumb menija"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Vedno prikazan"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Prikazan ob lebdenju"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Prikaži gumb za iskanje ob meniju programa"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Izbrani slog okraskov oken prikazuje meni programa kot en sam gumb."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Za uporabo teh možnosti dodajte gumb menija programa v naslovno vrstico."

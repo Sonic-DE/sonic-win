@@ -520,3 +520,31 @@ msgstr "Grandeu del boirdeure :"
 
 #~ msgid "%1 preview"
 #~ msgstr "prévoeyaedje di %s"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stîle do boton do menu des programes:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "On seu boton di menu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Todi mostré"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Mostré cwand l' sori passe dzeur"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Mostrer on boton di cweraedje avou l' menu des programes"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Li stîle di gåyotaedje des purneas tchoezi mostere li menu des programes come on seu boton."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Radjoutez l' boton do menu des programes al bår di tite po pleur eployî ces tchuzes ci."

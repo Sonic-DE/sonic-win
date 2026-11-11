@@ -568,3 +568,31 @@ msgstr "Ylisuuret ikkunareunukset"
 #~ "p><p>Valitse välilehdellä ”Painikkeet” valinta ”Käytä muokattuja "
 #~ "otsikkopalkkipainikesijainteja” ja voit vaihtaa painikkeiden sijaintia "
 #~ "haluamaksesi.</p>"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Sovelluksen valikkopainikkeen tyyli:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Yksi valikkopainike"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Näytetään aina"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Näytetään osoitettaessa"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Näytä hakupainike sovelluksen valikon kanssa"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Valittu ikkunakehystyyli näyttää sovelluksen valikon yhtenä painikkeena."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Lisää sovelluksen valikkopainike otsikkopalkkiin käyttääksesi näitä asetuksia."

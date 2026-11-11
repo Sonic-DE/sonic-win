@@ -508,3 +508,31 @@ msgstr "Râne grutte:"
 #~ "Gjin foarbyld beskikber.\n"
 #~ "Der wie wierskynlik\n"
 #~ "swierrichheid by it laden fan de plugin."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Styl fan de knop foar it tapassingsmenu:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Ien menuknop"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Altyd toand"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Toand by der oerhinne gean"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "In sykknop by it tapassingsmenu toane"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "De keazen finsterdekoraasjestyl toant it tapassingsmenu as ien knop."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Foegje de knop foar it tapassingsmenu ta oan de titelbalke om dizze opsjes te brûken."

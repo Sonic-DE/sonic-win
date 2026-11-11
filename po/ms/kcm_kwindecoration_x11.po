@@ -539,3 +539,31 @@ msgstr "&Saiz sempadan:"
 #~ "Tiada pralihat didapati.\n"
 #~ "Kemungkinan besar terdapat\n"
 #~ "masalah ketika memuatkan plugin."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Gaya butang menu aplikasi:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Satu butang menu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Sentiasa ditunjukkan"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Ditunjukkan ketika dilayang"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Tunjuk butang carian bersama menu aplikasi"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Gaya hiasan tetingkap yang dipilih menunjukkan menu aplikasi sebagai satu butang."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Tambah butang menu aplikasi pada palang tajuk untuk menggunakan pilihan ini."

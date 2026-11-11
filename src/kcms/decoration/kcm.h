@@ -50,6 +50,7 @@ class KCMKWinDecoration : public KQuickManagedConfigModule
     Q_PROPERTY(QAbstractListModel *leftButtonsModel READ leftButtonsModel NOTIFY buttonsChanged)
     Q_PROPERTY(QAbstractListModel *rightButtonsModel READ rightButtonsModel NOTIFY buttonsChanged)
     Q_PROPERTY(QAbstractListModel *availableButtonsModel READ availableButtonsModel CONSTANT)
+    Q_PROPERTY(bool themeSupportsTitleBarMenu READ themeSupportsTitleBarMenu NOTIFY themeChanged)
 
 public:
     KCMKWinDecoration(QObject *parent, const KPluginMetaData &metaData);
@@ -65,6 +66,7 @@ public:
     int borderIndex() const;
     int borderSize() const;
     int recommendedBorderSize() const;
+    bool themeSupportsTitleBarMenu() const;
     int theme() const;
 
     void setBorderIndex(int index);

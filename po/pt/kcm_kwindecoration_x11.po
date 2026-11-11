@@ -333,3 +333,31 @@ msgstr "Tamanho do contorno da janela:"
 
 #~ msgid "Author"
 #~ msgstr "Autoria"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Estilo do botão do menu da aplicação:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Um único botão de menu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Sempre visível"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Visível à passagem do rato"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Mostrar um botão de pesquisa com o menu da aplicação"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "O estilo de decoração das janelas seleccionado mostra o menu da aplicação como um único botão."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Adicione o botão do menu da aplicação à barra de título para usar estas opções."

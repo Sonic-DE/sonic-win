@@ -314,3 +314,31 @@ msgstr "არანორმალურად დიდი ფანჯრი�
 #~ msgctxt "tab label"
 #~ msgid "Theme"
 #~ msgstr "თემა"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "პროგრამის მენიუს ღილაკის სტილი:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "მენიუს ერთი ღილაკი"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "ყოველთვის ნაჩვენები"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "ნაჩვენები თაგუნას მიტანისას"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "ძებნის ღილაკის ჩვენება პროგრამის მენიუსთან ერთად"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "ფანჯრის დეკორაციის არჩეული სტილი პროგრამის მენიუს ერთ ღილაკად აჩვენებს."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "ამ პარამეტრების გამოსაყენებლად სათაურის ზოლში პროგრამის მენიუს ღილაკი დაამატეთ."

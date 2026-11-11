@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: 2026 Joseph Crowell <joseph.w.crowell@gmail.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+msgid ""
+msgstr ""
+"Project-Id-Version: kcm_kwindecoration_x11\n"
+"Report-Msgid-Bugs-To: https://github.com/Sonic-DE/\n"
+"POT-Creation-Date: 2026-11-11 00:00+0000\n"
+"PO-Revision-Date: 2026-11-11 00:00+0000\n"
+"Last-Translator: Joseph Crowell <joseph.w.crowell@gmail.com>\n"
+"Language-Team: hy\n"
+"Language: hy\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Հավելվածի ընտրացանկի կոճակի ոճը:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Մեկ ընտրացանկի կոճակ"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Միշտ ցուցադրված"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Ցուցադրված սավառնելիս"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Ցուցադրել որոնման կոճակ հավելվածի ընտրացանկի հետ"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Ընտրված պատուհանի զարդարման ոճը հավելվածի ընտրացանկը ցուցադրում է որպես մեկ կոճակ:"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Ավելացրեք հավելվածի ընտրացանկի կոճակը վերնագրի գոտուն՝ այս ընտրանքներն օգտագործելու համար:"

@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: 2026 Joseph Crowell <joseph.w.crowell@gmail.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+msgid ""
+msgstr ""
+"Project-Id-Version: kcm_kwindecoration_x11\n"
+"Report-Msgid-Bugs-To: https://github.com/Sonic-DE/\n"
+"POT-Creation-Date: 2026-11-11 00:00+0000\n"
+"PO-Revision-Date: 2026-11-11 00:00+0000\n"
+"Last-Translator: Joseph Crowell <joseph.w.crowell@gmail.com>\n"
+"Language-Team: tt\n"
+"Language: tt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Кушымта менюсы төймәсенең стиле:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Бер меню төймәсе"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Һәрвакыт күрсәтелә"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Күрсәткеч өстенә килгәч күрсәтелә"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Кушымта менюсы белән эзләү төймәсен күрсәтергә"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Сайланган тәрәзә бизәлеше стиле кушымта менюсын бер төймә итеп күрсәтә."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Бу көйләүләрне куллану өчен кушымта менюсы төймәсен баш юлына өстәгез."

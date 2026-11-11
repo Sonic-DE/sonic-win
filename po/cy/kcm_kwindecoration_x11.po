@@ -493,3 +493,31 @@ msgstr "Maint ffin: Bach Iawn"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Arddull botwm dewislen y rhaglen:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Un botwm dewislen"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Wedi'i ddangos bob amser"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Wedi'i ddangos wrth hofran"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Dangos botwm chwilio gyda dewislen y rhaglen"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Mae'r arddull addurno ffenestri a ddewiswyd yn dangos dewislen y rhaglen fel un botwm."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Ychwanegwch fotwm dewislen y rhaglen at y bar teitl i ddefnyddio'r dewisiadau hyn."

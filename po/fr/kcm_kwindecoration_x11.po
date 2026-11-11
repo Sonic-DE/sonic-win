@@ -571,3 +571,31 @@ msgstr "Bordures de fenêtre sur-dimensionnées"
 
 #~ msgid "Ozone"
 #~ msgstr "Ozone"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Style du bouton du menu d'application :"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Un seul bouton de menu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Toujours affiché"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Affiché au survol"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Afficher un bouton de recherche avec le menu d'application"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Le style de décoration de fenêtres sélectionné affiche le menu d'application sous forme d'un seul bouton."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Ajoutez le bouton du menu d'application à la barre de titre pour utiliser ces options."

@@ -280,3 +280,31 @@ msgstr "Bordes de ventana gigantescos"
 #, kde-format
 msgid "Oversized window borders"
 msgstr "Bordes de ventana desmesurados"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Estilo del botón del menú de la aplicación:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Un único botón de menú"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Mostrado siempre"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Mostrado al pasar el ratón"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Mostrar un botón de búsqueda con el menú de la aplicación"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "El estilo de decoración de ventanas seleccionado muestra el menú de la aplicación como un único botón."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Añada el botón del menú de la aplicación a la barra de título para usar estas opciones."

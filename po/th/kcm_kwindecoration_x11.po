@@ -514,3 +514,31 @@ msgstr "ขนาดของกรอบ:"
 
 #~ msgid "Ozone"
 #~ msgstr "โอโซน"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "รูปแบบปุ่มเมนูแอปพลิเคชัน:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "ปุ่มเมนูเดียว"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "แสดงเสมอ"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "แสดงเมื่อเลื่อนเมาส์ไปวาง"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "แสดงปุ่มค้นหาพร้อมกับเมนูแอปพลิเคชัน"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "รูปแบบการตกแต่งหน้าต่างที่เลือกแสดงเมนูแอปพลิเคชันเป็นปุ่มเดียว"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "เพิ่มปุ่มเมนูแอปพลิเคชันลงในแถบหัวเรื่องเพื่อใช้ตัวเลือกเหล่านี้"

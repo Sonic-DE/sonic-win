@@ -202,6 +202,12 @@ KCM.SimpleKCM {
 
     // One scrolling column: the opacity settings and exceptions don't fit beside the button editor.
     ColumnLayout {
+        id: titlebarColumn
+
+        readonly property bool applicationMenuButtonInLayout: kcm.settings.buttonsOnLeft.indexOf("N") >= 0
+                                                              || kcm.settings.buttonsOnRight.indexOf("N") >= 0
+        readonly property bool applicationMenuOptionsAvailable: applicationMenuButtonInLayout && kcm.themeSupportsTitleBarMenu
+
         Buttons {
             Layout.fillWidth: true
         }
@@ -240,6 +246,51 @@ KCM.SimpleKCM {
                 configObject: kcm.settings
                 settingName: "showToolTips"
             }
+        }
+
+        RowLayout {
+            QQC2.Label {
+                text: i18nc("@label:listbox", "Application menu button style:")
+                enabled: applicationMenuStyleComboBox.enabled
+            }
+            QQC2.ComboBox {
+                id: applicationMenuStyleComboBox
+                // In the order of KDecoration3::ApplicationMenuStyle.
+                model: [
+                    i18nc("@item:inlistbox application menu button style", "Single menu button"),
+                    i18nc("@item:inlistbox application menu button style", "Always shown"),
+                    i18nc("@item:inlistbox application menu button style", "Shown on hover"),
+                ]
+                currentIndex: kcm.settings.applicationMenuStyle
+                onActivated: kcm.settings.applicationMenuStyle = currentIndex
+
+                KCM.SettingStateBinding {
+                    configObject: kcm.settings
+                    settingName: "applicationMenuStyle"
+                    extraEnabledConditions: titlebarColumn.applicationMenuOptionsAvailable
+                }
+            }
+        }
+
+        QQC2.CheckBox {
+            text: i18nc("checkbox label", "Show a search button with the application menu")
+            checked: kcm.settings.applicationMenuSearch
+            onToggled: kcm.settings.applicationMenuSearch = checked
+
+            KCM.SettingStateBinding {
+                configObject: kcm.settings
+                settingName: "applicationMenuSearch"
+                extraEnabledConditions: titlebarColumn.applicationMenuOptionsAvailable
+            }
+        }
+
+        Kirigami.InlineMessage {
+            Layout.fillWidth: true
+            type: Kirigami.MessageType.Information
+            visible: !titlebarColumn.applicationMenuOptionsAvailable
+            text: titlebarColumn.applicationMenuButtonInLayout
+                ? i18nc("@info", "The selected window decoration style shows the application menu as a single button.")
+                : i18nc("@info", "Add the Application menu button to the titlebar to use these options.")
         }
 
         // The titlebar's transparency, shared by every theme and by the toolbars and menu

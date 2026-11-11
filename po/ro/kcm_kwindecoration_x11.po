@@ -543,3 +543,31 @@ msgstr "Contur supradimensionat al ferestrelor"
 
 #~ msgid "Ozone"
 #~ msgstr "Ozon"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stilul butonului meniului aplicației:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Un singur buton de meniu"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Afișat întotdeauna"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Afișat la trecerea cursorului"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Arată un buton de căutare cu meniul aplicației"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Stilul de decorare a ferestrelor ales arată meniul aplicației ca un singur buton."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Adăugați butonul meniului aplicației în bara de titlu pentru a folosi aceste opțiuni."

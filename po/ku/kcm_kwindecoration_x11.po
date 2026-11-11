@@ -535,3 +535,31 @@ msgstr "Mezinahiya K&êlekan:"
 
 #~ msgid "Ozone"
 #~ msgstr "Ozone"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Şêwaza bişkoka pêşeka sepanê:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Yek bişkoka pêşekê"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Her dem tê nîşandan"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Dema li ser bisekine tê nîşandan"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Bişkokeke lêgerînê bi pêşeka sepanê re nîşan bide"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Şêwaza xemilandina paceyê ya hilbijartî pêşeka sepanê wek yek bişkok nîşan dide."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Ji bo bikaranîna van vebijêrkan bişkoka pêşeka sepanê li darikê sernivîsê zêde bike."

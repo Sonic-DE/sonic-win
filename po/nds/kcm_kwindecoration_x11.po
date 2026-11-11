@@ -571,3 +571,31 @@ msgstr "Rahmendickde:"
 
 #~ msgid "Ozone"
 #~ msgstr "Ozoon"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stil vun den Programmmenü-Knoop:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Een enkelt Menüknoop"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Jümmers wiest"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Bi't Röverfohren wiest"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "En Söökknoop bi dat Programmmenü wiesen"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "De utsöchte Finsterdekoratschoonstil wiest dat Programmmenü as een enkelt Knoop."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Föög den Programmmenü-Knoop to de Titelbalken to, dat Du disse Instellen bruken kannst."

@@ -527,3 +527,31 @@ msgstr "اندازه &لبه:‌"
 
 #~ msgid "&Buttons"
 #~ msgstr "&دکمه‌ها‌"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "سبک دکمهٔ منوی برنامه:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "یک دکمهٔ منو"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "همیشه نمایش داده می‌شود"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "هنگام شناور شدن نمایش داده می‌شود"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "نمایش یک دکمهٔ جست‌وجو همراه منوی برنامه"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "سبک تزئین پنجرهٔ برگزیده، منوی برنامه را به صورت یک دکمه نمایش می‌دهد."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "برای استفاده از این گزینه‌ها، دکمهٔ منوی برنامه را به نوار عنوان اضافه کنید."

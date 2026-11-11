@@ -487,3 +487,31 @@ msgstr "ਓਵਰ-ਸਾਈਜ਼ ਵਿੰਡੋ ਬਾਰਡਰ"
 
 #~ msgid "Ozone"
 #~ msgstr "ਓਜ਼ੋਨ"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "ਐਪਲੀਕੇਸ਼ਨ ਮੇਨੂ ਬਟਨ ਦਾ ਸਟਾਈਲ:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "ਇੱਕ ਮੇਨੂ ਬਟਨ"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "ਹਮੇਸ਼ਾ ਵੇਖਾਇਆ"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "ਉੱਤੇ ਲੈ ਜਾਣ ਨਾਲ ਵੇਖਾਇਆ"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "ਐਪਲੀਕੇਸ਼ਨ ਮੇਨੂ ਨਾਲ ਖੋਜ ਬਟਨ ਵੇਖਾਓ"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "ਚੁਣਿਆ ਵਿੰਡੋ ਸਜਾਵਟ ਸਟਾਈਲ ਐਪਲੀਕੇਸ਼ਨ ਮੇਨੂ ਨੂੰ ਇੱਕ ਬਟਨ ਵਜੋਂ ਵੇਖਾਉਂਦਾ ਹੈ।"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "ਇਹ ਚੋਣਾਂ ਵਰਤਣ ਲਈ ਟਾਈਟਲ-ਪੱਟੀ ਵਿੱਚ ਐਪਲੀਕੇਸ਼ਨ ਮੇਨੂ ਬਟਨ ਜੋੜੋ।"

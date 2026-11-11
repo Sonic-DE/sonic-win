@@ -346,3 +346,31 @@ msgstr ""
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Isimbo seqhosha lemenyu yesicelo:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Iqhosha lemenyu elinye"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Ihlala iboniswa"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Iboniswa xa ujikeleza phezu kwayo"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Bonisa iqhosha lokukhangela kunye nemenyu yesicelo"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Isimbo sokuhombisa ifestile esikhethiweyo sibonisa imenyu yesicelo njengeqhosha elinye."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Yongeza iqhosha lemenyu yesicelo kwibha yesihloko ukuze usebenzise ezi ndlela zokhetho."

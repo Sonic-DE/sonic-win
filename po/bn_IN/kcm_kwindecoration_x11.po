@@ -429,3 +429,31 @@ msgstr "প্রান্তরেখার মাপ: (&o)"
 
 #~ msgid "Ozone"
 #~ msgstr "Ozone"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "অ্যাপ্লিকেশন মেনু বোতামের শৈলী:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "একক মেনু বোতাম"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "সর্বদা প্রদর্শিত"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "হোভার করলে প্রদর্শিত"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "অ্যাপ্লিকেশন মেনুর সাথে একটি অনুসন্ধান বোতাম প্রদর্শন করা হবে"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "নির্বাচিত উইন্ডো সজ্জা শৈলী অ্যাপ্লিকেশন মেনুকে একটি একক বোতাম হিসেবে প্রদর্শন করে।"
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "এই বিকল্পগুলি ব্যবহার করার জন্য শিরোনাম বারে অ্যাপ্লিকেশন মেনু বোতাম যোগ করুন।"

@@ -441,3 +441,31 @@ msgstr "Border size: Tiny"
 
 #~ msgid "KDE 2"
 #~ msgstr "KDE 2"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Услуби тугмаи менюи барнома:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Як тугмаи меню"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Ҳамеша намоиш дода мешавад"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Ҳангоми ишора намоиш дода мешавад"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Тугмаи ҷустуҷӯро бо менюи барнома намоиш диҳед"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Услуби ороиши равзанаи интихобшуда менюи барномаро ҳамчун як тугма намоиш медиҳад."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Барои истифодаи ин имконот тугмаи менюи барномаро ба навори сарлавҳа илова кунед."

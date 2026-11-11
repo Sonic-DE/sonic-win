@@ -316,3 +316,31 @@ msgstr ""
 
 #~ msgid "Inactive Window"
 #~ msgstr "Dritarja Jo Aktive"
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Stil butoni menuje aplikacioni:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Një buton i vetëm menuje"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Shfaqur përherë"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Shfaqur kur kalohet kursori sipër"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Shfaq një buton kërkimi me menunë e aplikacionit"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Stili i zgjedhur i zbukurimit të dritareve e shfaq menunë e aplikacionit si një buton të vetëm."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Shtoni butonin e menusë së aplikacionit te shtylla e titullit që të përdorni këto mundësi."

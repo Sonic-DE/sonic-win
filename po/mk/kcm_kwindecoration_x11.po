@@ -519,3 +519,31 @@ msgstr "Г&олемина на работ:"
 #~ "Нема достапен преглед.\n"
 #~ "Најверојатно имало проблем\n"
 #~ "со вчитувањето на приклучокот."
+
+msgctxt "@label:listbox"
+msgid "Application menu button style:"
+msgstr "Стил на копчето за мени на апликацијата:"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Single menu button"
+msgstr "Едно копче за мени"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Always shown"
+msgstr "Секогаш прикажано"
+
+msgctxt "@item:inlistbox application menu button style"
+msgid "Shown on hover"
+msgstr "Прикажано при лебдење"
+
+msgctxt "checkbox label"
+msgid "Show a search button with the application menu"
+msgstr "Прикажи копче за пребарување со менито на апликацијата"
+
+msgctxt "@info"
+msgid "The selected window decoration style shows the application menu as a single button."
+msgstr "Избраниот стил на декорација на прозорци го прикажува менито на апликацијата како едно копче."
+
+msgctxt "@info"
+msgid "Add the Application menu button to the titlebar to use these options."
+msgstr "Додајте го копчето за мени на апликацијата во насловната лента за да ги користите овие опции."
