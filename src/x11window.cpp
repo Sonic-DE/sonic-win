@@ -49,6 +49,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QProcess>
+#include <algorithm>
 #include <cmath>
 // xcb
 #include <xcb/xcb_icccm.h>
@@ -867,12 +868,23 @@ bool X11Window::manage(xcb_window_t w, bool isMapped)
         //  - non-transient dialogs, or transient dialogs without a parent, or
         //  - transient dialogs with a parent that explicitly requested a position
         //    (WM_NORMAL_HINTS PPosition/USPosition) located inside the parent's
-        //    frame geometry.
+        //    frame geometry (popups, #42), or
+        //  - transient dialogs with a parent that explicitly requested a position
+        //    that lies entirely on one output (dialogs reopened where the user
+        //    left them, #49).
+        // A requested position that is off-screen or straddles outputs is
+        // ignored, and the dialog is centred on its parent.
         if (!isTransient() || !transientFor()) {
             usePosition = true;
-        } else if (m_geometryHints.hasPosition()
-                   && transientFor()->frameGeometry().contains(geom.topLeft())) {
-            usePosition = true;
+        } else if (m_geometryHints.hasPosition()) {
+            if (transientFor()->frameGeometry().contains(geom.topLeft())) {
+                usePosition = true;
+            } else {
+                const QList<Output *> outputs = workspace()->outputs();
+                usePosition = std::any_of(outputs.cbegin(), outputs.cend(), [&geom](const Output *output) {
+                    return output->geometryF().contains(geom);
+                });
+            }
         }
     } else if (isSplash()) {
         ; // Force using placement policy
