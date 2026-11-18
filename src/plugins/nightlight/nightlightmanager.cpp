@@ -89,6 +89,22 @@ NightLightManager::NightLightManager()
     });
     connect(kwinApp()->session(), &Session::awoke, this, &NightLightManager::hardReset);
 
+    // On X11, the CRTC gamma ramps are not part of the composited frame, so any
+    // client can overwrite them silently. Re-assert them after every output
+    // re-query and for a while after each reset, so the color temperature
+    // survives display reconfiguration and login-time gamma writes by other
+    // session components (ICC vcgt loaders, brightness helpers, etc.).
+    connect(kwinApp()->outputBackend(), &OutputBackend::outputsQueried, this, &NightLightManager::reassertGammaRamps);
+
+    m_reassertTimer = new QTimer(this);
+    m_reassertTimer->setInterval(1000);
+    connect(m_reassertTimer, &QTimer::timeout, this, [this]() {
+        reassertGammaRamps();
+        if (++m_reassertAttempts >= 15) {
+            m_reassertTimer->stop();
+        }
+    });
+
     hardReset();
 }
 
@@ -106,6 +122,9 @@ void NightLightManager::hardReset()
     if (isEnabled() && !isInhibited()) {
         setRunning(true);
         commitGammaRamps(currentTargetTemperature());
+
+        m_reassertAttempts = 0;
+        m_reassertTimer->start();
     }
     resetAllTimers();
 }
@@ -526,6 +545,21 @@ void NightLightManager::commitGammaRamps(int temperature)
     }
 
     setCurrentTemperature(temperature);
+}
+
+void NightLightManager::reassertGammaRamps()
+{
+    if (!m_running) {
+        return;
+    }
+
+    // ColorDevice::setTemperature() has an equality early-out, so it cannot be
+    // used to repair gamma ramps that were overwritten by an external client.
+    // scheduleUpdate() unconditionally rewrites the stored channel factors.
+    const QList<ColorDevice *> devices = kwinApp()->colorManager()->devices();
+    for (ColorDevice *device : devices) {
+        device->scheduleUpdate();
+    }
 }
 
 void NightLightManager::setEnabled(bool enabled)
