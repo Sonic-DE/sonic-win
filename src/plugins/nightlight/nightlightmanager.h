@@ -244,6 +244,7 @@ private:
     void updateTransitionTimings(const QDateTime &dateTime);
 
     void commitGammaRamps(int temperature);
+    void reassertGammaRamps();
 
     void setEnabled(bool enabled);
     void setRunning(bool running);
@@ -279,6 +280,8 @@ private:
     std::unique_ptr<QTimer> m_slowUpdateTimer;
     std::unique_ptr<QTimer> m_quickAdjustTimer;
     std::unique_ptr<QTimer> m_previewTimer;
+    QTimer *m_reassertTimer = nullptr;
+    int m_reassertAttempts = 0;
 
     int m_currentTemperature = DEFAULT_DAY_TEMPERATURE;
     int m_targetTemperature = DEFAULT_DAY_TEMPERATURE;
